@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { classify } from '@/service/classification';
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -23,13 +24,12 @@ export default function Dashboard() {
 
     setIsLoading(true);
     try {
-      // Add classification API call here
-      // const result = await api.classifyDocument(file);
-
-      // Set dummy data
-      setClassifications(["Financial", "Report", "Annual", "Confidential"]);
-      setResponse("This document appears to be regarding MAS's annual financial report for 2024.")
-
+      const response = await classify("test");
+      if (response.ok) {
+        const data = await response.json();
+        setClassifications(data.classifications)
+        setResponse(data.response)
+      }
     } catch (error) {
       console.error('Classification failed:', error);
     } finally {
