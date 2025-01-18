@@ -1,0 +1,1055 @@
+OBJECTIVES AND PRINCIPLES OF 
+FINANCIAL SUPERVISION  
+IN SINGAPORE  
+Monetary Authority of Singapore 
+April 2004 
+(revised in September 2015)  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                      
+ Contents  Page 
+ 
+1 Introduction   1 
+ 
+2 A Sound and Progressive Financial Services Sector   2 
+ 
+3 Objectives of Supervision   4 
+ 
+4 Principles of Good Supervision   12 
+ 
+5 Oversight Functions of MAS  19 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+MONETARY AUTHORITY OF SINGAPORE 
+APRIL 2004 (revised in September 2015) 
+OBJECTIVES AND PRINCIPLES OF 
+FINANCIAL SUPERVISION  
+IN SINGAPORE 
+ 
+1 
+ 
+1  Introduction 
+ 
+1 The mission of the Monetary Authority of Singapore (MAS) is “to promote 
+sustained and non -inflationary economic growth, and a sound and 
+progressive financial services se ctor”.  To carry out this mission, MAS 
+conducts exchange rate policy, manages the official foreign reserves, 
+regulates and supervises the financial sector, and works with the industry to 
+develop Singapore as an international financial centre. 
+ 
+2 This documen t focuses on the supervisory aspect of MAS’ mandate, 
+namely, to promote a sound and progressive financial services sector 
+through regulation and supervision. 1  It sets out MAS’ objectives or desired 
+outcomes of supervision, the functions it performs direct ly or facilitates to 
+achieve these outcomes, and the principles that guide its supervisory 
+approach. 
+ 
+3 The schematic representation below illustrates how the various functions of 
+MAS, based on a foundation of guiding principles, help to support the 
+achievement of MAS’ objectives and mission  to promote a sound and 
+progressive financial services sector. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                           
+1  Regulation refers to the establishment of specific rules of behaviour and supervision 
+means the more general monitoring of the behaviour of financial institutions, 
+including compliance with rules and regulations.  When the term “supervision” is 
+used in isolation in this note, we intend it to mean the broad oversight that includes 
+both regulation and supervision.  
+Resolution
+Consumer Education *
+PRINCIPLES
+FUNCTIONS
+MISSION
+Desired outcomes 
+we seek to promote
+Supervision
+Regulation
+Enforcement
+Authorisation
+Surveillance
+Corporate Governance *
+Market Discipline *
+Consumer Safety-Net *
+3. Safe and efficient INFRASTRUCTURE
+4. Fair, efficient and transparent MARKETS
+5. Transparent and fair-dealing INTERMEDIARIES and OFFERORS
+6. Well-informed and empowered CONSUMERS
+2. Safe and sound INTERMEDIARIES
+1. Stable financial SYSTEM
+To promote a 
+Sound and Progressive 
+FINANCIAL SERVICES SECTOR
+Risk-Focused Stakeholder-Reliant
+Disclosure-Based Supportive of Enterprise
+Reason why we exist
+Activities we perform
+or  facilitate*
+Beliefs that underpin 
+our approach
+2 
+ 
+2  A Sound and Progressive Financial Services 
+Sector 
+ 
+1 A sound and progressive financial services sector is a vital part of any 
+modern economy.  This is particularly so in the case of a small and open 
+economy like Singapore.  Apart from its direct and significant contribution 
+to gross domestic product, the financial services sector intermediates 
+between savers and borrowers, allocates financial re sources efficiently, and 
+thereby enhances economic growth and job creation.  Promoting a sound 
+and progressive financial services sector is an integral part of ensuring the 
+success and resilience of the Singapore economy. 
+ 
+2 Confidence and stability are fund amental to a well -functioning financial 
+system.  Only when there is confidence in the system would corporates and 
+individuals transact in the financial markets to invest and to raise capital.  
+Without confidence and stability, the economy's ability to mobi lize savings 
+for economic use will be compromised.  
+ 
+3 Experience has shown that, left to themselves, financial systems and 
+institutions can be prone to bouts of instability and loss of confidence.  The 
+social and economic costs of such instability can be si gnificant, as 
+demonstrated by the economic fallout from  financial crises. Even advanced 
+economies are not immune to financial crises or instability.  
+ 
+4 MAS is concerned with both the stability of the financial system as a whole 
+and the soundness of individu al institutions.  Working with other 
+stakeholders, principally the boards and managers of financial institutions, 
+MAS encourages the effective management and mitigation of risks taken by 
+financial institutions. We aim to do so in a way that does not unnece ssarily 
+hinder the competitiveness and dynamism of financial institutions, or the 
+efficiency of financial markets.  While we seek to detect excessive risk -
+taking and apply the brakes in a sensible manner, we must do so in a way 
+that avoids moral hazard and does not smother innovation and enterprise.  
+ 
+5 MAS seeks to promote a sound and progressive financial services sector 
+through both financial supervision and developmental initiatives.  We 
+supervise the banking and insurance industries, as well as the capit al 
+markets.  At the same time, we work in partnership with the private sector 
+to identify and implement strategies for developing Singapore as an 
+international financial centre.  
+3 
+ 
+ 
+ 
+Are supervision and development compatible? 
+ 
+Are MAS’ dual roles as supervi sor and promoter of the financial sector 
+compatible?  On the surface, there appear to be inherent tensions between 
+the two.  Supervision is concerned with the effective monitoring and 
+mitigation of risks.  Promotion focuses on facilitating business innovat ion 
+and enterprise, which often entails the taking of risk.   
+ 
+But in a deeper sense, supervision and development are not incompatible.  
+In fact, they are complementary.  A well -regulated and supervised financial 
+services sector is not an end in itself.  W e promote financial soundness 
+because it is a vital component of economic growth and development.  
+Financial institutions come to Singapore to do business in large part 
+because of the well -regulated, stable and sound financial system Singapore 
+offers.  Sup ervision and development work hand in hand to promote a 
+sound and progressive financial services sector. 
+ 
+At the same time, MAS recognises that there could well be tensions 
+between the supervisory and developmental roles in some situations.  This 
+is why there is clear separation between these two functions within MAS.   
+ 
+Officers involved in prudential or market conduct supervision are not 
+charged with initiating and implementing developmental initiatives.  There 
+are separate and dedicated departments withi n MAS for financial 
+supervision and financial centre development.  Any potential tensions or 
+trade-offs between supervision and development are resolved at the senior 
+management level which has collective responsibility for MAS’ dual 
+mandate.   
+  
+This arrangement has worked well in practice, as evidenced by the financial 
+reforms launched since 1998 amidst challenging economic and financial 
+conditions.  The reforms have helped promote greater competition, 
+efficiency and growth in the financial sector without  compromising the 
+safety and soundness of institutions or the resilience and stability of the 
+system. 
+ 
+Our experience has been that effective cooperation between the supervisor 
+and developer is vital, so that our rules or regulations  take into account 
+business efficacy and market realities without compromising industry best 
+practices or undermining the basic principles of good supervision . We 
+believe that the delicate balance between the supervisory and 
+developmental roles is best achieved within one organi sation with a shared 
+purpose rather than separate agencies with possibly conflicting goals. 
+ 
+4 
+ 
+3 Objectives of Supervision 
+ 
+1 We believe that fulfilling our mission of a sound and progressive financial 
+services sector requires achieving six distinct objectives .  The objectives or 
+desired outcomes of MAS’ supervisory activities are: 
+ 
+ a stable financial system; 
+ 
+ safe and sound financial intermediaries; 
+ 
+ safe and efficient financial infrastructure; 
+ 
+ fair, efficient and transparent organised markets;  
+ 
+ transparent and fair-dealing intermediaries and offerors; and 
+ 
+ well-informed and empowered consumers. 
+ 
+ 
+Objective 1 
+Stable financial system 
+ 
+2 Stability is fundamental to a well -functioning financial system.  It provides 
+the basis for participants to trade in the financ ial markets and use the 
+services of financial institutions with confidence.  Promoting a stable 
+system is thus the overarching objective  of MAS’ financial supervision.  It 
+requires MAS to meet the other five objectives with respect to 
+intermediaries, infrastructure, markets, offerors and consumers. 
+ 
+ 
+ 
+ 
+ 
+ 
+5 
+ 
+ 
+Can and should MAS seek to prevent failure? 
+ 
+Our desired outcome is financial stability.  But in seeking to promote and 
+preserve stability in the financial system, we do not aim to prevent the 
+failure of a ny financial institution.  Such a “zero failure” regime is neither 
+feasible nor desirable. 
+ 
+Risk is the life-blood of the financial system.  It is the business of financial 
+institutions to intermediate risks and to take on risks.  Institutions can incur 
+substantial losses if risks are not well -managed, or if risk events turn out to 
+be more severe than anticipated.  Regulation or supervision cannot 
+completely prevent losses without making it impossible for financial 
+institutions to operate effectively. 
+ 
+Instead, MAS seeks to reduce the risk and impact of a failure. MAS does 
+this by requiring institutions to have sound risk management systems and 
+adequate internal controls.  It also requires institutions to have appropriate 
+contingency arrangements to address risks that may materialise  in stress 
+conditions, and to  maintain prudent levels of capital to buffer against 
+possible losses.  For key financial institutions, the contingency 
+arrangements include recovery plans to restore financial strength and 
+viability w hen the institution comes under severe  stress. With these 
+measures, we seek to reduce the risk of a failure.  But we cannot and should 
+not guarantee the soundness of individual financial institutions. 
+ 
+This is especially true in Singapore, where most finan cial institutions, 
+banks in particular, operate as branches of organisations incorporated in 
+other jurisdictions.  Their global operations are influenced by factors 
+beyond MAS’ control.  Our supervision of these institutions is limited to 
+their operations in Singapore, even though the risks to their viability may 
+arise from any part of their global network.  While MAS has a rigorous 
+admission policy that seeks to allow only well -managed and reputable 
+institutions to operate in Singapore, it is difficult for  us to detect and 
+resolve problems or mishaps occurring in the global operations of these 
+institutions.  With respect to locally -incorporated institutions, MAS has 
+greater supervisory influence.  Even so, given the growing scope and 
+complexity of financial  business, it is impossible for MAS to prevent 
+financial distress or collapse in all circumstances. 
+ 
+Even if it were possible to prevent failure in all instances, it would be 
+undesirable to seek to do so.  Any such supervisory and regulatory regime 
+would b e excessively burdensome for financial institutions and severely 
+undermine their competitiveness, innovation and enterprise.  This would be 
+inconsistent with MAS’ mission of promoting a progressive financial 
+services sector. 
+6 
+ 
+  
+A “zero-failure” regime would  also be inconsistent with the principle that 
+owners and managers of institutions, together with consumers, must be 
+responsible for their own actions.  Considerable moral hazard would arise if 
+consumers and market participants believed that no institution would ever 
+be allowed to collapse or go out of business, or no investor would lose his 
+savings through imprudent investment.  The incentive for boards of 
+directors and managers to take due care in managing the risks of institutions 
+under their charge would  be eroded.  The best defence against financial 
+instability is to maximise the incentives for boards, management and 
+market participants to identify and pre -empt problems rather than provide 
+an official guarantee against failure of any single institution. 
+ 
+ 
+ 
+Objective 2 
+Safe and sound financial intermediaries 
+ 
+3 The focus of much of MAS’ regulation and supervision is on the safety and 
+soundness of financial intermediaries such as banks, insurance companies, 
+and broker-dealer and fund management firms.  There are two reasons for 
+this.   
+ 
+4 Firstly, the distress or collapse of key financial institutions, especially large 
+banks, can have potentially damaging consequences for systemic stability 
+by transmitting problems from one institution to another or undermining 
+confidence in general.  Secondly, depositors, policyholders and retail 
+investors are usually not in a position to make fully informed judgments 
+about the risks facing the institutions with which they enter into financial 
+contracts.  This information asymme try can be reduced through greater 
+disclosure, but it cannot be eliminated entirely.  MAS, therefore, has a role 
+in actively encouraging financial institutions to identify, monitor and 
+mitigate the risks facing them.  For key financial institutions, this extends to 
+the development and ongoing review of robust and credible recovery and 
+resolution plans which take into account the specific cir cumstances of the 
+institution. MAS assesses the adequacy of the se financial institutions’  
+recovery and resolution plan s and seeks improvements if deficiencies are 
+identified. In the case of financial institutions headquartered in other 
+jurisdictions, MAS will coordinate with the relevant supervisors and 
+authorities from those jurisdictions wherever possible on these asses sments 
+and follow-up actions. 
+ 
+7 
+ 
+5 At the same time as it supervises the safety and soundness of financial 
+institutions, MAS also requires institutions to have in place robust systems 
+and procedures to combat money laundering and terrorism financing  
+(ML/TF).  This is because financial institutions are vulnerable to abuse for 
+criminal purposes, such as money laundering and terrorism financing.  
+Besides contributing to the international effort to curb  crimes that generate 
+illegal proceeds or support  terrorism activities, MAS’ supervision in this 
+regard seeks to detect, deter and prevent abuses that pose significant legal 
+and reputational risks to the institutions , which could also impact on their 
+safety and soundness,  and affect Singapore’s standing as an interna tional 
+financial centre.   
+ 
+ 
+What is MAS’ role in combating money laundering and terrorism 
+financing?  
+ 
+As an international financial centre, Singapore actively supports global 
+efforts to combat ML/TF as well as  proliferation financing. Singapore has 
+zero tolerance for the use of its financial system as a conduit or sanctuary 
+for illicit fund s. Singapore is firmly committed to detect, deter and prevent 
+illegal financial activities.  
+ 
+Singapore was one of the first jurisdictions in Asia to join the Financial  
+Action Task Force (FATF), the global standard setting body for fighting 
+ML/TF, and a founding member of the Asia /Pacific Group on Money 
+Laundering.  In addition, MAS participates in the Anti -Money 
+Laundering/Countering the Financing of Terrorism (AML/CFT)  Expert 
+Group under the Basel Committee on Banking Supervision that develops 
+international standards in this area. 
+ 
+MAS’ role in Singapore’s AML/CFT regime pertains to four key areas: 
+strict regulation, rigorous supervision, effective enforcement, and cros s-
+border co-operation. 
+ 
+Regulation 
+All financial institutions in Singapore are required to put in place strong 
+AML/CFT controls and conduct rigorous checks.  This includes customer 
+due diligence, regular account reviews, and monitoring and reporting any 
+suspicious transactions. MAS undertakes regular reviews to identify 
+emerging risks and strengthen its AML/CFT regime. The latest review 
+resulted in MAS issuing an enhanced set of AML/CFT regulatory notices in 
+April 2015.  This was accompanied by a set of AML/ CFT guidelines to 
+further clarify MAS’ expectations.  
+ 
+ 
+ 
+8 
+ 
+Supervision 
+MAS determines whether financial institutions have adequate AML/CFT 
+controls and are compliant with our regulations and requirements .  This is 
+done through regular inspections, off -site r eviews and by leveraging on 
+audits conducted by internal and external auditors.  The frequency and 
+scope of MAS’ AML/CFT inspections are based on our assessment of each 
+institution’s ML/TF risks, regardless of the size of the institution. 
+ 
+Following each i nspection, MAS issues a detailed report on any control 
+gaps and weaknesses identified and will instruct the financial institution to 
+undertake remedial measures within a specified timeframe.  For a foreign 
+financial institution operating in Singapore, MAS also shares its inspection 
+reports with the institution’s head office and home regulator, to promote 
+more effective remediation.  
+ 
+In addition, MAS requires the auditors of the financial institutions to verify 
+the remediation measures undertaken by the ins titutions and report to MAS 
+on the adequacy of the rectifications made. 
+ 
+Enforcement 
+MAS takes firm and appropriate enforcement actions against financial 
+institutions that breach our AML/CFT regulations.  Enforcement actions 
+include formal warnings, reprim ands, restrictions on operations, financial 
+penalties and revocation of licences. 
+ 
+Cross-border Co-operation 
+Recognising the cross -border nature of ML/TF offences, relevant agencies 
+in Singapore, such as the Suspicious Transaction Reporting Office 
+(Singapore’s Financial Intelligence Unit), law enforcement agencies (e.g. 
+Commercial Affairs Department) and the Attorney -General’s Chambers 
+(Singapore’s central authority for mutual legal assistance) have established 
+channels to cooperate with foreign counterpart s and assist in investigations. 
+MAS also maintains channels to cooperate with our foreign supervisors on 
+AML/CFT matters. These include facilitating effective consolidated 
+supervision of financial institutions, exchanging supervisory information 
+including sharing AML/CFT inspection reports and fit and proper 
+assessments, supporting on-site AML/CFT inspections by home supervisors 
+as well as participating in and hosting supervisory colleges.   
+ 
+MAS continually strengthens its AML/CFT regulations and superviso ry 
+framework to keep pace with emerging risks and evolving market 
+developments as part of our commitment to enforce  a robust regulatory and 
+supervisory AML/CFT regime in Singapore.   
+ 
+ 
+ 
+9 
+ 
+     Objective 3 
+Safe and efficient financial infrastructure  
+ 
+6 Financial infrastructure refers to the platforms that provide the services and 
+facilities underpinning financial market activities, such as exchanges, 
+clearing houses, and payment and settlement systems.2 
+ 
+7 These platforms are important nodes in the financial sys tem.  Their failure 
+may amplify systemic risks by seizing up financial flows, undermining the 
+fulfilment of obligations and transmitting shocks from one institution to 
+another.  The safe operation of financial infrastructure , including under 
+stress conditi ons, is therefore essential for preserving stability in the 
+financial system. These platforms  are therefore expected  to have 
+contingency arrangements to help  ensure that  the markets they serve 
+continue to function effectively. 
+ 
+8 Financial infrastructure sho uld also be efficient in helping to reduce 
+friction, lower costs, and maximise the economic benefits of financial 
+intermediation.  Improvements to the safety and reliability of financial 
+infrastructure must be judiciously balanced against the costs of doing so.  
+ 
+ 
+Objective 4 
+Fair, efficient and transparent organised markets  
+ 
+9 Confidence in the financial system and effective intermediation of financial 
+flows require that capital markets be fair, efficient and transparent. 
+ 
+10 A fair market is characterised by proper trading practices, fair access to 
+market facilities and information, and structures that do not tilt the playing 
+field in favour of some market users over others.  As part of its mandate, 
+MAS seeks to deter, detect and penalise market rigging, marke t 
+manipulation, insider trading, fraud, deceit and other unfair trading conduct. 
+ 
+11 Price formation and discovery are intrinsic to any well -functioning market 
+that matches buyers and sellers.  An efficient market is one where this 
+process is reliable and unh indered.  This requires material information 
+likely to affect market prices to be disseminated in a timely and organised 
+manner. 
+ 
+ 
+ 
+                                           
+2   Clearing is broadly concerned with the establishment and risk management of 
+contractual obligations while settlement is concerned with the discharge of obligations. 
+10 
+ 
+12 Information asymmetries are at the root of most market inefficiencies and 
+misconduct.  A transparent market is one where inf ormation about trading 
+is made publicly available on a real -time basis.  Pre-trade information, such 
+as bids and offers, should be made available to enable investors to know 
+whether they can deal and at what prices.  Post -trade information on 
+executed trades should be similarly publicised to reflect the market price of 
+concluded transactions. 
+ 
+ 
+Objective 5 
+Transparent and fair-dealing intermediaries and offerors 
+ 
+13 MAS’ market conduct supervision focuses on promoting transparency and 
+fair-dealing by financial  institutions and offerors in the conduct of their 
+business with customers.  This involves prescribing disclosure 
+requirements, conducting fit and proper tests to promote honesty and 
+integrity among financial institutions and their representatives, setting  
+competency requirements for those providing financial services in the 
+capital markets, and instilling fair business practices in the marketing and 
+distribution of financial services and products. 
+ 
+14 Market intermediaries are expected to uphold high professi onal standards 
+when dealing with customers.  MAS penalises, through criminal and civil 
+sanctions, instances of market misconduct (e.g. front running, insider 
+trading, market rigging, market manipulation and misleading disclosure).  
+Offerors are required to  make full, prompt and continuing disclosure of 
+material information, to help ensure market transparency and equip 
+investors with the necessary knowledge to make informed decisions.  
+ 
+15 While MAS expects financial institutions to adopt fair business practice s 
+and high standards of disclosure when dealing with consumers, matters 
+such as commercial service standards and pricing of products and services 
+are normally outside MAS’ purview.  But institutions should provide 
+consumers with the necessary information o n these matters to enable them 
+to make well-informed decisions.     
+ 
+ 
+Objective 6 
+Well-informed and empowered consumers 
+ 
+16 Consumers bear the principal responsibility for protecting their own 
+interests.  They should exercise due care in their selection of fi nancial 
+products and service providers.  MAS does not and cannot protect 
+consumers from the risk that their investments will not deliver anticipated 
+returns.   
+11 
+ 
+ 
+17 MAS does play a role, however, in helping to ensure that consumers are 
+well-informed and empowered to assume principal responsibility for their 
+own protection.  MAS seeks to address risks to consumers stemming from 
+insufficient, false or misleading disclosure, conflicts of interest, mis -selling 
+and mis-representation. 
+ 
+18 MAS requires financial institu tions and offerors of investments to make 
+full, prompt and accurate disclosure of material information to consumers.  
+But a disclosure -based regime cannot work if consumers do not know how 
+to make good use of the information disclosed to them.  Consumer 
+education helps to empower consumers to make informed choices.  MAS 
+works with other public sector agencies and industry associations in helping 
+to equip consumers with basic money management, financial planning and 
+investment skills.  
+ 
+19 It is also important that in the event of market misconduct or improper 
+behaviour, consumers have recourse to an impartial and efficient dispute 
+resolution mechanism.  MAS facilitates the setting up of fair, efficient and 
+affordable industry dispute resolution mechanisms as al ternatives to 
+resolutions through court litigation. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+12 
+ 
+4 Principles of Good Supervision 
+ 
+1 MAS is guided by twelve key principles which collectively characterise our 
+supervisory approach as one that is risk-focused, stakeholder-reliant, 
+disclosure-based and supportive of enterprise. 
+ 
+Risk-Focused 
+ 
+    Principle 1 
+ Emphasise risk-focused supervision rather than one-size-
+fits-all regulation 
+ 
+2 Our emphasis is on risk -focused supervision, rather than prescriptive one -
+size-fits-all rules.  The latter approach , whereby a supervisor prescribes 
+activities and risks that institutions can and cannot take, is increasingly 
+ineffective in a rapidly changing environment, and also unnecessarily 
+restrictive for the stronger institutions.  With risk -focused supervision, 
+MAS evaluates the risk profile of an institution, taking into account the 
+quality of the institution’s internal risk management systems and processes.  
+This approach allows us to give greater business latitude to well -managed 
+institutions while retaining hi gher requirements or tighter restrictions for 
+weaker ones. 
+ 
+ 
+Principle 2 
+Assess the adequacy of an institution’s risk management 
+in the context of its risk and business profiles  
+ 
+3 MAS takes a proportionate approach to assessing an institution’s risks.  
+Rather than having a fixed view of what constitutes an acceptable level of 
+business risks or risk management standards,  MAS assesses whether risk 
+management systems, internal controls, and contingency arrangements  are 
+commensurate with the institution’s risk and business profiles.  Institutions 
+engaging in complex financial businesses must be able to demonstrate that 
+their risk management capabilities match their risk appetite and operations, 
+while institutions engaging in less complex or risky financial activi ties may 
+find simpler risk management processes adequate for their purpose. Key 
+financial institutions  are therefore expected to  have effective recovery 
+measures to deal with situations of severe stress.   
+ 
+ 
+ 
+13 
+ 
+Principle 3 
+Allocate scarce supervisory resources according to impact 
+and risks 
+ 
+4 We allocate supervisory resources among financial institutions according to 
+the potential impact they would have on Singapore’s financial system, 
+economy and reputation in the event of a significant mishap (e.g. financial 
+failure, and prolonged disruption  of business operations) , and also the 
+likelihood of these significant mishaps occurring.  Institutions are placed in 
+distinct supervisory categories which are differentiated in terms of the scope 
+and intensity of our super vision.  More resources are channelled towards 
+supervising systemically-important institutions and institutions with higher 
+risk profiles. 
+ 
+5 In the case of AML/CFT supervision, more resources are allocated to 
+financial institutions posing high er ML/TF risk, notwithstanding that they 
+may be of lower systemic importance.    
+ 
+ 
+Principle 4 
+Ensure institutions are supervised on an integrated 
+(across industry) and consolidated (across geography) 
+basis 
+ 
+6 As the home supervisor of local financial groups, MAS takes an  integrated 
+supervisory approach, evaluating them on a whole -of-group basis across 
+their banking, insurance and securities activities.  We also supervise these 
+financial groups on a consolidated basis, taking into account both their 
+Singapore and overseas operations.  
+ 
+7 For foreign banks and insurance companies operating in Singapore, we 
+ensure that they are subject to consolidated supervision by their home 
+regulators. For these institutions, MAS cooperates and shares information 
+with foreign supervisors thr ough bilateral exchanges and supervisory 
+colleges for effective cross -border supervision and handling of crises.  MAS 
+incorporates home supervisor information in setting supervisory plans for 
+the relevant Singapore operations.  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+14 
+ 
+Principle 5 
+Maintain high standards in financial supervision, 
+including observing international standards and best 
+practices 
+ 
+8 MAS continually strives to maintain high standards in financial supervision, 
+benchmarking itself against international standards and best practices.  A s 
+an international financial centre with a strong stake in global financial 
+stability, MAS participates actively in regional and international initiatives 
+to enhance regulatory standards and supervisory training. 
+ 
+Principle 6  
+Seek to reduce the risk and impact of failure rather than 
+prevent the failure of any institution 
+ 
+9 MAS does not aim to prevent all failures.  We require financial institutions 
+to observe prudential standards, such as appropriate capitalisation, liquidity 
+and exposure limits.  We have t he power to intervene if we believe that the 
+interests of depositors, policyholders or investors are at risk.  But we cannot 
+(due to the complexity of financial activities) and should not (due to moral 
+hazard and the undesirable consequences of excessive r egulatory burden) 
+guarantee the soundness of financial institutions.  
+ 
+10 Consumers should recognise that there are risks involved in dealing with 
+financial institutions.  One challenge that MAS faces, like other regulators, 
+is to educate the public about thi s reality and to manage their expectations.  
+Deposit insurance and policy owners’ protection schemes will make explicit 
+the level of protection available to depositors and policy owners.  They will 
+also help to make consumers realise that risks are inheren t in financial 
+transactions. 
+ 
+11 While we cannot prevent failures, we are conscious of the systemic impact 
+that failures can have and the damage they can do to consumers and 
+Singapore’s reputation as a financial centre.  MAS will seek to reduce the 
+risk of fa ilure of institutions through increased supervision where it is 
+appropriate and effective. We also require key financial institutions to draw 
+up recovery plans that set out options for early action to restore long -term 
+viability.  In the case where increas ed supervision is ineffective, we will 
+take measures to limit the impact of a failure. These measures include an 
+effective resolution regime that provides for a broad range of powers and 
+tools to resolve a non -viable financial institution in an orderly man ner that 
+protects the interests of depositors, policy owners and investors; and putting 
+in place an ongoing process for resolution planning for key financial 
+institutions. For financial institutions with cross -border operations, MAS 
+15 
+ 
+will also work with for eign resolution authorities toward s a coordinated 
+resolution where such action takes into account MAS’ aim of maintaining 
+financial stability.  
+ 
+  
+16 
+ 
+Stakeholder-Reliant 
+Principle 7 
+ Place principal responsibility for risk oversight on the 
+institution’s board and management 
+ 
+12 The primary responsibility for the prudential soundness and professional 
+market conduct of a financial institution lies with its board of directors and 
+senior management.  Our supervisory approach seeks to reinforce the 
+responsibility of the board and management to deal fairly with customers, 
+ensure compliance with regulatory standards, and maintain adequate risk 
+oversight of its business activities.   By working to encourage best practices 
+by boards and management, we minimise the need to interfere with 
+institutions’ business decisions. 
+ 
+ 
+Principle 8 
+ Leverage on relevant stakeholders, professionals, industry 
+associations and other agencies 
+ 
+13 MAS is not the only party interested in the integrity, safety and soundness 
+of financial institution s.  There are other stakeholders such as their 
+shareholders, creditors, counterparties, depositors, policyholders and home 
+supervisors who also have an interest in the institutions’ continued financial 
+health and stability.  Likewise, professionals such as  external auditors, 
+internal auditors and actuaries, as well as credit rating agencies, are 
+specialists in assessing the risks inherent in the institutions and the 
+adequacy of risk management and internal control systems.  In addition, 
+many financial insti tutions here are members of their respective industry 
+associations.   
+ 
+14 MAS leverages on these relationships and the work of some of these 
+parties.  We interact and work closely with some of them, including the 
+home supervisors, financial infrastructure per forming a frontline regulatory 
+role, auditors and industry associations, to complement our own supervision  
+of the institutions.  MAS also works in cooperation with other agencies, 
+such as the Council on Corporate Disclosure and Governance, the Ministry 
+of Finance, and the Accounting and Corporate Regulatory Authority , to 
+strengthen corporate governance and disclosure standards.    
+ 
+17 
+ 
+Disclosure-Based 
+ 
+Principle 9 
+ Rely on timely, accurate and adequate disclosure by 
+institutions rather than merit-based regulation of 
+products to protect consumers 
+ 
+15 MAS has moved from prescriptive, merit -based regulation to a more 
+disclosure-based regime.  Under the merit -based regime, the regulator 
+assesses the suitability of a product before it is allowed to be introduced in 
+the marketplace.  Under a disclosure -based regime, the consumer makes 
+well-informed decisions when purchasing financial products and services 
+based on material information being made available to the consumer.  A 
+disclosure-based regime encourages innovation  and facilitates the 
+development of a more sophisticated body of consumers.  The role of MAS 
+is therefore to put in a place a regulatory framework that facilitates timely, 
+accurate and meaningful disclosure of material information that consumers 
+could reasonably rely on in making financial decisions.   
+ 
+ 
+Principle 10 
+ Empower consumers to assess and assume for themselves 
+the financial risks of their financial decisions 
+ 
+16 A disclosure-based regime is meaningless if consumers do not know how to 
+make use of dis closed information in making financial decisions.  
+Consumers should understand the nature of different financial products and 
+the considerations that they should look out for in making their financial 
+decisions.  MAS works in partnership with other public sector agencies and 
+industry bodies on consumer education to facilitate this. 
+ 
+ 
+ 
+ 
+18 
+ 
+Supportive of Enterprise 
+ 
+Principle 11 
+ Give due regard to competitiveness, business efficiency 
+and innovation 
+ 
+17 MAS seeks to undertake supervision in a way that does not unn ecessarily 
+impair the competitiveness and dynamism of individual institutions and 
+Singapore’s financial services sector.  We take into account the business 
+and operational concerns of the institutions and industry, so as not to hinder 
+enterprise and innova tion as long as the se are accompanied by good 
+governance and risk management, and supported by sensible, sustainable, 
+long-term strategies .  In our dealings with institutions, we seek to be 
+professional and to respond to their requests in a timely manner. 
+ 
+ 
+Principle 12 
+ Adopt a consultative approach to regulating the industry 
+ 
+18 MAS adopts a consultative approach to regulating the industry.  We 
+actively seek feedback from market practitioners and the public, so as to 
+help us develop regulations that take int o account market realities and 
+industry practices.  Consultation also helps to pre -empt implementation 
+problems, minimise unintended consequences, and foster better industry 
+understanding and support.  In the end, it is the combined efforts of MAS 
+and the industry that contribute to financial stability and resilience while 
+promoting enterprise and innovation. 
+19 
+ 
+5 Oversight Functions of MAS 
+ 
+1 MAS performs six distinct oversight functions to achieve its objectives, 
+namely regulation, authorisation, supervision, surveillance, enforcement 
+and resolution.   
+ 
+2 But MAS’ oversight in itself is insufficient for achieving the mission of a 
+sound and progressive financial services sector.  Sound corporate 
+governance, effective market discipline , a high level of consumer 
+education and a basic consumer safety-net are also necessary.  These are 
+functions principally carried out by other entities, with MAS playing a 
+facilitating role. 
+ 
+ 
+Regulation 
+3 As a regulator, MAS determines the scope of financial services activities 
+that sh ould be regulated, and sets the rules and standards governing the 
+behaviour of financial markets and institutions.  MAS’ prudential regulation 
+focuses on the safety and soundness of financial institutions, seeking to 
+safeguard the value of the assets that underpin the ability of these 
+institutions to fulfil their financial contracts, such as bank deposits and 
+insurance policies.  It involves setting risk -based capital and prudential 
+requirements.  MAS’ market conduct regulation focuses on how financial 
+firms and their representatives carry out business dealings with consumers, 
+and seeks to promote fair dealing.  It involves setting requirements and 
+standards for sound business conduct practices . MAS’ AML/CFT 
+regulations focus on protecting the integrity of t he financial sector by 
+preventing it from being used as a conduit for illicit funds  and financing of 
+terrorism.  It involves setting regulations relating to customer due diligence, 
+record keeping , ongoing monitoring  and reporting of suspicious 
+transactions, amongst others. 
+ 
+ 
+Authorisation 
+4 MAS is the “gatekeeper” for institutions that wish to offer financial services 
+in Singapore.  MAS assesses these institutions to ensure that they satisfy the 
+necessary authorisation or licensing criteria.  These include ha ving the 
+relevant track record, adequate financial resources and sound operational 
+processes to ensure orderly and fair conduct of business.  MAS also 
+assesses whether financial institutions and their representatives are of sound 
+20 
+ 
+repute, and meet the fit a nd proper criteria to conduct regulated activities.  
+Offerors seeking to raise funds in the capital markets are also required to 
+register prospectuses that provide full and fair disclosure of material 
+information to potential investors. 
+ 
+ 
+Supervision 
+5 MAS i s responsible for the prudential and AML/CFT supervision of 
+financial institutions.  We seek to have a good understanding of an 
+institution’s business to identify potential risks that may impact the 
+reputation, safety, and soundness  of the institution and to assess the 
+suitability of various supervisory actions. We rely on a variety of 
+supervisory tools to carry out this work.  These include on -site inspections 
+as well as continuous off -site supervision such as holding regular meetings 
+with the institutions , reviewing audit reports on the institutions and 
+regulatory returns, and monitoring key indicators and business 
+developments. 
+ 
+6 MAS also supervises the conduct of business by financial institutions and 
+their representatives, to ensure that they adhere to s ound market conduct 
+practices, including furnishing adequate information about their products, 
+and providing customers with appropriate advice to purchase products that 
+suit the customers’ needs and risk appetite. 
+ 
+ 
+Surveillance 
+7 MAS undertakes various kind s of financial surveillance.  From the 
+prudential perspective, we seek to identify non -sustainable trends and 
+potential vulnerabilities in the financial system, as well as transmission 
+linkages within the system that could impair the safety and soundness o f 
+financial institutions.  From the market conduct perspective, we monitor the 
+efficiency and fairness of market operations, seek to identify market 
+misconduct, and assess financial institutions’ compliance with market 
+conduct rules.  From the AML/CFT pers pective, we assess the ML/TF risk 
+faced by financial institutions due to their business  models and  practices, 
+products and services offered , and use of new technologies.   In addition, 
+MAS requires financial institutions to consider the results of the  National 
+Risk Assessment as part of  their enterprise -wide ML/ TF risk assessment  
+and management. 
+ 
+ 
+21 
+ 
+Enforcement 
+8 MAS is empowered to take action against those institutions and individuals 
+who breach prudential , AML/CFT and market conduct requirements.  
+Where there  is a regulatory breach, MAS may impose administrative and 
+financial sanctions or refer the matter to law enforcement or prosecution  
+authorities.  We also investigate and initiate civil penalty actions against 
+those who engage in market misconduct in the capital markets. 
+ 
+Resolution 
+9 MAS is responsible for exercising resolution powers over financial 
+institutions.  MAS has a broad range of powers and resolution tools to 
+maintain financial stability , address serious problems in a financial 
+institution that threaten its viability , and resolve an institution that is no 
+longer viable.  MAS seeks to resolve non -viable3 institutions in an orderly 
+manner that protects the interests of depositors, policy owners  and 
+investors, and ensure timely return of segregated client assets. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                           
+3 Non-viable refers both to a financial institution which is no longer viable, or likely to be 
+no longer viable, and has no reasonable prospect of becoming viable. 
+ 
+What is MAS’ role in the event of a failure? 
+ 
+The failure of a financial institution can give rise to large negative 
+consequences for the financial system  and the real econ omy.  In the 
+absence of robust resolution tools, some regulators had to bail out 
+failing financial institutions or depend on corporate bankruptcy 
+proceedings to deal with the failures during the recent crisis. Both 
+solutions can be costly.  A disorderly an d long drawn bankruptcy can 
+severely disrupt financial markets; while a bail -out will heighten moral 
+hazard risks and incur large costs that are ultimately borne by the public.  
+ 
+MAS is responsible for exercising resolution powers over financial 
+institutions in Singapore.  We have in place a wide range of resolution 
+powers and tools to facilitate various strategies for resolving non-viable 
+financial institutions.   For example, the resolution regime empowers 
+MAS to take a variety of measures, including to  wind up, tak e control 
+of, transfer the business/ownership of, or restructure the share capital of 
+a distressed bank , as well as to establish a bridge institution .  MAS has 
+also put in place safety -nets such as the Deposit Insurance and Policy 
+Owners’ Protection schemes, to protect depositors and insurance policy 
+owners.   
+22 
+ 
+ 
+ 
+Corporate Governance 
+10 The primary responsibility to oversee and manage the risks arising from an 
+institution’s activities, as well as to ensure compliance with regulatory 
+standards and requirements rests with the institut ion’s board of directors 
+and senior management.  MAS therefore seeks to promote effective and 
+sound corporate governance practices by institutions.  MAS also works with 
+other agencies in promoting sound corporate governance practices by listed 
+companies. 
+ 
+The Singapore Deposit Insurance Corporation Limited administers 
+these schemes and coordinates with MAS to make payment of 
+compensation to insured depositors or policy owners  should a scheme 
+member fails.  
+ 
+If a financial institution  fails, MAS seeks to achieve an orderly 
+resolution, such that financial stability and  the continuity of 
+systemically important financial services, and  financial infrastructure , 
+are preserved.  In determining the appropriate resolution strategy, MAS 
+will also seek to avoid unnecessary destruction of value and minimise 
+the overall costs of resolution. As far as possible, private sector 
+solutions will be considered first.  In the absence of viable private 
+sector alte rnatives, and publicly -assisted resolution strategies are 
+needed, the use of public funds will be accompanied by strict 
+conditions, to minimise the risk of moral hazard. 
+  
+As the application of resolution powers to individual components of a 
+cross-border financial group could impact the group as a whole and the 
+financial stability of other jurisdictions, MAS will consider the impact 
+of its resolution actions on financial stability in other jurisdictions, and 
+work with foreign resolution authorities wherever  possible, towards a 
+coordinated resolution where such action takes into account MAS’ aim 
+of maintaining financial stability.  This includes notifying the relevant 
+foreign resolution authority before taking a resolution action, as far as 
+possible.  MAS is i nvolved, as both home and host authority, in cross -
+border crisis management group and supervisory college meetings, 
+which provide a platform for supervisors and resolution authorities  
+from the different jurisdictions  to coordinate the development of group 
+recovery and resolution plans.  
+ 
+23 
+ 
+Market Discipline 
+11 MAS promotes timely, adequate and accurate disclosure by financial 
+institutions and offerors to allow consumers and investors to make informed 
+decisions about the products they purchase or invest in.  A transparent 
+market fosters market d iscipline.  We also encourage markets to perform 
+effective self -regulatory functions.  In addition, MAS seeks to foster 
+effective market discipline by facilitating the establishment of dispute 
+resolution schemes. 
+ 
+ 
+Consumer Education 
+12 The liberalisation of financial markets and shift towards a disclosure -based 
+regime mean that consumers are faced with a growing array of financial 
+products and services.  Consumers need to understand the implications of 
+the different financial contracts they enter into when pu rchasing or 
+investing in financial products and services in order to choose wisely.  
+Under the MoneySENSE national financial education programme, MAS 
+acts as a catalyst for consumer education in Singapore by working closely 
+with industry associations, cons umer groups and other public sector 
+organisations to identify the main areas of focus for consumer education 
+efforts and to encourage greater collaboration between the private and 
+public sectors. 
+ 
+ 
+Consumer Safety-Net 
+13 MAS facilitates the establishment of v arious safety-net schemes such as the 
+Deposit Insurance Scheme and the Policy owners’ Protection Scheme.  
+Both are privately funded by the participating banks and insurance 
+companies, respectively.  The establishment of such safety-net schemes is 
+important given that MAS cannot prevent all failures.  Consumers can then 
+know exactly how much of their money will be fully protected or whether 
+their losses arising from insured perils will be compensated if an institution 
+fails.  This will help to strengthen mar ket discipline and dispel any public 
+misperception of a government guarantee in the event of a failure.  MAS 
+requires approved exchanges to maintain a fidelity fund to give  a certain 
+level of protection to investors trading on these exchanges  against acts of 
+defalcation and default on the part of the broker/dealers. 
+ 
