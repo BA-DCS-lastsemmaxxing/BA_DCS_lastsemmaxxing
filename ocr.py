@@ -4,6 +4,7 @@ import os
 import subprocess
 from ctypes.util import find_library
 from pypdf import PdfReader
+from preprocessing import clean_text_files
 find_library("gs")
 
 def generate_ocr_files(input_folder_path, output_folder_path):
@@ -32,6 +33,8 @@ def generate_ocr_files(input_folder_path, output_folder_path):
             print(f"Error processing {filename}: {e}")
     # Extract text from OCR processed PDFs into .txt files
     extract_text_from_pdfs(output_folder_path)
+    # Clean extracted text files
+    clean_text_files(output_folder_path)
 
 def extract_text_from_pdfs(folder_path):
     for filename in os.listdir(folder_path):
