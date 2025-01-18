@@ -1,0 +1,1855 @@
+Basel Committee
+on Banking Supervision
+Guidelines
+Sound management of
+risks related to money
+laundering and financing
+of terrorism
+This document includes final revisions to Annex II -
+Correspondent banking and Annex IV -General Guide to
+Account Opening issued for consultation in November
+2016).
+June 2017
+lo \ BANK FOR INTERNATIONAL SETTLEMENTS
+
+This publication is available on the BIS website (www.bis.org).
+© Bank for International Settlements 2017. All rights reserved. Brief excerpts may be reproduced or
+translated provided the source ts stated.
+ISBN 978-92-9259-053-6 (online)
+
+Contents
+Sound management of risks related to money laundering and financing Of tErrOriSM ........cseecseeseesstesseessteeees 1
+T. UMtrOGUCTION LA. eeceececseessesssesseessesseessecssessecsscsuccsscsuccssesuccssssuccssesuecasesucsasesuecasesucsasesuecasssuccaesuecaessessuecacsasecacsasecuesaecaesaensceaseseeeass 1
+II. Essential elements of SoUNd ML/FT risk MANAGEMENL..........cccceessscssesssesseeessessseesscsssecssessseessesssesssessecesseeseceseeeseeeseess 3
+1. Assessment, understanding, ManageMent and Mitigation OF FISKS 0... eseesssesssesseesseesstecstesstesstessteeseess 4
+(a) Assessment and Understanding Of FISKS .......csesssessssssssesssssssessessseessessscesscssscssscssecssacesacesscesaeesseesseesesseeesaess 4
+(b) Proper governance arrangement .........cecssscssssesssecsssssessesssesssesscsstessesseecsccsecscsseecacsaecsesasecucsaeceesaeeceesateceeeass 4
+(c) The three lines Of AefENCO i ecesessscessssscsesessscsessecsessesscsessecsesesecsssesusesacsesesesacsesecessesusesarsesesesacseceearaees 4
+(d) Adequate transaction MONItOring SYSTEM .......ceesesssesssssesssessesssessesseessesssesscsstecsesstecsesstecuesateceesateceesateceeeass 6
+2. CUSTOMEN ACCEPTANCE POIICY ou... eeceecsesseesseecsesseecsesseccsesseccsceseecsccseesecsstecscssecscsasececssecucsatecsesatecaesateceesateceeeaeeeeeaseessees 7
+3. Customer and beneficial owner identification, verification and risk Profiling .........cceeeseeseessesseesseeeees 7
+A. OMGOING MONITOLIING 00... eeseessecssessecssesseesseessecsccsscsucsssccuccssecucsssesucsasecucsssecscsssesuccasecucsssesucsatecuesaesuesaeeaeesuesseesesseesseseeess 10
+5. Management of information ......cceccseccssssssssssssssssessssssscssssssssssscssscssscssscesscssseesacssacssscssacssacesecssacssaceseeesaeeseeesees 11
+(A) ReECOrC-KETMPING .......ecseessesseessesssessesssecseessecsesssccsesssecsessccssessecssessccasesucsssessccssssuesssesucsasesuesaesscsasesuesateceesateneesesseess 11
+(b) Updating of information nn... cceccsssssssssssssesssesssesssssssessescssessesssecsseesscesessesseesseesseesseesseesseesseeeseesseeeseesseeeseesss 11
+(Cc) Supplying information to the SUPEFVISOSS .......cccsesssssssesssssssesssscseecssecseecseesseecseesseecseecstesseecseesseesseecsteesesss 11
+6. Reporting of SUSPICIOUS traNSACtIONS AN ASSET FFESZING........cecceccseccssecssecssecseecssesseecstecseecseecseesstecseesseeeseess 11
+(a) Reporting Of SUSPICIOUS trANSACTIONS .........ecsccsssssssecsescssesssecseccseecseccseecssecseccstecseessceseecstecseecseeeseesseessteessesss 11
+(1D) ASS@t FPEOZIING ....esescsessssscsssssssesssscssssssscssscusccsecsssecssecusessscsusesssssusesasecusesasesusesasesasesusesasesasesasesasesacesaceesecateeneessteeatesess 12
+TI]. AML/CFT in a group-wide and cross-border CONMtEXt.........ceessesssesseesesseecsessecsecsseeescssescscsssecucsatessesatseeesateseesateseeesses 12
+1. Global process for MANAGING CUSTOMET FISKS ........eccsessssessesssessstssseesssssssssssssssesscssscesseesacssecsseceseceseeeseceseeeseessees 13
+2. RISK ASSESSMENT ANd MANAGEMENNA.........esseccsesseessesseecsessecsesssecsesssccsesssecsesssccscsssecsesssecsessseceessscceesseeeeesseeceesateseeeass 13
+3. Consolidated AML/CFT policies ANd Procedure ........cecesssssssssssssssssessessessessessessssssssessscsscsscsscssceseeaeeseeaeesseees 14
+A, GrOUP-WIdE| INFOFMATION-SNALING .......eeesesssssssssessessssceseccseecseccsecesccsccsscesccssessecseecsucesecseeseecseecseesseesstesstesseesseesees 15
+5. Mixed FIMANCIAl GPOUPS ue eeseesssesssesssecsecssecssecssecssecssecssecssessscsssecssccsscesscesscesscesscesseesscessecsecesseestecaeecaeesseeeseesseeseesseess 15
+IV. The role Of SUPEFVISOLS.........cecssssseessssssessesssessssssessessucssssssesssssuccsscsucssscsucsssssucssscsucssscsucssscsucsseceucssscsucesscsscssscsucauessesseceseeasessees 16
+Annex 1: Using another bank, financial institution or third party to perform customer due diligence........19
+Annex 2: COrresSPONCeNt DANKING ........eeseessesseesseessesseessesseessccsscsscsssecucssscsucsasecscsssesscsasecaccasecacsasecassaecuesaecuesaeecacsaeeseesateneesaeeases 23
+Annex 3: List of relevant FATF recOMMendatiOns ........ccccscsssssssssssssssssssecssesseecsecsssecsecesesseecssecsccsesseesseesseeseeeseeeseeeseesseess 32
+Annex 4: General guide to ACCOUNT OPENING o..0...eecsesseessesssesssessessescsessccscsssccsesssccscsssceacsssesacssseeucsaecuesateseesateseessteseeeateseessses 33
+Sound management of risks related to money laundering and financing of terrorism
+
+
+me SRE ER EN SWRA EN TRON SA ESS SR EN ES Sh renicuryhees Tes ewesee eye PP Pee eN REE DNS
+Od Ba ant
+‘
+Bo Re Ee A Be RS ae ob oy WY KE OE
+ao
+N Tater ets retin
+1. Being aware of the risks incurred by banks of being used, intentionally or unintentionally, for
+criminal activities, the Basel Committee on Banking Supervision is issuing these guidelines to describe how
+banks should include money laundering (ML) and financing of terrorism (FT) risks within their overall risk
+management.
+2. The Committee has a long-standing commitment to promote the implementation of sound Anti-
+Money Laundering and Countering Financing of Terrorism (AML/CFT) policies and procedures that are
+critical in protecting the safety and soundness of banks and the integrity of the international financial
+system. Following an initial statement in 1988," it has published several documents in support of this
+commitment. In September 2012, the Committee reaffirmed its stance by publishing the revised version
+of the Core principles for effective banking supervision, in which a dedicated principle (BCP 29) deals with
+the abuse of financial services.
+3. The Committee supports the adoption of the standards issued by the Financial Action Task Force
+(FATF).* In February 2012, the FATF released a revised version of the /nternational Standards on Combating
+Money Laundering and the Financing of Terrorism and Proliferation (the FATF standards), to which the
+Committee provided input.’ In March 2013, the FATF also issued Financial Inclusion Guidance, which has
+also been considered by the Committee in drafting these guidelines. The Committee's intention in issuing
+this paper is to support national implementation of the FATF standards by exploring complementary areas
+and leveraging the expertise of both organisations. These guidelines embody both the FATF standards
+and the Basel Core Principles for banks operating across borders and fits into the overall framework of
+banking supervision. Therefore, these guidelines are intended to be consistent with and to supplement
+the goals and objectives of the FATF standards, and in no way should they be interpreted as modifying
+the FATF standards, either by strengthening or weakening them.
+4. In some instances, the Committee has included cross-references to FATF standards in this
+document in order to assist banks in complying with national requirements based on the implementation
+of those standards. However, as the Committee's intention is not to simply duplicate the existing FATF
+standards, cross-references are not included as a matter of routine.
+5. The Committee's commitment to combating money laundering and the financing of terrorism is
+fully aligned with its mandate “to strengthen the regulation, supervision and practices of banks worldwide
+with the purpose of enhancing financial stability”.* Sound ML/FT risk management has particular relevance
+1 See BCBS, Prevention of criminal use of the banking system for the purpose of money-laundering, December 1988, accessible at
+www.bis.org/publ/bcbsc137.pdf.
+2 The FATF is an intergovernmental body that develops international standards and promotes policies to protect the global
+financial system against money laundering, terrorist financing and the financing of proliferation of weapons of mass
+destruction. The FATF defines money laundering as the processing of criminal proceeds in order to disguise their illegal origin.
+The FATF works in close cooperation with other entities involved in this area, and in particular FATF associate members and
+observers. The Committee has observer status within the FATF.
+3 Annex 3 contains an excerpt of the most relevant FATF Recommendations that banks and supervisors should comply with when
+implementing their AML/CFT measures. This is not exhaustive and other FATF Recommendations, including the Interpretive
+Notes, may be relevant. The full document is accessible at www. fatf-gafi.org/recommendations.
+4 See Basel Committee on Banking Supervision, Charter, January 2013, accessible at www.bis.org/bcbs/charter.pdf.
+Sound management of risks related to money laundering and financing of terrorism 1
+
+to the overall safety and soundness of banks and of the banking system, the primary objective for banking
+Supervision, in that:
+° it helps protect the reputation of both banks and national banking systems by preventing and
+deterring the use of banks to launder illicit proceeds or to raise or move funds in support of
+terrorism; and
+° it preserves the integrity of the international financial system as well as the work of governments
+in addressing corruption and in combating the financing of terrorism.
+6 The inadequacy or absence of sound ML/FT risk management exposes banks to serious risks,
+especially reputational, operational, compliance and concentration risks. Recent developments, including
+robust enforcement actions taken by regulators and the corresponding direct and indirect costs incurred
+by banks due to their lack of diligence in applying appropriate risk management policies, procedures and
+controls, have highlighted those risks. These costs and damage could probably have been avoided had
+the banks maintained effective risk-based AML/CFT policies and procedures.
+7. It is worth noting that all these risks are interrelated. However, in addition to incurring fines and
+sanctions by regulators, any one of them could result in significant financial costs to banks (eg through
+the termination of wholesale funding and facilities, claims against the bank, investigation costs, asset
+seizures and freezes, and loan losses), as well as the diversion of limited and valuable management time
+and operational resources to resolve problems.
+8. Consequently, this paper should be read in conjunction with a number of related Committee
+papers, including the following:
+e Core principles for effective banking supervision, September 2012°
+° The internal audit function in banks, June 2012°
+° Principles for the sound management of operational risk, June 2011’
+° Principles for enhancing corporate governance, October 2010°
+° Due diligence and transparency regarding cover payment messages related to cross-border wire
+transfers, May 2009°
+e Compliance and the compliance function in banks, April 20051°
+9. In an effort to rationalise the Committee's publications on AML/CFT guidance, this document
+merges and supersedes two of the Committee’s previous publications dealing with related topics:
+Customer due diligence for banks, October 2001 and Consolidated KYC risk management, October 2004. In
+updating these papers, the Committee has also increased its focus on risks associated with the usage by
+banks of third parties to introduce business (see Annex 1) and the provision of correspondent banking
+services (See Annex 2). Despite their importance and relevance, other specific risk areas such as politically
+exposed persons (PEPs), private banking and specific legal structures that were addressed in the previous
+Accessible at: www.bis.org/publ/bcbs230.pdf.
+Accessible at: www.bis.org/publ/bcbs223.pdf.
+7 Accessible at: www.bis.org/publ/bcbs195.pdf.
+8 Accessible at: www.bis.org/publ/bcbs176.pdf.
+Accessible at: www.bis.org/publ/bcbs154.pdf.
+10
+Accessible at: www.bis.org/publ/bcbs113.pdf.
+2 Sound management of risks related to money laundering and financing of terrorism
+
+papers have not been specifically developed in this guidance, since they are the subject of existing FATF
+publications.
+10. With respect to the scope of application, these guidelines should be read in conjunction with
+other standards and guidelines produced by the Committee that promote supervision of banking groups
+on a consolidated level.?? This is particularly relevant in the context of AML/CFT since customers frequently
+have multiple relationships and/or accounts with the same banking group, but in offices located in
+different countries.
+11. These guidelines are applicable to all banks. Some of the requirements may require adaptation
+for use by small or specialised institutions, to fit their specific size or business models. However, it is beyond
+the scope of this guidance document to address these adjustments.
+12. These guidelines specifically target banks, banking groups (parts II and III respectively) and
+banking supervisors (part IV). As stated in BCP 29, the Committee is aware of the variety of national
+arrangements that exist for ensuring AML/CFT compliance, particularly the sharing of supervisory functions
+between banking supervisors and other authorities such as financial intelligence units.’° Therefore, for the
+purpose of these guidelines, the term “supervisor” might refer to these authorities. In jurisdictions where
+AML/CFT supervisory authority is shared, the banking supervisor cooperates with other authorities to seek
+adherence to these guidelines.
+13. It should be noted that the FATF standards that require countries to apply other measures in their
+financial sectors and other designated non-financial sectors, or establishing powers and responsibilities
+for the competent authorities, are not dealt with in this document.
+RK S2 aos
+14. In accordance with the updated Core principles for effective banking supervision (2012), all banks
+should be required to “have adequate policies and processes, including strict customer due diligence
+(CDD) rules to promote high ethical and professional standards in the banking sector and prevent the
+bank from being used, intentionally or unintentionally, for criminal activities’.“* This requirement is to be
+seen as a specific part of banks’ general obligation to have sound risk management programmes in place
+to address all kinds of risks, including ML and FT risks. “Adequate policies and processes” in this context
+requires the implementation of other measures in addition to effective CDD rules. These measures should
+also be proportional and risk-based, informed by banks’ own risk assessment of ML/FT risks. This
+document sets out guidance in respect of such measures. In addition, other guidelines (see paragraph 8
+above) are applicable or supplementary where no specific AML/CFT guidance exists.
+11 See in particular the FATF Guidance on Politically Exposed Persons (recommendations 12 and 22), accessible at www.fatf-
+gafi.org/fr/documents/documents/peps-r12-r22.html.
+12 See for example BCP 12 in Core principles for effective banking supervision, September 2012.
+13 Financial intelligence units are described in Recommendation 26 in the FATF Standards.
+14 See BCP 29 in Core principles for effective banking supervision, September 2012.
+Sound management of risks related to money laundering and financing of terrorism 3
+
+a ‘ 5 « ws . : sae is roy gyNooo oceweis® opisietisseecber eset ces ee eyes es ces ecaretes ete coset searbiesrcfees es ayb ciechess
+Ns . ad * bl) 5 ae SOS, 5 i ” aot an x fal 4 => : => 4s
+PASSE&ESSSTTEETTE, USPHS Skah, PSG EYES APM PYM se Loe Gat
+* y
+(a) Assessment and understanding of risks
+15. Sound risk management? requires the identification and analysis of ML/FT risks present within
+the bank and the design and effective implementation of policies and procedures that are commensurate
+with the identified risks. In conducting a comprehensive risk assessment to evaluate ML/FT risks, a bank
+should consider all the relevant inherent and residual risk factors at the country,’® sectoral, bank and
+business relationship level, among others, in order to determine its risk profile and the appropriate level
+of mitigation to be applied. The policies and procedures for CDD, customer acceptance, customer
+identification and monitoring of the business relationship and operations (product and service offered)
+will then have to take into account the risk assessment and the bank’s resulting risk profile. A bank should
+have appropriate mechanisms to document and provide risk assessment information to competent
+authorities such as supervisors.
+16. A bank should develop a thorough understanding of the inherent ML/FT risks present in its
+customer base, products, delivery channels and services offered (including products under development
+or to be launched) and thejurisdictions within which it or its customers do business. This understanding
+should be based on specific operational and transaction data and other internal information collected by
+the bank as well as external sources of information such as national risk assessments and country reports
+from international organisations. Policies and procedures for customer acceptance, due diligence and
+ongoing monitoring should be designed and implemented to adequately control those identified inherent
+risks. Any resulting residual risk should be managed in line with the bank’s risk profile established through
+its risk assessment. This assessment and understanding should be able to be demonstrated as required
+by, and should be acceptable to, the bank's supervisor.
+(b) Proper governance arrangements
+17. Effective ML/FT risk management requires proper governance arrangements as described in
+relevant previous publications of the Committee.”” In particular, the requirement for the board of directors
+to approve and oversee the policies for risk, risk management and compliance is fully relevant in the
+context of ML/FT risk. The board of directors should have a clear understanding of ML/FT risks. Information
+about ML/FT risk assessment should be communicated to the board in a timely, complete, understandable
+and accurate manner so that it is equipped to make informed decisions.
+18. Explicit responsibility should be allocated by the board of directors effectively taking into
+consideration the governance structure of the bank for ensuring that the bank's policies and procedures
+are managed effectively. The board of directors and senior management should appoint an appropriately
+qualified chief AML/CFT officer to have overall responsibility for the AML/CFT function with the stature
+and the necessary authority within the bank such that issues raised by this senior officer receive the
+necessary attention from the board, senior management and business lines.
+(c) The three lines of defence
+19. As a general rule and in the context of AML/CFT, the business units (eg front office, customer-
+facing activity) are the first line of defence in charge of identifying, assessing and controlling the risks of
+their business. They should know and carry out the policies and procedures and be allotted sufficient
+resources to do this effectively. The second line of defence includes the chief officer in charge of AML/CFT,
+15 See in particular BCP 15 in Core principles for effective banking supervision, September 2012 as well as Principle 6 in Principles
+for enhancing corporate governance, October 2010.
+16 Where appropriate, AML/CFT risk assessments at a supranational level should be taken into account.
+17 See, in particular, The internal audit function in banks, June 2012; Principles for enhancing corporate governance, October 2010;
+Compliance and the compliance function in banks, April 2005.
+4 Sound management of risks related to money laundering and financing of terrorism
+
+the compliance function but also human resources or technology. The third line of defence is ensured by
+the internal audit function.
+20. As part of the first line of defence, policies and procedures should be clearly specified in writing,
+and communicated to all personnel. They should contain a clear description for employees of their
+obligations and instructions as well as guidance on how to keep the activity of the bank in compliance
+with regulations. There should be internal procedures for detecting and reporting suspicious transactions.
+21. A bank should have adequate policies and processes for screening prospective and existing staff
+to ensure high ethical and professional standards. All banks should implement ongoing employee training
+programmes so that bank staff are adequately trained to implement the bank's AML/CFT policies and
+procedures. The timing and content of training for various sectors of staff will need to be adapted by the
+bank according to their needs and the bank’s risk profile. Training needs will vary depending on staff
+functions and job responsibilities and length of service with the bank. Training course organisation and
+materials should be tailored to an employee's specific responsibility or function to ensure that the
+employee has sufficient knowledge and information to effectively implement the bank’s AML/CFT policies
+and procedures. New employees should be required to attend training as soon as possible after being
+hired, for the same reasons. Refresher training should be provided to ensure that staff are reminded of
+their obligations and their knowledge and expertise are kept up to date. The scope and frequency of such
+training should be tailored to the risk factors to which employees are exposed due to their responsibilities
+and the level and nature of risk present in the bank.
+22. As part of the second line of defence, the chief officer in charge of AML/CFT should have the
+responsibility for ongoing monitoring of the fulfilment of all AML/CFT duties by the bank. This implies
+sample testing of compliance and review of exception reports to alert senior management or the board
+of directors if it is believed management is failing to address AML/CFT procedures in a responsible manner.
+The chief AML/CFT officer should be the contact point regarding all AML/CFT issues for internal and
+external authorities, including supervisory authorities or financial intelligence units (FIUs).
+23. The business interests of a bank should in no way be opposed to the effective discharge of the
+above-mentioned responsibilities of the chief AML/CFT officer. Regardless of the bank's size or its
+management structure, potential conflicts of interest should be avoided. Therefore, to enable unbiased
+judgments and facilitate impartial advice to management, the chief AML/CFT officer should, for example,
+not have business line responsibilities and should not be entrusted with responsibilities in the context of
+data protection or the function of internal audit. Where any conflicts between business lines and the
+responsibilities of the chief AML/CFT officer arise, procedures should be in place to ensure AML/CFT
+concerns are objectively considered at the highest level.
+24. The chief AML/CFT officer may also perform the function of the chief risk officer or the chief
+compliance officer or equivalent. He/she should have a direct reporting line to senior management or the
+board. In case of a separation of duties the relationship between the aforementioned chief officers and
+their respective roles must be clearly defined and understood.
+25. The chief AML/CFT officer should also have the responsibility for reporting suspicious
+transactions. The chief AML/CFT officer should be provided with sufficient resources to execute all
+responsibilities effectively and play a central and proactive role in the bank’s AML/CFT regime. In order to
+do so, he/she must be fully conversant with the bank’s AML/CFT regime, its statutory and regulatory
+requirements and the ML/FT risks arising from the business.
+26. Internal audit, the third line of defence, plays an important role in independently evaluating
+the risk management and controls, and discharges its responsibility to the audit committee of the board
+of directors or a similar oversight body through periodic evaluations of the effectiveness of compliance
+with AML/CFT policies and procedures. A bank should establish policies for conducting audits of (i) the
+adequacy of the bank's AML/CFT policies and procedures in addressing identified risks, (ii) the
+effectiveness of bank staff in implementing the bank’s policies and procedures; (iii) the effectiveness of
+compliance oversight and quality control including parameters of criteria for automatic alerts; and (iv) the
+Sound management of risks related to money laundering and financing of terrorism 5
+
+effectiveness of the bank's training of relevant personnel. Senior management should ensure that audit
+functions are allocated staff that are knowledgeable and have the appropriate expertise to conduct such
+audits. Management should also ensure that the audit scope and methodology are appropriate for the
+bank's risk profile and that the frequency of such audits is also based on risk. Periodically, internal auditors
+should conduct AML/CFT audits on a bank-wide basis. In addition, internal auditors should be proactive
+in following up their findings and recommendations.’® As a general rule, the processes used in auditing
+should be consistent with internal audit’s broader audit mandate, subject to any prescribed auditing
+requirements applicable to AML/CFT measures.
+27. In many countries, external auditors also have an important role to play in evaluating banks’
+internal controls and procedures in the course of their financial audits, and in confirming that they are
+compliant with AML/CFT regulations and supervisory practice. In cases where a bank uses external auditors
+to evaluate the effectiveness of AML/CFT policies and procedures, it should ensure that the scope of the
+audit is adequate to address the bank's risks and that the auditors assigned to the engagement have the
+requisite expertise and experience. A bank should also ensure that it exercises appropriate oversight of
+such engagements.
+(d) Adequate transaction monitoring system
+28 A bank should have a monitoring system in place that is adequate with respect to its size, its
+activities and complexity as well as the risks present in the bank. For most banks, especially those which
+are internationally active, effective monitoring is likely to necessitate the automation of the monitoring
+process. When a bank has the opinion that an IT monitoring system is not necessary in its specific situation,
+it should document its decision and be able to demonstrate to its supervisor or external auditors that it
+has in place an effective alternative. When an IT system is used, it should cover all accounts of the bank's
+customers and transactions for the benefit of, or by order of, those customers. It must enable the bank to
+undergo trend analysis of transaction activity and to identify unusual business relationships and
+transactions in order to prevent ML or FT.
+29. In particular, this system should be able to provide accurate information for senior management
+relating to several key aspects, including changes in the transactional profile of customers. In compiling
+the customer's profile, the bank should incorporate the updated, comprehensive and accurate CDD
+information provided to it by the customer. The IT system should allow the bank, and where appropriate
+the group, to gain a centralised knowledge of information (ie organised by customer, product, across
+group entities, transactions carried out during a certain timeframe etc). Without being requested to have
+a unique customer file, banks should be able to risk-rate customers and manage alerts with all the relevant
+information at their disposal. An IT monitoring system must use adequate parameters based on the
+national and international experience on the methods and the prevention of ML or FT. A bank may make
+use of the standard parameters provided by the developer of the IT monitoring system; however, the
+parameters used must reflect and take into account the bank's own risk situation.
+30. The IT monitoring system should enable a bank to determine its own criteria for additional
+monitoring, filing a suspicious transaction report (STR) or taking other steps in order to minimise the risk.
+The chief AML/CFT officer should have access to and benefit from the IT system as far as it is relevant for
+his/her function (even if operated or used by other business lines). Parameters of the IT system should
+allow for generation of alerts of unusual transactions and should then be subject to further assessment by
+the chief AML/CFT officer. Any risk criteria used in this context should be adequate with regard to the risk
+assessment of the bank.
+31. Internal audit should also evaluate the IT system to ensure that it is appropriate and used
+effectively by the first and second lines of defence.
+18 See BCBS, The internal audit function in banks, June 2012.
+6 Sound management of risks related to money laundering and financing of terrorism
+
+32. A bank should develop and implement clear customer acceptance policies and procedures to
+identify the types of customer that are likely to pose a higher risk of ML and FT pursuant to the bank’s risk
+assessment.?? When assessing risk, a bank should consider the factors relevant to the situation, such as a
+customer's background, occupation (including a public or high-profile position), source of income and
+wealth, country of origin and residence (when different), products used, nature and purpose of accounts,
+linked accounts, business activities and other customer-oriented risk indicators in determining what is the
+level of overall risk and the appropriate measures to be applied to manage those risks.
+33. Such policies and procedures should require basic due diligence for all customers and
+commensurate due diligence as the level of risk associated with the customer varies. For proven lower risk
+situations, simplified measures may be permitted, if this is allowed by law. For example, the application of
+basic account-opening procedures may be appropriate for an individual who expects to maintain a small
+account balance and use it to conduct routine retail banking transactions. It is important that the customer
+acceptance policy is not so restrictive that it results in a denial of access by the general public to banking
+services, especially for people who are financially or socially disadvantaged. The FATF Financial Inclusion
+Guidance” provides useful guidelines on designing AML/CFT procedures that are not overly restrictive to
+the financially or socially disadvantaged.
+34. Where the risks are higher, banks should take enhanced measures to mitigate and manage those
+risks. Enhanced due diligence may be essential for an individual planning to maintain a large account
+balance and conduct regular cross-border wire transfers or an individual who is a politically exposed
+person (PEP). In particular, such enhanced due diligence is required for foreign PEPs. Decisions to enter
+into or pursue business relationships with higher-risk customers should require the application of
+enhanced due diligence measures, such as approval to enter into or continue such relationships, being
+taken by senior management. The bank's customer acceptance policy should also define circumstances
+under which the bank would not accept a new business relationship or would terminate an existing one.
+35. For the purposes of this guidance, a customer refers, in accordance with the FATF
+Recommendation 10, to any person?! who enters into a business relationship or carries out an occasional
+financial transaction with the bank. The customer due diligence should be applied not only to customers
+but also to persons acting on their behalf and beneficial owners.*? In accordance with the FATF standards,
+banks should identify customers and verify their identity.7°
+19 The FATF standards also include useful guidelines on how the bank may effectively implement a risk-based approach (see in
+particular Recommendation 1).
+20 See FATF, Guidance on Anti-Money Laundering and Terrorist Financing and Financial Inclusion, February 2013, accessible at
+http://www. fatf-gafi.org/topics/financialinclusion/.
+21 “Person” in this context refers to natural and legal persons or legal arrangements.
+22 The term “beneficial owner’ is used in this guidance paper consistently with the definition and clarifications provided by the
+FATF standards. As a reminder, the FATF defines a “beneficial owner” as the natural person(s) who ultimately owns or controls
+a customer and/or natural person on whose behalf a transaction is being conducted. It also includes those persons who exercise
+ultimate effective control over a legal person or arrangement.
+23 See Interpretive note to Recommendation 1 of the FATF. This requirement applies unless the country has determined through
+a risk assessment that particular types of activities (and customers associated with the activities) may, on a limited basis, be
+exempted because there is a proven low risk of ML or FT in line with the interpretive note to Recommendation 1.
+Sound management of risks related to money laundering and financing of terrorism 7
+
+36. A bank should establish a systematic procedure for identifying and verifying its customers and,
+where applicable, any person acting on their behalf and any beneficial owner(s). Generally, a bank should
+not establish a banking relationship, or carry out any transactions, until the identity of the customer has
+been satisfactorily established and verified in accordance with FATF Recommendation 10. Consistent with
+BCP 29 and the FATF standards, the procedures should also include the taking of reasonable measures
+to verify the identity of the beneficial owner. A bank should also verify that any person acting on behalf of
+the customer is so authorised, and should verify the identity of that person.
+37. The identity of customers, beneficial owners, as well as persons acting on their behalf, should be
+verified by using reliable, independent source documents, data or information. When relying on
+documents, a bank should be aware that the best documents for the verification of identity are those most
+difficult to obtain illicitly or to counterfeit. When relying on other sources than documents, the bank must
+ensure that the methods (which may include checking references with other financial institutions and
+obtaining financial statements) and sources of information are appropriate, and in accordance with the
+bank’s policies and procedures and risk profile of the customer. A bank may require customers to complete
+a written declaration of the identity and details of the beneficial owner, although the bank should not rely
+solely on such declarations. As for all elements of the CDD process, a bank should also consider the nature
+and level of risk presented by a customer when determining the extent of the applicable due diligence
+measures.” In no case should a bank disregard its customer identification and verification procedures just
+because the customer is unable to be present for an interview (non-face-to-face customer); the bank
+should also take into account risk factors such as why the customer has chosen to open an account far
+away from its seat/office, in particular in a foreign jurisdiction. It would also be important to take into
+account the relevant risks associated with customers from jurisdictions that are known to have AML/CFT
+Strategic deficiencies and apply enhanced due diligence when this is called for by the FATF, other
+international bodies or national authorities.
+38. While the customer identification and verification process is applicable at the outset of the
+relationship or before an occasional banking transaction is carried out, a bank should use this information
+to build an understanding of the customer's profile and behaviour. The purpose of the relationship or the
+occasional banking transaction, the level of assets or the size of transactions of the customer, and the
+regularity or duration of the relationship are examples of information typically collected. Therefore, a bank
+should also have policies and procedures in place to conduct due diligence on its customers sufficient to
+develop customer risk profiles either for particular customers or categories of customers. The information
+collected for this purpose should be determined by the level of risk associated with the customer's
+business model and activities as well as the financial products or services requested by the customer. These
+risk profiles will facilitate the identification of any account activity that deviates from activity or behaviour
+that would be considered “normal” for the particular customer or customer category and could be
+considered as unusual, or even suspicious. Customer risk profiles will assist the bank in further determining
+if the customer or customer category is higher-risk and requires the application of enhanced CDD
+measures and controls. The profiles should also reflect the bank's understanding of the intended purpose
+and nature of the business relationship/occasional banking transaction, expected level of activity, type of
+transactions, and, where necessary, sources of customer funds, income or wealth as well as other similar
+considerations. Any significant information collected on customer activity or behaviour should be used in
+updating the bank's risk assessment of the customer.
+39. A bank should obtain customer identification papers as well as any information and
+documentation obtained as a result of CDD conducted on the customer. This could include copies of or
+records of official documents (eg passports, identity cards, driving licences), account files (eg financial
+transaction records) and business correspondence, including the results of any analysis undertaken such
+24 See BCP 29, essential criterion 5(b) in Core principles for effective banking supervision, September 2012.
+25 See World Bank, Politically Exposed Persons, Preventive Measures for the Banking Sector, 2010.
+8 Sound management of risks related to money laundering and financing of terrorism
+
+as the risk assessment and inquiries to establish the background and purpose of the relationships and
+activities.
+AO. A bank should also obtain all the information necessary to establish to its full satisfaction the
+identity of their customer and the identity of any person acting on behalf of the customer and of beneficial
+owners. While a bank is required to both identify its customers and verify their identities, the nature and
+extent of the information required for verification will depend on risk assessment, including the type of
+applicant (personal, corporate etc), and the expected size and use of the account. The specific
+requirements involved in ascertaining the identity of natural persons are usually prescribed in national
+legislation. Higher-risk customers will require the application of enhanced due diligence to verify customer
+identity. If the relationship is complex, or if the size of the account is significant, additional identification
+measures may be advisable, and these should be determined based on the level of overall risk.
+Al. When a bank is unable to complete CDD measures, it should not open the account, commence
+business relations or perform the transaction. However, there may be circumstances where it would be
+permissible for verification to be completed after the establishment of the business relationship, because
+it would be essential not to interrupt the normal conduct of business. In such circumstances, the bank
+should adopt adequate risk management procedures with respect to the conditions and restrictions under
+which a customer may utilise the banking relationship prior to verification. In situations where an account
+has been opened but problems of verification arise during the course of the establishment of the banking
+relationship that cannot be resolved, the bank should close or otherwise block access to the account. In
+any event, the bank should consider filing a STR in cases where there are problems with completion of the
+CDD measures.”° Additionally, where CDD checks raise suspicion or reasonable grounds to suspect that
+the assets or funds of the prospective customer may be the proceeds of predicate offences and crimes
+related to ML/FT, banks should not voluntarily agree to open accounts with such customers. In such
+situations, banks should file an STR with the relevant authorities accordingly and ensure that the customer
+is not informed, even indirectly, that an STR has been, is being or shall be filed.
+42. A bank should have in place procedures and material capacity enabling front office, customer-
+facing activities to identify any designated entities or individuals (eg terrorists, terrorist organisations) in
+accordance with their national legislation and the relevant United Nations Security Council Resolutions
+(UNSCRs).
+43. While the transfer of funds from an account in the customer's name in another bank subject to
+the same CDD standard as the initial deposit may provide some comfort, a bank should nevertheless
+conduct its own due diligence and consider the possibility that the previous account manager may have
+asked for the account to be closed because of a concern about illicit activities. Naturally, customers have
+the right to move their business from one bank to another. However, if a bank has any reason to believe
+that an applicant has been refused banking facilities by another bank due to concerns over illicit activities
+of the customer, it should consider classifying that applicant as higher-risk and apply enhanced due
+diligence procedures to the customer and the relationship, filing an STR and/or not accepting the customer
+in accordance with its own risk assessments and procedures.
+44. A bank should not open an account or conduct ongoing business with a customer who insists on
+anonymity or who gives an obviously fictitious name. Nor should confidential numbered?” accounts
+function as anonymous accounts but they should be subject to exactly the same CDD procedures as all
+other customers’ accounts, even if the procedures are carried out by selected staff. While a numbered
+account can offer additional confidentiality for the account-holder, the identity of the latter must be
+verified by the bank and known to a sufficient number of staff to facilitate the conduct of effective due
+diligence, especially if other risk factors indicate that the customer is higher-risk. A bank should ensure
+76 Subject to any national legislation concerning handling of suspicious transactions.
+a7 In a numbered account, the names of the customer and beneficial owner are known to the bank but are substituted by an
+account number or code name in subsequent documentation.
+Sound management of risks related to money laundering and financing of terrorism 9
+
+that its internal control, compliance, audit and other oversight functions, in particular the chief AML/CFT
+officer, and the bank's supervisors, have full access to this information as needed.
+45. Ongoing monitoring is an essential aspect of effective and sound ML/FT risk management. A
+bank can only effectively manage its risks if it has an understanding of the normal and reasonable banking
+activity of its customers that enables the bank to identify attempted and unusual transactions which fall
+outside the regular pattern of the banking activity. Without such knowledge, the bank is likely to fail in its
+obligations to identify and report suspicious transactions to the appropriate authorities. Ongoing
+monitoring should be conducted in relation to all business relationships and transactions, but the extent
+of the monitoring should be based on risk as identified in the bank risk assessment and its CDD efforts.
+Enhanced monitoring should be adopted for higher-risk customers or transactions. A bank should not
+only monitor its customers and their transactions, but should also carry out cross-sectional product/service
+monitoring in order to identify and mitigate emerging risk patterns.
+AO. All banks should have systems in place to detect unusual or suspicious transactions or patterns
+of activity. In establishing scenarios for identifying such activity, a bank should consider the customer's
+risk profile developed as a result of the bank’s risk assessment, information collected during its CDD efforts,
+and other information obtained from law enforcement and other authorities in its jurisdiction. For example,
+a bank may be aware of particular schemes or arrangements to launder proceeds of crime that may have
+been identified by authorities as occurring within its jurisdiction. As part of its risk assessment process, it
+will have assessed the risk that activity associated with such schemes or arrangements may be occurring
+within the bank through a category of customers, group of accounts, transaction pattern or product usage.
+Based on this knowledge, the bank should design and apply appropriate monitoring tools and controls to
+identify such activity. These could be through alert scenarios for computerised monitoring systems or
+setting limits for a particular class or category of activity, for instance.
+47. Using CDD information, a bank should be able to identify transactions that do not appear to
+make economic sense, that involve large cash deposits or that are not consistent with the customer's
+normal and expected transactions.
+48. A bank should have established enhanced due diligence policies and procedures for customers
+who have been identified as higher-risk by the bank. In addition to established policies and procedures
+relating to approvals for account opening, a bank should also have specific policies regarding the extent
+and nature of required CDD, frequency of ongoing account monitoring and updating of CDD information
+and other records. The ability of the bank to effectively monitor and identify suspicious activity would
+require access to updated, comprehensive and accurate customer profiles and records.
+49. A bank should ensure that they have appropriate integrated management information systems,
+commensurate with its size, organisational structure or complexity, based on materiality and risks, to
+provide both business units (eg relationship managers) and risk and compliance officers (including
+investigating staff) with timely information needed to identify, analyse and effectively monitor customer
+accounts. The systems used and the information available should support the monitoring of such customer
+relationships across lines of business and include all the available information on that customer
+relationship including transaction history, missing account opening documentation and significant
+changes in the customer's behaviour or business profile and transactions made through a customer
+account that are unusual.
+50. The bank should screen its customer database(s) whenever there are changes to sanction lists.
+The bank should also screen its customer database(s) periodically to detect foreign PEPs and other higher-
+risk accounts and subject them to enhanced due diligence.
+10 Sound management of risks related to money laundering and financing of terrorism
+
+aa ‘ ec Q at
+a es as es ee eg Fea lues sean nh ae
+SEER PLAS APY ONT PPYPePry ir aAPriga yy
+TV ERaD PSSA REE SIA SL Qed fb er Seb bs eae aes
+at
+(a) Record-keeping
+51. A bank should ensure that all information obtained in the context of CDD is recorded. This
+includes both (i) recording the documents the bank is provided with when verifying the identity of the
+customer or the beneficial owner, and (ii) transcription into the bank's own IT systems of the relevant CDD
+information contained in such documents or obtained by other means.
+52. A bank should also develop and implement clear rules on the records that must be kept to
+document due diligence conducted on customers and individual transactions. These rules should take into
+account, if possible, any prescribed privacy measures. They should include a definition of the types of
+information and documentation that should be included in the records as well as the retention period for
+such records, which should be at least five years from the termination of the banking relationship or the
+occasional transaction.*® Even if accounts are closed, in the event of ongoing investigation/ litigation, all
+records should be retained until the closure of the case. Maintaining complete and updated records is
+essential for a bank to adequately monitor its relationship with its customer, to understand the customer's
+ongoing business and activities, and, if necessary, to provide an audit trail in the event of disputes, legal
+action, or inquiries or investigations that could lead to regulatory actions or criminal prosecution.
+53. Adequate records documenting the evaluation process related to ongoing monitoring and review
+and any conclusions drawn should also be maintained and will help to demonstrate the bank's compliance
+with CDD requirements and ability to manage ML and FT risk.
+(b) Updating of information
+54. Only if banks ensure that records remain accurate, up-to-date and relevant by undertaking
+regular reviews of existing records and updating the CDD information can other competent authorities,
+law enforcement agencies or financial intelligence units make effective use of that information in order to
+fulfil their own responsibilities in the context of AML/CFT. In addition, keeping up-to-date information will
+enhance the bank's ability to effectively monitor the account for unusual or suspicious activities.
+(Cc) Supplying information to the supervisors
+55. A bank should be able to demonstrate to its supervisors, on request, the adequacy of Its
+assessment, management and mitigation of ML/FT risks; its customer acceptance policy; its procedures
+and policies concerning customer identification and verification; its ongoing monitoring and procedures
+for reporting suspicious transactions; and all measures taken in the context of AML/CFT.
+ary aN tA wet ek get A st tek ee ek ake wee ae So ek ek atk thee aa ~AS SARAT RN PRR ue baht este: AR gtoes ah esA eS SSA ON nk SQP SSSA Sete
+ae seo ee ery 8 rr re es 8 et RS ets s Ny at ONE lan wath WN Sata PY US
+FARERGAGP AEP PL AE SAS BETAS WS LPaPiSahl iss GPS GSSEL PY y :
+H :
+(a) Reporting of suspicious transactions
+56. Ongoing monitoring and review of accounts and transactions will enable banks to identify
+Suspicious activity, eliminate false positives and report promptly genuine suspicious transactions. The
+process for identifying, investigating and reporting suspicious transactions to the FIU should be clearly
+specified in the bank's policies and procedures and communicated to all personnel through regular
+training. These policies and procedures should contain a clear description for employees of their
+obligations and instructions for the analysis, investigation and reporting of such activity within the bank
+as well as guidance on how to complete such reports.
+57. There should also be established procedures for assessing whether the bank’s statutory
+obligations under recognised suspicious activity reporting regimes require the transaction to be reported
+78 See BCP 29, essential criterion 5(f) in Core principles for effective banking supervision, September 2012.
+Sound management of risks related to money laundering and financing of terrorism 11
+
+to the appropriate law enforcement agency or FIU and/or supervisory authorities, if relevant. These
+procedures should also reflect the principle of confidentiality, ensure that investigation is conducted swiftly
+and that reports contain relevant information and are produced and submitted in a timely manner. The
+chief AML/CFT officer should ensure prompt disclosures where funds or other property that is suspected
+to be the proceeds of crime remain in an account.
+58. Once suspicion has been raised in relation to an account or relationship, in addition to reporting
+the suspicious activity a bank should ensure that appropriate action is taken to adequately mitigate the
+risk of the bank being used for criminal activities. This may include a review of either the risk classification
+of the customer or account or of the entire relationship itself. Appropriate action may necessitate
+escalation to the appropriate level of decision-maker to determine how to handle the relationship, taking
+into account any other relevant factors, such as cooperation with law enforcement agencies or the FIU.
+(b) Asset freezing
+59. Financing of terrorism has similarities compared to money laundering, but it also has specificities
+that banks should take into due consideration: funds that are used to finance terrorist activities may be
+derived either from criminal activity or from legal sources, and the nature of the funding sources may vary
+according to the type of terrorist organisation. In addition, it should be noted that transactions associated
+with the financing of terrorists may be conducted in very small amounts.
+60. A bank should be able to identify and to enforce funds freezing decisions made by the competent
+authority and it should otherwise not deal with any designated entities or individuals (eg terrorists, terrorist
+organisations) consistent with relevant national legislation and UNSCRs.
+61. CDD should help a bank to detect and identify potential FT transactions, providing important
+elements for a better knowledge of its customers and the transactions they conduct. In developing
+customer acceptance policies and procedures, a bank should give proper relevance to the specific risks of
+entering into or pursuing business with individuals or entities linked to terrorist groups. Before establishing
+a business relationship or carrying out an occasional transaction with new customers, a bank should screen
+customers against lists of known or suspected terrorists issued by competent (national and international)
+authorities. Likewise, ongoing monitoring should verify that existing customers are not entered into these
+same lists.
+62. All banks should have systems in place to detect prohibited transactions (eg transactions with
+entities designated by the relevant UNSCRs or national sanctions). Terrorist screening is not a risk-sensitive
+due diligence measure and should be carried out irrespective of the risk profile attributed to the customer.
+For the purpose of terrorist screening, a bank may adopt automatic screening systems, but it should ensure
+that such systems are fit for the purpose. A bank should freeze without delay and without prior notice the
+funds or other assets of designated persons and entities, following applicable laws and regulations.
+63. Sound ML/FT risk management where a bank operates in other jurisdictions entails consideration
+of host country legal requirements. Given the risks, each group should develop group-wide AML/CFT
+policies and procedures consistently applied and supervised across the group. In turn, policies and
+procedures at the branch or subsidiary levels, even though reflecting local business considerations and
+the requirements of the host jurisdiction, must still be consistent with and supportive of the group's
+broader policies and procedures.” In cases where the host jurisdiction requirements are stricter than the
+29 The term “group” is used in this paper to refer to an organisation’s one or more banks, and the branches and subsidiaries of
+those banks. The term “head office” is used in this paper to refer also to the parent bank or to the unit in which AML/CFT risk
+management is performed on a business line basis.
+12 Sound management of risks related to money laundering and financing of terrorism
+
+group’s, group policy should allow the relevant branch or subsidiary to adopt and implement the host
+Jurisdiction local requirements.
+64. Consolidated risk management means establishing and administering a process to coordinate
+and apply policies and procedures on a group-wide basis, thereby implementing a consistent and
+comprehensive baseline for managing the bank's risks across its international operations. Policies and
+procedures should be designed not merely to comply strictly with all relevant laws and regulations, but
+more broadly to identify, monitor and mitigate group-wide risks. Every effort should be made to ensure
+that the group’s ability to obtain and review information in accordance with its global AML/CFT policies
+and procedures is not impaired as a result of modifications to local policies or procedures necessitated by
+local legal requirements. In this regard, a bank should have robust information-sharing among the head
+office and all of its branches and subsidiaries. Where the minimum regulatory or legal requirements of the
+home and host countries differ, offices in host jurisdictions should apply the higher standard of the two.
+65. Furthermore, according to FATF Standards,*° if the host country does not permit the proper
+implementation of those standards, the chief AML/CFT officer should inform the home supervisors.
+Additional measures should be considered, including, as appropriate, the financial group closing its
+operations in the host country.
+66. The Committee recognises that implementing group-wide AML/CFT procedures is more
+challenging than many other risk management processes because somejurisdictions continue to restrict
+the ability of banks to transmit customer names and balances across national borders. For effective group-
+wide monitoring and for ML/FT risk management purposes, it is essential that banks be authorised to
+share information about their customers, subject to adequate legal protection, with their head offices or
+parent bank. This applies in the case of both branches and subsidiaries.
+67. The bank should have a thorough understanding of all the risks associated with its customers
+across the group, either individually or as a category, and should document and update these on a regular
+basis, commensurate with the level and nature of risk in the group. In assessing customer risk, a bank
+should identify all relevant risk factors such as geographical location and patterns of transaction activity
+(declared or self-stated) and usage of bank products and services and establish criteria for identifying
+higher-risk customers. These criteria should be applied across the bank, its branches and its subsidiaries
+and through outsourced activities (see Annex 1). Customers that pose a higher risk of ML/FT to the bank
+should be identified across the group using these criteria. Customer risk assessments should be applied
+on a group-wide basis or at least be consistent with the group-wide risk assessment. Taking into account
+differences in risks associated with customer categories, group policy should recognise that customers in
+the same category may pose different risks in different jurisdictions. The information collected in the
+assessment process should then be used to determine the level and nature of overall group risk and
+Support the design of appropriate group controls to mitigate these risks. The mitigating factors can
+comprise additional information from the customer, tighter monitoring, more frequent updating of
+personal data and visits by bank staff to the customer location.
+68. Banks’ compliance and internal audit staff, in particular the chief AML/CFT officer, or external
+auditors, should evaluate compliance with all aspects of their group's policies and procedures, including
+the effectiveness of centralised CDD policies and the requirements for sharing information with other
+group members and responding to queries from head office. Internationally active banking groups should
+30 See Interpretative Note to recommendation 18 (Internal controls and foreign branches and subsidiaries) in the FATF Standards.
+Sound management of risks related to money laundering and financing of terrorism 13
+
+ensure that they have a strong internal audit and a global compliance function since these are the primary
+mechanisms for monitoring the overall application of the bank's global CDD and the effectiveness of its
+policies and procedures for sharing information within the group. This should include the responsibility of
+a chief AML/CFT officer for group-wide compliance with all relevant AML/CFT policies, procedures and
+controls nationally and abroad (see paragraphs 75 and 76).
+oo Neenerare Po AR SD Free tot ‘ :£ SNENSSSEST ATS EASE FL BP BIEN ER APTS PASS Ere
+Re APPA AACE PAEMWEALS ALP GD RAAB DAUR GRD ERG Lab UA aeel f”
+69. A bank should ensure it understands the extent to which AML/CFT legislation allows it to rely on
+the procedures undertaken by other banks (for example within the same group) when business Is being
+referred. A bank should not rely on introducers that are subject to standards that are less strict than those
+governing the bank’s own AML/CFT procedures. This will entail banks monitoring and evaluating the
+AML/CFT standards in place in thejurisdiction of the referring bank. A bank may rely on an introducer that
+is part of the same financial group and could consider placing a higher level of reliance on the information
+provided by this introducer, provided this introducer is subject to the same standards as the bank, and the
+application of these requirements is supervised at the group level. A bank taking this approach should
+ensure, however, that it obtains customer information from the referring bank (as further detailed in Annex
+1), as this information may be required to be reported to FIUs in the event that a transaction involving the
+referred customer is determined to be suspicious.
+70. Relevant information should be accessible by the banking group's head office for the purpose of
+enforcing group AML/CFT policies and procedures. Each office of the banking group should be in a
+position to comply with minimum AML/CFT and accessibility policies and procedures applied by the head
+office and defined consistently with the Committee guidelines.
+71. Customer acceptance, CDD and record-keeping policies and procedures should be implemented
+through the consistent application of policies and procedures throughout the organisation, with
+adjustments as necessary to address variations in risk according to specific business lines or geographical
+areas of operation. Moreover, it is recognised that different approaches to information collection and
+retention may be necessary across jurisdictions to conform to local regulatory requirements or relative risk
+factors. However, these approaches should be consistent with the group-wide standards discussed above.
+72. Regardless of its location, each office should establish and maintain effective monitoring policies
+and procedures that are appropriate to the risks present in the jurisdiction and in the bank. This local
+monitoring should be complemented by a robust process of information-sharing with the head office, and
+if appropriate with other branches and subsidiaries regarding accounts and activity that may represent
+heightened risk.
+73. To effectively manage the ML and FT risks arising from such accounts, a bank should integrate
+this information based not only on the customer but also on its knowledge of both the beneficial owners
+of the customer and the funds involved. A bank should monitor significant customer relationships,
+balances and activity on a consolidated basis, regardless of whether the accounts are held on-balance
+sheet, off-balance sheet, as assets under management or on a fiduciary basis, and regardless of where
+they are held. The FATF standards have now also set out more details relating to banks’ head office
+oversight of group compliance, audit and/or AML/CFT functions.*+ Moreover, if these guidelines have been
+conceived primarily for banks, they might be of interest for conglomerates (including banks).
+74. Many large banks with the capability to do so centralise certain processing systems and databases
+for more effective management or efficiency purposes. In implementing this approach, a bank should
+adequately document and integrate the local and centralised transaction/account monitoring functions to
+31 See in particular Recommendation 18 in the FATF Standards.
+14 Sound management of risks related to money laundering and financing of terrorism
+
+ensure that it has the opportunity to monitor for patterns of potential suspicious activity across the group
+and not just at either the local or centralised levels.
+75. A bank performing business nationally and abroad should appoint a chief AML/CFT officer for
+the whole group (group AML/CFT officer). The group AML/CFT officer has responsibility, as a part of the
+global risk management, for creating, coordinating and group-wide assessment of the implementation of
+a single AML/CFT strategy (including mandatory policies and procedures and the authorisation to give
+orders for all branches, subsidiaries and subordinated entities nationally and abroad).
+76, The function of the group AML/CFT officer includes ongoing monitoring of the fulfilment of all
+AML/CFT requirements on a group-wide basis, nationally and abroad. Therefore, the group AML/CFT
+officer should satisfy him/herself (including through on-site visits on a regular basis) that there is group-
+wide compliance with the AML/CFT requirements. If needed, he/she should be empowered to give orders
+or take the necessary measures for the whole group.
+77. Banks should oversee the coordination of information-sharing. Subsidiaries and branches should
+be required to proactively provide the head office with information concerning higher-risk customers and
+activities relevant to the global AML/CFT standards, and respond to requests for account information from
+the head office or parent bank in a timely manner. The bank's group-wide standards should include a
+description of the process to be followed in all locations for identifying, monitoring and investigating
+potential unusual circumstances and reporting suspicious activity.
+78. The bank's group-wide policies and procedures should take into account issues and obligations
+related to local data protection and privacy laws and regulations. They should also take into account the
+different types of information that may be shared within a group and the requirements for storage,
+retrieval, sharing/distribution and disposal of this information.
+79. The group’s overall ML/FT risk management function should evaluate the potential risks posed
+by activity reported by its branches and subsidiaries and, where appropriate, assess the group-wide risks
+presented by a given customer or category of customers. It should have policies and procedures to
+ascertain if other branches or subsidiaries hold accounts for the same customer (including any related or
+affiliated parties). The bank should also have policies and procedures governing global account
+relationships that are deemed higher-risk or have been associated with potentially suspicious activity,
+including escalation procedures and guidance on restricting account activities, including the closing of
+accounts as appropriate.
+80. In addition, a bank and its branches and subsidiaries should, in accordance with their respective
+domestic laws, be responsive to requests from law enforcement agencies, supervisory authorities or FIUs
+for information about customers that is needed in their efforts to combat ML and FT. A bank's head office
+should be able to require all branches and subsidiaries to search their files against specified lists or requests
+for individuals or organisations suspected of aiding and abetting ML and FT, and report matches.
+81. A bank should be able to inform its supervisors, if so requested, about its global process for
+managing customer risks, its risk assessment and management of ML/FT risks, its consolidated AML/CFT
+policies and procedures, and its group-wide information-sharing arrangements.
+82. Many banking groups engage in securities and insurance businesses. The application of ML/FT
+risk management controls in mixed financial groups poses additional issues that may not be present for
+deposit-taking and lending operations. Mixed groups should have the ability to monitor and share
+information on the identity of customers and their transaction and account activities across the entire
+Sound management of risks related to money laundering and financing of terrorism 15
+
+group, and be alert to customers that use their services in different sectors, as described in paragraph 79
+above.
+83. Differences in the nature of activities and patterns of relationships between banks and customers
+in each sector may require or justify variations in the AML/CFT requirements imposed on each sector. The
+group should be alert to these differences when cross-selling products and services to customers from
+different business arms, and the appropriate AML/CFT requirements for the relevant sectors should be
+applied.
+\ nN yA rey S gs Sh AS ¥ REN Q
+84. Banking supervisors are expected to comply with FATF Recommendation 26, which states in part:
+“For financial institutions subject to the Core Principles, the regulatory and supervisory measures that apply
+for prudential purposes, and which are also relevant to money laundering and financing of terrorism,
+should apply in a similar manner for AML/CFT purposes. This should include applying consolidated group
+supervision for AML/CFT purposes.” The Committee expects supervisors to apply the Core principles for
+effective banking supervision to banks’ ML/FT risk management in a manner consistent with and supportive
+of the supervisors’ overall supervision of banks. Supervisors should be able to apply a range of effective,
+proportionate and dissuasive sanctions in cases when banks fail to comply with their AML/CFT
+requirements.
+85. Banking supervisors are expected to set out supervisory expectations governing banks’ AML/CFT
+policies and procedures. The essential elements as set out in this paper should provide clear guidance for
+supervisors to proceed with the work of designing or improving national supervisory practice. National
+Supervisors are encouraged to provide guidance to assist banks in designing their own customer
+identification policies and procedures. The Committee has therefore developed two specific topic guides
+in Annexes 1 and 2, which could be used by supervisors for this purpose.
+86. Supervisors should adopt a risk-based approach to supervising banks’ ML/FT risk management.4
+Such an approach requires that supervisors (i) develop a thorough understanding of the risks present in
+the jurisdiction and their potential impact on the supervised entities; °° (ii) evaluate the adequacy of the
+bank's risk assessment based on the jurisdiction's national risk assessment(s);** (iii) assess the risks present
+in the target supervised entity to understand the nature and extent of the risks in the entity's customer
+base, products and services and the geographical locations in which the bank and its customers do
+business; (iv) evaluate the adequacy and effectiveness in implementation of the controls (including CDD
+measures) designed by the bank in meeting its AML/CFT obligations and risk mitigation; and (v) utilise this
+information to allocate the resources, scope the review, identify the necessary supervisory expertise and
+experience needed to conduct an effective review and allocate these resources relative to the identified
+risks.
+87. Higher-risk lines of business or customer categories may require specialised expertise and
+additional procedures to ensure an effective review. The bank's risk profile should also be used in
+determining the frequency and timing of the supervisory cycle. Again, banks dealing with higher risk
+profiles may require more frequent review than others. Supervisors should also verify whether banks have
+adequately used their discretion with regard to applying AML/CFT measures on a risk-based approach.
+They should also evaluate the internal controls in place and how banks determine whether they are in
+Supervisors should also take into account the risk-based approach to supervision described in Interpretive Note 26 in the FATF
+Standards.
+For this, it is expected that supervisors would build on countries’ assessment such as described in the interpretative note to
+recommendation 1 in the FATF standards.
+Including, where appropriate, any supranational risk assessment.
+16 Sound management of risks related to money laundering and financing of terrorism
+
+compliance with supervisory and regulatory guidance, and prescribed obligations. The supervisory process
+should include not only a review of policies and procedures but also, when appropriate, a review of
+customer documentation and the sampling of accounts and transactions, internal reports and STRs.
+Supervisors should always have the right to access all documentation related to the transactions
+conducted or accounts maintained in thatjurisdiction, including any analysis the bank has made to detect
+unusual or suspicious transactions.
+88. Supervisors have a duty to ensure their banks maintain sound ML/FT risk management not only
+to protect their own safety and soundness but also to protect the integrity of the financial system.”°
+Supervisors should make it clear that they will take appropriate action, which may be severe and public if
+the circumstances warrant, against banks and their officers who demonstrably fail to follow their own
+internal procedures and regulatory requirements. In addition, supervisors (or other relevant national
+authorities) should be able to apply appropriate countermeasures and ensure that banks are aware of and
+apply enhanced CDD measures to business relationships and to transactions when called for by the FATF
+or that involve jurisdictions where their AML/CFT standards are considered inadequate by the country. In
+this aspect, the FATF and some national authorities have listed a number of countries and jurisdictions
+that are considered to have strategic AML/CFT deficiencies or that do not comply with international
+AML/CFT standards,*° and such findings should be a component of a bank's ML/FT risk management.
+89. Supervisors should also consider a bank’s overall monitoring and oversight of compliance at the
+branch and subsidiary level as well as the ability of group policy to accommodate local regulatory
+requirements and ensure that where there is a difference between the group and local requirements, the
+Stricter of the two is applied. Supervisors should also ensure that in cases where the group branch or
+subsidiary cannot apply the stricter of the two standards, the reasons for this and the differences between
+the two should be documented and appropriate mitigating measures implemented to address risks
+identified as a result of those differences.
+90. In a cross-border context, home country supervisors*’ should face no impediments in verifying a
+bank’s compliance with group-wide AML/CFT policies and procedures during on-site inspections. This may
+well require a review of customer files and a sampling of accounts or transactions in the host jurisdiction.
+Home country supervisors should have access to information on sampled individual customer accounts
+and transactions and on the specific domestic and international risks associated with such customers to
+the extent necessary to enable a proper evaluation of the application of CDD standards and an assessment
+of risk management practices. This use of information for a legitimate supervisory need, safeguarded by
+the confidentiality provisions applicable to supervisors, should not be impeded by local bank secrecy or
+data protection laws. Although the host country supervisors and/or other authorities retain responsibility
+for the enforcement of compliance with local AML/CFT requirements (which would include an evaluation
+of the appropriateness of the procedures), host country supervisors should ensure they extend full
+35 Many supervisors also have a duty to report any suspicious, unusual or illegal transactions that they detect, for example, during
+on-site examinations.
+36 For instance, jurisdictions may be publicly identified by :
+- the FATF’s Public Statement, which identifies:
+(i) jurisdictions that have strategic AML/CFT deficiencies and to which countermeasures apply;
+(ii) jurisdictions with strategic AML/CFT deficiencies that have not made sufficient progress in addressing the
+deficiencies or have not committed to an action plan developed with the FATF to address the deficiencies.
+- The FATF public document, /mproving Global AML/CFT Compliance: On-going Process, which identifies jurisdictions with
+strategic AML/CFT deficiencies that have provided a high-level political commitment to address the deficiencies through
+implementation of an action plan developed with the FATF.
+37 In those countries where the examination process is undertaken by external auditors, this exemption should also apply to the
+competent auditors.
+Sound management of risks related to money laundering and financing of terrorism 17
+
+cooperation and assistance to home country supervisors who may need to assess how the bank oversees
+compliance with group-wide AML/CFT policies and processes.
+91. The role of group audit (external or internal) is particularly important in assessing the
+effectiveness of AML/CFT policies and procedures. Home country supervisors should ensure that there is
+an appropriate policy, based on the risks, and adequate resources allocated regarding the scope and
+frequency of audit of the group’s AML/CFT. They should also ensure that auditors have full access to all
+relevant reports during the audit process.
+92. Supervisors should ensure that information about banks’ customers and transactions is subject
+to the same confidentiality measures as are applicable to the broad array of information shared between
+Supervisors on banks’ activities.
+93. It is essential that all jurisdictions that host foreign banks provide an appropriate legal framework
+to facilitate the passage of information required for customer risk management purposes to the head
+office or parent bank and home country supervisors. Similarly, there should be no impediments to on-site
+visits to host jurisdiction subsidiaries and branches by home jurisdiction head office auditors, risk
+managers, compliance officers (including the chief AML/CFT officer and/or AML/CFT group officer), or
+home country supervisors, nor any restrictions in their ability to access all the host jurisdiction bank's
+records, including customers’ names and balances. This access should be the same for both branches and
+subsidiaries. If impediments to information-sharing prove to be insurmountable, and there are no
+satisfactory alternative arrangements, the home supervisors should make it clear to the host supervisor
+that the bank may be subject to additional supervisory actions, such as enhanced supervisory measures
+on the group, including, as appropriate, requesting the parent group to close down its operations in the
+host jurisdiction.
+94. Where a bank's head office staff are granted access to information on local customers, there
+should be no restrictions on them reporting such information back to head office. Such information should
+be subject to adequate safeguards on confidentiality and use and may be subject to applicable privacy
+and privilege laws in the home country.
+95. The Committee believes that there is no justifiable reason why local legislation should impede
+the transfer of customer information from a host bank branch or subsidiary to its head office or parent
+bank in the homejurisdiction for risk management purposes, including ML and FT risks. If the law in the
+host jurisdiction restricts disclosure of such information to “third parties”, it is essential that the head office
+or parent bank and the home jurisdiction bank supervisors are clearly excluded from definitions of a third
+party. Jurisdictions that have legislation that impedes, or can be interpreted as impeding, such
+information-sharing for ML/FT risk management purposes, are urged to remove any such restrictions and
+to provide specific gateways appropriate for this purpose.
+18 Sound management of risks related to money laundering and financing of terrorism
+
+x ay
+Are ay i
+Using another bank, financial institution or third party to perform
+customer due diligence
+1. In some countries, banks are permitted to use other banks, financial institutions or other entities
+to perform customer due diligence (CDD). These arrangements can take various forms but in essence
+usually fall into one of the following two situations:
+Sy ate hdaxt end .ae eas are dela tered ox ea eden net
+MAHAR SEA FRYEes PAPTY ag
+PNAS EER PRAY Stok RG PEs Ga RAE A?
+2. Banks in some countries are allowed to rely on CDD performed by other financial institutions or
+designated non-financial businesses and professions who are themselves supervised or monitored for
+AML/CFT purposes.*® In these situations, the third party will usually have an existing business relationship
+with the customer, and the banks may be exempt from applying their own CDD measures at the beginning
+of the relationship. The FATF standards*? permit reliance for these aspects:
+(a) Identifying the customer and verifying that customer's identity using reliable, independent source
+documents, data or information.
+(b) Identifying the beneficial owner, and taking reasonable measures to verify the identity of the
+beneficial owner, such that the financial institution is satisfied that it knows who the beneficial
+owner is. For legal persons and arrangements this should include financial institutions
+understanding the ownership and control structure of the customer.
+(c) Understanding and, as appropriate, obtaining information on the purpose and intended nature
+of the business relationship.
+FATF standards further require that a financial institution relying upon a third party should immediately
+obtain the necessary information concerning these three CDD measures.
+3. Some countries restrict the ability to rely in various ways; for example, limiting reliance to financial
+institutions, allowing reliance only for third parties’ existing relationships (and prohibiting chains of
+reliance) or not allowing reliance on foreign entities.
+4. Banks may also use third parties to perform various elements of their CDD obligations on a
+contractual basis, often in an outsourcing/agent relationship (ie the outsourced entity applies the CDD
+measures on behalf of the delegating bank). Typically, there are fewer restrictions on who can act as the
+agent of a bank, but this is often offset by prescribed arrangements and record-keeping.
+5. For both reliance and outsourcing, banks may choose to limit the size, scope or nature of
+transaction types when utilising third parties. In all cases, supervisors should have timely access to
+38 See Recommendation 17 in the FATF Standards and its interpretative note.
+39 See Recommendation 17 and Recommendation 10 on CDD in the FATF Standards.
+Sound management of risks related to money laundering and financing of terrorism 19
+
+customer information upon request. Although these two categories seem similar or related, there are
+significant differences between them and banks should ensure they understand those differences and
+reflect these in their policies and procedures.
+6. Banks should have clear policies and procedures on whether and when it is acceptable and
+prudent to rely on another bank or financial institution. Such reliance in no way relieves the bank of its
+ultimate responsibility for having adequate CDD policies and procedures and other AML/CFT requirements
+on customers, such as understanding expected activity, whether customers are high-risk, and whether
+transactions are suspicious.
+7. In depending on another bank or financial institution to conduct certain aspects of CDD, banks
+should assess the reasonableness of such reliance. In addition to ensuring there is a legal ability to rely,
+relevant criteria for assessing reliance include:
+(a) The bank, financial institution or other entity (as permitted by national law) on which reliance is
+placed should be as comprehensively regulated and supervised as the bank, have comparable
+customer identification requirements at account opening and have an existing relationship with
+the customer opening an account at the bank. Alternatively, national law may require the use of
+compensating measures or controls, in cases where these standards are not met.
+(b) The bank and the other entity should have an arrangement or understanding in writing
+acknowledging the bank's reliance on the other financial institution's CDD processes.
+(c) The bank's procedures and policies should document the reliance and should establish adequate
+controls and review procedures for such a relationship.
+(d) A third party may be required to certify to the bank that it has implemented its AML programme,
+and that it performs CDD substantially equivalent to or consistent with the bank's obligations.
+(e) The bank should give due consideration to adverse public information about the third party, such
+as its subjection to an enforcement action for AML deficiencies or violations.
+(f) The bank should identify and mitigate any additional risk posed by reliance on multiple parties
+(a chain of reliance) rather than a direct relationship with one entity.
+(g) The bank's risk assessment should identify reliance on third parties as a potential risk factor.
+(h) The bank should periodically review the other entity to ensure that it continues to conduct CDD
+ina manner as comprehensive as the bank. For that purpose, the bank should obtain all the CDD
+information and documents from the bank, financial institution, or entity that it relies upon and
+assess due diligence conducted, including screening against local databases to ensure
+compliance with local regulatory requirements.
+(i) Banks should consider terminating reliance on entities that do not apply adequate CDD on their
+customers or otherwise fail to meet requirements and expectations.
+8. Banks with subsidiaries or branches outside the home jurisdiction frequently use the financial
+group to introduce their customers to other parts of the financial group. In countries that permit this cross-
+border reliance on affiliates, financial institutions that rely on other parts of the group for customer
+identification should ensure that the above assessment criteria are in place. The FATF standards“? allow
+40 See Recommendation 17 in the FATF Standards.
+20 Sound management of risks related to money laundering and financing of terrorism
+
+countries to exempt country risk from this assessment if the financial institution is subject to group-wide
+AML/CFT standards and supervised on a group level by its financial supervisor.
+9. Banks may choose to apply identification and other CDD processes directly or can appoint one
+or more third parties to take these measures on their behalf, sometimes in an agent relationship. While
+AML/CFT compliance functions may be performed by third parties, the responsibility for complying with
+CDD and AML/CFT requirements remains with the bank. The extent of the use of third parties usually
+depends on the business model of the bank; normally, banks that operate by telephone or over the
+internet or that have few “bricks & mortar” branches tend to use third parties to a greater extent. Banks
+may use third parties to expand their customer base or improve customer support and overall access to
+their services.
+10. Banks that choose to use third parties should ensure that a written agreement is in place that sets
+out the AML/CFT obligations of the bank and how these will be executed by the third party. In some
+countries, the relationship between banks and their third parties is regulated.
+11. As noted above, it is important for banks to understand the difference between using a third
+party as its agent and relying on another bank's customer identification and CDD processes. An agent is
+usually, under the law of agent and principal, a legal extension of the bank. When a bank's customer or
+potential customer deals with an agent of a bank, it is legally dealing with the bank itself. The third party
+will therefore be obligated to apply the bank's policies and requirements with respect to identification and
+verification and CDD.
+12. In practice, banks’ third parties need to have the necessary technical expertise, knowledge and
+training to apply customer identification and CDD measures of the bank. In some cases, where third
+parties’ business models are based on acting for several banks, they usually develop significant in-house
+expertise of their own. However, third parties are not always themselves subject to AML/CFT obligations,
+although many often are. Whether or not this is the case, however, the third party is always in the position
+of applying its principal's identification and CDD requirements (which in turn must conform to legal
+requirements).
+13. Examples of third parties routinely used by banks to apply their customer identification
+obligations include retail deposit brokers, mortgage brokers and solicitors. ML/FT risk mitigation can be
+compromised when banks do not ensure that applicable customer identification requirements and CDD
+are applied by their third parties.
+14. As noted, there should be a written agreement or arrangement documenting the third party’s
+responsibilities, which should include the following:
+(a) requiring the application of the bank's customer identification and CDD requirements (including
+enquiring on source of funds and wealth, as appropriate);
+(b) ensuring that, where the customer is present in person at the time customer identification and/or
+CDD measures are conducted, the third party applies customer identification procedures that
+include viewing original identification documents where this is required by regulations or the
+bank;
+(c) ensuring that, where the customer is not present at the time customer identification is
+ascertained, the third party applies any applicable prescribed or bank-stipulated non-face-to-
+face identification requirements; and
+(d) ensuring that the third party maintains the confidentiality of customer information.
+15. Banks should also:
+Sound management of risks related to money laundering and financing of terrorism 21
+
+(a) ensure that if the third party is responsible for determining and/or identifying the beneficial
+owner or a PEP determination, these responsibilities are documented;
+(b) ensure that the third party provides the bank with customer identification information in the
+required time frames; and
+(c) periodically review or audit, in a systemic manner, the quality of customer information gathered
+and documented by the third party to ensure that it continues to meet the bank's requirements;
+(d) clearly identify instances that the bank would consider failures on the part of the third party to
+perform its duties as contracted and establish a process for implementing appropriate actions,
+such as terminating the relationship in response to identified failures.
+16. The bank should obtain all relevant information from the third party in a timely manner and
+ensure the information is complete and kept up to date in the bank's customer record.
+17. Contracts with third parties should be reviewed and updated as necessary to ensure that they
+continue to address the third parties’ role accurately and reflect any updates to duties.
+22 Sound management of risks related to money laundering and financing of terrorism
+
+pores *
+1. According to the FATF glossary, “correspondent banking is the provision of banking services by
+one bank (the ‘correspondent bank’) to another bank (the ‘respondent bank’)". For the purpose of its
+guidance on correspondent banking (hereafter “the FATF guidance”),** the FATF does not include one-off
+transactions or the mere exchange of messaging capabilities** but rather states that correspondent
+banking is characterised by its ongoing, repetitive nature. Like the FATF guidance, this Annex focuses on
+higher-risk correspondent banking relationships, in particular cross border correspondent banking
+involving the execution of third-party payments. Indeed, in line with FATF Recommendation 13, cross-
+border correspondent relationships (as opposed to domestic relationships) are the ones that should
+prompt additional customer due diligence measures.
+2. Used by banks throughout the world, correspondent banking services enable respondent banks
+to conduct business and provide services*® that they cannot offer otherwise (owing to the lack of an
+international presence and cross-border payment systems). As noted by the Financial Stability Board, the
+ability to make and receive international payments via correspondent banking is vital for businesses and
+individuals, and for the G20’s goal of strong, sustainable, balanced growth.”
+3. Correspondent banks that execute and/or process transactions for customers of respondent
+banks generally do not have direct business relationships with these customers, which may be individuals,
+corporations or financial services firms, established in jurisdictions other than that of the correspondent
+bank. Thus the customers of the correspondent bank are the respondent banks. Correspondent banks are
+therefore required to conduct appropriate due diligence on the respondent banks and are not generally
+required to do so on the respondent banks’ customers.*°
+4. Because of the structure of this activity and the limited information available regarding the nature
+or purpose of the underlying transactions, correspondent banks may be exposed to money laundering
+and financing of terrorism (ML/FT) risks.
+at FATF, Guidance on correspondent banking services, October 2016, www. fatf-
+gafi.org/publications/fatfrecommendations/documents/correspondent-banking-services.html.
+42 Such as SWIFT Relationship Management Application (RMA) keys.
+43 Such as “cash management (eg interest-bearing accounts in a variety of currencies), international wire transfers, cheque
+clearing, payable-through accounts and foreign exchange services”, FATF Glossary in the FATF recommendations.
+44 See FSB, Progress report to G20 on the FSB action plan to assess and address the decline in correspondent banking, August 2016,
+www.fsb.org/2016/08/progress-report-to-g20-on-the-fsb-action-plan-to-assess-and-address-the-decline-in-correspondent-
+banking/.
+° See FATF, Guidance on correspondent banking services, October 2016, paragraph 3: “The term KYCC has created a lot of
+confusion. To clarify, the FATF Recommendations do not require financial institutions to conduct customer due diligence on
+the customers of their customer (i.e., each individual customer).”
+Sound management of risks related to money laundering and financing of terrorism 23
+
+5. Respondent banks are the ones responsible for conducting due diligence on their customers
+using correspondent banking services. The present guidance addresses both correspondent banks that
+provide the services and respondent banks that use the services.
+6. If the respondent bank is an affiliate of the correspondent bank, the AML/CFT policies and
+procedures applicable at the consolidated group level apply to the respondent bank.*°
+TY si! i. ay god meekoy & ~ mye eek oS ax een crete me GE ee YS ot wt oxen
+MACS PSEA BAS VEL
+.
+7. The FATF guidance clarifies that, while additional customer due diligence (CDD) measures are
+required for cross-border correspondent banking, not all such correspondent banking services carry the
+same level of ML/FT risks. 4” The FATF guidance focuses on higher-risk correspondent banking
+relationships, in particular, cross-border correspondent banking relationships involving the execution of
+third-party payments. This section provides factors that banks should consider when assessing the level
+of risk of a particular correspondent banking relationship.
+8. Banks that undertake correspondent banking activities should assess the ML/FT risks associated
+with the relationship.
+9. Risk indicators that correspondent banks should consider in their risk assessment include:
+(1) the inherent risk resulting from the nature of services provided, in particular:
+(a) the purpose of the services provided to the respondent bank (eg foreign exchange
+services for respondents’ proprietary trading, securities trading on recognised
+exchanges or payments between a respondent's group within the samejurisdiction may
+constitute indicators of lower risk);
+(b) whether the banking services will be used, via nested (downstream) correspondent(s),
+by either the respondent bank's affiliates or other third parties, and the different risks
+these parties entail (see paragraph 12 below);
+(c) whether the banking services will be used, via payable-through-account(s) activity, by
+either the respondent bank’s affiliates or other third parties, and the different risks these
+parties entail (see paragraph 29 below).
+(2) the characteristics (and information on) of the respondent bank, in particular:
+(d) the respondent bank's major business activities including target markets and overall
+types of customers served in key business lines;*®
+46 See section III in Basel Committee on Banking Supervision, Sound management of risks related to money laundering and
+financing of terrorism.
+47 See FATF, Guidance on correspondent banking services, October 2016, paragraph 13a.
+48 The correspondent bank should have a broad knowledge of the products and services offered and types of customers served
+by the respondent bank (see FATF guidance, paragraph 22).
+24 Sound management of risks related to money laundering and financing of terrorism
+
+(e) the respondent bank’s management and ownership (including the beneficial owners)
+and whether they represent specific ML/FT risks (eg politically exposed persons (PEPs)):
+(f) the respondent bank's money laundering prevention and detection policies and
+procedures, including a description of the CDD measures applied by the respondent
+bank to its customers and the correspondent bank's ability to obtain information ona
+particular transaction as specified in paragraphs 32-3 of the FATF guidance;*?
+(g) whether any civil, administrative or criminal actions or sanctions, including public
+reprimands, have been applied by any court or supervisory authority to the respondent
+bank, when it occurred, the severity, and how the respondent bank addressed the
+identified shortcomings.
+(3) the environment in which the respondent bank operates, in particular:
+(h) the jurisdiction in which the respondent bank (and its parent company when the
+respondent bank is an affiliate) is located;
+(i) the jurisdictions in which subsidiaries and branches of the group may be located,
+possibly using the group structure available in the Legal Entity Identifier (LEI) system, °
+as well as the jurisdictions in which third parties using the correspondent banking
+relationship may be located;
+(j) the quality and effectiveness of banking regulation and supervision in the respondent's
+country (especially AML/CFT laws and regulations) °' and the respondent's parent
+company country when the respondent is an affiliate.
+10. Correspondent banks should take a holistic view of the above indicators and other available
+information, to first determine the inherent risk of each respondent bank relationship, and then to consider
+risk mitigation factors to determine the residual risk and whether it can manage this residual risk level (see
+FATF guidance, paragraph 16). In general, factors that could reduce ML/FT risks would include the
+effectiveness of the respondent bank's risk management policies and procedures as well as the specific
+measures put in place by the correspondent bank.
+11. In some instances, inherently higher-risk relationships, products or services may be mitigated by
+strong risk management practices and other factual circumstances, resulting in adequately manageable
+residual risk. For example, a correspondent banking relationship with a foreign respondent bank located
+in a higher-risk foreign jurisdiction could pose an inherently higher risk that may be mitigated in part
+because of effective group-wide AML/CFT controls in place in both the correspondent and respondent
+banks. Correspondent banks can also manage their risk by adapting their product offering or limiting the
+volume of activity with a particular respondent.
+“9 The ability to obtain this information may depend on legal or technical permissibility.
+°° Information on ultimate parents of legal entities started being collected in the LEI system in May 2017 and is available on the
+website of the Global LEI Foundation; information on branches will follow in 2017 (see LEI ROC, Collecting data on direct and
+ultimate parents of legal entities in the Global LEI System — Phase 1, 10 March 2016, and Including data on international/foreign
+branches in the Global LEI System, 11 July 2016). The LEI system may be used for that purpose provided that the group’s ultimate
+accounting consolidating parent and all group entities in the accounting consolidation perimeter and eligible branches have
+an LEI, and that the ultimate parent relationship is reported for all subsidiaries. In addition, the relevant LEI should have an
+“issued” status (for active entities), which means that the associated reference data are kept current under the conditions
+required by the LEI System.
+51
+See paragraph 25 of the FATF guidance.
+Sound management of risks related to money laundering and financing of terrorism 25
+
+12. Nested, or downstream, correspondent banking refers to the use of a bank's correspondent
+relationship by a number of respondent banks through their relationships with the bank’s direct
+respondent bank to conduct transactions and obtain access to other financial services.
+13. Downstream correspondent banking relationships are an integral and generally legitimate part
+of correspondent banking. Nesting may be a way for regional banks to help small local banks within the
+respondent's region obtain access to the international financial system or to facilitate transactions where
+no direct relationship exists between banks.
+14. Providing access to third-party foreign financial institutions that are not the customer of the
+correspondent bank, and so not necessarily known, can obscure financial transparency and increase ML/FT
+risks. As a result, correspondent banks should require that respondent banks disclose whether accounts
+include nested relationships** as part of account opening and ongoing risk profile reviews. Respondent
+banks should disclose accurate information regarding the existence of nested relationships.
+15. Correspondent banks should assess the ML/TF risk associated with customers which are
+respondent banks with nested relationships on an individual case by case basis, consistent with the risk-
+based approach. The level of risk may vary depending on the nature of nested foreign financial institutions
+served by respondent banks, including size and geographical location, products and services offered,
+markets and customers served, and the degree of transparency provided by the respondent bank (eg in
+formatting payment transactions).
+16. In order to assess the ML/FT risks associated with a nested relationship, correspondent banks
+should understand the purpose of the nested relationship. To this end, they may consider the following
+factors, among others:
+(a) the number and type of financial institutions a respondent bank serves;
+(b) whether the nested banks are located in the samejurisdiction as the respondent (considering the
+knowledge a respondent bank might have of its ownjurisdiction) or a different country;
+(c) whether thejurisdiction of the nested bank and the areas the nested bank serves have adequate
+AML/CFT policies according to available public information (eg FATF information);
+(d) the types of services the respondent offers to nested banks (proprietary only or customer services
+such as correspondent banking);
+(e) the length of the relationship between the correspondent and respondent banks (eg a long-
+standing relationship which enables the correspondent bank to have a good understanding of
+the ML/FT risk associated with the relationship versus a new one);
+(f) the adequacy of the due diligence programme of the respondent bank to evaluate the AML/CFT
+controls on its nested banks. The due diligence programme should be updated periodically and
+provided to the correspondent bank at its request.
+17. Respondent banks should promptly respond to requests for information from correspondent
+banks (see FATF guidance, paragraphs 32-3) related to transactions through respondent banks, as
+appropriate.
+2 oy EK Een a en oy aes kb oe es
+t DENTS PRS TER EN SEA P EN SPER
+Nas AP DQA SP PP Pa REE Oar A bg
+o ae
+18. Before entering into a business relationship with a respondent bank, correspondent banks should
+gather sufficient information to understand the nature of the respondent's business and assess ML/FT risks
+°2 ‘This does not entail that a list of the nested relationships should be produced.
+26 Sound management of risks related to money laundering and financing of terrorism
+
+both at the outset and on an ongoing basis. There is no requirement or expectation for a correspondent
+bank to apply CDD measures to customers of the respondent bank or to duplicate the data on its
+customers obtained and stored by the respondent bank.
+19. Information on a respondent bank's AML/CFT policies and procedures may be obtained from the
+respondent bank, for example via a questionnaire, or from publicly available information (such as financial
+information or any mandatory supervisory information relating to the respondent bank). An industry-wide
+questionnaire may be useful, provided it is used as a starting point for the risk assessment. The
+correspondent bank should verify the identity of the respondent bank using reliable, independent source
+documents, data or information (see Annex 4) and take measures to verify other CDD information on the
+respondent bank obtained on a risk-sensitive basis and identify any beneficial owners.
+20. At account opening, banks may collect — and subsequently update — respondent banks’
+information by using third-party databases that contain relevant information on banks (often referred to
+as “KYC utilities”). KYC utilities may provide efficiency gains for both correspondent and respondent banks
+to gather and provide information, especially with regard to standardisation and interoperability (eg the
+ability of different systems to share data). From the correspondent bank perspective, using a KYC utility
+could in particular be useful for gathering information on the respondent bank, especially to assess the
+risk indicators listed in paragraph 9. If banks see benefits in using KYC utilities for obtaining information
+from the respondent bank, supervisors see in principle no objection to the use of utilities in correspondent
+banking risk assessment processes, provided the conditions and factors described in paragraphs 6bis and
+6ter of Annex 4 are met and the final responsibility for CDD remains with the correspondent.
+21. Banks should also consider gathering information from public sources. These may include the
+website of the supervisory authority of the respondent bank, for cross-checking identification data with
+the information obtained by the supervisor in the licensing process, or with regard to potential AML/CFT
+administrative sanctions that have been imposed on the respondent bank. This may also include public
+registries (see FATF guidance, paragraph 25).
+22. In assessing whether to enter into a correspondent banking relationship, the correspondent bank
+should also consider relevant information on the jurisdiction in which the respondent operates, for
+instance from international bodies or other sources listed in paragraph 25 of the FATF guidance. Where
+deficiencies are identified in certain jurisdictions, correspondent banks should also take into account the
+corrective measures under way to strengthen the jurisdiction's AML/CFT controls, as well as efforts by
+domestic authorities to instruct respondent banks on how to strengthen their controls and mitigate ML/FT
+risks. This would be relevant especially where a correspondent bank is considering whether an existing
+correspondent banking relationship could be subject to additional monitoring or restrictions, rather than
+termination.
+ok < re 5 a a fog 2
+ASQ aSerypyrayny OVE PES Fe Cry yey yar DANK Q aAinysk ¢PUR PNR PERLE EL QPP LP ERS PMSA RSP RAL DL ASCE EA Se PURE SA?
+23. All correspondent banking relationships should be subject to an appropriate level of due
+diligence following a risk-based approach, as presented above. The level of due diligence should be
+proportionate to the respondent bank’s risk profile and consistent with paragraph 14 of the FATF guidance.
+Banks should not treat the CDD process as a “paper-gathering exercise” but as an essential step to support
+assessment of ML/FT risk, as described in paragraphs 9-11. This involves the correspondent bank assessing
+the respondent bank's AML/CFT controls on a risk-sensitive basis (for example, receiving a description of
+the respondent bank's AML/CFT procedures and systems, including sanctions screening, checking if the
+internal audit function regularly reviews the adequacy of the respondent bank’s AML/CFT controls)
+consistent with the FATF guidance and the main body of the present guidelines. Based on the
+correspondent’s own risk assessment, the information-gathering should be complemented by liaising
+Sound management of risks related to money laundering and financing of terrorism 27
+
+directly (eg by phone or videoconference) with the respondent bank's local management and compliance
+officer, or potentially by an on-site visit.
+24. CDD information should also be reviewed and updated regularly, in accordance with the risk-
+based approach. The updating could be based on changes to risks associated with the respondent
+relationship. This information should be used to update the bank's risk assessment process.
+25. The decision to enter into a correspondent banking relationship with a respondent bank should
+be approved by the relevant senior management® of the correspondent bank. When significant ML/FT
+risk factors emerge in an existing correspondent banking relationship, the correspondent should review
+the relationship. Following the review, the decision to continue the relationship with additional risk
+mitigation measures or to terminate it should be escalated to the relevant senior management.
+26. Pursuant to the FATF standards (Recommendation 13), correspondent banks should refuse to
+enter into or continue correspondent banking relationships with “shell” banks (ie banks incorporated in a
+Jurisdiction in which they have no physical presence and which is unaffiliated with a regulated financial
+group).°* Correspondent banks should not enter into correspondent banking relationships if they are not
+satisfied, based on the information gathered or received, that the respondent bank is not a shell bank.
+wn yor
+27. Correspondent banks should establish appropriate policies, procedures and systems to detect
+financial activity that is not consistent with the purpose of the services provided to respondent banks or
+any financial activity that is contrary to commitments that may have been concluded between the
+correspondent bank and the respondent bank. The level of ongoing monitoring should be commensurate
+with respondent banks’ risk profiles.
+28. Respondent banks should ensure that full and accurate originator and beneficiary information is
+included in payment messages sent to correspondent banks, in accordance with FATF
+Recommendation 16 and to enable correspondent banks to screen sanctions and monitor transactions.
+29. If a correspondent bank decides to allow correspondent accounts to be used directly by third
+parties to transact business on their own behalf (payable-through accounts), it should conduct enhanced
+monitoring of these activities in line with the specific risks assessed. The correspondent bank should satisfy
+itself that the respondent bank has conducted adequate CDD on the customers with direct access to
+correspondent accounts and that the respondent bank can provide relevant CDD information upon
+request.
+The senior management consists of a core group of individuals responsible and accountable to the board for the sound and
+prudent day-to-day management of the bank; see Principle 4 in Basel Committee on Banking Supervision, Corporate
+governance principles for banks, July 2015.
+The FATF glossary defines “shell bank” as “a bank that has no physical presence in the country in which it is incorporated and
+licensed, and which is unaffiliated with a regulated financial group that is subject to effective consolidated supervision. Physical
+presence” means meaningful mind and management located within a country. The existence simply of a local agent or low
+level staff do not constitute physical presence”.
+28 Sound management of risks related to money laundering and financing of terrorism
+
+30. As part of ongoing monitoring, if there are doubts after analysing unusual activity alerts
+generated by the monitoring process, the correspondent bank could issue a Request for Information on
+that particular transaction to the respondent bank.
+31. Before considering withdrawing from a correspondent banking relationship, the correspondent
+bank may consider additional measures such as limiting the services provided, real-time monitoring,
+sample testing of transactions or on-site visits.
+32. Senior management should be regularly informed of high-risk correspondent banking
+relationships and how they are monitored, particularly where risks are considered very high.
+SEKI Setar ia
+33. The Committee document Due diligence and transparency regarding cover payment messages
+related to cross-border wire transfers sets supervisory expectations concerning the respective roles of the
+originator’s bank, the intermediary banks and the beneficiary's bank in processing a cross-border payment
+for a wire transfer. Although the document focuses on cover payments, most of the expectations apply
+more widely to all payment messages, as described below. Originating banks are responsible for using the
+right format for payment messages. They should require that information on the originator and beneficiary
+accompanies wire transfers, while others in the payment chain are required to monitor the payments they
+process based on this information. The Committee encourages all banks to apply high transparency
+standards, in full compliance with FATF Recommendation 16, and applicable national laws and regulations.
+34. In particular, the quality of information provided in payment messages should be part of ongoing
+monitoring. Indeed, as mentioned in the Committee guidance on payment messages, the correspondent
+bank as an intermediary should monitor the payment messages transmitted by the respondent bank for
+the purpose of detecting those which lack required originator and/or beneficiary information, including
+meaningless fields,°° consistent with FATF Recommendation 16 and straight through processing. and
+verify the reliability of the respondent's controls, for instance via sample testing (ie a closer look at a few
+transactions to identify cases where they do not comply with the wire transfer information requirements).
+35. Sample testing may also help the correspondent bank to adjust the level and type of monitoring,
+including the timing of ex post reviews.
+36. The respondent bank, acting as the ordering financial institution, remains responsible for
+performing customer due diligence on the originator and must verify originator information for accuracy
+and maintain this information in accordance with local regulatory requirements implementing FATF
+Recommendation 16.
+37. As recommended by the CPMI, the use of the LEI as additional information in payment messages
+should be possible on an optional basis in the current relevant payment messages (ie MT 202 COV and
+MT 103). Where available, the use of the LEI would facilitate the determination by the correspondent bank
+that the information in the message is sufficient to unambiguously identify the originator and beneficiary
+of a transfer.
+°° «See in particular paragraph 25 of Basel Committee on Banking Supervision, Due diligence and transparency regarding cover
+payment messages related to cross-border wire transfers, May 2009.
+°& ‘That is, information that makes no obvious sense, such as “one of my customers” or a pure string of characters.
+Sound management of risks related to money laundering and financing of terrorism 29
+
+VII. | Group-wide and cross-border considerations
+38. If a respondent bank has correspondent banking relationships with several entities belonging to
+the same group (case 1), the head office of the group should ensure that the assessments of the risks by
+the different entities of the group are consistent with the group-wide risk assessment policy. The group’s
+head office should coordinate the monitoring of the relationship with the respondent bank, particularly in
+the case of a high-risk relationship, and make sure that adequate information-sharing mechanisms inside
+the group are in place.
+Case 1
+Financial group supervised ona
+consolidated basis or on an under-
+consolidated basis
+Head office of group A
+Ssot~wvfornrOn
+Head office group
+business relationship Subsidiary Al - country C
+ttty
+manager 
+Respondent
+t bank
+b
+Head office group a .AML/CFT compliance Subsidiary A2 — country H . Country Z
+officer k
+I
+Subsidiary A3 - copntry U
+. ay
+39. If a correspondent bank has business relationships with several entities belonging to the same
+group but established in different host countries (case 2), the correspondent bank should take into account
+the fact that these entities belong to the same group. Nevertheless, the correspondent bank should also
+independently assess the ML/FT risks presented by each business relationship.
+30 Sound management of risks related to money laundering and financing of terrorism
+
+Case 2
+Foreign financial group
+Respondent bank
+subsidiary B2 — country S
+| re |
+Ct
+| I
+1 O 41
+I I
+i Fou
+tort
+1 et Respondent bank B, head
+1 I .
+1 Sot office of group — country G
+ips
+1
+] 1]
+I
+Business relationship ! ;
+maneger Correspondent 1 OY
+bani 1 e€ Respondent bank
++ a 1 subsidiary B1 — country K
+I I
+I I
+AML/CFT Country F !
+compliance officer ; .
+1 3 y
+I I
+I I
+I I
+I I
+I I
+I I
+I I
+I I
+I I
+I I
+I I
+VIII. Risk management
+40. Banks should establish specific procedures to manage correspondent banking relationships.
+Business relationships should be formalised in written agreements that clearly define the roles and
+responsibilities of the banking partners.
+41. Including notice periods for terminating or limiting the business relationships in the terms and
+conditions governing the correspondent banking relationship is recommended as it should be part of the
+correspondent bank’s risk management procedures. From the respondent bank's perspective, such notice
+periods should inform banks’ business continuity plans.°’ As part of contingency planning for critical
+functions under operational risk management, a respondent bank may consider having more than one
+correspondent banking account for its payment services, where necessary for its continued operation.
+42. Senior management should also be aware of the roles and responsibilities of the different services
+within the bank (eg business lines, compliance officers (including the chief or group AML/CFT officer),
+audit) pertaining to correspondent banking activities.
+43. A bank's internal audit and compliance functions>® have important responsibilities in evaluating
+and ensuring compliance with procedures related to correspondent banking activities. Internal controls
+should cover identification measures of the respondent banks, the collection of information, the ML/FT
+risk assessment process, ongoing monitoring of correspondent banking relationships and compliance with
+the duties to detect and report suspicions (about respondents and/or possible underlying subjects
+involved in the transactions).
+°7_ ‘See in particular Principle 10 in Basel Committee on Banking Supervision, Principles for the sound management of operational
+risk, June 2011.
+58 See Basel Committee on Banking Supervision, The internal audit function in banks, June 2012, and BCP 26 on internal control
+and audit in Core principles for effective banking supervision, September 2012.
+Sound management of risks related to money laundering and financing of terrorism 31
+
+Annex 3
+List of relevant FATF recommendations
+FATF new recommendations
+(including their interpretative notes)
+R. 1: Assessing risks and applying a risk-based approach
+R. 2: National cooperation and coordination
+R. 9: Financial institution secrecy law
+R. 10: Customer due diligence
+R. 11: Record-keeping
+R. 12: PEPs
+R. 13: Correspondent banking
+R.15: New technologies
+R. 16: Wire transfers
+R. 17: Reliance on third parties
+R. 18: Internal controls and foreign branches and subsidiaries
+R.20: Reporting of suspicious transactions
+R. 26: Regulation and supervision of financial institutions
+R. 40: International cooperation
+32 Sound management of risks related to money laundering and financing of terrorism
+
+1. This annex is a general guide detailing the principles set out in the main body of these guidelines
+(paragraphs 35-41). This guide focuses on account opening. It is not intended to cover every eventuality,
+but rather to focus on some of the mechanisms that banks can use in developing an effective customer
+identification and verification programme. It also sets out the information that should be collected at the
+time of account opening and which will help the bank to develop and complete the customer risk profile.
+2. For the purpose of this Annex, an account is defined as any formal banking or business
+relationship established by a bank to provide or engage in products, services, dealings, or other financial
+transactions. This includes demand deposits, savings deposits, or other transaction or asset accounts, or
+credit accounts or other extension of credit. In keeping with the scope of the original document issued by
+the Basel Committee in 2003, this guide only covers the opening of new accounts and not the conduct of
+occasional transactions.
+3. The guidance set out in this annex is therefore intended to assist banks in defining their approach
+to account opening. It may be adapted for specific application by banks in respect of their AML/CFT
+policies and procedures, especially in developing sound customer risk profiles and by national financial
+Supervisors seeking to further enhance the effectiveness of bank compliance with customer identification
+and verification programmes. Supervisors recognise that any effective customer identification/verification
+programme should reflect the risks arising from the different types of customer, types of banking product
+and the varying levels of risk resulting from a customer's relationship with a bank. Higher-risk customer
+relationships and transactions, such as those associated with politically exposed persons (PEPs)*? or other
+higher-risk customers, will clearly require greater scrutiny than relationships and transactions associated
+with lower-risk customers. Therefore, the provisions in this guide should be read in conjunction with the
+main body of the guidelines, and in particular with the provisions related to assessing and understanding
+risks (see paragraphs 15-16 of the guidelines) and should be adapted for identified specific (higher- or
+lower-) risk situations.
+4. Guidance and best practice established by national financial supervisors should be
+commensurate with the risks present in thejurisdiction; for this reason they will vary between countries.
+According to this risk-based approach, jurisdictions may allow simplified customer due diligence measures
+to be applied for lower-risk situations. For example, some jurisdictions have either taken or supported
+actions to encourage financial inclusion by promoting lower-risk financial products (such as an account
+with a limited set of services for specific types of customer). Conversely, in cases where there is a higher
+risk, banks should apply enhanced due diligence. Examples of such cases include the customer applying
+°9 «See “in particular the FATF Guidance on Politically Exposed Persons (recommendations 12 and 22), www.fatf-
+gafi.org/fr/documents/documents/peps-r12-r22.html.
+Sound management of risks related to money laundering and financing of terrorism 33
+
+for specific products featuring non-face-to-face transactions, that allow anonymity of certain
+transactions, or that are specifically vulnerable to fraud.
+5. Similarly, banks’ customer identification and verification policies and procedures will differ to
+reflect risks arising from the relevant categories of customers, products and services. In designing and
+implementing customer identification programmes and establishing a customer's risk profile, banks
+should take into account the risks arising from each type of financial product or service used by the
+customer as well as the delivery channel and the location.
+6. According to the FATF standards,°! banks should always identify customers and verify their
+identity.°* When doing so, banks should be conscious that some identification documents are more
+vulnerable to fraud than others. For those that are most susceptible to fraud, or where there is uncertainty
+concerning the validity of the document(s) presented, the verification requirement should be enhanced
+and the information provided by the customer should be verified through additional inquiries or other
+sources of information.
+6bis. Supervisors recognise banks’ growing use of external databases, such as KYC utilities or public
+registries for obtaining customer information. Different types of information may be contained in such
+databases and used by banks for different purposes, such as:
+(a) helping identify the customer, by providing identification and, in some cases, beneficial
+ownership information;
+(b) collecting information supporting the risk profile;
+(c) in some cases, serving as an external source of verification.
+Such databases may be used at different stages and for different types of customers, for instance at
+account opening for obtaining basic information, during the course of the relationship to update the
+information, or on an ongoing basis to assist banks with gathering information for their risk assessment
+process. Banks should take into account international standards, which require consideration of the
+reliability of the source, and compliance with applicable national laws, which may prescribe certain
+customer identification or verification procedures. In the case of public registries, the banks should take
+into account the laws and procedures governing them. Banks should also be alert to the risk of identity
+theft, and take into account the fact that a database may help establish that a customer exists and gather
+information on that customer. However, the database may not necessarily confirm that the person the
+bank is dealing with is that customer.
+6ter. In any case, the ultimate responsibility for CDD remains with the bank establishing the customer
+relationship. The level of risk associated with the customer and the KYC utility features will determine
+whether the bank needs to verify or corroborate the information provided by the utility and collect
+additional information, or take other measures. Therefore, when determining the extent to which they can
+use KYC utilities to support due diligence, banks should consider whether:
+60 Anonymous accounts are prohibited by the FATF but some products and new payment methods (certain prepaid cards, virtual
+currencies) could be higher risk, for example where they allow anonymous transactions,
+61 See recommendation 10.
+62 The extent and intensity of the process can nevertheless vary according to the risks involved. See FATF Guidance on AML/CFT
+Measures and financial inclusion, paragraph 61 and followings and FATF RBA Guidance for the banking sector, paragraph 63.
+68 For instance, FATF Recommendation 10 requires “(a) identifying the customer and verifying that customer's identity using
+reliable, independent source documents, data or information. (b) Identifying the beneficial owner, and taking reasonable
+measures to verify the identity of the beneficial owner, such that the financial institution is satisfied that it knows who the
+beneficial owner is. For legal persons and arrangements this should include financial institutions understanding the ownership
+and control structure of the customer. (c) Understanding and, as appropriate, obtaining information on the purpose and
+intended nature of the business relationship.” Interpretative Note to Recommendation 10 states “the relevant identification
+data may be obtained from a public register, from the customer or from other reliable sources”.
+34 Sound management of risks related to money laundering and financing of terrorism
+
+(a) the utility clearly specifies the source of the information (eg the customer itself, a public registry)
+so that the bank can assess the adequacy of the source and whether it meets the level of
+confidence expected by the bank in the circumstances;
+(b) the utility specifies the date of the last update and when the information was last confirmed with
+the source;
+(c) the data quality is adequate, by assessing from time to time the reliability of the information in
+the utility (eg by verifying for a sample that the information matched the stated source at the
+stated date, with a frequency and depth depending on the extent to which the utility is itself
+subject to a transparent and independent data quality management programme).
+7. The rest of this annex is divided into two sections covering different aspects of customer
+identification. Section II describes what types of information should be collected and verified for natural
+persons seeking to open accounts. Section III describes what types of information should be collected and
+verified for legal persons and legal arrangements.
+II. Natural persons
+A. Identification of individuals who are customers or beneficial owners or
+authorised signatories
+8. For natural persons, the bank should collect the following information for identification purposes
+from the customer or any other available source:
+Natural persons
+Identification information Table 1
+Potential additional information
+Ata minimum (on the basis of risks)
+Any other names used (such as marital name,
+Legal name (first and last name); former legal name or alias);
+Business address, post office box number, e-mail
+Complete residential address;° address and landline or mobile telephone
+numbers;
+Nationality, an official personal identification
+. . oe Residency status;°
+number or other unique identifier;? y
+Date and place of birth.” Gender.
+(a) Not all this information may be required in lower-risk situations, when simplified due diligence can be applied. The list does not
+include other basic requirements that are not specifically related to AML/CFT requirements, such as collecting the signatures of the
+account holders.
+(6) There are circumstances when this information is legitimately unavailable. This could prevent the clients from accessing formal
+banking services. If clients are allowed to access to formal banking services, banks should apply mitigating measures as provided
+for by their internal risk policies, in line with national laws. Such measures could include utilising alternative information or
+conducting appropriate monitoring.
+(c) The collection of this information may be subject to national data protection and privacy regimes.
+Sound management of risks related to money laundering and financing of terrorism 35
+
+B. Information related to the customer’s risk profile
+9. When the account opening is the start of a customer relationship, further information should be
+collected with a view to developing an initial customer risk profile (See in particular paragraphs 37-39 of
+the main body of the guidelines):
+Natural persons
+Risk profile’s information Table 2
+Key attributes° Potential additional information
+(on the basis of risks)
+Occupation, public position held; Name of employer, where applicable;
+Income; Sources of customer's wealth;
+Expected use of the account: amount, number,
+type, purpose and frequency of the transactions Sources of funds passing through the account;
+expected;
+Financial products or services requested by the Destination of funds passing through the
+customer. account.
+(a) These key attributes are useful in establishing the first step of the customer's risk profile; they might not be required in lower-risk
+situations where simplified due diligence can be applied.
+C. Verification of identity of natural persons
+10. The bank should verify the identity of the customer established through information collected
+according to paragraph 8 using reliable, independently sourced documents, data or information. The
+measures to verify the information produced should be proportionate to the risk posed by the customer
+relationship and should enable the bank to satisfy itself that it knows who the customer is. Examples of
+different verification procedures are given below. This list of examples is not exhaustive:
+(a) Documentary verification proceduresTM
+e confirming the identity of the customer or the beneficial owner from an unexpired official
+document (eg passport, identification card, residence permit, social security records, driver's
+licence) that bears a photograph of the customer;
+e confirming the date and place of birth from an official document (eg birth certificate, passport,
+identity card, social security records);
+° confirming the validity of official documentation provided through certification by an authorised
+person (eg embassy official, public notary);
+e confirming the residential address (eg utility bill, tax assessment, bank statement, letter from a
+public authority).
+In somejurisdictions, there may be other verification procedures of an equivalent nature that will provide
+satisfactory evidence of a customer's identity and risk profile.
+64 Even if not required nor necessary in all circumstances, given the availability of counterfeit and fraudulently obtained
+documents, a bank is encouraged to review more than a single document to ensure that it has a reasonable belief that it knows
+the customer's true identity.
+36 Sound management of risks related to money laundering and financing of terrorism
+
+(b) Non-documentary verification procedures
+° contacting the customer by telephone or by letter to confirm the information supplied, after an
+account has been opened (eg a disconnected phone, returned mail etc should warrant further
+investigation);
+° checking references provided by other financial institutions;
+° utilising an independent information verification process, such as by accessing public registers,
+private databases or other reliable independent sources (eg credit reference agencies).
+11. Banks should verify that any person purporting to act on behalf of the customer is so authorised.
+If so, banks should identify and verify the identity of that person. In such a case, the bank should also verify
+the authorisation to act on behalf of the customer (a signed mandate, an official judgment or equivalent
+document).
+12. Particular attention needs to be focused on those customers assessed as having higher-risk
+profiles.°° Additional sources of information and enhanced verification procedures may include:
+e confirming an individual’s residential address on the basis of official papers, a credit reference
+agency search, or through home visits;
+e prior bank reference (including banking group reference) and contact with the bank regarding
+the customer;
+e verification of income sources, funds and wealth identified through appropriate measures; and
+e verification of employment and of public positions held;
+° personal reference (ie by an existing customer of the same bank).
+13. If national law allows for non-face-to-face account opening, banks should take into account the
+specific risks associated with this method. Customer identification and verification procedures should be
+equally effective and similar to those implemented for face-to-face interviews. In particular, banks should
+(i) establish that the customer exists; and (ii) establish that the person the bank is dealing with is that
+customer.
+14. As part of its broader customer due diligence measures, the bank should consider, on a risk-
+sensitive basis, whether the information regarding sources of wealth and funds or destination of funds
+should be corroborated.
+15. The procedures discussed previously in paragraphs 8-14 should also be applied to legal persons
+and arrangements. Banks should identify and verify the identity of the customer, and understand the
+nature of its business, and its ownership and control structure, with a view to establishing a customer risk
+profile.
+65 Without prejudice to FATF recommendations on PEPs and associated enhanced due diligence (see in particular
+Recommendation 12 within the FATF standards).
+Sound management of risks related to money laundering and financing of terrorism 37
+
+A. Legal persons®
+16. The term legal person includes any entity (eg business or non-profit organisation, distinct from
+its officers and shareholders) that is not a natural person or a legal arrangement. In considering the
+customer identification guidance for the different types of legal persons, particular attention should be
+given to the different levels and nature of risk associated with these entities.
+1. Identification of legal persons
+17. For legal persons, the following information should be obtained for identification purposes:
+Legal persons
+Identification information Table 3
+Potential additional information
+Ata minimum (on the basis of risks)
+Name, legal form, status and proof of
+incorporation of the legal person;
+Permanent address of the principal place of the
+legal person’s activities;
+Official identification number (company
+registration number, tax identification number); egal entity identifier (LEI) if eligible
+Mailing and registered address of legal person; Contact telephone and fax numbers.
+Identity of natural persons who are authorised to
+operate the account. In the absence of an | Identity of relevant persons holding senior
+authorised person, the identity of the relevant | management positions.
+person who is the senior managing official.
+Identity of the beneficial owners (according to
+relevant FATF standards and paragraph 13 of this
+annex); °
+Powers that regulate and bind the legal person
+(such as the articles of incorporation for a
+corporation).
+(a) Not all this information may be required in lower-risk situations where simplified due diligence can be applied. The list does not
+include other basic requirements that are not specifically related to AML/CFT requirements, such as collecting the signatures of the
+account holders.
+(b) The term “beneficial owner” is used in this annex in a manner consistent with the definition and clarifications provided in the FATF
+standards. For reference, the FATF defines a “beneficial owner” as the natural person(s) who ultimately owns or controls a customer
+and/or the natural person on whose behalf a transaction is being conducted. It also includes those persons who exercise ultimate
+effective control over a legal person or arrangement.
+(c) See Interpretative note to recommendation 10 of the FATF. See also FATF, Transparency and beneficial ownership, October 2014,
+www. fatf-gafi.org/media/fatf/documents/reports/Guidance-transparency-beneficial-ownership.pdf.
+(d) Subject to developments in the LEI project, this information may become required in the future.
+6 The FATF definition of “legal persons” refers to any entities other than natural persons that can establish a permanent customer
+relationship with a bank or otherwise own property. This can include companies, bodies corporate, foundations, Anstalt-type
+structures, partnerships, or associations and other relevantly similar entities.
+38 Sound management of risks related to money laundering and financing of terrorism
+
+2. Information for defining the risk profile of a customer which is a legal person
+18. When the account opening is the start of a customer relationship, further information should be
+collected with a view to developing an initial customer risk profile (see in particular paragraphs 37-39 of
+the main body of the guidelines):
+Legal persons
+Risk profile information Table 4
+At a minimum? Potential additional information
+(on the basis of risks)
+Nature and purpose of the activities of the legal
+entity and its legitimacy;
+Financial situation of the entity;
+Expected use of the account: amount, number,
+type, purpose and frequency of the transactions
+expected.
+Sources of funds paid into the account and
+destination of funds passing through the account.
+(a) Not all this information may be required in lower-risk situations when simplified due diligence can be applied. The list does not
+include other basic requirements that are not specifically related to AML/CFT requirements, such as collecting the signatures of the
+account holders.
+3. Verification of identity of legal persons
+19. The bank should verify the identity of the customer established through information collected
+according to paragraph 17 using reliable, independent source documents, data or information. The bank
+should obtain:
+° a copy of the certificate of incorporation and memorandum and articles of association, or
+partnership agreement (or any other legal document certifying the existence of the entity, eg
+abstract of the registry of companies/commerce);
+20. The measures to verify the information produced should be proportionate to the risk posed by
+the customer relationship and should allow the bank to satisfy itself that it knows the customer's identity.
+Examples of other verification procedures are given below. This list is not exhaustive.
+(a) Documentary verification
+e for established corporate entities — reviewing a copy of the latest financial statements (audited, if
+available).
+(b) Non-documentary verification
+° undertaking a company search and/or other commercial enquiries to ascertain that the legal
+person has not been, or is not in the process of being, dissolved, struck off, wound up or
+terminated;
+° utilising an independent information verification process, such as by accessing public corporate
+registers, private databases or other reliable independent sources (eg lawyers, accountants);
+e validating the LEI and associated data in the public access service;
+e obtaining prior bank references;
+° visiting the corporate entity, where practical;
+e contacting the corporate entity by telephone, mail or e-mail.
+Sound management of risks related to money laundering and financing of terrorism 39
+
+In somejurisdictions, there may be other verification procedures of an equivalent nature that will
+provide satisfactory evidence of a customer’s identity and risk profile.
+4. Verification of identity of authorised signatories and of beneficial owners of the
+customer
+21. Banks should verify that any person purporting to act on behalf of the legal person is so
+authorised. If so, banks should verify the identity of that person. This verification should entail verification
+of the authorisation to act on behalf of the customer (a signed mandate, an official judgment or equivalent
+document).
+22. Banks should undertake reasonable measures to verify the identity of the beneficial owners, in
+accordance with the FATF definition referenced in Table 3 note b and the due diligence procedures for
+natural persons outlined in Section II above.
+5. Further verification of information on the basis of risks
+23. As part of its broader customer due diligence measures, the bank should consider, on a risk-
+sensitive basis, whether the information regarding financial situation and source of funds and/or
+destination of funds should be corroborated.
+B. Legal arrangements*’
+1. Identification of legal arrangements
+24. For legal arrangements, the following information should be obtained:
+Legal arrangements
+Identification information Table 5
+Potential additional information
+Ata minimum (on the basis of risks)
+Name of the legal arrangement and proof of
+Contact telephone and fax numbers if relevant;
+existence;
+Address, and country of establishment;
+Nature, purpose and objects of the legal
+arrangement (eg is it discretionary, testamentary
+eto); Legal entity identifier (LEI), if eligible;>
+The names of the settlor, the trustee(s), the
+protector (if any), the beneficiaries or class of
+beneficiaries, and any other natural person
+exercising ultimate effective control over the legal
+arrangement (including through a chain of
+control/ownership);
+The names of the relevant persons having a senior
+management position in the legal arrangement, if
+relevant, addresses of trustees, beneficiaries.
+(a) Not all this information may be required in lower-risk situations where simplified due diligence can be applied. The list does not
+include other basic requirements that are not specifically related to AML/CFT requirements, such as collecting the signatures of the
+account holders.
+67 The term “legal arrangements” is used in this annex consistently with the definition provided by the FATF standards. As a
+reminder, the FATF defines “legal arrangements” as express trusts or other similar legal arrangements. Examples of other similar
+arrangements (for AML/CFT purposes) include fiducie, Treuhand and fideicomiso.
+40 Sound management of risks related to money laundering and financing of terrorism
+
+(b) Subject to developments in the LEI project, this information may be required in the future.
+2. Information for defining the risk profile of a customer which is a legal arrangement
+25. When the account opening is the start of a customer relationship, further information should be
+collected with a view to develop an initial customer risk profile (see in particular paragraphs 37-39 of the
+main body of the guidelines):
+Legal arrangements
+Risk profile information Table 6
+Potential additional informationA 
+oe 
+;
+ta minimum (on the basis of risks)
+Description of the purpose/activities of the legal | Source of funds;
+arrangement (eg in a formal constitution, trust
+deed);
+Expected use of the account: amount, number, | Origin and destination of funds passing through
+type, purpose and frequency of the transactions | the account.
+expected.
+(a) Not all this information may be required in lower-risk situations where simplified due diligence can be applied. The list does not
+include other basic requirements that are not specifically related to AML/CFT requirements, such as collecting the signatures of the
+account holders.
+3. Verification of identity of legal arrangement
+26. The bank should verify the identity of the customer established through information collected
+according to paragraph 23, using reliable, independently sourced documents, data or information. The
+bank should obtain, at a minimum, a copy of documentation confirming the nature and legal existence of
+the account holder (eg a deed of trust, register of charities). Measures to verify the information produced
+should be proportionate to the risk posed by the customer relationship and enable the bank to satisfy
+itself that it knows the customer's identity.
+27. Examples of other procedures of verification are given below. This list of examples is not
+exhaustive. In somejurisdictions, there may be other procedures of an equivalent nature which may be
+produced, applied or accessed as satisfactory evidence of a customer's identity and risk profile. It includes:
+e obtaining an independent undertaking from a reputable and known firm of lawyers or
+accountants confirming the documents submitted;
+e obtaining prior bank references;
+e accessing or searching public and private databases or other reliable independent sources.
+4. Verification of identity of authorised signatories and of beneficial owners of the legal
+arrangement
+28. Banks should undertake reasonable measures to verify the identity of the beneficial owners of
+the legal arrangements, in accordance with paragraphs 10-11 above.
+29. Banks should verify that any person purporting to act on behalf of the legal arrangement is so
+authorised. If so, banks should verify not only the identity of that person but also the person’s authorisation
+to act on behalf of the legal arrangement (by means of a signed mandate, an official judgment or another
+equivalent document).
+Sound management of risks related to money laundering and financing of terrorism Al
+
+5. Further verification of information on the basis of risks
+30. As part of its broader customer due diligence measures, the bank should consider, on a risk-
+sensitive basis, whether the information regarding source of funds and/or destination of funds should be
+corroborated.
+seutic herac eyh copie kop:
+1. Retirement benefit programmes
+31. Where an occupational pension programme, employee benefit trust or share option plan is an
+applicant for an account, the trustee and any other person who has control over the relationship (eg
+administrator, programme manager or account signatories) can be considered as beneficial owners and
+the bank should take steps to identify them and verify their identities.
+2. Mutuals/friendly societies, cooperatives and provident societies
+32. Where these entities are applicants for accounts, those persons exercising control or significant
+influence over the organisation’s assets should be considered the beneficial owners and therefore
+identified and verified. This will often include board members as well as executives and account signatories.
+3. Professional intermediaries
+33. When a professional intermediary opens a customer account on behalf of a single customer that
+customer must be identified. Professional intermediaries will often open “pooled” accounts on behalf of a
+number of entities. Where funds held by the intermediary are not co-mingled but “sub-accounts” are
+established which can be attributed to each beneficial owner, all beneficial owners of the account held by
+the intermediary should be identified. Where the funds are co-mingled, the bank should look through to
+the beneficial owners. However, there may be circumstances — which should be permitted by law and set
+out in supervisory guidance — where the bank may not need to look beyond the intermediary (eg when
+the intermediary is subject to due diligence standards in respect of its customer base that are equivalent
+to those applying to the bank itself, such as could be the case for broker-dealers).
+34. Where such circumstances apply and an account is opened for an open or closed-end investment
+company, unit trust or limited partnership that is subject to customer due diligence requirements which
+are equivalent to those applying to the bank itself, the bank should treat this investment vehicle as its
+customer and take steps to identify:
+° the fund itself;
+° its directors or any controlling board where it is a company;
+° its trustee where it is a unit trust;
+° its managing (general) partner where it is a limited partnership;
+° account signatories; and
+° any other person who has control over the relationship eg fund administrator or manager.
+35 Where other investment vehicles are involved, the same steps should be taken as in paragraph 34
+where it is appropriate to do so. In addition, in cases when no equivalent due diligence standards apply to
+the investment vehicle, all reasonable steps should be taken to verify the identity of the beneficial owners
+of the funds and of those who have control of the funds.
+68 ~~ When the domestic AML/CFT requirements do not require all this information to be collected but, as a minimum, only one of
+the items mentioned, the account-opening bank should consider collecting the other items as additional information.
+42 Sound management of risks related to money laundering and financing of terrorism
+
+36. Intermediaries should be treated as individual customers of the bank and the standing of the
+intermediary should be separately verified by applying the appropriate methods listed in paragraphs 17-23
+above.
+Sound management of risks related to money laundering and financing of terrorism 43
+

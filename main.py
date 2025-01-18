@@ -31,7 +31,7 @@ def main(input_dir, output_dir):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process some files.')
-    parser.add_argument('--input_dir', default="sample/test", type=str, help='The input directory where your raw pdf files will be stored.')
+    parser.add_argument('--input_dir', default="sample/anti_money_laundering", type=str, help='The input directory where your raw pdf files will be stored.')
     parser.add_argument('--output_dir', default="pre_processing", type=str, help='The output directory where the extracted.csv files will be stored.')
     args = parser.parse_args()
     

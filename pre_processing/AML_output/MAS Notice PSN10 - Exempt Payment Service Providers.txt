@@ -1,0 +1,62 @@
+MAS Notice PSN10
+5 December 2019
+Last revised on 28 June 2021
+(Refer to endnotes for history of amendments)
+NOTICE TO EXEMPT PAYMENT SERVICE PROVIDERS
+MONETARY AUTHORITY OF SINGAPORE ACT, CAP. 186
+PREVENTION OF MONEY LAUNDERING AND COUNTERING THE FINANCING OF
+TERRORISM - EXEMPT PAYMENT SERVICE PROVIDERS
+1.1
+1.2
+2.1
+INTRODUCTION
+This Notice is issued pursuant to section 178 of the Monetary Authority of Singapore
+Act (Cap. 186) (“MAS Act’) and applies to all exempt persons.
+This Notice shall take effect from 28 January 2020.
+DEFINITIONS
+For the purposes of this Notice -
+“exempt person” means any of the following persons who is exempt under section 13(1)
+of the Payment Services Act 2019 (Act 2 of 2019) (“PS Act”) from the requirement to
+have in force a licence that entitles the person to carry on a business of providing any
+payment service:
+(a) | abank licensed under the Banking Act (Cap. 19);
+(b) | amerchant bank licensed under the Banking Act;
+(c) a finance company licensed under the Finance Companies Act (Cap. 108):
+(d) | aperson licensed to carry on the business of issuing credit cards or charge
+cards in Singapore under section 57B of the Banking Act.
+[MAS Notice PSN10 (Amendment) 2021]
+“product”, for the purposes of the definition of specified product, means a facility which
+is offered by a payment service provider to its customers in relation to one or more
+payment services under the same terms and conditions;
+“specified product” means a product that involves all of the following services:
+
+(a) an account issuance service;
+(b) | adomestic money transfer service; and
+(c) an @-money issuance service;
+2.2 The expressions used in this Notice shall, except where defined in this Notice or where
+the context otherwise requires, have the same meanings as in the PS Act.
+3 EXEMPTION
+3.1. An exempt person as described in the first column of Table 1 shall be exempt from the
+requirements of the corresponding AML/CFT Notice as set out in the second column of
+Table 1, only to the extent that such requirements relate to the provision of payment
+services for a specified product.
+3.2 For the avoidance of doubt, an exempt person shall continue to comply with MAS
+Notice PSNO1 Notice to Holders of Payment Services Licence (Specified Payment
+Services) in relation to the provision of payment services for a specified product.
+Table1
+First column Second column
+Exempt person Notice
+1. A bank licensed under the Banking Act MAS Notice 626
+2. Amerchant bank licensed under the MAS Notice 1014
+Banking Act
+3. A finance company licensed under the MAS Notice 824
+Finance Companies Act
+4. A person licensed to carry on the business | MAS Notice 626A
+of issuing credit cards or charge cards in
+Singapore under section 57B of the
+Banking Act
+Endnotes on History of Amendments
+[MAS Notice PSN10 (Amendment) 2021]
+1. MAS Notice PSN10 dated 5 December 2019 with effect from 28 January 2020.
+(a) MAS Notice PSN10 (Amendment) 2021 with effect from 1 July 2021.
+
