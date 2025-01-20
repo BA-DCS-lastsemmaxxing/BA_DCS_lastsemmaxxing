@@ -19,6 +19,13 @@ EXTRACTOR_SCRIPT = os.path.join(BASE_DIR, "pdf_extractor.py")
 os.makedirs(INPUT_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
+
+# To test the Flask app       
+@app.route('/')
+def home():
+    return jsonify({"message": "Welcome to Flask!"})
+
+
 def run_ocr(input_folder, output_folder):
     """Run the OCR script as a subprocess."""
     try:
@@ -39,11 +46,6 @@ def run_extractor():
     except subprocess.CalledProcessError as e:
         print(f"Error running extractor script: {e}")
         
-# To test the Flask app       
-@app.route('/')
-def home():
-    return jsonify({"message": "Welcome to Flask!"})
-
 
 @app.route("/upload", methods=["POST"])
 def upload_files():

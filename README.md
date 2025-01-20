@@ -21,7 +21,7 @@
       ```
 4. Install required packages:
     ```bash
-    pip install flask flask-cors
+    pip install flask flask-cors ocrmypdf pypdf python-docx
     ```
 
 ### Frontend:
