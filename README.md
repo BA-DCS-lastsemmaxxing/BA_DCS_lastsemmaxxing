@@ -1,5 +1,8 @@
 # BA_DCS_lastsemmaxxing
 
+## Key Resources
+Weekly Updates: https://drive.google.com/drive/folders/1o8y0EWdAuGMQe17fiuy6eFUvAWo5dUt3?usp=drive_link
+
 ## Installation
 ### Backend:
 1. Navigate to the `backend` directory:
