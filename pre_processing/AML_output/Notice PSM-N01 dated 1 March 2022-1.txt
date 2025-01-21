@@ -1,0 +1,1149 @@
+MAS Notice PSM-N01
+1 March 2022
+NOTICE TO FINANCIAL INSTITUTIONS DEALING IN PRECIOUS STONES AND PRECIOUS
+METALS
+MONETARY AUTHORITY OF SINGAPORE ACT 1970
+PREVENTION OF MONEY LAUNDERING AND COUNTERING THE FINANCING OF
+TERRORISM - FINANCIAL INSTITUTIONS DEALING IN PRECIOUS STONES AND
+PRECIOUS METALS
+1.1
+1.2
+1.3
+INTRODUCTION
+This Notice is issued pursuant to section 27B of the Monetary Authority of Singapore Act
+1970 (“MAS Act”) and applies to all financial institutions as defined in section 27A(6), read
+with section 27A(7) of the MAS Act (“financial institution’), which carries on a business —
+(a) of regulated dealing; or
+(b) as_an intermediary for regulated dealing.
+In relation to a person as described in the first column of Table 1, the requirements of the
+corresponding AML/CFT Notice as set out in the second column of Table 1 shall not apply
+to that person only to the extent that such requirements relate to the carrying on of a
+business of regulated dealing or as an intermediary for regulated dealing.
+For the avoidance of doubt, a person as described in the first column of Table 1 shall
+continue to comply with MAS Notice PSM-N01 in relation to the carrying on of a business
+of regulated dealing or as an intermediary for regulated dealing.
+Table1
+First column Second column
+Person Notice
+(a) A bank licensed under the Banking Act 1970 MAS Notice 626
+(b) A merchant bank in Singapore licensed under the | MAS Notice 1014
+Banking Act 1970
+(c) A finance company licensed under the Finance | MAS Notice 824
+Companies Act 1967
+
+(d) A person licensed to carry on the business of | MAS Notice 626A
+issuing credit cards or charge cards in Singapore
+under Section 5/B of the Banking Act 1970
+(e) A holder of a capital markets services licence under | MAS Notice SFA04-N02
+the Securities and Futures Act 2001 (“SFA”)
+(f) A fund management company registered under
+paragraph 5(1)(i) of the Second Schedule to the
+Securities and Futures (Licensing and Conduct of
+Business) Regulations (Rg. 10) (“SF(LCB)R’)
+(g) A person exempted under paragraphs 3(1)(d),
+3A(1)(d) and 7(1)(b) of the Second Schedule to the
+SF(LCB)R from the requirement to hold a capital
+markets services licence
+(h) A licensed financial adviser under the Financial | MAS Notice FAA-N06
+Advisers Act 2001 (“FAA”)
+(i) A registered insurance broker which is exempt
+under section 23(1)(c) of the FAA, from holding a
+financial adviser’s licence to act as a financial
+adviser in Singapore in respect of any financial
+advisory service
+(j) A person exempt under section 23(1)(f) of the FAA
+read with regulation 27(1)(d) of the Financial
+Advisers Regulations (Rg. 2), from holding a
+financial adviser’s licence to act as a financial
+adviser in Singapore in respect of any financial
+advisory service
+(k) A holder of a licence under the Payments Services | MAS Notice PSNO1
+Act 2019 (“PS Act’) that carries on the business of
+providing a specified payment service (as defined
+under MAS Notice PSN01)
+(I) A person exempt under section 13(1) of the PS Act
+where such person offers a specified product (as
+defined under MAS Notice PSNO1)
+1.4 This Notice shall take effect from 1 March 2022.
+2 DEFINITIONS
+
+2.1 For the purposes of this Notice -
+“account relationship” means —
+(a) the opening or maintenance of an account in the name of a person (whether a
+natural person, legal person or legal arrangement) by a financial institution for the
+purpose of any regulated dealing; or
+(b) the use of an existing account with a financial institution in the name of a person
+(whether a natural person, legal person or legal arrangement) for the purpose of
+any regulated dealing by the financial institution with that person;
+“AML/CFT” means anti-money laundering and countering the financing of terrorism;
+“asset-backed token” means a token, certificate or other instrument backed by one or
+more precious stones, precious metals or precious products that entitles the holder to the
+precious stone, precious metal or precious product, or part of it, but excludes —
+(a) securities or derivatives contracts within the meaning of the SFA;
+(b) | commodity contracts within the meaning of the Commodity Trading Act 1992; and
+(c) digital payment tokens within the meaning of the PS Act;
+“Authority” means the Monetary Authority of Singapore;
+“beneficial owner’, in relation to a customer of a financial institution, means the natural
+person who ultimately owns or controls the customer or the natural person on whose
+behalf a relevant business transaction is conducted or an account relationship is
+established, and includes any person who exercises ultimate effective control over a legal
+person or legal arrangement;
+“cash” means currency notes and coins (whether of Singapore or of a foreign country or
+jurisdiction) which are legal tender and circulate as money in the country or jurisdiction of
+ISSUE;
+“cash equivalent” means any physical or electronic form of a voucher, token, stamp,
+coupon, card or other article the redemption of which in accordance with its terms entitles
+the holder to receive any precious stone, precious metal or precious product up to the
+value stated on or recorded in or in respect of the voucher, token, stamp, coupon, card
+or other article;
+“cash transaction report” has the same meaning as defined in section 2 of the Precious
+Stones and Precious Metals (Prevention of Money Laundering and Terrorism Financing)
+Act 2019 (“PSPM Act”):
+
+“CDD measures” or “customer due diligence measures” means the measures required
+by paragraph 6;
+“CDSA” means the Corruption, Drug Trafficking and Other Serious Crimes (Confiscation
+of Benefits) Act 1992:
+“connected party” —
+(a) — inrelation to a legal person (other than a partnership), means any director or any
+natural person having executive authority in the legal person;
+(b) in relation to a legal person that is a partnership, means any partner or manager’;
+and
+(c) in relation to a legal arrangement, means any natural person having executive
+authority in the legal arrangement;
+“customer”, in relation to a financial institution, means a person (whether a natural person,
+legal person or legal arrangement) —
+(a) with whom the financial institution establishes or intends to establish an account
+relationship; or
+(b) for whom the financial institution undertakes or intends to undertake any
+transaction related to regulated dealings without an account being opened:
+“designated transaction” means any of the relevant business transactions, for which cash
+or acash equivalent is received as payment:
+“FATF” means the Financial Action Task Force;
+“government entity” means a government of a country or jurisdiction, a ministry within
+such a government, or an agency specially established by such a government through
+written law;
+“intermediary”, in relation to regulated dealing, means a broker, an auctioneer, an
+exchange or any provider of a trading or clearing facility, for regulated dealing, whether
+by electronic means or otherwise;
+‘legal arrangement’ meansa trust or other similar arrangement
+‘legal person” means an entity other than a natural person that can establish a permanent
+customer relationship with a financial institution or otherwise own property;
+' In the case of a limited liability partnership or a limited partnership.
+
+“officer” means any director or any member of the committee of management of the
+financial institution;
+“partnership” means a partnership, a limited partnership within the meaning of the Limited
+Partnerships Act 2008 or a limited liability partnership within the meaning of the Limited
+Liability Partnerships Act 2005;
+“personal data” has the same meaning as defined in section 2(1) of the Personal Data
+Protection Act 2012:
+“precious metal” has the same meaning as defined in section 2 of the PSPM Act;
+“precious product” has the same meaning as defined in section 2 of the PSPM Act;
+“precious stone” has the same meaning as defined in section 2 of the PSPM Act;
+“reasonable measures” means appropriate measures which are commensurate with the
+level of money laundering or terrorism financing risks;
+“regulated dealer” means any person who carries on —
+(a) | abusiness of regulated dealing; or
+(b) business as an intermediary for regulated dealing,
+and Is regulated by the Ministry of Law, but excludes a pawnbroker and such other person
+as may be prescribed under the PSPM Act as an excluded regulated dealer;
+“regulated dealing” means doing any of the following —
+(a) manufacturing any precious stone, precious metal or precious product;
+(b) importing or possessing for sale any precious stone, precious metal or precious
+product;
+(c) selling or offering for sale any precious stone, precious metal or precious product;
+(d) — selling or redeeming any asset backed tokens;
+(e) purchasing any precious stone, precious metal or precious product for the
+purposes of resale;
+“relevant business transaction” means any of the following transactions conducted wholly
+or partly in Singapore —
+(a) a sale of any precious stone, precious metal, precious product or asset-backed
+token by the financial institution to a customer, for which the payment exceeds
+the threshold amount:
+
+2.2
+2.3
+(b) | 2ormore sales of any precious stone, precious metal, precious product or asset-
+backed token in a single day by the financial institution to the same customer, or
+to customers whom the financial institution knows act on behalf of the same
+person, for which the payment exceeds the threshold amount;
+(c) a purchase of any precious stone, precious metal or precious product from a
+customer (who is not a financial institution or regulated dealer) by the financial
+institution, for which the payment exceeds the threshold amount;
+(d) | 2ormore purchases of any precious stone, precious metal or precious product in
+a single day by the financial institution, from the same customer, or customers
+whom the financial institution knows act on behalf of the same person (where
+none of the customers or such person Is a financial institution or regulated dealer),
+for which the payment exceeds the threshold amount;
+(e) | aredemption of an asset-backed token from a customer (who Is not a financial
+institution or regulated dealer) by the financial institution, for which the payment
+exceeds the threshold amount;
+(f) 2 or more redemptions of any asset-backed token in a single day by the financial
+institution from the same customer, or customers whom the financial institution
+knows act on behalf of the same person (where none of the customers or such
+person is a financial institution or regulated dealer), for which the payment
+exceeds the threshold amount;
+“sale” includes a supply under a conditional sale agreement or hire-purchase agreement
+within the meanings given by section 2(1) of the Hire-Purchase Act 1969, and “selling” is
+construed accordingly;
+“STR” means a suspicious transaction report:
+“STRO” means the Suspicious Transaction Reporting Office, Commercial Affairs
+Department of the Singapore Police Force;
+“threshold amount” means $$20,000; and
+“TSOFA” means the Terrorism (Suppression of Financing) Act 2002.
+A reference to any threshold or value limit expressed in S$ shall include a reference to
+the equivalent amount expressed in any other currency.
+The expressions used in this Notice shall, except where defined in this Notice or where
+the context otherwise requires, have the same meanings as in the MAS Act.
+
+3.1
+4
+UNDERLYING PRINCIPLES
+This Notice is based on the following principles, which shall serve as a guide for all
+financial institutions in the conduct of their operations and business activities in relation
+to precious stones, precious metals and precious products:
+(a) A financial institution shall exercise due diligence when dealing with customers,
+natural persons appointed to act on the customer's behalf, connected parties of
+the customer and beneficial owners of the customer.
+A financial institution shall conduct its business in conformity with high ethical
+standards, and guard against establishing any account relationship or
+undertaking any transaction related to regulated dealings, that is or may be
+connected with, or facilitates or may facilitate money laundering or terrorism
+financing.
+A financial institution shall, to the fullest extent possible, assist and cooperate with
+the relevant law enforcement authorities in Singapore to prevent money
+laundering and terrorism financing.
+ASSESSING RISKS AND APPLYING A RISK-BASED APPROACH
+Risk Assessment
+41
+42
+A financial institution shall take appropriate steps to identify, assess and understand, its
+money laundering and terrorism financing risks in relation to -
+(a)
+(b)
+(c)
+(d)
+its customers;
+the countries or jurisdictions tts customers are from or in;
+the countries or jurisdictions the financial institution has operations in; and
+the products, services, transactions and delivery channels of the financial
+institution.
+The appropriate steps referred to in paragraph 4.1 shall include —
+documenting the financial institution’s risk assessments;
+considering all the relevant risk factors before determining the level of overall risk
+and the appropriate type and extent of mitigation to be applied;
+keeping the financial institution's risk assessments up-to-date; and
+
+(d) having appropriate mechanisms to provide its risk assessment information to the
+Authority.
+Risk Mitigation
+43
+5.1
+5.2
+5.3
+A financial institution shall —
+(a) develop and implement policies, procedures and controls, which are approved by
+senior management, to enable the financial institution to effectively manage and
+mitigate the risks that have been identified by the financial institution or notified to
+it by the Authority or other relevant authorities in Singapore;
+monitor the implementation of those policies, procedures and controls, and
+enhance them if necessary;
+perform enhanced measures where higher risks are identified, to effectively
+manage and mitigate those higher risks; and
+ensure that the performance of measures or enhanced measures to effectively
+manage and mitigate the identified risks addresses the risk assessment and
+guidance from the Authority or other relevant authorities in Singapore.
+NEW PRODUCTS, PRACTICES AND TECHNOLOGIES
+A financial institution shall identify and assess the money laundering and terrorism
+financing risks that may arise in relation to —
+(a)
+(b)
+the development of new products and new business practices, including new
+delivery mechanisms; and
+the use of new or developing technologies for both new and existing products.
+A financial institution shall undertake the risk assessments, prior to the launch or use of
+such products, practices and technologies (to the extent such use Is permitted by this
+Notice), and shall take appropriate measures to manage and mitigate the risks.
+A financial institution shall, in complying with the requirements of paragraphs 5.1 and 5.2,
+pay special attention to any —
+(a)
+(b)
+new products and new business practices, including new delivery mechanisms;
+and
+new or developing technologies,
+that favour anonymity.
+
+6 CUSTOMER DUE DILIGENCE (“CDD”)
+Anonymous or Fictitious Person or Account
+6.1 No financial institution shall deal with any person on an anonymous basis or any person
+using a fictitious name.
+Where There Are Reasonable Grounds for Suspicion prior to the Establishment of
+Account Relationships or Undertaking any Transaction related to Regulated Dealings
+without Opening an Account
+6.2 Prior to a financial institution establishing an account relationship or undertaking any
+transaction related to regulated dealings without opening an account, where the financial
+institution has any reasonable grounds to suspect that the assets or funds of a customer
+are proceeds of drug dealing or criminal conduct as defined in the CDSA, or are property
+related to the facilitation or carrying out of any terrorism financing offence as defined in
+the TSOFA, the financial institution shall -
+(a) not establish an account relationship with, or undertake a transaction related to
+regulated dealings for, the customer; and
+(b) file an STR2, and extend a copy to the Authority for information.
+When CDD is to be Performed
+6.3
+6.4
+A financial institution shall perform the measures as required by paragraphs 6, 7 and 8
+when —
+(a) the financial institution establishes an account relationship with any customer;
+(b) the financial institution undertakes a relevant business transaction for any
+customer who has not otherwise established an account relationship with the
+financial institution;
+(c) there is a suspicion of money laundering or terrorism financing, notwithstanding
+that the financial institution would not otherwise be required by this Notice to
+perform the measures as required by paragraphs 6, 7 and 8; or
+(d) — the financial institution has doubts about the veracity or adequacy of any
+information previously obtained.
+Where a financial institution suspects that two or more transactions are or may be related,
+linked or the result of a deliberate restructuring of an otherwise single transaction into
+2 Please note in particular section 48 of the CDSA on tipping-off.
+
+6.5
+6.6
+6.7
+6.8
+smaller transactions in order to evade the measures provided for in this Notice in relation
+to the circumstances set out in paragraph 6.3(b), the financial institution shall treat the
+transactions as a single transaction and aggregate their values for the purposes of this
+Notice.
+Identification of Customer
+A financial institution shall identify each customer.
+For the purposes of paragraph 6.5, a financial institution shall obtain at least the following
+information:
+(a) full name, including any aliases;
+(b) unique identification number (such as an identity card number, birth certificate
+number or passport number, or where the customer is not a natural person, the
+incorporation number or business registration number);
+(c) the customer's -
+(i) residential address; or
+(ii) registered or business address, and if different, principal place of
+business,
+as may be appropriate;
+(d) date of birth, establishment, incorporation or registration (as may be appropriate);
+and
+(e) nationality, place of incorporation or place of registration (as may be appropriate).
+Where the customer is a legal person or legal arrangement, the financial institution shall,
+apart from identifying the customer, also identify the legal form, constitution and powers
+that regulate and bind the legal person or legal arrangement.
+Where the customer is a legal person or legal arrangement, the financial institution shall
+identify the connected parties of the customer, by obtaining at least the following
+information of each connected party:
+(a) full name, including any aliases; and
+(b) unique identification number (such as an identity card number, birth certificate
+number or passport number of the connected party)
+6.8A Where the financial institution —
+10
+
+(Ill)
+6.10
+6.11
+(a) has assessed that the money laundering and terrorism financing risks in relation
+to the customer are not high; and
+(b) is unable to obtain the unique identification number of the connected party after
+taking reasonable measures,
+the financial institution may obtain the date of birth and nationality of the connected party,
+in lieu of the unique identification number.
+The financial institution shall document the results of the assessment in paragraph
+6.8A(a) and all the measures taken under paragraph 6.8A(b).
+Verification of Identity of Customer
+A financial institution shall verify the identity of the customer using reliable, independent
+source data, documents or information. Where the customer is a legal person or legal
+arrangement, a financial institution shall verify the legal form, proof of existence,
+constitution and powers that regulate and bind the customer, using reliable, independent
+source data, documents or information.
+Identification and Verification of Identity of Natural Person Appointed to Act on a
+Customer's Behalf
+Where a customer appoints one or more natural persons to act on the customer's behalf
+in establishing an account relationship with, or to undertake a relevant business
+transaction without an account being opened for, a financial institution or the customer is
+not a natural person, the financial institution shall -
+(a) identify each natural person who acts or is appointed to act on behalf of the
+customer by obtaining at least the following information of such natural person:
+(i) full name, including any aliases;
+(ii) unique identification number (such as an identity card number, birth
+certificate number or passport number);
+(iii) residential address;
+(iv) date of birth;
+(v) nationality; and
+(b) verify the identity of each natural person using reliable, independent source data,
+documents or information.
+A financial institution shall verify the due authority of each natural person appointed to act
+on behalf of the customer by:-
+11
+
+6.11A
+6.11B
+6.11C
+6.12
+(IV)
+6.13
+6.14
+(a) obtaining the appropriate documentary evidence authorising the appointment of
+such natural person by the customer to act on the customer's behalf; and
+(b) verifying that such natural person is the person authorised to act on the
+customer's behalf, through methods which include obtaining the person's
+specimen signature or other electronic means of verification.
+Where the financial institution —
+(a) has assessed that the money laundering and terrorism financing risks of the
+customer are not high; and
+(b) is unable to obtain the residential address of the natural person who acts or is
+appointed to act on behalf of the customer after taking reasonable measures,
+the financial institution may obtain the business address of this natural person, in lieu of
+the residential address.
+Where the financial institution has obtained the business address of the natural person
+referred to in paragraph 6.11A, the financial institution shall take reasonable measures to
+verify the business address using reliable, independent source data, documents or
+information.
+The financial institution shall document the results of the assessment in paragraph
+6.11A(a) and all the measures taken under paragraph 6.11A(b).
+Where the customer is a Singapore Government entity, the financial institution shall only
+be required to obtain such information as may be required to confirm that the customer is
+a Singapore Government entity as asserted.
+Identification and Verification of Identity of Beneficial Owner
+Subject to paragraph 6.16, a financial institution shall inquire if there exists any beneficial
+owner in relation to a customer.
+Where there is one or more beneficial owners in relation to a customer, the financial
+institution shall identify the beneficial owners and take reasonable measures to verify the
+identities of the beneficial owners using the relevant information or data obtained from
+reliable, independent sources. The financial institution shall —
+(a) for customers that are legal persons —
+(i) identify the natural persons (whether acting alone or together) who
+ultimately own the legal person;
+12
+
+(ii
+to the extent that there is doubt under subparagraph (i) as to whether the
+natural persons who ultimately own the legal person are the beneficial
+owners or where no natural persons ultimately own the legal person,
+identify the natural persons (if any) who ultimately control the legal person
+or have ultimate effective control of the legal person; and
+where no natural persons are identified under subparagraphs (i) or (ii),
+identify the natural persons having executive authority in the legal person,
+or in equivalent or similar positions;
+for customers that are legal arrangements —
+(i
+(i)
+for trusts, identify the settlors, the trustees, the protector (if any), the
+beneficiaries (including every beneficiary that falls within a designated
+characteristic or class)’, and any natural person exercising ultimate
+ownership, ultimate control or ultimate effective control over the trust
+(including through a chain of control or ownership); and
+for other types of legal arrangements, identify persons in equivalent or
+similar positions, as those described under subparagraph (i).
+6.15 Where the customer is not a natural person, the financial institution shall understand the
+nature of the customer's business and Its ownership and control structure.
+6.16 A financial institution shall not be required to inquire if there exists any beneficial owner
+in relation to a customer that is -
+(a)
+(b)
+an entity listed and traded on the Singapore Exchange;
+an entity listed on a stock exchange outside of Singapore that is subject to -
+(i)
+(i)
+regulatory disclosure requirements; and
+requirements relating to adequate transparency in respect of its beneficial
+owners (imposed through stock exchange rules, law or other enforceable
+means);
+a financial institution set out in Appendix 1;
+3 In relation to a beneficiary of a trust designated by characteristics or by class, the financial institution shall obtain sufficient
+information about the beneficiary to satisfy itself that it will be able to establish the identity of the beneficiary -
+(a) before making a distribution to that beneficiary; or
+(b) when that beneficiary intends to exercise vested rights.
+13
+
+6.17
+6.18
+(VI)
+6.19
+6.20
+(d) — afinancial institution incorporated or established outside Singapore that is subject
+to and supervised for compliance with AML/CFT requirements consistent with
+standards set by the FATF; or
+(e) aninvestment vehicle where the managers are financial institutions* —
+(i) set out in Appendix 1; or
+(ii) incorporated or established outside Singapore but are subject to and
+supervised for compliance with AML/CFT requirements consistent with
+standards set by the FATF,
+unless the financial institution has doubts about the veracity of the CDD information, or
+suspects that the customer, an account relationship with, or a relevant business
+transaction for the customer, may be connected with money laundering or terrorism
+financing.
+For the purposes of paragraphs 6.16(d) and 6.16(e)(Ii), a financial institution shall
+document the basis for its determination that the requirements in those paragraphs have
+been duly met.
+Information on the Purpose and Intended Nature of Account Relationships and Relevant
+Business Transactions Undertaken without an Account Being Opened
+A financial institution shall, when processing the application to establish an account
+relationship, or undertaking a relevant business transaction without an account being
+opened, understand and as appropriate, obtain from the customer information as to the
+purpose and intended nature of such account relationship or relevant business
+transaction.
+Review of Relevant Business Transactions Undertaken without an Account Being
+Opened
+Where a financial institution undertakes one or more relevant business transactions for a
+customer without an account being opened (“current relevant business transaction’), the
+financial institution shall review the earlier relevant business transactions undertaken by
+that customer to ensure that the current relevant business transaction is consistent with
+the financial institution's knowledge of the customer, its business and risk profile and
+where appropriate, the source of funds.
+Where a financial institution establishes an account relationship with a customer, the
+financial institution shall review any relevant business transaction undertaken before the
+“For the avoidance of doubt, the financial institution shall be required to inquire if there exists any beneficial owners in relation
+to a customer that is an investment vehicle to which it provides the regulated activity of fund management as the primary
+manager, except where the interests in the investment vehicle are distributed by a financial institution as described in
+paragraphs 6.16(e) or 6.16(f).
+14
+
+6.21
+6.22
+6.23
+(VII)
+6.24
+6.25
+6.26
+6.27
+account relationship is established, to ensure that the account relationship is consistent
+with the financial institution’s knowledge of the customer, its business and risk profile and
+where appropriate, the source of funds.
+A financial institution shall pay special attention to all complex, unusually large or unusual
+patterns of relevant business transactions, that have no apparent or visible economic or
+lawful purpose.
+For the purposes of reviewing relevant business transactions undertaken without an
+account being opened as required by paragraph 6.19, a financial institution shall put in
+place and implement adequate systems and processes, commensurate with the size and
+complexity of the financial institution to -
+(a) monitor its relevant business transactions undertaken without an account being
+opened for customers; and
+(b) detect and report suspicious, complex, unusually large or unusual patterns of
+relevant business transactions undertaken without an account being opened.
+A financial institution shall, to the extent possible, inquire into the background and
+purpose of the relevant business transactions in paragraph 6.21 and document its
+findings with a view to making this information available to the relevant authorities should
+the need arise.
+Ongoing Monitoring
+A financial institution shall monitor on an ongoing basis, its account relationships with
+customers.
+A financial institution shall, during the course of an account relationship with a customer,
+observe the conduct of the customer's account and scrutinise transactions undertaken
+throughout the course of account relationship, to ensure that the transactions are
+consistent with the financial institution’s knowledge of the customer, its business and risk
+profile and where appropriate, the source of funds.
+A financial institution shall pay special attention to all complex, unusually large or unusual
+patterns of transactions, undertaken throughout the course of account relationships, that
+have no apparent or visible economic or lawful purpose.
+For the purposes of ongoing monitoring, a financial institution shall put in place and
+implement adequate systems and processes, commensurate with the size and
+complexity of the financial institution, to —
+(a) monitor its account relationships with customers; and
+15
+
+6.28
+6.29
+6.30
+6.31
+(b) detect and report suspicious, complex, unusually large or unusual patterns of
+transactions undertaken throughout the course of account relationships.
+A financial institution shall, to the extent possible, inquire into the background and
+purpose of the transactions in paragraph 6.26 and document its findings with a view to
+making this information available to the relevant authorities should the need arise.
+A financial institution shall ensure that the CDD data, documents and information
+obtained in respect of customers, natural persons appointed to act on behalf of the
+customers, connected parties of the customers and beneficial owners of the customers,
+are relevant and kept up-to-date by undertaking reviews of existing CDD data, documents
+and information, particularly for higher risk categories of customers.
+Where there are any reasonable grounds for suspicion that an existing account
+relationship with a customer is connected with money laundering or terrorism financing,
+and where the financial institution considers It appropriate to retain the customer —
+(a) the financial institution shall substantiate and document the reasons for retaining
+the customer; and
+(b) the customer's account relationship with the financial institution shall be subject
+to commensurate risk mitigation measures, including enhanced ongoing
+monitoring.
+Where the financial institution assesses the customer or the account relationship with the
+customer referred to in paragraph 6.30 to be of higher risk, the financial institution shall
+perform enhanced CDD measures, which shall include obtaining the approval of the
+financial institution's senior management to retain the customer.
+CDD Measures for Non-Face-to-Face Account Relationships
+6.32
+6.33
+6.34
+A financial institution shall develop policies and procedures to address any specific risks
+associated with non-face-to-face account relationships.
+A financial institution shall implement the policies and procedures referred to in paragraph
+6.32 when establishing an account relationship with a customer and when conducting
+ongoing due diligence.
+Where there is no face-to-face contact, the financial institution shall perform CDD
+measures that are at least as robust as those that would be required to be performed if
+there was face-to-face contact.
+Reliance by Acquiring Financial Institutions on Measures Already Performed
+6.35 When a financial institution (“acquiring financial institution”) acquires, either in whole or in
+part, the business of another financial institution (whether in Singapore or elsewhere), the
+16
+
+acquiring financial institution shall perform the measures as required by paragraphs 6, 7
+and 8, on the customers acquired with the business at the time of acquisition except
+where the acquiring financial institution has —
+(a) acquired at the same time all corresponding customer records (including CDD
+information) and has no doubt or concerns about the veracity or adequacy of the
+information so acquired; and
+(b) conducted due diligence enquiries that have not raised any doubt on the part of
+the acquiring financial institution as to the adequacy of AML/CFT measures
+previously adopted in relation to the business or part thereof now acquired by the
+acquiring financial institution, and document such enauiries.
+Timing for Verification
+6.36
+6.37
+6.38
+Subject to paragraphs 6.37 and 6.38, a financial institution shall complete verification of
+the identity of a customer as required by paragraph 6.9, natural persons appointed to act
+on behalf of the customer as required by paragraph 6.10(b) and beneficial owners of the
+customer as required by paragraph 6.14 -
+(a) before the financial institution establishes account relationships with the
+customer; or
+(b) before the financial institution undertakes any relevant business transaction,
+where the customer has not otherwise established account relationships with the
+financial institution.
+A financial institution may establish account relationships with a customer before
+completing the verification of the identity of the customer as required by paragraph 6.9,
+natural persons appointed to act on behalf of the customer as required by paragraph
+6.10(b) and beneficial owners of the customer as required by paragraph 6.14 if -
+(a) the deferral of completion of the verification is essential in order not to interrupt
+the normal conduct of business operations; and
+(b) — the risks of money laundering and terrorism financing can be effectively managed
+by the financial institution.
+Where the financial institution establishes account relationships with a customer before
+verifying the identity of the customer as required by paragraph 6.9, natural persons
+appointed to act on behalf of the customer as required by paragraph 6.10(b), and
+beneficial owners of the customer as required by paragraph 6.14, the financial institution
+shall -
+17
+
+(a) | develop and implement internal risk management policies and procedures
+concerning the conditions under which such account relationships may be
+established prior to verification; and
+(b) complete such verification as soon as is reasonably practicable.
+Where Measures are Not Completed
+6.39
+6.40
+Where the financial institution is unable to complete the measures as required by
+paragraphs 6, 7 and 8, it shall not commence or continue an account relationship with
+any customer, or undertake any relevant business transaction for any customer. The
+financial institution shall consider if the circumstances are suspicious so as to warrant the
+filing of an STR.
+For the purposes of paragraph 6.39, completion of the measures means the situation
+where the financial institution has obtained, screened and verified (including by delayed
+verification as allowed under paragraphs 6.37 and 6.38) all necessary CDD information
+required under paragraphs 6, 7 and 8, and where the financial institution has received
+satisfactory responses to all inquiries in relation to such necessary CDD information.
+Joint Account
+6.41 In the case of a joint account, a financial institution shall perform CDD measures on all of
+the joint account holders as if each of them were individual customers of the financial
+institution.
+Screening
+6.42
+6.43
+A financial institution shall screen a customer, natural persons appointed to act on behalf
+of the customer, connected parties of the customer and beneficial owners of the customer
+against relevant money laundering and terrorism financing information sources, as well
+as lists and information provided by the Authority or other relevant authorities in
+Singapore for the purposes of determining if there are any money laundering or terrorism
+financing risks in relation to the customer.
+A financial institution shall screen the persons referred to in paragraph 6.42 -
+(a) | when, or as soon as reasonably practicable after, the financial institution
+establishes an account relationship with a customer;
+(b) before the financial institution completes any relevant business transaction for a
+customer who has not otherwise established an account relationship with the
+financial institution;
+(c) on a periodic basis after the financial institution establishes an account
+relationship with the customer; and
+18
+
+6.44
+7.1
+7.2
+7.3
+74
+19
+7.6
+(d) when there are any changes or updates to -
+(i) the lists and information provided by the Authority or other relevant
+authorities in Singapore to the financial institution; or
+(ii) | the natural persons appointed to act on behalf of a customer, connected
+parties of a customer or beneficial owners of a customer.
+The results of screening and assessment by the financial institution shall be documented.
+SIMPLIFIED CUSTOMER DUE DILIGENCE
+Subject to paragraph 7.4, a financial institution may perform simplified CDD measures in
+relation to a customer, any natural person appointed to act on behalf of the customer and
+any beneficial owner of the customer (other than any beneficial owner that the financial
+institution is exempted from making inquiries about under paragraph 6.16) if it is satisfied
+that the risks of money laundering and terrorism financing are low.
+The assessment of low risks shall be supported by an adequate analysis of risks by the
+financial institution.
+The simplified CDD measures shall be commensurate with the level of risk, based on the
+risk factors identified by the financial institution.
+A financial institution shall not perform simplified CDD measures —
+(a) | where acustomer or any beneficial owner of the customer is from or in a country
+orjurisdiction in relation to which the FATF has called for countermeasures;
+(b) | where acustomer or any beneficial owner of the customer is from or in a country
+or jurisdiction known to have inadequate AML/CFT measures, as determined by
+the financial institution for itself, or notified to financial institutions generally by the
+Authority, or other foreign regulatory authorities; or
+(c) where the financial institution suspects that money laundering or terrorism
+financing is involved.
+Subject to paragraphs 7.2, 7.3 and 7.4, a financial institution may perform simplified CDD
+measures in relation to a customer that is a financial institution set out in Appendix 2.
+Where the financial institution performs simplified CDD measures in relation to a
+customer, any natural person appointed to act on behalf of the customer and any
+beneficial owner of the customer, it shall document —
+(a) the details of its risk assessment; and
+19
+
+77
+8
+(b) the nature of the simplified CDD measures.
+For avoidance of doubt, the term “CDD measures” in paragraph 7 means the measures
+required by paragraph 6.
+ENHANCED CUSTOMER DUE DILIGENCE
+Politically Exposed Persons
+8.1
+8.2
+For the purposes of paragraph 8 —
+“close associate’ means a natural person who Is closely connected to a politically
+exposed person, either socially or professionally;
+“domestic politically exposed person” means a natural person who is or has been
+entrusted domestically with prominent public functions;
+“family member’ means a parent, step-parent, child, step-child, adopted child, spouse,
+sibling, step-sibling and adopted sibling of the politically exposed person:
+“foreign politically exposed person” means a natural person who Is or has been entrusted
+with prominent public functions in a foreign country or jurisdiction:
+“international organisation” means an entity established by formal political agreements
+between member countries or jurisdictions that have the status of international treaties,
+whose existence is recognised by law in member countries or jurisdictions and which is
+not treated as a resident institutional unit of the country orjurisdiction in which it is located:
+“international organisation politically exposed person” means a natural person who Is or
+has been entrusted with prominent public functions in an international organisation;
+“politically exposed person” means a domestic politically exposed person, foreign
+politically exposed person or international organisation politically exposed person; and
+“prominent public functions” includes the roles held by a head of state, a head of
+government, government ministers, senior civil or public servants, senior judicial or
+military officials, senior executives of state owned corporations, senior political party
+officials, members of the legislature and senior management of international
+organisations.
+A financial institution shall implement appropriate internal risk management systems,
+policies, procedures and controls to determine if a customer, any natural person
+appointed to act on behalf of the customer, any connected party of the customer or any
+20
+
+8.3
+8.4
+beneficial owner of the customer is a politically exposed person, or a family member or
+close associate of a politically exposed person.
+A financial institution shall, in addition to performing CDD measures (specified in
+paragraph 6), perform at least the following enhanced CDD measures where a customer
+or any beneficial owner of the customer is determined by the financial institution to be a
+politically exposed person, or a family member or close associate of a politically exposed
+person under paragraph 8.2:
+(a) obtain approval from the financial institution's senior management to establish or
+continue an account relationship with the customer or undertake any relevant
+business transaction without an account opened for the customer;
+(b) — establish, by appropriate and reasonable means, the source of wealth and source
+of funds of the customer and any beneficial owner of the customer; and
+(c) conduct, during the course of an account relationship with, or when undertaking
+transactions in the course of the account relationship for the customer, enhanced
+monitoring of the account relationship or such transactions. In particular, the
+financial institution shall increase the degree and nature of monitoring of the
+account relationship with, and such transactions for, the customer in order to
+determine whether they appear unusual or suspicious.
+A financial institution may adopt a risk-based approach in determining whether to perform
+enhanced CDD measures or the extent of enhanced CDD measures to be performed
+for -
+(a) | domestic politically exposed persons, their family members and close associates;
+(b) international organisation politically exposed persons, their family members and
+close associates; or
+(c) politically exposed persons who have stepped down from their prominent public
+functions, taking into consideration the level of influence such persons may
+continue to exercise after stepping down from their prominent public functions,
+their family members and close associates,
+except in cases where their account relationships with the financial institution, or relevant
+business transactions undertaken without an account being opened by the financial
+institution present a higher risk for money laundering or terrorism financing.
+Other Higher Risk Categories
+8.5 A financial institution shall implement appropriate internal risk management systems,
+policies, procedures and controls to determine if account relationships with, or relevant
+21
+
+8.6
+8.7
+business transaction undertaken without an account being opened for, any customer
+present a higher risk for money laundering or terrorism financing.
+For the purposes of paragraph 8.5, circumstances where a customer presents or may
+present a higher risk for money laundering or terrorism financing include but are not
+limited to the following:
+(a) | where acustomer or any beneficial owner of the customer is from or in a country
+or jurisdiction in relation to which the FATF has called for countermeasures, the
+financial institution shall treat any account relationship with or relevant business
+transactions undertaken without an account being opened for, any such customer
+as presenting a higher risk for money laundering or terrorism financing;
+(b) | where acustomer or any beneficial owner of the customer is from or in a country
+or jurisdiction known to have inadequate AML/CFT measures, as determined by
+the financial institution for itself, or notified to financial institutions generally by the
+Authority or other foreign regulatory authorities, the financial institution shall
+assess whether any such customer presents a higher risk for money laundering
+or terrorism financing; and
+(c) | where acustomer is a legal person for which the financial institution is not able to
+establish if it has any —
+(i) ongoing, apparent or visible operation or business activity;
+(ii) economic or business purpose for its corporate structure or
+arrangement; or
+(ili) | substantive financial activity in its interactions with the financial
+institution,
+the financial institution shall assess whether any such customer presents a higher
+risk for money laundering, or terrorism financing.
+A financial institution shall perform the appropriate enhanced CDD measures in
+paragraph 8.3 for an account relationship with, or relevant business transactions
+undertaken without an account being opened for, any customer —
+(a) — who the financial institution determines under paragraph 8.5; or
+(b) the Authority or other relevant authorities in Singapore notify to the financial
+institution,
+as presenting a higher risk for money laundering or terrorism financing.
+22
+
+8.8
+9.1
+9.2
+A financial institution shall, in taking enhanced CDD measures to manage and mitigate
+any higher risks that have been identified by the financial institution, or notified to it by the
+Authority or other relevant authorities in Singapore, ensure that the enhanced CDD
+measures take into account the requirements of any laws, regulations or directions
+administered by the Authority, including but not limited to the regulations or directions
+issued by the Authority under section 27A of the MAS Act.
+RELIANCE ON THIRD PARTIES
+For the purposes of paragraph 9, “third party” means -
+(a) — afinancial institution set out in Appendix 2:
+(b) — afinancial institution which is subject to and supervised by a foreign authority for
+compliance with AML/CFT requirements consistent with standards set by the
+FATF (other than a holder of a payment services licence under the PS Act, or
+equivalent licences);
+(c) in relation to a financial institution incorporated in Singapore, its branches,
+subsidiaries, parent entity, the branches and subsidiaries of the parent entity, and
+other related corporations; or
+(d) ——_ inrelation to a financial institution incorporated outside Singapore, its head office,
+its parent entity, the branches and subsidiaries of the head office, the branches
+and subsidiaries of the parent entity, and other related corporations.
+Subject to paragraph 9.3, a financial institution may rely on a third party to perform the
+measures as required by paragraphs 6, 7 and 8 if the following requirements are met:
+(a) the financial institution is satisfied that the third party it intends to rely upon is
+subject to and supervised for compliance with AML/CFT requirements consistent
+with standards set by the FATF, and has adequate AML/CFT measures in place
+to comply with those requirements;
+(b) the financial institution takes appropriate steps to identify, assess and understand
+the money laundering and terrorism financing risks particular to the countries or
+jurisdictions that the third party operates in;
+(c) the third party is not one which financial institutions have been specifically
+precluded by the Authority from relying upon; and
+(d) the third party is able and willing to provide, without delay, upon the financial
+institution's request, any data, documents or information obtained by the third
+23
+
+9.3
+9.4
+9.5
+10
+10.1
+10.2
+party with respect to the measures applied on the financial institution's customer,
+which the financial institution would be required or would want to obtain.
+No financial institution shall rely on a third party to conduct a review of relevant business
+transactions undertaken without an account being opened or ongoing monitoring of
+account relationships with its customers.
+Where a financial institution relies on a third party to perform the measures as required
+by paragraphs 6, 7 and 8, it shall -
+(a) document the basis for its satisfaction that the requirements in paragraphs 9.2(a)
+and (b) have been met, except where the third party is a financial institution set
+out in Appendix 2; and
+(b) immediately obtain from the third party the CDD information which the third party
+had obtained.
+For the avoidance of doubt, notwithstanding the reliance upon a third party, the financial
+institution shall remain responsible for its AML/CFT obligations in this Notice.
+RECORD KEEPING
+A financial institution shall, in relation to all data, documents and information that the
+financial institution is required to obtain or produce to meet the requirements under this
+Notice, prepare, maintain and retain records of such data, documents and information.
+A financial institution shall perform the measures as required by paragraph 10.1 such
+that-
+(a) all requirements imposed by law (including this Notice) are met:
+(b) any individual transaction undertaken by the financial institution can be
+reconstructed (including the amount and type of currency involved) so as to
+provide, if necessary, evidence for prosecution of criminal activity;
+(c) the Authority or other relevant authorities in Singapore and the internal and
+external auditors of the financial institution are able to review the financial
+institution's account relationships, transactions, records and CDD information and
+assess the level of compliance with this Notice; and
+(d) the financial institution can satisfy, within a reasonable time or any more specific
+time period imposed by law or by the requesting authority, any enquiry or order
+from the relevant authorities in Singapore for information.
+24
+
+10.3
+10.4
+10.5
+11
+11.1
+11.2
+Subject to paragraph 10.5 and any other requirements imposed by law, a financial
+institution shall, for the purposes of record retention under paragraphs 10.1 and 10.2, and
+when setting its record retention policies, comply with the following record retention
+periods:
+(a) for CDD information relating to the account relationships and relevant business
+transactions undertaken without an account being opened, as well as account
+files, business correspondence and results of any analysis undertaken, a period
+of at least 5 years following the termination of such account relationships or
+completion of such relevant business transactions; and
+(b) for data, documents and information relating to a transaction, including any
+information needed to explain and reconstruct the transaction, a period of at least
+5 years following the completion of the transaction.
+A financial institution may retain data, documents and information as originals or copies,
+in paper or electronic form or on microfilm, provided that they are admissible as evidence
+in a Singapore court of law.
+A financial institution shall retain records of data, documents and information on all its
+account relationships with or transactions for a customer pertaining to a matter which is
+under investigation or which has been the subject of an STR, in accordance with any
+request or order from STRO or other relevant authorities in Singapore.
+PERSONAL DATA
+For the purposes of paragraph 11, “individual” means a natural person, whether living or
+deceased.
+Subject to paragraph 11.3 and for the purposes of complying with this Notice, a financial
+institution shall not be required to provide an individual customer, an individual appointed
+to act on behalf of a customer, an individual connected party of a customer or an individual
+beneficial owner of a customer, with —
+(a) any access to personal data about the individual that is in the possession or under
+the control of the financial institution;
+(b) any information about the ways in which the personal data of the individual under
+subparagraph (a) has been or may have been used or disclosed by the financial
+institution; and
+(c) any right to correct an error or omission of the personal data about the individual
+that Is in the possession or under the control of the financial institution.
+20
+
+11.3. A financial institution shall, as soon as reasonably practicable, upon the request of an
+11.4
+12
+12.1
+individual customer, an individual appointed to act on behalf of a customer, an individual
+connected party of a customer or an individual beneficial owner of a customer, provide
+the requesting individual with the right to —
+(a) access the following types of personal data of that individual, that is in the
+possession or under the control of the financial institution:
+(i) the individual’s full name, including any alias;
+(ii) the individual's unique identification number (such as an identity card
+number, birth certificate number or passport number):
+(iii) the individual's residential address;
+(iv) the individual’s date of birth:
+(v) the individual's nationality;
+(vi) subject to sections 21(2) and (3) read with the Fifth Schedule to the
+Personal Data Protection Act 2012, any other personal data of the
+respective individual provided by that individual to the financial institution;
+and
+(b) subject to section 22(7) read with the Sixth Schedule to the Personal Data
+Protection Act 2012, correct an error or omission in relation to the types of
+personal data set out in subparagraphs (a)(i) to (vi), provided the financial
+institution is satisfied that there are reasonable grounds for such request.
+For the purposes of complying with this Notice, a financial institution may, whether directly
+or through a third party, collect, use and disclose personal data of an individual customer,
+an individual appointed to act on behalf of a customer, an individual connected party of a
+customer or an individual beneficial owner of a customer, without the respective
+individual's consent.
+SUSPICIOUS TRANSACTIONS REPORTING
+A financial institution shall keep in mind the provisions in the CDSA® and in the TSOFA
+that provide for the reporting to the authorities of transactions suspected of being
+connected with money laundering or terrorism financing and implement appropriate
+internal policies, procedures and controls for meeting its obligations under the law,
+including the following:
+5 Please note in particular section 48 of the CDSA on tipping-off.
+26
+
+12.2
+12.3
+12.4
+13
+13.1
+14
+14.1
+(a) establish a single reference point within the organisation to whom all employees
+and officers are instructed to promptly refer all transactions suspected of being
+connected with money laundering or terrorism financing, for possible referral to
+STRO via STRs; and
+(b) keep records of all transactions referred to STRO, together with all internal
+findings and analysis done in relation to them.
+A financial institution shall promptly submit reports on suspicious transactions (including
+attempted transactions), regardless of the amount of the transaction, to STRO, and
+extend a copy to the Authority for information.
+A financial institution shall consider if the circumstances are suspicious so as to warrant
+the filing of an STR and document the basis for its determination, including where —
+(a) the financial institution is for any reason unable to complete the measures as
+required by paragraphs 6, 7 and 8; or
+(b) the customer is reluctant, unable or unwilling to provide any information requested
+by the financial institution, or decides to withdraw a pending application to
+establish an account relationship or a pending transaction, or to terminate existing
+account relationship.
+Where a financial institution forms a suspicion of money laundering or terrorism financing,
+and reasonably believes that performing any of the measures as required by paragraphs
+6, 7 or 8 will tip-off a customer, a natural person appointed to act on behalf of the
+customer, a connected party of the customer or a beneficial owner of the customer, the
+financial institution may stop performing those measures. The financial institution shall
+document the basis for its assessment and file an STR.
+CASH TRANSACTION REPORTING
+A financial institution who enters into a designated transaction shall promptly submit cash
+transaction reports to STRO pursuant to section 17 of the PSPM Act and promptly extend
+a copy to the Authority for information.
+INTERNAL POLICIES, COMPLIANCE, AUDIT AND TRAINING
+A financial institution shall develop and implement adequate internal policies, procedures
+and controls, taking into consideration its money laundering and terrorism financing risks
+and the size of its business, to help prevent money laundering and terrorism financing
+and communicate these to its employees and officers.
+2/
+
+14.2 The policies, procedures and controls shall meet all the requirements of this Notice.
+Group Policy
+14.3
+14.4
+14.5
+14.6
+14.7
+14.7A
+14.8
+For the purposes of paragraphs 14.4 to 14.9, a reference to “financial institution” means
+a financial institution incorporated in Singapore.
+A financial institution shall develop a group policy on AML/CFT to meet all the
+requirements of this Notice and extend this to all of its branches and subsidiaries in its
+financial group.
+Where a financial institution has a branch or subsidiary in a host country or jurisdiction —
+(a) in relation to which the FATF has called for countermeasures; or
+(b) known to have inadequate AML/CFT measures, as determined by the financial
+institution for itself, or notified to financial institutions generally by the Authority or
+other foreign regulatory authorities,
+the financial institution shall ensure that its group policy on AML/CFT is strictly observed
+by the management of that branch or subsidiary.
+Subject to the financial institution putting in place adequate safeguards to protect the
+confidentiality and use of any information that is shared, the financial institution shall
+develop and implement group policies and procedures for its branches and subsidiaries
+within the financial group, to share information required for the purposes of CDD and for
+money laundering and terrorism financing risk management, to the extent permitted by
+the law of the countries or jurisdictions that its branches and subsidiaries are in.
+Such policies and procedures shall include the provision, to the financial institution’s
+group-level compliance, audit, and AML/CFT functions, of customer, account, and
+transaction information from its branches and subsidiaries within the financial group,
+when necessary for money laundering and terrorism financing risk management
+purposes.
+For the purposes of paragraph 14.7, the information to be shared within the financial
+institution's financial group shall include any information and analysis of transactions or
+activities that appear unusual.®
+Where the AML/CFT requirements in the host country or jurisdiction differ from those in
+Singapore, the financial institution shall require that the overseas branch or subsidiary
+apply the higher of the two standards, to the extent that the law of the host country or
+jurisdiction so permits.
+6 Subject to section 48 of the CDSA on tipping-off, information shared may include an STR, the underlying information of the
+STR, or the fact that STR was filed.
+28
+
+14.9 Where the law of the host country or jurisdiction conflicts with Singapore law such that
+the overseas branch or subsidiary is unable to fully observe the higher standard, the
+financial institution shall apply additional appropriate measures to manage the money
+laundering and terrorism financing risks, report this to the Authority and comply with such
+further directions as may be given by the Authority.
+14.9A Inthe case of a Singapore branch of a financial institution incorporated outside Singapore,
+subject to the Singapore branch putting in place adequate safeguards to protect the
+confidentiality and use of any information that is shared, the Singapore branch shall share
+customer, account and transaction information within the financial institution’s financial
+group when necessary for money laundering and terrorism financing risk management
+purposes. Such information to be shared within the financial institution’s financial group
+shall include any information and analysis of transactions or activities that appear
+unusual.’
+Compliance
+14.10 A financial institution shall develop appropriate compliance management arrangements,
+including at least, the appointment of an AML/CFT compliance officer at the management
+level.
+14.11 A financial institution shall ensure that the AML/CFT compliance officer, as well as any
+other persons appointed to assist the AML/CFT compliance officer, is suitably qualified,
+and has adequate resources and timely access to all customer records and other relevant
+information which the AML/CFT compliance officer requires to discharge the AML/CFT
+compliance officer's functions.
+Audit
+14.12 A financial institution shall maintain an audit function that is adequately resourced and
+independent, and that is able to regularly assess the effectiveness of the financial
+institution's internal policies, procedures and controls, and its compliance with regulatory
+requirements.
+Employee Hiring
+14.13 A financial institution shall have in place screening procedures to ensure high standards
+when hiring employees and appointing officers.
+Training
+7 Subject to section 48 of the CDSA on tipping-off, information shared may include an STR, the underlying information of the
+STR, or the fact that an STR was filed.
+29
+
+14.14 A financial institution shall take all appropriate steps to ensure that its employees and
+officers (whether in Singapore or elsewhere) are regularly and appropriately trained on -
+(a) | AML/CFT laws and regulations, and in particular, CDD measures, and detecting
+and reporting of suspicious transactions:
+(b) prevailing techniques, methods and trends in money laundering and terrorism
+financing; and
+(c) _ the financial institution’s internal AML/CFT policies, procedures and controls, and
+the roles and responsibilities of employees and officers in combating money
+laundering and terrorism financing.
+30
+
+Appendix 1
+1. Financial institutions that are licensed, approved, registered (including a fund
+management company registered under paragraph 5(1)(i) of the SF(LCB)R) or regulated
+by the Authority but does not include a person (other than a person referred to in
+paragraphs 2 and 3) who is exempted from licensing, approval or regulation by the
+Authority under any Act administered by the Authority, including a private trust company
+exempted from licensing under section 15 of the Trust Companies Act 2005 read with
+regulation 4 of the Trust Companies (Exemption) Regulations (Rg. 1).
+Persons exempted under section 23(1)(f) of the FAA read with regulation 27(1)(d) of the
+Financial Advisers Regulations (Rg. 2).
+Persons exempted under section 99(1)(h) of the SFA read with paragraph 7(1)(b) of the
+SF(LCB)R.
+Note: For the avoidance of doubt, the financial institutions set out in Appendix 2 fall within
+Appendix 1.
+31
+
+Appendix 2
+1.
+2.
+10.
+11.
+12.
+Banks in Singapore licensed under the Banking Act 1970.
+Merchant banks licensed under the Banking Act 1970.
+Finance companies licensed under section 6 of the Finance Companies Act 1967.
+Financial advisers licensed under section 6 of the FAA except those which only provide
+advice by issuing or promulgating research analyses or research reports, whether in
+electronic, print or other form, concerning any investment product.
+Holders of a capital markets services licence under section 82 of the SFA.
+Fund management companies registered under paragraph 5(1)(i) of the SF(LCB)R.
+Persons exempted under section 23(1)(f) of the FAA read with regulation 27(1)(d) of the
+Financial Advisers Regulations (Rg. 2) except those which only provide advice by issuing
+or promulgating research analyses or research reports, whether in electronic, print or
+other form, concerning any investment product.
+Persons exempted under section 99(1)(h) of the SFA read with paragraph 7(1)(b) of the
+SF(LCB)R.
+Approved trustees approved under section 289 of the SFA.
+Trust companies licensed under section 5 of the Trust Companies Act 2005.
+Direct life insurers licensed under section 8 of the Insurance Act 1966.
+Insurance brokers registered under the Insurance Act 1966 which, by virtue of such
+registration, are exempted under section 23(1)(c) of the FAA except those which only
+provide advice by issuing or promulgating research analyses or research reports, whether
+in electronic, print or other form, concerning any investment product.
+32
+

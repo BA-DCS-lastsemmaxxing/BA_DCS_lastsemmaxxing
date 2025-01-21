@@ -1,0 +1,86 @@
+Circular No.: AMLD 01/2018
+08 January 2018
+The Chief Executive Officers of All Financial Institutions
+Dear Madam/ Sir
+USE OF MYINFO AND CDD MEASURES FOR NON FACE-TO-FACE BUSINESS RELATIONS
+MAS supports the use of technology by financial institutions (Fls) to improve the
+customer onboarding experience while adequately assessing and managing money
+laundering and terrorism financing (ML/TF) risks.
+2 This Circular provides guidance regarding Fls’ use of Mylnfo as a verified source of
+identification information. It also highlights considerations relating to the use of non-face-to-
+face (NFTF) verification measures, and provides further examples of NFTF measures that Fis
+may employ as additional checks to manage the risk of impersonation.?
+(i) | Use of Mylnfo as Verified Identity Information
+3 Mylnfo has been made available for private sector use from end-2017. In line with
+Singapore’s Smart Nation initiative, Fls will be able to use the MylInfo platform for customer
+identification and verification.
+e MAS considers MylInfo to be a reliable and independent source for the purposes
+of verifying the customer’s name, unique identification number, date of birth,
+nationality and residential address.”
+e Where MyInfo is used, MAS will not require Fls to obtain additional identification
+documents? to verify a customer’s identity, and will also not expect Fis to
+separately obtain a photograph of the customer.*
+1 The examples listed here are in addition to those listed in the Guidelines to the relevant AML/CFT Notices, in relation to
+CDD Measures for Non-Face-to-Face Business Relations.
+2 Where Fls require additional customer information such as other personal attributes or data in order to provide financial
+services to the customer and the information can also be obtained from Mylnfo, Fils may access and obtain the information
+on MylInfo subject to the customer’s consent.
+3 Including, for example, customer’s NRIC or passport.
+4 Fils which decide to retain the photograph requirement for other reasons, such as to fulfill Group compliance requirements,
+may continue to do so.
+
+e Fils should maintain proper records of data — including data obtained from MylInfo
+— as per the requirements set out in the MAS Notices.
+4 For the avoidance of doubt, Fis should continue to subject customers who are not
+enrolled on MyiInfo (e.g. non-Singapore residents) or who do not consent to the use of MyInfo
+for account opening/establishing business relations to the existing Customer Due Diligence
+(“CDD”) requirements of the applicable MAS’ Notices on Prevention of Money Laundering
+and Countering the Financing of Terrorism (“MAS Notices”) and Guidelines to the MAS
+Notices (“MAS Guidelines”).
+(ii) | Clarification on CDD Measures for Non-Face-to-Face Business Relations?
+5 Where identity is obtained electronically through other NFTF means, including through
+transmission of scanned or copy documents, Fls should apply additional checks to mitigate
+the risk of impersonation. MAS Guidelines provide illustrative examples of what such
+measures could be. The examples are non-exhaustive and Fls can apply any one of those
+measures, so long as the FI has assessed it to be appropriate to mitigate the risk. In addition
+to the existing examples in the MAS Guidelines, Fls can also consider applying the following
+measures:
+a. holding real-time video conference that is comparable to face-to-face
+communication, in addition to providing electronic copies of identification
+documents;
+b. verifying the identity of a customer through a document the customer has signed
+with a secure digital signature using a set of Public Key Infrastructure-based
+credentials issued by a certified Certificate Authority under the Electronic
+Transaction Act; and
+C. using new technology solutions© including, but not limited to, biometric
+technologies (e.g. fingerprint or iris scans, facial recognition), which should be
+linked incontrovertibly to the customer.
+6 Fis that rely on new technology solution(s) to perform NFTF CDD should ensure that
+these solutions continue to facilitate CDD measures that are at least as robust as those
+performed with face-to-face contact’. This should include a once-off independent assessment
+from a suitably qualified professional® to certify, at the first year mark after implementation,
+5 Licensed Money-changers and Remittance Agents should refer to MAS Notice 3001 on Prevention of Money Laundering
+and Countering the Financing of Terrorism for the applicable requirements for NFTF business relations. The clarifications on
+CDD Measures for NFTF Business Relations set out in this Circular shall apply only upon fulfilment of the requirements under
+Notice 3001.
+6 A technology will be considered new if it is new to, or has yet to be widely adopted, by financial institutions in Singapore
+for the purposes of onboarding of customers.
+7 In line with the requirements in the relevant MAS AML/CFT Notices, in relation to CDD Measures for Non-Face-to-Face
+Business Relations.
+8 Any suitably qualified professional may perform the independent assessment of new technology solutions for NFTF
+verification. This can include the Fl’s Internal Audit (IA) function, where the IA has the necessary expertise to do so. Fls may
+also engage an External Auditor or independent qualified consultant to conduct the assessment and certification of the
+effectiveness of the new measure in managing impersonation risk.
+
+the effectiveness of the new technology solution in managing impersonation risk. The
+independent assessment should be retained by the FI for as long as that technology solution
+is in use, and for a minimum period of 5 years after it ceases to be in use. MAS may request
+to review the independent assessment as part of our supervisory process.
+7 MAS expects the Board and senior management of Fls to exercise effective oversight of
+the management of ML/TFE risks and controls.
+Yours faithfully
+(Sent via MASNET/email)
+VALERIE TAY
+EXECUTIVE DIRECTOR
+ANTI-MONEY LAUNDERING DEPARTMENT
+
