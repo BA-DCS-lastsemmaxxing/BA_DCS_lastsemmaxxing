@@ -4,7 +4,7 @@ import argparse
 # from combine_extracted_csv import combine_csv_files
 from datetime import datetime
 
-from ocr import generate_ocr_files
+from .ocr import generate_ocr_files
 
 
 
@@ -27,13 +27,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process some files.")
     parser.add_argument(
         "--input_dir",
-        default="sample/anti_money_laundering",
+        default="input_data",
         type=str,
         help="The input directory where your raw pdf files will be stored.",
     )
     parser.add_argument(
         "--output_dir",
-        default="pre_processing/AML_output",
+        default="output_data",
         type=str,
         help="The output directory where the extracted.csv files will be stored.",
     )
