@@ -25,7 +25,6 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 def home():
     return jsonify({"message": "Welcome to Flask!"})
 
-
 def run_ocr(input_folder, output_folder):
     """Run the OCR script as a subprocess."""
     try:
@@ -50,6 +49,7 @@ def run_extractor():
 @app.route("/upload", methods=["POST"])
 def upload_files():
     """Endpoint to upload PDF files."""
+
     if "files" not in request.files:
         return jsonify({"error": "No files part in the request"}), 400
 
