@@ -5,8 +5,18 @@ import threading
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
+# Import the SQLAlchemy and Bcrypt classes
+import mysql.connector
+import bcrypt
+from config import Config
+from routes import auth_blueprint
+
 app = Flask(__name__)
 CORS(app)
+
+app.config.from_object(Config)
+
+app.register_blueprint(auth_blueprint)
 
 # Define paths relative to the backend folder
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -91,6 +101,9 @@ def download_file(filename):
     if not os.path.exists(file_path):
         return jsonify({"error": "File not found"}), 404
     return send_file(file_path, as_attachment=True)
+
+
+
 
 
 if __name__ == "__main__":
