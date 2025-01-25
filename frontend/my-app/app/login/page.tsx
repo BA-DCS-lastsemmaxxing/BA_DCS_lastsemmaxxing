@@ -1,17 +1,29 @@
 'use client';
 
 import { useState } from 'react';
+import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/navigation'; // Import the useRouter hook
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
+  const router = useRouter(); // Initialize the router
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
-      await login(email, password);
+      const response = await axios.post('http://localhost:5001/login', { email, password });
+
+      if (response.status === 200) {
+        // Handle successful login (e.g., store JWT token or user data)
+        console.log('Login successful:', response.data);
+        
+        // Redirect to the dashboard page after successful login
+        router.push('/dashboard');  // Redirect to the dashboard page
+      }
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -53,4 +65,4 @@ export default function Login() {
       </div>
     </div>
   );
-} 
+}
