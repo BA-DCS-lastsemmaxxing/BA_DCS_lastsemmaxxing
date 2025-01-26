@@ -1,31 +1,46 @@
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { useRouter } from 'next/navigation'; // Import the useRouter hook
+import { useRouter } from 'next/navigation';
+import { useToast } from "@/hooks/use-toast"
+
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
   const router = useRouter(); // Initialize the router
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5001/login', { email, password });
-
-      if (response.status === 200) {
-        // Handle successful login (e.g., store JWT token or user data)
-        console.log('Login successful:', response.data);
-        
-        // Redirect to the dashboard page after successful login
-        router.push('/dashboard');  // Redirect to the dashboard page
+      await login(email, password);
+      // No need to manually redirect here as AuthContext handles it
+      toast({
+        title: "Login successful",
+        description: "Welcome!"
+      })
+    } catch (error: any) {
+      
+      if (error.status === 401) {
+        // Handle unauthorized error
+        const data = await error.json();
+        toast({
+          variant: "destructive",
+          title: "Authentication failed",
+          description: data.message
+        });
+      } else {
+        // Handle other errors
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: error.message
+        });
       }
-    } catch (error) {
-      console.error('Login failed:', error);
     }
   };
 

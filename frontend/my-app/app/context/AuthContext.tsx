@@ -1,7 +1,6 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
 interface AuthContextType {
   user: any | null;
   login: (email: string, password: string) => Promise<void>;
@@ -24,6 +23,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const checkAuth = async () => {
     try {
       // Add your session verification logic here
+      
       setIsLoading(false);
     } catch (error) {
       setUser(null);
@@ -34,8 +34,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string) => {
     try {
       // Add your login API call here
-      // const response = await api.login(email, password);
-      // setUser(response.user);
+      console.log("Login service reached");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/login`, { 
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json", // Set the content type to JSON
+          },
+          body : JSON.stringify({ 
+              'email': email, 'password': password 
+          })
+      });
+      // Handle the response
+      if (!response.ok) {
+        throw response;
+      }
+      setUser(response.json())
       router.push('/dashboard');
     } catch (error) {
       throw error;

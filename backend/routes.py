@@ -6,6 +6,7 @@ auth_blueprint = Blueprint('auth', __name__)
 
 @auth_blueprint.route('/login', methods=['POST'])
 def login():
+    print(1, flush=True)
     data = request.get_json()
 
     email = data.get('email')
