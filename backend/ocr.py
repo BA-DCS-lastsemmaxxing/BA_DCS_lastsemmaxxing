@@ -6,7 +6,7 @@ from ctypes.util import find_library
 
 from pypdf import PdfReader
 
-from .preprocessing import clean_text_files
+from preprocessing import clean_text_files
 
 find_library("gs")
 

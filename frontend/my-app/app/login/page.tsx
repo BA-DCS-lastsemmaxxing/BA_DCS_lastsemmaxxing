@@ -45,11 +45,11 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-600">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
+    <div className="flex items-start justify-center h-[calc(100vh-4rem)] bg-gray-600">
+      <div className="w-2/3 max-w-3xl space-y-8 p-8 bg-white rounded-lg shadow mt-16">
         <div>
-          <h2 className="text-center text-3xl font-bold">Document Classifier</h2>
-          <p className="mt-2 text-center text-gray-900">Sign in to your account</p>
+          <h2 className="text-center text-3xl font-bold">Welcome!</h2>
+          <p className="mt-2 text-center text-gray-900">Please login to access your documents</p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">

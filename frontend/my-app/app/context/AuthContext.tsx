@@ -1,6 +1,7 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+
 interface AuthContextType {
   user: any | null;
   login: (email: string, password: string) => Promise<void>;
@@ -33,22 +34,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      // Add your login API call here
       console.log("Login service reached");
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/login`, { 
           method: 'POST',
           headers: {
-            "Content-Type": "application/json", // Set the content type to JSON
+            "Content-Type": "application/json",
           },
-          body : JSON.stringify({ 
+          body: JSON.stringify({ 
               'email': email, 'password': password 
           })
       });
-      // Handle the response
+
       if (!response.ok) {
         throw response;
       }
-      setUser(response.json())
+
+      // Wait for the JSON response and set it to user state
+      const userData = await response.json();
+      setUser(userData);
       router.push('/dashboard');
     } catch (error) {
       throw error;
@@ -67,10 +70,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useAuth = () => {
+export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}; 
+} 

@@ -21,10 +21,13 @@ def login():
     
     if user:
         print(f"User found: {user}")  # Debugging: Log the user object (avoid printing sensitive info in production)
-
         # Check if password matches the hashed password
         if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-            return jsonify({"message": "Login successful"}), 200
+            return jsonify({
+                "message": "Login successful",
+                "user_id": user.id,
+                "user_email": user.email
+            }), 200
         else:
             print(f"Password mismatch for user: {email}")  # Debugging: Log password mismatch
             return jsonify({"message": "Invalid credentials"}), 401

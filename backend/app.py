@@ -93,6 +93,31 @@ def upload_files():
 
     return jsonify({"message": "Files uploaded and processing started."})
 
+@app.route("/documents", methods=["GET"])
+def search_documents():
+    query = request.args.get("query", default=None)
+    print("Query: ", query,flush=True)
+
+    return jsonify({
+        "results": [
+            {
+                "id": 1,
+                "name": "sample1.pdf",
+                "uploadedAt": "25-1-24 15:44",
+                "status": "processing",
+                "summary": None,
+                "tags": None
+            },
+            {
+                "id": 2,
+                "name": "sample2.pdf",
+                "uploadedAt": "25-1-24 15:44",
+                "status": "completed",
+                "summary": "This appears to be a financial report for the year 2024",
+                "tags": ["Finanical", "Report", "2024"]
+            },
+        ]
+    }), 200
 
 @app.route("/download/<filename>", methods=["GET"])
 def download_file(filename):
