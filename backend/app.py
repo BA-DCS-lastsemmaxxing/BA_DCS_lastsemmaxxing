@@ -10,9 +10,11 @@ import mysql.connector
 import bcrypt
 from config import Config
 from routes import auth_blueprint
+from models import Document
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
 
 app.config.from_object(Config)
 
@@ -59,73 +61,67 @@ def run_extractor():
 @app.route("/upload", methods=["POST"])
 def upload_files():
     """Endpoint to upload PDF files."""
+    try:
+        if "files" not in request.files:
+            return jsonify({"error": "No files part in the request"}), 400
 
-    if "files" not in request.files:
-        return jsonify({"error": "No files part in the request"}), 400
+        # Clear the input_data and output_data folders
+        for folder in [INPUT_FOLDER, OUTPUT_FOLDER]:
+            for file in os.listdir(folder):
+                file_path = os.path.join(folder, file)
+                try:
+                    if os.path.isfile(file_path):
+                        os.unlink(file_path)
+                except Exception as e:
+                    print(f"Error deleting file {file_path}: {e}")
 
-    # Clear the input_data folder
-    for file in os.listdir(INPUT_FOLDER):
-        file_path = os.path.join(INPUT_FOLDER, file)
-        try:
-            if os.path.isfile(file_path):
-                os.unlink(file_path)
-        except Exception as e:
-            print(f"Error deleting file {file_path}: {e}")
+        files = request.files.getlist("files")
 
-    # Clear the output_data folder
-    for file in os.listdir(OUTPUT_FOLDER):
-        file_path = os.path.join(OUTPUT_FOLDER, file)
-        try:
-            if os.path.isfile(file_path):
-                os.unlink(file_path)
-        except Exception as e:
-            print(f"Error deleting file {file_path}: {e}")
+        for file in files:
+            if file.filename.endswith(".pdf"):
+                file_path = os.path.join(INPUT_FOLDER, file.filename)
+                file.save(file_path)
 
-    files = request.files.getlist("files")
+                # Store metadata in database with dummy values
+                Document.store_metadata(file.filename)
 
-    for file in files:
-        if file.filename.endswith(".pdf"):
-            file.save(os.path.join(INPUT_FOLDER, file.filename))
+        # Run OCR and extraction in separate threads
+        threading.Thread(target=run_ocr, args=(INPUT_FOLDER, OUTPUT_FOLDER)).start()
+        threading.Thread(target=run_extractor).start()
 
-    # Run OCR and extraction in separate threads to avoid blocking
-    threading.Thread(target=run_ocr, args=(INPUT_FOLDER, OUTPUT_FOLDER)).start()
-    threading.Thread(target=run_extractor).start()
+        return jsonify({"message": "Files uploaded and processing started."})
+    except Exception as e:
+        print(f"Error during file upload: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
 
-    return jsonify({"message": "Files uploaded and processing started."})
+
+####################################################################################################################
 
 @app.route("/documents", methods=["GET"])
 def search_documents():
     query = request.args.get("query", default=None)
-    print("Query: ", query,flush=True)
+    print("Query: ", query, flush=True)
 
-    return jsonify({
-        "results": [
-            {
-                "id": 1,
-                "name": "sample1.pdf",
-                "uploadedAt": "25-1-24 15:44",
-                "status": "processing",
-                "summary": None,
-                "tags": None
-            },
-            {
-                "id": 2,
-                "name": "sample2.pdf",
-                "uploadedAt": "25-1-24 15:44",
-                "status": "completed",
-                "summary": "This appears to be a financial report for the year 2024",
-                "tags": ["Finanical", "Report", "2024"]
-            },
-        ]
-    }), 200
+    # Fetch documents metadata
+    documents = Document.get_documents(query)
 
-@app.route("/download/<filename>", methods=["GET"])
-def download_file(filename):
-    """Endpoint to download processed files."""
-    file_path = os.path.join(OUTPUT_FOLDER, filename)
-    if not os.path.exists(file_path):
-        return jsonify({"error": "File not found"}), 404
-    return send_file(file_path, as_attachment=True)
+    return jsonify({"results": documents}), 200
+
+    
+    
+    
+    
+    
+####################################################################################################################
+
+
+# @app.route("/download/<filename>", methods=["GET"])
+# def download_file(filename):
+#     """Endpoint to download processed files."""
+#     file_path = os.path.join(OUTPUT_FOLDER, filename)
+#     if not os.path.exists(file_path):
+#         return jsonify({"error": "File not found"}), 404
+#     return send_file(file_path, as_attachment=True)
 
 
 
