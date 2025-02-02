@@ -5,7 +5,14 @@ import argparse
 from datetime import datetime
 
 from .ocr import generate_ocr_files
+import nltk
+from nltk.corpus import stopwords
 
+# Check if stopwords are already downloaded
+try:
+    stopwords.words('english')
+except LookupError:
+    nltk.download('stopwords')
 
 
 
