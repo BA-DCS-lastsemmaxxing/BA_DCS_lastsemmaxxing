@@ -16,6 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `documents`
+--
+
+DROP TABLE IF EXISTS `documents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `documents` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `uploadedAt` datetime DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `summary` text,
+  `tags` json DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `documents`
+--
+
+LOCK TABLES `documents` WRITE;
+/*!40000 ALTER TABLE `documents` DISABLE KEYS */;
+INSERT INTO `documents` VALUES (1,'sample','2024-01-25 15:44:00','processing',NULL,NULL),(2,'sample2.pdf','2024-01-25 15:44:00','completed','This appears to be a financial report for the year 2024','[\"Financial\", \"Report\", \"2024\"]'),(3,'Enterprise Singapore Internship Confirmation.pdf','2025-01-30 22:22:37','processing','This is a dummy summary.','[\"tag1\", \"tag2\", \"tag3\"]'),(4,'Enterprise Singapore Internship Confirmation.pdf','2025-02-01 15:41:47','processing','This is a dummy summary.','[\"tag1\", \"tag2\", \"tag3\"]');
+/*!40000 ALTER TABLE `documents` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -50,4 +78,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-25 18:44:15
+-- Dump completed on 2025-02-02 16:20:45
