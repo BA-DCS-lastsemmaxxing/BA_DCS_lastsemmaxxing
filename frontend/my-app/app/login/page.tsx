@@ -21,6 +21,7 @@ export default function Login() {
       // No need to manually redirect here as AuthContext handles it
       toast({
         title: "Login successful",
+        variant: "success",
         description: "Welcome!"
       })
     } catch (error: any) {

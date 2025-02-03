@@ -35,7 +35,7 @@ class Document:
         self.uploadedAt = uploadedAt
         self.status = status
         self.summary = summary
-        self.tags = tags.split(",") if tags else None
+        self.tags = tags
 
     @staticmethod
     def store_metadata(filename, status="processing"):
@@ -65,7 +65,7 @@ class Document:
 
         cursor.execute(sql, params)
         results = cursor.fetchall()
-
+        print(type(results[0]["tags"]))
         documents = [
             Document(
                 id=row["id"],
@@ -73,7 +73,7 @@ class Document:
                 uploadedAt=row["uploadedAt"].strftime("%d-%m-%y %H:%M"),
                 status=row["status"],
                 summary=row["summary"],
-                tags=row["tags"]
+                tags=json.loads(row["tags"]) if row["tags"] else None
             ).__dict__
             for row in results
         ]
