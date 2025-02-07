@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: .  # Set to root directory to access requirements.txt
+      dockerfile: ./backend/Dockerfile  # Path to the Dockerfile in the backend folder
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./backend/input_data:/app/input_data
+      - ./backend/output_data:/app/output_data
+    environment:
+      - FLASK_ENV=development
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./frontend/my-app
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
