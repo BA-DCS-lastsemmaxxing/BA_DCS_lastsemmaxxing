@@ -1,22 +1,45 @@
-services:
-  backend:
-    build:
-      context: .  # Set to root directory to access requirements.txt
-      dockerfile: ./backend/Dockerfile  # Path to the Dockerfile in the backend folder
-    ports:
-      - "5001:5001"
-    volumes:
-      - ./backend/input_data:/app/input_data
-      - ./backend/output_data:/app/output_data
-    environment:
-      - FLASK_ENV=development
-    depends_on:
-      - frontend
 
+
+services:
   frontend:
     build:
-      context: ./frontend/my-app
+      context: ./frontend/my-app  # Path to your frontend Dockerfile
     ports:
       - "3000:3000"
-    stdin_open: true
-    tty: true
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./  # Root folder is the context for backend (ensure it includes requirements.txt)
+      dockerfile: ./backend/Dockerfile  # Specify the backend Dockerfile location
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+      - DATABASE_URL=mysql+mysqlconnector://root@localhost:3306/user_database
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: user_database
+    ports:
+      - "3307:3307"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
