@@ -1,11 +1,14 @@
 import mysql.connector
 import json
+import os
 
 def get_db_connection():
+    host = os.getenv('DB_HOST', 'db')  # Default to 'db' for Docker networking
     return mysql.connector.connect(
-        host='localhost',
-        user='root',  # use your MySQL username
-        database='user_database'
+        host=host,
+        user='root',  # Use your MySQL username
+        password='rootpassword',  # MySQL root password
+        database='user_database'  # Database name
     )
 
 ###############################################################Login##############################################################################################################

@@ -39,8 +39,7 @@ CREATE TABLE `documents` (
 
 LOCK TABLES `documents` WRITE;
 /*!40000 ALTER TABLE `documents` DISABLE KEYS */;
-INSERT INTO `documents` VALUES (1,'sample','2024-01-25 15:44:00','processing',NULL,NULL),(2,'sample2.pdf','2024-01-25 15:44:00','completed','This appears to be a financial report for the year 2024','[\"Financial\", \"Report\", \"2024\"]'),(3,'Enterprise Singapore Internship Confirmation.pdf','2025-01-30 22:22:37','processing','This is a dummy summary.','[\"tag1\", \"tag2\", \"tag3\"]'),(4,'Enterprise Singapore Internship Confirmation.pdf','2025-02-01 15:41:47','processing','This is a dummy summary.','[\"tag1\", \"tag2\", \"tag3\"]');
-/*!40000 ALTER TABLE `documents` ENABLE KEYS */;
+INSERT INTO `documents` VALUES (1,'sample','2024-01-25 15:44:00','processing',NULL,NULL),(2,'sample2.pdf','2024-01-25 15:44:00','completed','This appears to be a financial report for the year 2024','[\"Financial\", \"Report\", \"2024\"]');
 UNLOCK TABLES;
 
 --

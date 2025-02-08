@@ -2,23 +2,25 @@
 FROM python:3.10-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /app/backend
 
-# Copy the requirements.txt from the root directory (relative to build context)
-COPY ./requirements.txt /app/requirements.txt 
+# Copy the requirements.txt from the root to /app in the container
+COPY requirements.txt /app/
 
-# Copy the backend directory contents into the container at /app
-COPY . /app  
+# Copy the backend files into the container
+COPY ./backend /app/backend
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Expose the port that Flask runs on
+RUN pip install mysql-connector-python
+
+# Expose the port the Flask app will run on
 EXPOSE 5001
 
-# Set environment variables for Flask
-ENV FLASK_APP=app.py
+# Set Flask environment variables
+ENV FLASK_APP=app
 ENV FLASK_ENV=production
 
 # Command to run the Flask app
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=5001"]
