@@ -24,8 +24,9 @@ jobs:
 
       - name: Get AWS Region from Terraform
         id: tf_output
+        working-directory: ./terraform
         run: |
-          AWS_REGION=$(terraform output -raw aws_region | tr -d '\r\n%')
+          AWS_REGION=$(terraform output -raw aws_region | tr -d '\r\n')
           echo "AWS_REGION=$AWS_REGION" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
