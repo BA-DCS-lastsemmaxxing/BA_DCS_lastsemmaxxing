@@ -22,7 +22,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: var.aws_region
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Set Up Node.js
         uses: actions/setup-node@v3
@@ -51,7 +51,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: var.aws_region
+          AWS_REGION: ${{ env.AWS_REGION }}
 
       # Save the plan output as an artifact
       - name: Upload Terraform Plan
@@ -74,7 +74,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: var.aws_region
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Set Up Terraform
         uses: hashicorp/setup-terraform@v2
@@ -94,4 +94,4 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: var.aws_region
+          AWS_REGION: ${{ env.AWS_REGION }}
