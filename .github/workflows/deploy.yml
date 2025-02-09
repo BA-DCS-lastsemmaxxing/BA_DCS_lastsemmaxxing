@@ -22,6 +22,11 @@ jobs:
         run: terraform init
         working-directory: ./terraform
 
+      - name: Check Terraform Outputs
+        run: |
+          terraform output
+        working-directory: ./terraform
+
       - name: Get AWS Region from Terraform
         id: tf_output
         run: |
