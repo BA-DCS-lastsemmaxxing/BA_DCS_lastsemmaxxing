@@ -15,10 +15,12 @@ jobs:
 
       - name: Get AWS Region from Terraform
         id: tf_output
-        run: echo "AWS_REGION=$(terraform output -raw aws_region)" >> $GITHUB_ENV
+        run: |
+          export AWS_REGION=$(terraform output -raw aws_region)
+          echo "AWS_REGION=$AWS_REGION" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -70,7 +72,7 @@ jobs:
 
       # Set AWS credentials for Terraform & AWS CLI
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
