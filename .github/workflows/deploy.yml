@@ -55,7 +55,7 @@ jobs:
 
       # Save the plan output as an artifact
       - name: Upload Terraform Plan
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: terraform-plan
           path: tfplan
@@ -83,7 +83,7 @@ jobs:
 
       # Download the Terraform Plan from the previous job
       - name: Download Terraform Plan
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: terraform-plan
           path: .
