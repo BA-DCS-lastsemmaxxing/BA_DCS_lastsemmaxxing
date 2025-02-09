@@ -10,3 +10,7 @@ terraform {
 provider "aws" {
   region = var.region
 }
+
+output "aws_region" {
+  value = var.region
+}
