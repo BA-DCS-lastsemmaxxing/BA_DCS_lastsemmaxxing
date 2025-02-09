@@ -30,6 +30,7 @@ jobs:
           AWS_REGION=$(terraform output -raw aws_region | tr -d '\r\n')
           echo "AWS_REGION=$AWS_REGION" >> $GITHUB_ENV
           echo "AWS_REGION value is $AWS_REGION"
+        working-directory: ./terraform
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
