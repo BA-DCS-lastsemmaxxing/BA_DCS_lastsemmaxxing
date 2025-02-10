@@ -2,6 +2,7 @@
 
 ## Key Resources
 Weekly Updates: https://drive.google.com/drive/folders/1o8y0EWdAuGMQe17fiuy6eFUvAWo5dUt3?usp=drive_link
+Figma Wireframe: https://www.figma.com/design/2C31Fox5FKbKZVwxzbCV9O/IS483-UI-Wireframe?node-id=0-1&p=f&t=W9CMfhO1DnFUEP5F-0 
 
 ## Installation
 ### Backend:
