@@ -11,16 +11,16 @@ Weekly Updates: https://drive.google.com/drive/folders/1o8y0EWdAuGMQe17fiuy6eFUv
     ```
 2. Create a virtual environment:
     ```bash
-    python -m venv env
+    python -m venv venv
     ```
 3. Activate the virtual environment:
     - On Windows:
       ```bash
-      env\Scripts\activate
+      venv\Scripts\activate
       ```
     - On macOS/Linux:
       ```bash
-      source env/bin/activate
+      source venv/bin/activate
       ```
 4. Install required packages:
     ```bash
@@ -50,10 +50,10 @@ Weekly Updates: https://drive.google.com/drive/folders/1o8y0EWdAuGMQe17fiuy6eFUv
     ```
 2. Create and activate the virtual environment (if not already done):
     ```bash
-    python -m venv env
-    env\Scripts\activate  # For Windows
+    python -m venv venv
+    venv\Scripts\activate  # For Windows
     # OR
-    source env/bin/activate  # For macOS/Linux
+    source venv/bin/activate  # For macOS/Linux
     ```
 3. Start the backend server:
     ```bash
