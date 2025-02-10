@@ -74,7 +74,7 @@ Weekly Updates: https://drive.google.com/drive/folders/1o8y0EWdAuGMQe17fiuy6eFUv
     http://localhost:3000
     ```
 #### Env Files:
-1. Navigate to frontend/my-app/.env:
+1. Create .env in frontend/my-app/:
     ```
     NEXT_PUBLIC_BACKEND_API_URL=http://localhost:5001
     ```
