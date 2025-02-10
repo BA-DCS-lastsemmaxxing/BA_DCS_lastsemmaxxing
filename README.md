@@ -57,7 +57,7 @@ Weekly Updates: https://drive.google.com/drive/folders/1o8y0EWdAuGMQe17fiuy6eFUv
     ```
 4. Open the backend in your browser or API client at:
     ```
-    http://127.0.0.1:5000
+    http://127.0.0.1:5001
     ```
 
 ### Frontend:
@@ -73,9 +73,8 @@ Weekly Updates: https://drive.google.com/drive/folders/1o8y0EWdAuGMQe17fiuy6eFUv
     ```
     http://localhost:3000
     ```
-## Env Files:
-### Frontend:
-1. frontend/my-app/.env:
+#### Env Files:
+1. Navigate to frontend/my-app/.env:
     ```
-    NEXT_PUBLIC_BACKEND_API_URL (URL to backend)
+    NEXT_PUBLIC_BACKEND_API_URL=http://localhost:5001
     ```
