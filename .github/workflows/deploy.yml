@@ -82,16 +82,15 @@ jobs:
         with:
           terraform_version: 1.0.0
 
-      - name: Initialise Terraform
-        run: terraform init
-        working-directory: ./terraform
-
       # Download the Terraform Plan from the previous job
       - name: Download Terraform Plan
         uses: actions/download-artifact@v4
         with:
           name: terraform-plan
           path: .
+
+      - name: Initialise Terraform
+        run: terraform init
 
       # Apply the Terraform Plan
       - name: Apply Terraform Plan
