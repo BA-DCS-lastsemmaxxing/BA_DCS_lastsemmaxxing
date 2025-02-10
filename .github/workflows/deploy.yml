@@ -84,6 +84,7 @@ jobs:
 
       - name: Initialise Terraform
         run: terraform init
+        working-directory: ./terraform
 
       # Download the Terraform Plan from the previous job
       - name: Download Terraform Plan
