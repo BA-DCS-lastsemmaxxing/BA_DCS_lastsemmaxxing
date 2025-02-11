@@ -10,7 +10,7 @@ data "aws_s3_bucket" "s3" {
 
 resource "aws_s3_bucket_website_configuration" "this" {
   // bucket = aws_s3_bucket.s3.bucket
-  bucket = data.aws_s3_bucket.s3
+  bucket = data.aws_s3_bucket.s3.id
 
   index_document {
     suffix = "index.html"
@@ -23,7 +23,7 @@ resource "aws_s3_bucket_website_configuration" "this" {
 
 resource "aws_s3_bucket_public_access_block" "s3" {
   // bucket = aws_s3_bucket.s3.bucket
-  bucket = data.aws_s3_bucket.s3
+  bucket = data.aws_s3_bucket.s3.id
 
   block_public_acls       = false
   block_public_policy     = false
@@ -33,7 +33,7 @@ resource "aws_s3_bucket_public_access_block" "s3" {
 
 resource "aws_s3_bucket_policy" "s3" {
   // bucket = aws_s3_bucket.s3.bucket
-  bucket = data.aws_s3_bucket.s3
+  bucket = data.aws_s3_bucket.s3.id
 
   policy = jsonencode({
     Version = "2012-10-17"
