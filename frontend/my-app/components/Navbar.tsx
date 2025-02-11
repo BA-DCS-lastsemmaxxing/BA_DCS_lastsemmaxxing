@@ -18,13 +18,7 @@ export default function Navbar() {
           <div className="flex justify-between h-16 items-center">
             {/* Center section - Logo */}
             <div className="flex-shrink-0 flex items-center mx-auto">
-              <Image
-                src="/assets/nomura-logo.png"
-                alt="Nomura Logo"
-                width={120}
-                height={40}
-                className="h-20 w-auto"
-              />
+              <h1 className="text-2xl font-bold">Document Classifier</h1>
             </div>
 
             {/* Right section - User menu */}
