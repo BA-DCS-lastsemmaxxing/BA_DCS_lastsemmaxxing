@@ -4,8 +4,8 @@ variable "region" {
   default     = "ap-southeast-1"
 }
 
-variable "s3_name" {
-  description = "The name of the S3 bucket to create"
+variable "project_name" {
+  description = "The name of the project to use for naming resources"
   type        = string
-  default     = "lsm-fyp-s3"
+  default     = "lsm-fyp"
 }

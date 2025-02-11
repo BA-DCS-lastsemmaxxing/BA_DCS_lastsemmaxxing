@@ -1,16 +1,27 @@
-data "aws_s3_bucket" "existing" {
-  bucket = var.s3_name
+// use this for creating a new bucket
+resource "aws_s3_bucket" "s3" {
+  bucket = var.project_name
 }
 
-resource "aws_s3_bucket" "s3" {
-  for_each = data.aws_s3_bucket.existing.id != "" ? {} : { "create" = true }
+// use this for using an existing bucket
+# data "aws_s3_bucket" "s3" {
+#   bucket = "lsm-fyp"
+# }
 
-  bucket = var.s3_name
+resource "aws_s3_bucket_website_configuration" "this" {
+  bucket = aws_s3_bucket.s3.bucket
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "index.html"
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "s3" {
-  for_each = aws_s3_bucket.s3
-  bucket = each.value.id
+  bucket = aws_s3_bucket.s3.bucket
 
   block_public_acls       = true
   block_public_policy     = false
@@ -19,8 +30,7 @@ resource "aws_s3_bucket_public_access_block" "s3" {
 }
 
 resource "aws_s3_bucket_policy" "s3" {
-  for_each = aws_s3_bucket.s3
-  bucket = each.value.id
+  bucket = aws_s3_bucket.s3.bucket
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -31,7 +41,7 @@ resource "aws_s3_bucket_policy" "s3" {
         Effect    = "Allow"
         Principal = "*"
         Action    = "s3:GetObject"
-        Resource  = "${each.value.arn}/**"
+        Resource  = "${aws_s3_bucket.s3.arn}/**"
       }
     ]
   })
