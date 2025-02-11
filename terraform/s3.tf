@@ -1,5 +1,10 @@
+data "aws_s3_bucket" "existing" {
+  bucket = var.s3_name
+}
+
 resource "aws_s3_bucket" "s3" {
   bucket = var.s3_name
+  count = length(data.aws_s3_bucket.existing.id) > 0 ? 0 : 1
 }
 
 resource "aws_s3_bucket_public_access_block" "s3" {
