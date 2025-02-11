@@ -44,7 +44,8 @@ resource "aws_s3_bucket_policy" "s3" {
         Effect    = "Allow"
         Principal = "*"
         Action    = "s3:GetObject"
-        Resource  = "${aws_s3_bucket.s3.arn}/**"
+        # Resource  = "${aws_s3_bucket.s3.arn}/**"
+        Resource  = "${data.aws_s3_bucket.s3.arn}/**"
       }
     ]
   })
