@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - frontend-cicd # to be removed
-    paths:
-      - "terraform/**/*.tf"
+    # paths:
+    #   - "terraform/**/*.tf"
   workflow_dispatch:
 
 jobs:
