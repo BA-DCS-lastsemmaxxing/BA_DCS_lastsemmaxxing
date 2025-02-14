@@ -1,9 +1,14 @@
+
+
 services:
   # Backend Service (Flask)
   backend:
     build:
-      context: .
+      context: .  # Use the current directory
       dockerfile: backend/Dockerfile  # Build from the backend's Dockerfile
+    volumes:
+      - input_data:/app/backend/input_data  # Mount Docker volume input_data to the backend container
+      - output_data:/app/backend/output_data  # Mount Docker volume output_data to the backend container
     ports:
       - "5001:5001"  # Expose Flask app on port 5001
     environment:
@@ -31,3 +36,8 @@ services:
       - "3000:3000"  # Expose Next.js app on port 3000
     depends_on:
       - backend  # Wait for the backend to be ready before starting the frontend
+
+# Define Docker-managed volumes
+volumes:
+  input_data:
+  output_data:
