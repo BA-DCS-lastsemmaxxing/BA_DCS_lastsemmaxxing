@@ -6,8 +6,6 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
 # Import the SQLAlchemy and Bcrypt classes
-import mysql.connector
-import bcrypt
 from config import Config
 from routes import auth_blueprint
 from models import Document
@@ -31,11 +29,6 @@ EXTRACTOR_SCRIPT = os.path.join(BASE_DIR, "pdf_extractor.py")
 os.makedirs(INPUT_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-
-# To test the Flask app       
-@app.route('/')
-def home():
-    return jsonify({"message": "Welcome to Flask!"})
 
 def run_ocr(input_folder, output_folder):
     """Run the OCR script as a subprocess."""
@@ -112,16 +105,6 @@ def search_documents():
     
     
     
-####################################################################################################################
-
-
-# @app.route("/download/<filename>", methods=["GET"])
-# def download_file(filename):
-#     """Endpoint to download processed files."""
-#     file_path = os.path.join(OUTPUT_FOLDER, filename)
-#     if not os.path.exists(file_path):
-#         return jsonify({"error": "File not found"}), 404
-#     return send_file(file_path, as_attachment=True)
 
 
 

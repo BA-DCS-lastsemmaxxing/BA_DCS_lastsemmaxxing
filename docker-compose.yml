@@ -1,0 +1,43 @@
+services:
+  # Backend Service (Flask)
+  backend:
+    build:
+      context: .  # Use the current directory
+      dockerfile: backend/Dockerfile  # Build from the backend's Dockerfile
+    volumes:
+      - input_data:/app/backend/input_data  # Mount Docker volume input_data to the backend container
+      - output_data:/app/backend/output_data  # Mount Docker volume output_data to the backend container
+    ports:
+      - "5001:5001"  # Expose Flask app on port 5001
+    environment:
+      - DB_HOST=db  # Environment variable for DB connection (service name of the MySQL container)
+    depends_on:
+      - db  # Wait for the database to be ready before starting the backend
+    # Optionally, you can include a health check or wait-for-it script to ensure DB readiness
+
+  # MySQL Database Service
+  db:
+    build:
+      context: ./mysql  # Build from the MySQL directory
+      dockerfile: Dockerfile  # Use the Dockerfile inside the mysql directory
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # Set the MySQL root password
+      MYSQL_DATABASE: user_database  # Set the database to be created
+    ports:
+      - "3307:3306"  # Expose MySQL on port 3306
+
+  # Frontend Service (Next.js / React app)
+  frontend:
+    build:
+      context: ./frontend/my-app  # Build from the frontend/my-app directory
+      dockerfile: Dockerfile  # Use the Dockerfile inside the frontend/my-app directory
+    ports:
+      - "3000:3000"  # Expose Next.js app on port 3000
+    depends_on:
+      - backend  # Wait for the backend to be ready before starting the frontend
+    command: npx serve@latest out  # Serve the statically exported app
+
+# Define Docker-managed volumes
+volumes:
+  input_data:
+  output_data:
