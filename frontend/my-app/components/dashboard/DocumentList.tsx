@@ -31,6 +31,7 @@ export function DocumentList({
 
   return (
     <div className="grid gap-4">
+<<<<<<< HEAD
       {documents.map((doc) => (
         <div
           key={doc.id.toString()}
@@ -53,9 +54,32 @@ export function DocumentList({
               <h3 className="font-medium">{doc.name}</h3>
               <p className="text-sm text-gray-500">{doc.uploadedAt}</p>
             </div>
+=======
+    {documents.map((doc) => (
+      <div
+        key={String(doc.id)} // Ensure doc.id is a string
+        onClick={() => onDocumentClick(doc)}
+        className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 cursor-pointer"
+      >
+        <div className="flex items-center space-x-4">
+          <div className="flex-shrink-0">
+            <div className={`h-3 w-3 rounded-full ${
+              doc.status === 'completed' ? 'bg-green-500' :
+              doc.status === 'processing' ? 'bg-yellow-500' :
+              'bg-red-500'
+            }`} />
+          </div>
+          <div>
+            <h3 className="font-medium">{doc.name}</h3>
+            <p className="text-sm text-gray-500">
+              {doc.uploadedAt}
+            </p>
+>>>>>>> dockerise
           </div>
         </div>
-      ))}
+      </div>
+    ))}
+
     </div>
   );
 }
