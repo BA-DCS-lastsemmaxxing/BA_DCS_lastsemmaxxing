@@ -1,5 +1,3 @@
-
-
 services:
   # Backend Service (Flask)
   backend:
@@ -15,6 +13,7 @@ services:
       - DB_HOST=db  # Environment variable for DB connection (service name of the MySQL container)
     depends_on:
       - db  # Wait for the database to be ready before starting the backend
+    # Optionally, you can include a health check or wait-for-it script to ensure DB readiness
 
   # MySQL Database Service
   db:
@@ -36,6 +35,7 @@ services:
       - "3000:3000"  # Expose Next.js app on port 3000
     depends_on:
       - backend  # Wait for the backend to be ready before starting the frontend
+    command: npx serve@latest out  # Serve the statically exported app
 
 # Define Docker-managed volumes
 volumes:
