@@ -4,7 +4,8 @@ resource "aws_db_instance" "rds" {
     engine = "mysql"
     engine_version = "8.0"
     instance_class = "db.t3.micro"
-    db_name = "admin"
+    db_name = "lsm_fyp"
+    username = "admin" // todo - set this as secrets/values
     password = "testpassword"
     publicly_accessible = true
     skip_final_snapshot = true
