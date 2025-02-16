@@ -23,17 +23,22 @@ data "aws_vpc" "default" {
 }
 
 # Fetch the default subnet in the default VPC
-data "aws_subnet" "default" {
+data "aws_subnets" "default" {
     filter {
         name = "vpc-id"
         values = [data.aws_vpc.default.id]
     }
 }
 
+# Select the first two subnets from the default VPC
+locals {
+  selected_subnets = slice(data.aws_subnets.default.ids, 0, 2) # Picks first two subnets
+}
+
 # Create a DB subnet group using the default VPC subnets
 resource "aws_db_subnet_group" "default" {
   name       = "default-subnet-group"
-  subnet_ids = [data.aws_subnet.default.id]
+  subnet_ids = local.selected_subnets
 
   tags = {
     Name = "Default DB Subnet Group"
