@@ -38,7 +38,7 @@ locals {
 
 # Create a DB subnet group using the default VPC subnets
 resource "aws_db_subnet_group" "default" {
-  name       = "default-subnet-group"
+  name       = "subnet-group"
   subnet_ids = local.selected_subnets
 
   tags = {
