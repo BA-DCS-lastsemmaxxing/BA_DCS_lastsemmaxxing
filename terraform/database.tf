@@ -41,7 +41,7 @@ resource "aws_db_subnet_group" "default" {
 }
 
 resource "aws_security_group" "rds_sg" {
-    vpc_id = aws_vpc.default.id
+    vpc_id = data.aws_vpc.default.id
 
     ingress {
         from_port = 3306
