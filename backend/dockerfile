@@ -1,6 +1,11 @@
 # Use an official Python runtime as a parent image
 FROM python:3.10-slim
 
+# Install system dependencies for MySQL connection
+RUN apt-get update && apt-get install -y \
+    default-libmysqlclient-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set the working directory in the container
 WORKDIR /app/backend
 
@@ -13,7 +18,11 @@ COPY ./backend /app/backend
 # Install dependencies
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
+# Install MySQL connector
 RUN pip install mysql-connector-python
+
+# Copy the .env file to the container
+COPY ./backend/.env /app/backend/.env
 
 # Expose the port the Flask app will run on
 EXPOSE 5001
