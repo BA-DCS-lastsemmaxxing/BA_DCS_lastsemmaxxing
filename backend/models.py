@@ -1,15 +1,23 @@
 import mysql.connector
 import json
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def get_db_connection():
     # Use the RDS endpoint from the environment variable
-    host = os.getenv('DB_HOST', 'terraform-20250216045524406600000003.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com')  # Replace with your RDS endpoint
+    host = os.getenv('DB_HOST')
+    user = os.getenv('DB_USER')
+    password = os.getenv('DB_PASSWORD')
+    database = os.getenv('DB_NAME')
+
     return mysql.connector.connect(
         host=host,
-        user=os.getenv('DB_USER', 'admin'),  # Use MySQL username from environment variable
-        password=os.getenv('DB_PASSWORD', 'testpassword'),  # Use MySQL password from environment variable
-        database=os.getenv('DB_NAME', 'user_database')  # Database name from environment variable
+        user=user,
+        password=password,
+        database=database
     )
 
 ###############################################################Login##############################################################################################################
