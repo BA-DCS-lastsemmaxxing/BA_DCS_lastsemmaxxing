@@ -28,7 +28,8 @@ CREATE TABLE `documents` (
   `uploadedAt` datetime DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   `summary` text,
-  `tags` json DEFAULT NULL,
+  `topics` json DEFAULT NULL,
+  `classification` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

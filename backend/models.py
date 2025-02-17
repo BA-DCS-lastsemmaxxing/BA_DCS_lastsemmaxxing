@@ -6,18 +6,32 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-def get_db_connection():
-    # Use the RDS endpoint from the environment variable
-    host = os.getenv('DB_HOST')
-    user = os.getenv('DB_USER')
-    password = os.getenv('DB_PASSWORD')
-    database = os.getenv('DB_NAME')
+# For RDS
 
+# def get_db_connection():
+#     # Use the RDS endpoint from the environment variable
+#     host = os.getenv('DB_HOST')
+#     user = os.getenv('DB_USER')
+#     password = os.getenv('DB_PASSWORD')
+#     database = os.getenv('DB_NAME')
+
+#     return mysql.connector.connect(
+#         host=host,
+#         user=user,
+#         password=password,
+#         database=database
+#     )
+
+# For local demo
+def get_db_connection():
+    host = os.getenv('DB_HOST', 'db')  # Default to 'db' for Docker networking
+    password = os.getenv('DB_PASSWORD','rootpassword')
     return mysql.connector.connect(
         host=host,
-        user=user,
-        password=password,
-        database=database
+        user='root',  # Use your MySQL username
+        password=password,  # MySQL root password
+        database='user_database', # Database name
+        port = 3306
     )
 
 ###############################################################Login##############################################################################################################
@@ -51,23 +65,6 @@ class Document:
         self.classification = classification
 
     @staticmethod
-    def store_metadata(filename, status="processing", classification=None):
-        """Store document metadata in the database with topics and classification."""
-        connection = get_db_connection()
-        cursor = connection.cursor()
-
-        dummy_summary = "This is a dummy summary."
-        dummy_topics = json.dumps(["topic1", "topic2", "topic3"])  # Convert topics to a JSON array
-
-        cursor.execute(
-            "INSERT INTO documents (name, uploadedAt, status, summary, topics, classification) VALUES (%s, NOW(), %s, %s, %s, %s)",
-            (filename, status, dummy_summary, dummy_topics, classification)
-        )
-        connection.commit()
-        cursor.close()
-        connection.close()
-
-    @staticmethod
     def get_documents(query=None):
         """Retrieve document metadata from the database with topics and classification."""
         connection = get_db_connection()
@@ -89,7 +86,7 @@ class Document:
                 status=row["status"],
                 summary=row["summary"],
                 topics=json.loads(row["topics"]) if row["topics"] else None,  # Handle topics instead of tags
-                classification=row["classification"]
+                classification=row["classification"] if row['classification'] else None
             ).__dict__
             for row in results
         ]
@@ -98,3 +95,34 @@ class Document:
         connection.close()
 
         return documents
+    
+    @staticmethod
+    def insert_file_record(filename):
+        print("filename: ", filename)
+        """Store document metadata in the database with dummy values."""
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            "INSERT INTO documents (name, uploadedAt, status, summary) VALUES (%s, NOW(), 'processing' , 'This is a dummy summary.')",
+            (filename,)
+        )
+        doc_id = cursor.lastrowid
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return doc_id
+
+    @staticmethod
+    def update_file_classification(file_id, classification):
+        """Store document metadata in the database with dummy values."""
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        print(classification)
+        cursor.execute(
+            "UPDATE documents SET classification = %s, status='completed' WHERE id = %s;",
+            (classification[0], file_id)
+        )
+        connection.commit()
+        cursor.close()
+        connection.close()

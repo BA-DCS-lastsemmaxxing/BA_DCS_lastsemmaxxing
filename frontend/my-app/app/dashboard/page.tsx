@@ -31,7 +31,8 @@ export default function Dashboard() {
         uploadedAt: doc.uploadedAt,
         status: doc.status,
         summary: doc.summary,
-        tags: doc.tags
+        topics: doc.topics,
+        classification: doc.classification,
       }));
       setDocuments(mappedDocuments);
     } catch (error) {

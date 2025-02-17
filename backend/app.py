@@ -22,34 +22,10 @@ app.register_blueprint(auth_blueprint)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FOLDER = os.path.join(BASE_DIR, "input_data")
 OUTPUT_FOLDER = os.path.join(BASE_DIR, "output_data")
-OCR_SCRIPT = os.path.join(BASE_DIR, "ocr.py")
-EXTRACTOR_SCRIPT = os.path.join(BASE_DIR, "pdf_extractor.py")
-
+CLASSIFICATION_SCRIPT = os.path.join(BASE_DIR,"classification.py")
 # Ensure folders exist
 os.makedirs(INPUT_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
-
-
-def run_ocr(input_folder, output_folder):
-    """Run the OCR script as a subprocess."""
-    try:
-        subprocess.run(
-            [sys.executable, OCR_SCRIPT, input_folder, output_folder],
-            check=True
-        )
-    except subprocess.CalledProcessError as e:
-        print(f"Error running OCR script: {e}")
-
-def run_extractor():
-    """Run the PDF extractor script as a subprocess."""
-    try:
-        subprocess.run(
-            [sys.executable, EXTRACTOR_SCRIPT],
-            check=True
-        )
-    except subprocess.CalledProcessError as e:
-        print(f"Error running extractor script: {e}")
-        
 
 @app.route("/upload", methods=["POST"])
 def upload_files():
@@ -75,14 +51,8 @@ def upload_files():
                 file_path = os.path.join(INPUT_FOLDER, file.filename)
                 file.save(file_path)
 
-                # Store metadata in database with dummy values
-                Document.store_metadata(file.filename)
-
-        # Run OCR and extraction in separate threads
-        threading.Thread(target=run_ocr, args=(INPUT_FOLDER, OUTPUT_FOLDER)).start()
-        threading.Thread(target=run_extractor).start()
-
         return jsonify({"message": "Files uploaded and processing started."})
+
     except Exception as e:
         print(f"Error during file upload: {e}")
         return jsonify({"error": "Internal Server Error"}), 500

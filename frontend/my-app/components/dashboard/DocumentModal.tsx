@@ -13,6 +13,8 @@ interface DocumentModalProps {
 export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalProps) {
   if (!document) return null;
 
+  console.log(document);
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
@@ -33,12 +35,13 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
               <p className="text-gray-600">{document.summary}</p>
               
               <div className="flex flex-wrap gap-2">
-                {document.tags?.map(tag => (
-                  <Badge key={tag} variant="secondary">
-                    {tag}
+                {document.topics?.map(topic => (
+                  <Badge key={topic} variant="secondary">
+                    {topic}
                   </Badge>
                 ))}
               </div>
+              <Badge className="bg-green-500 text-white">{document.classification}</Badge>
             </>
           )}
         </div>

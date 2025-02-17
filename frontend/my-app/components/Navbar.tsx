@@ -1,16 +1,36 @@
 'use client';
 
-import { useAuth } from '@/app/context/AuthContext';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { auth } from '@/service/auth';
 import Image from 'next/image';
 import { Icons } from '@/components/Icons';
-import { useState } from 'react';
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const router = useRouter();
   const pathname = usePathname();
+  const [user, setUser] = useState<any>(null);
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
   const isLoginPage = pathname === '/login';
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  const checkUser = async () => {
+    try {
+      const currentUser = await auth.getCurrentUser();
+      setUser(currentUser);
+    } catch (error) {
+      console.error('No user session');
+    }
+  };
+
+  const handleLogout = () => {
+    auth.signOut();
+    router.push('/login');
+  };
+
   return (
     <div className="relative">
       <nav className="bg-white border-b border-gray-200">
@@ -43,7 +63,7 @@ export default function Navbar() {
                           <p className="font-medium">Welcome, {user?.user_email}</p>
                         </div>
                         <button
-                          onClick={logout}
+                          onClick={handleLogout}
                           className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                           Sign out

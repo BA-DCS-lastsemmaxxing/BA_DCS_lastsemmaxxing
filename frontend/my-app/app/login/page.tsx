@@ -1,47 +1,33 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useToast } from "@/hooks/use-toast"
-
+import { useToast } from "@/hooks/use-toast";
+import { auth } from '@/service/auth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      await login(email, password);
-      // No need to manually redirect here as AuthContext handles it
+      const result = await auth.signIn(email, password);
       toast({
         title: "Login successful",
         variant: "success",
         description: "Welcome!"
-      })
+      });
+      router.push('/dashboard');
     } catch (error: any) {
-      
-      if (error.status === 401) {
-        // Handle unauthorized error
-        const data = await error.json();
-        toast({
-          variant: "destructive",
-          title: "Authentication failed",
-          description: data.message
-        });
-      } else {
-        // Handle other errors
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: error.message
-        });
-      }
+      toast({
+        variant: "destructive",
+        title: "Authentication failed",
+        description: error.message
+      });
     }
   };
 

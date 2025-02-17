@@ -4,5 +4,6 @@ export interface Document {
   uploadedAt: string;
   status: 'processing' | 'completed' | 'failed';
   summary?: string;
-  tags?: string[];
+  topics?: string[];
+  classification?: string;
 } 
