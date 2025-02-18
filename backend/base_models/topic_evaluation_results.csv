@@ -1,100 +1,100 @@
 file_path,expected_topic,predicted_topic_gpt4o,predicted_topic_llama
-Cleaned_Data_v2/Financial/Investment and Market Research/finanalysis_sample_reports.txt,Investment and Market Research,Financial Statements,Investment and Market Research
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/pillar3-disclosures-2q-2022.txt,Risk Assessment Reports and Frameworks,Regulatory and Compliance,Risk Assessment Reports and Frameworks
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/Money Laundering National Risk Assessment.txt,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/FAQ - Notice on Cyber Hygiene.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
+Cleaned_Data_v2/Financial/Financial Statements/Balance_sheets31March15.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Annual Reports/pwc-iar-2023.txt,Annual Reports,Annual Reports,Annual Reports
 Cleaned_Data_v2/Legal and Contractual/Non-Disclosure Agreements (NDA)/GEL-NDA.txt,Non-Disclosure Agreements (NDA),Non-Disclosure Agreements (NDA),Non-Disclosure Agreements (NDA)
-Cleaned_Data_v2/Financial/Annual Reports/2023-annual-report-en.txt,Annual Reports,Annual Reports,Annual Reports
-Cleaned_Data_v2/Regulatory and Compliance/Taxation/etaxguides_iit_tax-framework-for-corporate-amalgamations-(fourth-edition).txt,Taxation,Taxation,Taxation
-Cleaned_Data_v2/Financial/Financial Statements/uobar2020.txt,Financial Statements,Annual Reports,Annual Reports
-Cleaned_Data_v2/Financial/Financial Statements/Balance_sheets30June17.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/gp-financial-3q-2017.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/2024-money-laundering-risk-assessment-report.txt,Risk Management,Anti Money Laundering,Anti Money Laundering
+Cleaned_Data_v2/Financial/Financial Statements/3. Nomura Financial Statement.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/liquidity-coverage-ratio-3q-2018.txt,Financial Statements,Regulatory and Compliance,Risk Management
 Cleaned_Data_v2/Regulatory and Compliance/Anti Money Laundering/Guidance to Capital Markets Intermediaries on Enhancing AMLCFT Frameworks and Controls.txt,Anti Money Laundering,Anti Money Laundering,Anti Money Laundering
-Cleaned_Data_v2/Financial/Financial Statements/Audited-Results-For-Year-Ended-31-Dec-2020.txt,Financial Statements,Financial Statements,Annual Reports
-Cleaned_Data_v2/Regulatory and Compliance/Anti Money Laundering/Notice PSN01 dated 2 April 2024.txt,Anti Money Laundering,Regulatory and Compliance,Anti Money Laundering
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/pillar3-disclosures-2q-2019.txt,Risk Assessment Reports and Frameworks,Regulatory and Compliance,Risk Management
+Cleaned_Data_v2/Financial/Investment and Market Research/finanalysis_sample_reports.txt,Investment and Market Research,Financial Statements,Investment and Market Research
+Cleaned_Data_v2/Regulatory and Compliance/Anti Money Laundering/Notice PSN01 dated 2 April 2024.txt,Anti Money Laundering,Anti Money Laundering,Anti Money Laundering
+Cleaned_Data_v2/Financial/Financial Statements/condensed-financial-statement-2q-2023-results.txt,Financial Statements,Financial Statements,Financial Statements
 Cleaned_Data_v2/Regulatory and Compliance/Risk Management/Compliance Toolkit for Merchant Banks Last Revised 12 September 2024.txt,Consumer Finance,Regulatory and Compliance,Regulatory and Compliance
-Cleaned_Data_v2/Financial/Annual Reports/annual-report-2019.txt,Annual Reports,Annual Reports,Annual Reports
-Cleaned_Data_v2/Financial/Financial Statements/condensed-financial-statement-2q-2022.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Regulatory and Compliance/Risk Management/Response to Consultation Paper on Management of Outsourced Relevant Services.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
-Cleaned_Data_v2/Regulatory and Compliance/Financial Regulations/The Singapore Guide to Conduct and Market Practices for the Wholesale Financial Markets.txt,Financial Regulations,Regulatory and Compliance,Regulatory and Compliance
+Cleaned_Data_v2/Financial/Financial Statements/liquidity-coverage-ratio-2q-2017.txt,Financial Statements,Regulatory and Compliance,Risk Management
+Cleaned_Data_v2/Regulatory and Compliance/Global Proxy Voting Policy - 2024.txt,Regulatory and Compliance,Regulatory and Compliance,Investment and Market Research
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/pillar3-disclosures-2q-2020.txt,Risk Management,Regulatory and Compliance,Financial Statements
+Cleaned_Data_v2/Regulatory and Compliance/Financial Regulations/The Singapore Guide to Conduct and Market Practices for the Wholesale Financial Markets.txt,Financial Regulations,Regulatory and Compliance,Investment and Market Research
 Cleaned_Data_v2/Regulatory and Compliance/Audit Reports/audit-regulatory-report-2023.txt,Audit Reports,Audit Reports,Audit Reports
 Cleaned_Data_v2/Legal and Contractual/Client Agreements/capitalxtend-client-agreement-v10-28112023.txt,Client Agreements,Client Agreements,Client Agreements
-Cleaned_Data_v2/Financial/Financial Statements/liquidity-coverage-ratio-4q-2017.txt,Financial Statements,Regulatory and Compliance,Risk Management
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/pillar3-disclosures-1q-2023.txt,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks
-Cleaned_Data_v2/Regulatory and Compliance/Risk Management/FAQ - Notice on Technology Risk Management.txt,Risk Management,Risk Management,Risk Management
-Cleaned_Data_v2/Financial/Financial Statements/ocbc 3q24 results press release.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/gp-financial-2q-2020.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Annual Reports/uobar2018.txt,Annual Reports,Annual Reports,Annual Reports
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/Guidelines on Environmental Risk Management for Banks.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
+Cleaned_Data_v2/Financial/Financial Statements/net-stable-funding-ratio-disclosure-2q-2018.txt,Financial Statements,Regulatory and Compliance,Regulatory and Compliance
 Cleaned_Data_v2/Technology/5f57eed0d983f9acc1ca0af0_360Alumni API Documentation.txt,Technology,Technology,Technology
 Cleaned_Data_v2/Legal and Contractual/Client Agreements/uob-bib-service-agreement.txt,Client Agreements,Client Agreements,Client Agreements
-Cleaned_Data_v2/Regulatory and Compliance/Risk Management/MAS Notice 1108 Cancellation.txt,Risk Management,Regulatory and Compliance,Financial Regulations
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/pillar3-disclosures-2q-2022.txt,Risk Management,Regulatory and Compliance,Financial Statements
 Cleaned_Data_v2/Regulatory and Compliance/Audit Reports/2020-pmp-public-report.txt,Audit Reports,Audit Reports,Audit Reports
-Cleaned_Data_v2/Financial/Investment and Market Research/BNY-2025-market-outlook-navigating-a-new-landscape.txt,Investment and Market Research,Investment and Market Research,Investment and Market Research
-Cleaned_Data_v2/Financial/Financial Statements/gp-financial-4q-2020.txt,Financial Statements,Financial Statements,Annual Reports
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/pillar3-disclosures-3q-2017.txt,Risk Management,Regulatory and Compliance,Financial Statements
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/pillar3-disclosures-1q-2023.txt,Risk Management,Regulatory and Compliance,Financial Statements
 Cleaned_Data_v2/Operational/sg-cass-ac121-2-3(rev-0)-sop-for-flight-crew-members.txt,Operational,Regulatory and Compliance,Regulatory and Compliance
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/pillar3-disclosures-3q-2022.txt,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks
-Cleaned_Data_v2/Financial/Financial Statements/unaudited-interim-financial-statements-30092021.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/pillar3-disclosures-4q-2021.txt,Risk Assessment Reports and Frameworks,Regulatory and Compliance,Financial Statements
+Cleaned_Data_v2/Financial/Annual Reports/annual-report-2018.txt,Annual Reports,Annual Reports,Annual Reports
+Cleaned_Data_v2/Financial/Financial Statements/gp-financial-4q-2019.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/unaudited-interim-financial-statements-310321.txt,Financial Statements,Financial Statements,Financial Statements
 Cleaned_Data_v2/Operational/nucats-overview-of-sops.txt,Operational,Operational,Operational
-Cleaned_Data_v2/Financial/Financial Statements/financial-updates-3q-2020.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Financial Statements/liquidity-coverage-ratio-4q-2018.txt,Financial Statements,Risk Management,Risk Management
-Cleaned_Data_v2/Financial/Financial Statements/Balance_sheets31Mar17.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/regulatory-disclosures-pillar-3-disclosures-q1-2024.txt,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/Directive 5.txt,Risk Management,Regulatory and Compliance,Financial Regulations
+Cleaned_Data_v2/Financial/Financial Statements/condensed-financial-statement-2q-2024-results.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/liquidity-coverage-ratio-1q-2019.txt,Financial Statements,Regulatory and Compliance,Financial Statements
+Cleaned_Data_v2/Financial/Annual Reports/annual-report-2023.txt,Annual Reports,Annual Reports,Annual Reports
 Cleaned_Data_v2/Legal and Contractual/Mergers and Acquisitions/mpdf.txt,Mergers and Acquisitions,Mergers and Acquisitions,Mergers and Acquisitions
-Cleaned_Data_v2/Regulatory and Compliance/Enforcement Monograph Final Revised Apr 20221.txt,Regulatory and Compliance,Regulatory and Compliance,Regulatory and Compliance
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/MAS Notice 1108 Cancellation.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
 Cleaned_Data_v2/Regulatory and Compliance/Financial Regulations/MAS-SGX Trade Surveillance Practice Guide.txt,Financial Regulations,Regulatory and Compliance,Regulatory and Compliance
 Cleaned_Data_v2/Strategic/BB_Strategies_for_growth.txt,Strategic,Strategic,Strategic
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/pillar3-disclosures-3q-2018.txt,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks
-Cleaned_Data_v2/Legal and Contractual/Loans/Guarantee to Bank.txt,Loans,Client Agreements,Client Agreements
-Cleaned_Data_v2/Financial/Financial Statements/3. Nomura Financial Statement.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Annual Reports/2023-annual-report-en.txt,Annual Reports,Annual Reports,Annual Reports
+Cleaned_Data_v2/Legal and Contractual/Loans/Guarantee to Bank.txt,Loans,Loans,Client Agreements
+Cleaned_Data_v2/Financial/Financial Statements/FSDF Financial Statement 2021.txt,Financial Statements,Financial Statements,Financial Statements
 Cleaned_Data_v2/Strategic/BCG-Your-Capabilities-Need-a-Strategy-Mar-2019_tcm9-215825.txt,Strategic,Strategic,Strategic
-Cleaned_Data_v2/Financial/Financial Statements/gp-financial-3q-2017.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Annual Reports/Annual-ReportDec2016.txt,Annual Reports,Annual Reports,Annual Reports
+Cleaned_Data_v2/Financial/Financial Statements/dbs-annual-report-2023-financial-statements.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/net-stable-funding-ratio-disclosure-4q-2018.txt,Financial Statements,Regulatory and Compliance,Regulatory and Compliance
 Cleaned_Data_v2/Marketing and Public Communication/what-consumers-want-from-personalization.txt,Marketing and Public Communication,Marketing and Public Communication,Marketing and Public Communication
-Cleaned_Data_v2/Financial/Annual Reports/Annual-Report2017.txt,Annual Reports,Annual Reports,Annual Reports
-Cleaned_Data_v2/Regulatory and Compliance/Consumer Finance/Notice 1109 Unsecured Credit Facilities to Individuals_1 Jul 2021.txt,Consumer Finance,Regulatory and Compliance,Regulatory and Compliance
-Cleaned_Data_v2/Financial/Financial Statements/condensed-financial-statement-4q-2021.txt,Financial Statements,Financial Statements,Annual Reports
-Cleaned_Data_v2/Regulatory and Compliance/Anti Money Laundering/best-practices-for-countering-trade-based-money-laundering.txt,Anti Money Laundering,Anti Money Laundering,Anti Money Laundering
-Cleaned_Data_v2/Regulatory and Compliance/Risk Management/7 Credit Facilities to Directors Related Corporations etc 01 Nov 1985.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
-Cleaned_Data_v2/Regulatory and Compliance/Guide to Internal Review on the Sustainability Report.txt,Regulatory and Compliance,Regulatory and Compliance,Risk Management
-Cleaned_Data_v2/Legal and Contractual/Client Agreements/general_terms_and_conditions.txt,Client Agreements,Client Agreements,Client Agreements
-Cleaned_Data_v2/Financial/Financial Statements/unaudited-results-for-second-quarter-ended-30-june-2024.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Marketing and Public Communication/242 - Loyalty Programs and Customer Expectations Are Growing - BCG - www.bcg.com.txt,Marketing and Public Communication,Marketing and Public Communication,Marketing and Public Communication
-Cleaned_Data_v2/Technology/singapore-cyber-landscape-2023.txt,Technology,Risk Assessment Reports and Frameworks,Risk Management
-Cleaned_Data_v2/Financial/Financial Statements/interim-financial-statement-2q-2021.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Legal and Contractual/Client Agreements/ian de vaz_due diligence.txt,Client Agreements,Regulatory and Compliance,Partnerships
-Cleaned_Data_v2/Regulatory and Compliance/Financial Regulations/SFLCBReg.txt,Financial Regulations,Regulatory and Compliance,Regulatory and Compliance
 Cleaned_Data_v2/Financial/Financial Statements/gp-financial-1q-2018.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Annual Reports/pwc-iar-2023.txt,Annual Reports,Annual Reports,Annual Reports
-Cleaned_Data_v2/Financial/Financial Statements/gp-financial-2q-2017.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Regulatory and Compliance/Consumer Finance/Notice 1109 Unsecured Credit Facilities to Individuals_1 Jul 2021.txt,Consumer Finance,Regulatory and Compliance,Regulatory and Compliance
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/Singapore’s National Money Laundering and Terrorist Financing Risk Assessment .txt,Risk Management,Anti Money Laundering,Anti Money Laundering
+Cleaned_Data_v2/Regulatory and Compliance/Anti Money Laundering/best-practices-for-countering-trade-based-money-laundering.txt,Anti Money Laundering,Anti Money Laundering,Anti Money Laundering
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/BCM-Guidelines-June-2022.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/pillar3-disclosures-1q-2019 (1).txt,Risk Management,Regulatory and Compliance,Financial Statements
+Cleaned_Data_v2/Legal and Contractual/Client Agreements/general_terms_and_conditions.txt,Client Agreements,Client Agreements,Client Agreements
+Cleaned_Data_v2/Financial/Financial Statements/Audited-Results-For-Year-Ended-31-Dec-2020.txt,Financial Statements,Financial Statements,Annual Reports
+Cleaned_Data_v2/Marketing and Public Communication/242 - Loyalty Programs and Customer Expectations Are Growing - BCG - www.bcg.com.txt,Marketing and Public Communication,Marketing and Public Communication,Marketing and Public Communication
+Cleaned_Data_v2/Technology/singapore-cyber-landscape-2023.txt,Technology,Technology,Risk Management
+Cleaned_Data_v2/Financial/Financial Statements/financial-statements.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Legal and Contractual/Client Agreements/ian de vaz_due diligence.txt,Client Agreements,Regulatory and Compliance,Partnerships
+Cleaned_Data_v2/Regulatory and Compliance/Financial Regulations/SFLCBReg.txt,Financial Regulations,Regulatory and Compliance,Financial Regulations
+Cleaned_Data_v2/Financial/Financial Statements/FSDF Financial Statements 2023.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/gp-financial-4q-2017.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/liquidity-coverage-ratio-1q-2018.txt,Financial Statements,Regulatory and Compliance,Risk Management
 Cleaned_Data_v2/Regulatory and Compliance/Audit Reports/2019-pmp-public-report.txt,Audit Reports,Audit Reports,Audit Reports
-Cleaned_Data_v2/Financial/Financial Statements/liquidity-coverage-ratio-2q-2018.txt,Financial Statements,Risk Management,Risk Management
-Cleaned_Data_v2/Legal and Contractual/Mergers and Acquisitions/LexologyGTDTPrivateMergersandAcquisitions2023Singaporechapter.txt,Mergers and Acquisitions,Mergers and Acquisitions,unknown
-Cleaned_Data_v2/Financial/Financial Statements/balance-sheets-30june18.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Financial Statements/unaudited-interim-financial-statements-300623.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/investment-marketoutlook-2023.txt,Financial Statements,Investment and Market Research,Investment and Market Research
+Cleaned_Data_v2/Legal and Contractual/Mergers and Acquisitions/LexologyGTDTPrivateMergersandAcquisitions2023Singaporechapter.txt,Mergers and Acquisitions,Mergers and Acquisitions,Mergers and Acquisitions
+Cleaned_Data_v2/Financial/Financial Statements/selected-financial-statements-2022-en.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/balance-sheets-31mar19.txt,Financial Statements,Financial Statements,Financial Statements
 Cleaned_Data_v2/Strategic/BCG_Designing_the_Corporate_Center_May_2013_tcm9-97479.txt,Strategic,Strategic,Strategic
 Cleaned_Data_v2/Legal and Contractual/Mergers and Acquisitions/Due-Diligence-for-Private-Acquisitions-in-Singapore.txt,Mergers and Acquisitions,Mergers and Acquisitions,Mergers and Acquisitions
-Cleaned_Data_v2/Regulatory and Compliance/Risk Management/8 Credit Facilities and Limits 01 Nov 1985.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/7 Credit Facilities to Directors Related Corporations etc 01 Nov 1985.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
 Cleaned_Data_v2/Strategic/introducing-the-next-gen-operating-model.txt,Strategic,Technology,Strategic
 Cleaned_Data_v2/Operational/PA00JM8D.txt,Operational,Regulatory and Compliance,Financial Statements
-Cleaned_Data_v2/Financial/Financial Statements/unaudited-interim-financial-statements-310320.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Financial Statements/gp-financial-1q-2019.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/unaudited-interim-financial-statements-30092021.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/unaudited-condensed-interim-financial-statements-300922.txt,Financial Statements,Financial Statements,Financial Statements
 Cleaned_Data_v2/Administrative/Sample-Employee-Handbook.txt,Administrative,Employment,Employment
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/Singapore’s National Money Laundering and Terrorist Financing Risk Assessment .txt,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks
-Cleaned_Data_v2/Financial/Financial Statements/unaudited-interim-financial-statements-310324.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Annual Reports/DBS_AR21_LR.txt,Annual Reports,Annual Reports,Annual Reports
+Cleaned_Data_v2/Financial/Financial Statements/unaudited-results-for-nine-months-ended-30-september-2024.txt,Financial Statements,Financial Statements,Financial Statements
 Cleaned_Data_v2/Regulatory and Compliance/Anti Money Laundering/MAS Notice PSN10  Exempt Payment Service Providers Tracked.txt,Anti Money Laundering,Regulatory and Compliance,Anti Money Laundering
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/pillar3-disclosures-1q-2022.txt,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks
-Cleaned_Data_v2/Financial/Financial Statements/selected-fs-fy2020-en.txt,Financial Statements,Audit Reports,Financial Statements
-Cleaned_Data_v2/Financial/Financial Statements/Balance_sheets30Sept15.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Annual Reports/ar2023.txt,Annual Reports,Annual Reports,Annual Reports
+Cleaned_Data_v2/Financial/Financial Statements/condensed-financial-statement-4q-2022.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Financial/Financial Statements/unaudited-interim-financial-statements-300919.txt,Financial Statements,Financial Statements,Financial Statements
 Cleaned_Data_v2/Legal and Contractual/Non-Disclosure Agreements (NDA)/NDA+FichePrésentation.txt,Non-Disclosure Agreements (NDA),Non-Disclosure Agreements (NDA),Non-Disclosure Agreements (NDA)
 Cleaned_Data_v2/Legal and Contractual/Employment/EC.txt,Employment,Employment,Employment
 Cleaned_Data_v2/Legal and Contractual/Employment/Sample Employment Contract.txt,Employment,Employment,Employment
 Cleaned_Data_v2/Strategic/bcg-infrastructure-strategy-2024-creating-value-through-operational-excellence-mar-2024.txt,Strategic,Investment and Market Research,Investment and Market Research
-Cleaned_Data_v2/Financial/Financial Statements/financial-statements.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Legal and Contractual/Loans/credit_facilities.txt,Loans,Client Agreements,Loans
-Cleaned_Data_v2/Financial/Financial Statements/ar2023.txt,Financial Statements,unknown,Annual Reports
-Cleaned_Data_v2/Regulatory and Compliance/Risk Management/Guidelines on Definition of a Deposit_01 Jul 2021.txt,Risk Management,Regulatory and Compliance,Regulatory and Compliance
+Cleaned_Data_v2/Financial/Financial Statements/2. Financial-statements-SAMPLE.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Legal and Contractual/Loans/credit_facilities.txt,Loans,Loans,Loans
+Cleaned_Data_v2/Financial/Financial Statements/unaudited-results-for-second-quarter-ended-30-june-2024.txt,Financial Statements,Financial Statements,Financial Statements
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/Consumer Credit Report_Updated_30_Oct_2024.txt,Risk Management,Consumer Finance,Consumer Finance
 Cleaned_Data_v2/Legal and Contractual/Mergers and Acquisitions/049_SINGAPORE-L-P.txt,Mergers and Acquisitions,Mergers and Acquisitions,Mergers and Acquisitions
-Cleaned_Data_v2/Financial/Financial Statements/liquidity-coverage-ratio-2q-2019.txt,Financial Statements,Risk Management,Risk Management
+Cleaned_Data_v2/Regulatory and Compliance/Guidance Notes on Acctg Std_POST FRG_FINAL_0.txt,Regulatory and Compliance,Regulatory and Compliance,Financial Statements
 Cleaned_Data_v2/Regulatory and Compliance/Audit Reports/Audited-Results-For-Year-Ended-31-Dec-2021.txt,Audit Reports,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Financial Statements/unaudited-interim-financial-statements-300923.txt,Financial Statements,Financial Statements,Financial Statements
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/dbs-annual-report-2023-risk-management.txt,Risk Assessment Reports and Frameworks,Risk Management,Risk Management
-Cleaned_Data_v2/Financial/Financial Statements/UOBKH_AR14.txt,Financial Statements,Annual Reports,Annual Reports
-Cleaned_Data_v2/Financial/Risk Assessment Reports and Frameworks/pillar3-disclosures-3q-2023.txt,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks,Risk Assessment Reports and Frameworks
+Cleaned_Data_v2/Regulatory and Compliance/Taxation/e-tax-guide_tax-treatment-on-appropriation-of-trading-stock-for-non-trade-or-capital-purposes-and-conversion-of-non-trade-or-capital-assets-to-trading-stock.txt,Taxation,Taxation,Taxation
+Cleaned_Data_v2/Financial/Annual Reports/DBS Annual Report 2023.txt,Annual Reports,Annual Reports,Annual Reports
+Cleaned_Data_v2/Regulatory and Compliance/Risk Management/pillar3-disclosures-2q-2017.txt,Risk Management,Regulatory and Compliance,Annual Reports
+Cleaned_Data_v2/Financial/Annual Reports/annual-report-2020.txt,Annual Reports,Annual Reports,Annual Reports
