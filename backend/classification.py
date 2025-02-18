@@ -41,8 +41,8 @@ unique_topics_str = ', '.join(unique_topics)
 
 def classify(file_content,filename, file_id):
     preprocess_pdf(file_content,filename)
-    result = [evaluate_saved_file()]
-    Document.update_file_classification(file_id, result)
+    summary, classification = evaluate_saved_file()
+    Document.update_file_classification(file_id, summary, classification)
     return
 
 def clean_text(text):
@@ -124,11 +124,35 @@ def map_to_category(predicted_output):
             return topic
     return "unknown"
 
+def extract_final_topic(response_text):
+    """
+    Extracts the final topic from the model's response using regex.
+    Ensures that we capture the topic stated explicitly at the end.
+    """
+    match = re.search(r"Final Topic:\s*(.+)", response_text, re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    
+    # If no clear label is found, fall back to the last line
+    lines = response_text.strip().split("\n")
+    return lines[-1].strip() if lines else "unknown"
 
 def evaluate_topic_with_llama(file_content):
-    """Classify the text using AWS Bedrock (Meta's Llama 3.3 70B Instruct)."""
+    """Classify the text using AWS Bedrock (Meta's Llama 3.3 70B Instruct) with an explanation."""
     try:
-        prompt = f"Classify the following text into only one of these topics: {unique_topics_str}. \n{file_content}"
+        prompt = f"""
+        Analyze the following document in depth and determine which topic it belongs to from the given list: {unique_topics_str}. 
+        Provide a justification first, then explicitly state the final topic in the format below:
+
+        Explanation: <Your explanation>
+        Final Topic: <One of the topics from the list>
+
+        Text:
+        {file_content}
+
+        Final classification:
+        """
+
         formatted_prompt = f"""
             <|begin_of_text|>
             <|start_header_id|>user<|end_header_id|>
@@ -136,7 +160,7 @@ def evaluate_topic_with_llama(file_content):
             <|eot_id|>
             <|start_header_id|>assistant<|end_header_id|>
             """
-
+        
         response = client.invoke_model(
             modelId=MODEL_ID_LLAMA,
             body=json.dumps({
@@ -146,21 +170,23 @@ def evaluate_topic_with_llama(file_content):
             }),
             contentType="application/json"
         )
+
         response_body = json.loads(response['body'].read())
-        predicted_topic = response_body.get("generation", "").strip()
-        
-        if not predicted_topic:
+        response_text = response_body.get("generation", "").strip()
+
+        if not response_text:
             print("Empty response from AWS Bedrock Llama, defaulting to unknown.")
+            return "unknown", "unknown"
 
-        return map_to_category(predicted_topic)
-
+        predicted_topic = extract_final_topic(response_text)
+        return response_text, predicted_topic  # Return both full response and extracted topic
+    
     except Exception as e:
         print(f"Error calling AWS Bedrock API: {e}")
-        return "unknown"
-
+        return "unknown", "unknown"
 
 def evaluate_saved_file():
-    """Loads metadata, reads file content, and evaluates it."""
+    """Loads metadata, reads file content, and evaluates it with explanation."""
     try:
         # Load metadata
         with open("processed_file.pkl", "rb") as f:
@@ -174,9 +200,11 @@ def evaluate_saved_file():
         # Read file content
         text_content = read_txt_file(file_path)
         if text_content:
-            predicted_topic = evaluate_topic_with_llama(text_content)
-            print(f"Predicted Topic: {predicted_topic}")
-            return predicted_topic
+            explanation, predicted_topic = evaluate_topic_with_llama(text_content)
+            explanation = explanation.strip("Explanation: ").split("Final Topic")[0]
+            print(f"Explanation: {explanation}\nPredicted Topic: {predicted_topic}")
+            return explanation, predicted_topic
+            
         else:
             print("Error: No content found in the file.")
 

@@ -114,14 +114,15 @@ class Document:
         return doc_id
 
     @staticmethod
-    def update_file_classification(file_id, classification):
+    def update_file_classification(file_id, summary, classification):
         """Store document metadata in the database with dummy values."""
         connection = get_db_connection()
         cursor = connection.cursor()
         print(classification)
+        print(summary)
         cursor.execute(
-            "UPDATE documents SET classification = %s, status='completed' WHERE id = %s;",
-            (classification[0], file_id)
+            "UPDATE documents SET summary = %s, classification = %s, status='completed' WHERE id = %s;",
+            (summary, classification, file_id)
         )
         connection.commit()
         cursor.close()
