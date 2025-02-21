@@ -3,6 +3,7 @@ import { configService } from './config';
 const { api } = configService.get();
 
 export async function upload(input: File[]) {
+    
     console.log("Upload service reached");
 
     // Create a FormData object
@@ -29,9 +30,9 @@ export async function upload(input: File[]) {
 
 export async function searchDocuments(query: string) {
     console.log("Search document service reached");
-
+    console.log(api);
     const encodedQuery = encodeURIComponent(query); // Encode query for spaces/special characters
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/documents?query=${encodedQuery}`;
+    const url = `${api.backendUrl}/documents?query=${encodedQuery}`;
 
     const response = await fetch(url, {
         method: "GET",
