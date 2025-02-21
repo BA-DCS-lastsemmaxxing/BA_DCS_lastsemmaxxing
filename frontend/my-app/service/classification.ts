@@ -1,3 +1,7 @@
+import { configService } from './config';
+
+const { api } = configService.get();
+
 export async function upload(input: File[]) {
     console.log("Upload service reached");
 
@@ -10,7 +14,7 @@ export async function upload(input: File[]) {
     });
 
     // Perform the fetch request
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/upload`, {
+    const response = await fetch(`${api.backendUrl}/upload`, {
         method: "POST",
         body: formData, // Attach FormData as the body
     });

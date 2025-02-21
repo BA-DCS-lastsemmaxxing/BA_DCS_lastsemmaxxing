@@ -1,3 +1,9 @@
 {
-    "cognito_url": "https://ap-southeast-1xs5grytf7.auth.ap-southeast-1.amazoncognito.com"
+    "cognito": {
+        "userPoolId": "ap-southeast-1_xS5GrytF7",
+        "clientId": "1ilgat7tshk7bmmhhcs3kkjpdv"
+    },
+    "api": {
+        "backendUrl": "http://127.0.0.1:5001"
+    }
 }
