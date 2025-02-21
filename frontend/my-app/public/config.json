@@ -4,6 +4,6 @@
         "clientId": "1ilgat7tshk7bmmhhcs3kkjpdv"
     },
     "api": {
-        "backendUrl": "http://127.0.0.1:5001"
+        "backendUrl": "https://hj7m847hn7.execute-api.ap-southeast-1.amazonaws.com"
     }
 }
