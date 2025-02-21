@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "@/components/ui/toaster";
-import Image from "next/image";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -34,12 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geist.variable} antialiased min-h-screen flex flex-col overflow-hidden`}>
-        <AuthProvider>
-          <Navbar />
-          <main className="flex-1">
-            {children}
-          </main>
-        </AuthProvider>
+        <Navbar />
+        <main className="flex-1">
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>

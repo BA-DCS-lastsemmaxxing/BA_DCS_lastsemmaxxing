@@ -1,4 +1,4 @@
-import config from '@/config.json';
+import config from '@/public/config.json';
 
 interface Config {
   cognito: {
