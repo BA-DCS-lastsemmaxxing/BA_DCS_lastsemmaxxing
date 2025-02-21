@@ -22,18 +22,6 @@ def get_db_connection():
         database=database
     )
 
-# # For local demo
-# def get_db_connection():
-#     host = os.getenv('DB_HOST', 'db')  # Default to 'db' for Docker networking
-#     password = os.getenv('DB_PASSWORD','rootpassword')
-#     return mysql.connector.connect(
-#         host=host,
-#         user='root',  # Use your MySQL username
-#         password=password,  # MySQL root password
-#         database='user_database', # Database name
-#         port = 3306
-#     )
-
 ###############################################################Login##############################################################################################################
 class User:
     def __init__(self, id, email, password):
