@@ -73,8 +73,8 @@ resource "aws_cloudfront_distribution" "cdn" {
 
   default_cache_behavior {
     target_origin_id = local.s3_origin_id
-    allowed_methods  = [HEAD, GET, OPTIONS] 
-    cached_methods   = [GET, HEAD]
+    allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods   = ["GET", "HEAD"]
 
     forwarded_values {
       query_string = true
