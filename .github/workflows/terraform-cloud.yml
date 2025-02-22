@@ -19,20 +19,26 @@ jobs:
         with:
           terraform_version: 1.4.0
 
+      # Configure Terraform Cloud authentication
+      - name: Set up Terraform Cloud credentials
+        run: |
+          mkdir -p ~/.terraform.d
+          echo '{"credentials":{"app.terraform.io":{"token":"${{ secrets.TERRAFORM_CLOUD_TOKEN }}"}}}' > ~/.terraform.d/credentials.tfrc.json
+
       - name: Terraform Init
-        env:
-          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+        # env:
+        #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
         run: terraform init
         working-directory: ./terraform
 
       - name: Terraform Plan
-        env:
-          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+        # env:
+        #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
         run: terraform plan -out=tfplan
         working-directory: ./terraform
 
       - name: Terraform Apply
-        env:
-          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+        # env:
+        #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
         run: terraform apply -auto-approve tfplan
         working-directory: ./terraform
