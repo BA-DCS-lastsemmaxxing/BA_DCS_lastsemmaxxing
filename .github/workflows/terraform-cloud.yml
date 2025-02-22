@@ -19,18 +19,20 @@ jobs:
         with:
           terraform_version: 1.4.0
 
-      - name: Set up Terraform Cloud credentials
-        run: |
-          echo "TERRAFORM_CLOUD_TOKEN=${{ secrets.TERRAFORM_CLOUD_TOKEN }}" >> $GITHUB_ENV
-
       - name: Terraform Init
+        env:
+          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
         run: terraform init
         working-directory: ./terraform
 
       - name: Terraform Plan
+        env:
+          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
         run: terraform plan -out=tfplan
         working-directory: ./terraform
 
       - name: Terraform Apply
+        env:
+          TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
         run: terraform apply -auto-approve tfplan
         working-directory: ./terraform
