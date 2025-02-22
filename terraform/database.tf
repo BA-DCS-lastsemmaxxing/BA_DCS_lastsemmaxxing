@@ -1,4 +1,5 @@
 resource "aws_db_instance" "rds" {
+    identifier = "${var.project_name}-rds"
     allocated_storage = 20
     storage_type = "gp2"
     engine = "mysql"
@@ -11,7 +12,7 @@ resource "aws_db_instance" "rds" {
     skip_final_snapshot = true
 
     vpc_security_group_ids = [aws_security_group.rds_sg.id]
-    db_subnet_group_name = aws_db_subnet_group.default.name
+    db_subnet_group_name = aws_db_subnet_group.lsm-fyp-db-subnet-group.name
 
     tags = {
         Name = "lsm-fyp-rds"
@@ -37,16 +38,17 @@ locals {
 }
 
 # Create a DB subnet group using the default VPC subnets
-resource "aws_db_subnet_group" "default" {
-  name       = "subnet-group"
+resource "aws_db_subnet_group" "lsm-fyp-db-subnet-group" {
+  name       = "${var.project_name}-subnet-group"
   subnet_ids = local.selected_subnets
 
   tags = {
-    Name = "Default DB Subnet Group"
+    Name = "DB Subnet Group"
   }
 }
 
 resource "aws_security_group" "rds_sg" {
+    name = "${var.project_name}-rds-sg"
     vpc_id = data.aws_vpc.default.id
 
     ingress {
