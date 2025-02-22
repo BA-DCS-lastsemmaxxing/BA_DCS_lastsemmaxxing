@@ -1,6 +1,6 @@
 // use this for creating a new bucket - fixed with cloud usage
 resource "aws_s3_bucket" "s3" {
-  bucket = var.project_name
+  bucket = "${var.project_name}-frontend"
 }
 
 // use this for using an existing bucket
