@@ -1,44 +1,34 @@
-# name: Terraform Cloud CI/CD Workflow
+name: Terraform Cloud CI/CD Workflow
 
-# on:
-#   push:
-#     branches:
-#       - api-gateway
-#   workflow_dispatch:
+on:
+  push:
+    branches:
+      - api-gateway
+  workflow_dispatch:
 
-# jobs:
-#   terraform:
-#     runs-on: ubuntu-latest
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout Repository
-#         uses: actions/checkout@v3
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-#       - name: Set Up Terraform
-#         uses: hashicorp/setup-terraform@v2
-#         with:
-#           terraform_version: 1.4.0
+      - name: Set Up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.0
 
-#       # Configure Terraform Cloud authentication
-#       - name: Set up Terraform Cloud credentials
-#         run: |
-#           mkdir -p ~/.terraform.d
-#           echo '{"credentials":{"app.terraform.io":{"token":"${{ secrets.TERRAFORM_CLOUD_TOKEN }}"}}}' > ~/.terraform.d/credentials.tfrc.json
+      # Configure Terraform Cloud authentication
+      - name: Set up Terraform Cloud credentials
+        run: |
+          mkdir -p ~/.terraform.d
+          echo '{"credentials":{"app.terraform.io":{"token":"${{ secrets.TERRAFORM_CLOUD_TOKEN }}"}}}' > ~/.terraform.d/credentials.tfrc.json
 
-#       - name: Terraform Init
-#         # env:
-#         #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
-#         run: terraform init
-#         working-directory: ./terraform
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./terraform
 
-#       - name: Terraform Plan
-#         # env:
-#         #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
-#         run: terraform plan
-#         working-directory: ./terraform
-
-#       - name: Terraform Apply
-#         # env:
-#         #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
-#         run: terraform apply -auto-approve
-#         working-directory: ./terraform
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./terraform
