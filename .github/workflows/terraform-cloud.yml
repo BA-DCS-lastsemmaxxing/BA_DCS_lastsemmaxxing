@@ -34,11 +34,11 @@ jobs:
       - name: Terraform Plan
         # env:
         #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
-        run: terraform plan -out=tfplan
+        run: terraform plan
         working-directory: ./terraform
 
       - name: Terraform Apply
         # env:
         #   TERRAFORM_CLOUD_TOKEN: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve
         working-directory: ./terraform
