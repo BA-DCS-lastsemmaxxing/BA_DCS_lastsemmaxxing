@@ -5,7 +5,7 @@
 
 // use this for using an existing bucket
 data "aws_s3_bucket" "s3" {
-  bucket = "lsm-fyp"
+  bucket = var.project_name
 }
 
 resource "aws_s3_bucket_website_configuration" "this" {

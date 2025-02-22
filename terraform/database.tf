@@ -1,4 +1,5 @@
 resource "aws_db_instance" "rds" {
+    identifier = "${var.project_name}-rds"
     allocated_storage = 20
     storage_type = "gp2"
     engine = "mysql"
@@ -38,15 +39,16 @@ locals {
 
 # Create a DB subnet group using the default VPC subnets
 resource "aws_db_subnet_group" "default" {
-  name       = "subnet-group"
+  name       = "${var.project_name}-subnet-group"
   subnet_ids = local.selected_subnets
 
   tags = {
-    Name = "Default DB Subnet Group"
+    Name = "DB Subnet Group"
   }
 }
 
 resource "aws_security_group" "rds_sg" {
+    name = "${var.project_name}-rds-sg"
     vpc_id = data.aws_vpc.default.id
 
     ingress {
