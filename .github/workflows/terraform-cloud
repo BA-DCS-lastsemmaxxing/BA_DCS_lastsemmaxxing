@@ -1,0 +1,35 @@
+name: Terraform Cloud CI/CD Workflow
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - "terraform/**/*.tf"
+    workflow_dispatch:
+
+    jobs:
+        terraform:
+            runs-on: ubuntu-latest
+
+            steps:
+                - name: Checkout Repository
+                  uses: actions/checkout@v3
+
+                - name: Set Up Terraform
+                  uses: hashicorp/setup-terraform@v2
+                  with:
+                      terraform_version: 1.4.0
+
+                - name: Set up Terraform Cloud credentials
+                  run: |
+                      echo "TERRAFORM_CLOUD_TOKEN=${{ secrets.TERRAFORM_CLOUD_TOKEN }}" >> $GITHUB_ENV
+
+                - name: Terraform Init
+                  run: terraform init
+
+                - name: Terraform Plan
+                  run: terraform plan -out=tfplan
+
+                - name: Terraform Apply
+                  run: terraform apply -auto-approve tfplan
