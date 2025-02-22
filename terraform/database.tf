@@ -38,7 +38,7 @@ locals {
 }
 
 # Create a DB subnet group using the default VPC subnets
-resource "aws_db_subnet_group" "default" {
+resource "aws_db_subnet_group" "lsm-fyp-db-subnet-group" {
   name       = "${var.project_name}-subnet-group"
   subnet_ids = local.selected_subnets
 
