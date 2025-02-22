@@ -94,7 +94,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   ordered_cache_behavior {
     path_pattern      = "/api/*"  # Adjust this for API paths
     target_origin_id  = local.api_origin_id
-    allowed_methods   = ["GET", "POST", "PUT", "DELETE"]
+    allowed_methods   = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods    = ["GET", "HEAD"]
 
     forwarded_values {
