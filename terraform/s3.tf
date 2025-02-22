@@ -1,12 +1,12 @@
-// use this for creating a new bucket
-# resource "aws_s3_bucket" "s3" {
-#   bucket = var.project_name
-# }
-
-// use this for using an existing bucket
-data "aws_s3_bucket" "s3" {
+// use this for creating a new bucket - fixed with cloud usage
+resource "aws_s3_bucket" "s3" {
   bucket = var.project_name
 }
+
+// use this for using an existing bucket
+# data "aws_s3_bucket" "s3" {
+#   bucket = var.project_name
+# }
 
 resource "aws_s3_bucket_website_configuration" "this" {
   // bucket = aws_s3_bucket.s3.bucket
