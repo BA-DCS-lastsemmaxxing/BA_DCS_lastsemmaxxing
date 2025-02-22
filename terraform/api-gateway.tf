@@ -21,7 +21,7 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
     }
 
     # edit this for the methods/integrations for api gateway
-    depends_on = [ aws_api_gateway_method.test_method, aws_api_gateway_method_integration.get_users_integration ]
+    depends_on = [ aws_api_gateway_method.test_method, aws_api_gateway_integration.get_users_integration ]
 }
 
 # use these to create endpoints
@@ -41,10 +41,10 @@ resource "aws_api_gateway_method" "test_method" {
 }
 
 # Create an integration for the GET method (e.g., Mock Integration)
-resource "aws_api_gateway_method_integration" "get_users_integration" {
-  rest_api_id = aws_api_gateway_rest_api.lsm_fyp_api.id
-  resource_id = aws_api_gateway_resource.users_resource.id
-  http_method = aws_api_gateway_method.get_users.http_method
+resource "aws_api_gateway_integration" "get_users_integration" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.test_resource.id
+  http_method = aws_api_gateway_method.test_method.http_method
 
   integration_http_method = "GET"
   type                    = "MOCK"  # Or "AWS", "HTTP" depending on your use case
