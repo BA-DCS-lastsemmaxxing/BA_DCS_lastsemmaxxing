@@ -1,6 +1,6 @@
 locals {
-  s3_origin_id   = "${var.project_name}-origin"
-  s3_domain_name = "${var.project_name}.s3.amazonaws.com"  # Updated to regular S3 domain for HTTPS
+  s3_origin_id   = "${var.project_name}-frontend-origin"
+  s3_domain_name = "${var.project_name}-frontend.s3.amazonaws.com"  # Updated to regular S3 domain for HTTPS
 
   api_origin_id   = "${var.project_name}-api-origin"
   api_domain_name = "${aws_api_gateway_rest_api.lsm-fyp-api.id}.execute-api.${var.region}.amazonaws.com"
