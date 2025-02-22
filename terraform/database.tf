@@ -12,7 +12,7 @@ resource "aws_db_instance" "rds" {
     skip_final_snapshot = true
 
     vpc_security_group_ids = [aws_security_group.rds_sg.id]
-    db_subnet_group_name = aws_db_subnet_group.default.name
+    db_subnet_group_name = aws_db_subnet_group.lsm-fyp-db-subnet-group.name
 
     tags = {
         Name = "lsm-fyp-rds"
