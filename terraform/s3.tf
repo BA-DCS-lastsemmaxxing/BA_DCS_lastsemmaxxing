@@ -1,16 +1,9 @@
-// use this for creating a new bucket - fixed with cloud usage
 resource "aws_s3_bucket" "s3_frontend" {
   bucket = "${var.project_name}-frontend"
 }
 
-// use this for using an existing bucket
-# data "aws_s3_bucket" "s3" {
-#   bucket = var.project_name
-# }
-
 resource "aws_s3_bucket_website_configuration" "s3_frontend_website_config" {
   bucket = aws_s3_bucket.s3_frontend.bucket
-  // bucket = data.aws_s3_bucket.s3.id
 
   index_document {
     suffix = "index.html"
@@ -20,16 +13,6 @@ resource "aws_s3_bucket_website_configuration" "s3_frontend_website_config" {
     key = "404.html"
   }
 }
-
-# resource "aws_s3_bucket_public_access_block" "s3" {
-#   bucket = aws_s3_bucket.s3.bucket
-#   // bucket = data.aws_s3_bucket.s3.id
-
-#   block_public_acls       = false
-#   block_public_policy     = false
-#   ignore_public_acls      = false
-#   restrict_public_buckets = false
-# }
 
 resource "aws_s3_bucket_policy" "s3_frontend_bucket_policy" {
   bucket = aws_s3_bucket.s3_frontend.bucket
@@ -57,3 +40,8 @@ resource "aws_s3_bucket_policy" "s3_frontend_bucket_policy" {
 }
 
 data "aws_caller_identity" "current" {}
+
+resource "aws_s3_bucket" "serverless_bucket" {
+  bucket = "${var.project_name}-serverless"
+  provider = aws.us-east-1
+}
