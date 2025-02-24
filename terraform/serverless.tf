@@ -40,7 +40,7 @@ resource "aws_lambda_function" "auth_lambda_edge" {
     s3_key = "auth_lambda.zip"
     function_name = "auth_lambda_edge"
     role = aws_iam_role.lambda_edge_role.arn
-    handler = "auth_lambda.lambda_handler"
+    handler = "serverless.auth_lambda.lambda_handler"
     runtime = "python3.8"
     publish = true
 }
