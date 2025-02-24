@@ -1,9 +1,17 @@
 locals {
   s3_origin_id   = "${var.project_name}-frontend-origin"
-  s3_domain_name = "${var.project_name}-frontend.s3.amazonaws.com"  # Updated to regular S3 domain for HTTPS
+  s3_domain_name = "${var.project_name}-frontend.s3.${var.region}.amazonaws.com"  # Updated to regular S3 domain for HTTPS
 
   api_origin_id   = "${var.project_name}-api-origin"
   api_domain_name = "${aws_api_gateway_rest_api.lsm-fyp-api.id}.execute-api.${var.region}.amazonaws.com"
+}
+
+resource "aws_cloudfront_origin_access_control" "oac" {
+  name = "lsm-fyp-oac"
+  description = "OAC for S3 Frontend Bucket"
+  origin_access_control_origin_type = "s3"
+  signing_behavior = "always"
+  signing_protocol = "sigv4"
 }
 
 # IAM role for CloudFront to sign requests
@@ -47,16 +55,12 @@ resource "aws_iam_role_policy_attachment" "cloudfront_policy_attachment" {
 resource "aws_cloudfront_distribution" "cdn" {
   
   enabled = true
+  default_root_object = "index.html"
   
   origin {
     origin_id                = local.s3_origin_id
+    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
     domain_name              = local.s3_domain_name
-    custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "https-only"  # Corrected to support HTTPS
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-    }
   }
 
   origin {
@@ -73,14 +77,15 @@ resource "aws_cloudfront_distribution" "cdn" {
 
   default_cache_behavior {
     target_origin_id = local.s3_origin_id
-    allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
 
     forwarded_values {
       query_string = true
+      headers = ["Origin"]
 
       cookies {
-        forward = "all"
+        forward = "none"
       }
     }
 
