@@ -37,7 +37,7 @@ resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
 resource "aws_lambda_function" "auth_lambda_edge" {
     provider = aws.us-east-1
     s3_bucket = "${var.project_name}-serverless"
-    s3_key = "auth_lambda.zip"
+    s3_key = "serverless/auth_lambda.zip"
     function_name = "auth_lambda_edge"
     role = aws_iam_role.lambda_edge_role.arn
     handler = "auth_lambda.lambda_handler"
