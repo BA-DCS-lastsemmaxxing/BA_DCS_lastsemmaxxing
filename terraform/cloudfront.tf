@@ -97,6 +97,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     lambda_function_association {
       event_type = "viewer-request"
       lambda_arn = aws_lambda_function.auth_lambda_edge.qualified_arn
+      include_body = false
     }
   }
 

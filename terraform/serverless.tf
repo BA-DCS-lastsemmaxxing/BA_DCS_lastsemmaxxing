@@ -34,6 +34,13 @@ resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+resource "aws_iam_policy_attachment" "lambda_edge_basic_edge_execution" {
+  provider   = aws.us-east-1
+  name       = "lambda-edge-basic-edge-execution"
+  roles      = [aws_iam_role.lambda_edge_role.name]
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicEdgeExecutionRole"
+}
+
 resource "aws_lambda_function" "auth_lambda_edge" {
     provider = aws.us-east-1
     s3_bucket = "${var.project_name}-serverless"
