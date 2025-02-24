@@ -1,9 +1,6 @@
 name: Lambda Deployment Pipeline
 
 on:
-  push:
-    branches:
-      - cognito-auth
   workflow_dispatch:
 
 jobs:

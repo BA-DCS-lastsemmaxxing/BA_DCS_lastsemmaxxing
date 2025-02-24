@@ -17,7 +17,7 @@ resource "aws_cognito_user_pool_client" "lsm-fyp-app-client" {
 
     explicit_auth_flows = [
         // "ALLOW_ADMIN_USER_PASSWORD_AUTH", // Admin can set password for user
-        // "ALLOW_REFRESH_TOKEN_AUTH", // Allow refresh token
+        "ALLOW_REFRESH_TOKEN_AUTH", // Allow refresh token
         "ALLOW_USER_SRP_AUTH"
     ]
 
