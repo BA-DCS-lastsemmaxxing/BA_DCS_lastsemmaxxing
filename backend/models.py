@@ -1,20 +1,23 @@
 import mysql.connector
 import json
 import os
+import datetime
+import pytz
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
-# For RDS
+# Define local timezone (Change accordingly)
+LOCAL_TZ = pytz.timezone("Asia/Singapore")  # Example: Singapore Time
+
+host=os.getenv('DB_HOST'),
+user=os.getenv('DB_USER'),
+password=os.getenv('DB_PASSWORD'),
+database=os.getenv('DB_NAME')
 
 def get_db_connection():
-    # Use the RDS endpoint from the environment variable
-    host = os.getenv('DB_HOST')
-    user = os.getenv('DB_USER')
-    password = os.getenv('DB_PASSWORD')
-    database = os.getenv('DB_NAME')
-
+    """Establish a connection to the MySQL database."""
     return mysql.connector.connect(
         host=host,
         user=user,
@@ -23,7 +26,17 @@ def get_db_connection():
         port=3306
     )
 
-###############################################################Login##############################################################################################################
+def convert_to_local_time(utc_time):
+    """Convert UTC time from MySQL to local timezone."""
+    if isinstance(utc_time, datetime.datetime):
+        utc_dt = utc_time.replace(tzinfo=pytz.utc)  # Mark as UTC
+        local_dt = utc_dt.astimezone(LOCAL_TZ)  # Convert to local time
+        return local_dt.strftime("%d-%m-%y %H:%M")  # Format for consistency
+    return utc_time
+
+##############################################################################################################
+# 🔐 User Authentication Model
+##############################################################################################################
 class User:
     def __init__(self, id, email, password):
         self.id = id
@@ -42,7 +55,9 @@ class User:
             return User(result['id'], result['email'], result['password'])
         return None
 
-###############################################################Document##############################################################################################################
+##############################################################################################################
+# 📄 Document Model
+##############################################################################################################
 class Document:
     def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None):
         self.id = id
@@ -67,14 +82,16 @@ class Document:
 
         cursor.execute(sql, params)
         results = cursor.fetchall()
+
+        # Convert timestamps to local time
         documents = [
             Document(
                 id=row["id"],
                 name=row["name"],
-                uploadedAt=row["uploadedAt"].strftime("%d-%m-%y %H:%M"),
+                uploadedAt=convert_to_local_time(row["uploadedAt"]),  # Convert MySQL UTC to local time
                 status=row["status"],
                 summary=row["summary"],
-                topics=json.loads(row["topics"]) if row["topics"] else None,  # Handle topics instead of tags
+                topics=json.loads(row["topics"]) if row["topics"] else None,  
                 classification=row["classification"] if row['classification'] else None
             ).__dict__
             for row in results
@@ -82,19 +99,20 @@ class Document:
 
         cursor.close()
         connection.close()
-
         return documents
-    
+
     @staticmethod
     def insert_file_record(filename):
-        print("filename: ", filename)
-        """Store document metadata in the database with dummy values."""
+        """Store document metadata in the database with Python-generated timestamp."""
         connection = get_db_connection()
         cursor = connection.cursor()
 
+        # Generate timestamp in UTC and store it in MySQL
+        now_utc = datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
+
         cursor.execute(
-            "INSERT INTO documents (name, uploadedAt, status, summary) VALUES (%s, NOW(), 'processing' , 'This is a dummy summary.')",
-            (filename,)
+            "INSERT INTO documents (name, uploadedAt, status, summary) VALUES (%s, %s, 'processing', 'This is a dummy summary.')",
+            (filename, now_utc)
         )
         doc_id = cursor.lastrowid
         connection.commit()
@@ -104,11 +122,10 @@ class Document:
 
     @staticmethod
     def update_file_classification(file_id, summary, classification):
-        """Store document metadata in the database with dummy values."""
+        """Update document classification and status."""
         connection = get_db_connection()
         cursor = connection.cursor()
-        print(classification)
-        print(summary)
+
         cursor.execute(
             "UPDATE documents SET summary = %s, classification = %s, status='completed' WHERE id = %s;",
             (summary, classification, file_id)
