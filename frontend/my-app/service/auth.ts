@@ -11,15 +11,15 @@ const poolData = {
 const userPool = new CognitoUserPool(poolData);
 
 export const auth = {
-  signIn: (email: string, password: string): Promise<any> => {
+  signIn: (username: string, password: string): Promise<any> => {
     return new Promise((resolve, reject) => {
       const authenticationDetails = new AuthenticationDetails({
-        Username: email,
+        Username: username,
         Password: password,
       });
 
       const cognitoUser = new CognitoUser({
-        Username: email,
+        Username: username,
         Pool: userPool
       });
 

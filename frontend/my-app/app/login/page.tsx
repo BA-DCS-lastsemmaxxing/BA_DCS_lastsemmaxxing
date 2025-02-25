@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { auth } from '@/service/auth';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
   const { toast } = useToast();
@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const result = await auth.signIn(email, password);
+      const result = await auth.signIn(username, password);
       toast({
         title: "Login successful",
         variant: "success",
@@ -41,10 +41,10 @@ export default function Login() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email address"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
               required
             />
