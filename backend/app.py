@@ -11,7 +11,7 @@ from routes import auth_blueprint
 from models import Document
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3001"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 
 app.config.from_object(Config)
