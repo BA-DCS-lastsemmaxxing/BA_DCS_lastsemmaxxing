@@ -19,7 +19,8 @@ def get_db_connection():
         host=host,
         user=user,
         password=password,
-        database=database
+        database=database,
+        port=3306
     )
 
 ###############################################################Login##############################################################################################################

@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
 # Import the SQLAlchemy and Bcrypt classes
-from config import Config
+# from config import Config
 from routes import auth_blueprint
 from models import Document
 
@@ -14,7 +14,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 
-app.config.from_object(Config)
+# app.config.from_object(Config)
 
 app.register_blueprint(auth_blueprint)
 
