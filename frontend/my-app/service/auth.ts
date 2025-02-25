@@ -25,6 +25,7 @@ export const auth = {
 
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: (result) => {
+            document.cookie = `CognitoToken=${result.getIdToken().getJwtToken()}; path=/; Secure; SameSite=None`;
           resolve(result);
         },
         onFailure: (err) => {
