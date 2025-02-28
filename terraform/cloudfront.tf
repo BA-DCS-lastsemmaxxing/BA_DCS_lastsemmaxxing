@@ -111,15 +111,6 @@ resource "aws_cloudfront_distribution" "cdn" {
     cache_policy_id = data.aws_cloudfront_cache_policy.caching_disabled.id
     origin_request_policy_id = data.aws_cloudfront_origin_request_policy.managed_origin_request_policy.id
 
-    forwarded_values {
-      query_string = true
-      headers = ["Origin"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
     default_ttl            = 3600
