@@ -52,6 +52,14 @@ resource "aws_iam_role_policy_attachment" "cloudfront_policy_attachment" {
   policy_arn = aws_iam_policy.cloudfront_sigv4_policy.arn
 }
 
+data "aws_cloudfront_cache_policy" "caching_disabled" {
+  name = "Managed-CachingDisabled"
+}
+
+data "aws_cloudfront_origin_request_policy" "managed_origin_request_policy" {
+  name = "Managed-AllViewerExceptHostHeader"
+}
+
 resource "aws_cloudfront_distribution" "cdn" {
   
   enabled = true
@@ -75,32 +83,6 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 
-  default_cache_behavior {
-    target_origin_id = local.s3_origin_id
-    allowed_methods = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-
-    forwarded_values {
-      query_string = true
-      headers = ["Origin"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 3600
-
-    lambda_function_association {
-      event_type = "viewer-request"
-      lambda_arn = aws_lambda_function.auth_lambda_edge.qualified_arn
-      include_body = false
-    }
-  }
-
   # Custom cache behavior for API Gateway requests, with stricter TTLs
   ordered_cache_behavior {
     path_pattern      = "/api/*"  # Adjust this for API paths
@@ -119,6 +101,26 @@ resource "aws_cloudfront_distribution" "cdn" {
     min_ttl                = 0
     default_ttl            = 300  # Slightly longer TTL for API responses
     max_ttl                = 3600
+  }
+
+    default_cache_behavior {
+    target_origin_id = local.s3_origin_id
+    allowed_methods = ["GET", "HEAD"]
+    cached_methods   = ["GET", "HEAD"]
+
+    cache_policy_id = data.aws_cloudfront_cache_policy.caching_disabled.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.managed_origin_request_policy.id
+
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 3600
+
+    lambda_function_association {
+      event_type = "viewer-request"
+      lambda_arn = aws_lambda_function.auth_lambda_edge.qualified_arn
+      include_body = false
+    }
   }
 
   restrictions {
