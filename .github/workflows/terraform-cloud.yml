@@ -1,9 +1,6 @@
 name: Terraform Cloud CI/CD Workflow
 
 on:
-  push:
-    branches:
-      - api-gateway
   workflow_dispatch:
 
 jobs:

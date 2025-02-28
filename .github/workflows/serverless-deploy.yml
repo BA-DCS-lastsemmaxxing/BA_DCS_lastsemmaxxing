@@ -3,7 +3,9 @@ name: Lambda Deployment Pipeline
 on:
   push:
     branches:
-      - cognito-auth
+      - main
+    paths:
+      - "serverless/**"
   workflow_dispatch:
 
 jobs:
