@@ -1,8 +1,5 @@
 import os
-import sys
-import subprocess
-import threading
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 # Import the SQLAlchemy and Bcrypt classes
@@ -11,18 +8,17 @@ from routes import auth_blueprint
 from models import Document
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
-
+CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:3002"}})
 
 app.config.from_object(Config)
-
 app.register_blueprint(auth_blueprint)
 
 # Define paths relative to the backend folder
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FOLDER = os.path.join(BASE_DIR, "input_data")
 OUTPUT_FOLDER = os.path.join(BASE_DIR, "output_data")
-CLASSIFICATION_SCRIPT = os.path.join(BASE_DIR,"classification.py")
+CLASSIFICATION_SCRIPT = os.path.join(BASE_DIR, "classification.py")
+
 # Ensure folders exist
 os.makedirs(INPUT_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -57,28 +53,24 @@ def upload_files():
         print(f"Error during file upload: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
 
-
-####################################################################################################################
-
-@app.route("/documents", methods=["GET"])
+@app.route("/documents", methods=["GET", "OPTIONS"])
 def search_documents():
+    if request.method == "OPTIONS":
+        response = jsonify({})
+        response.headers.add("Access-Control-Allow-Origin", "http://127.0.0.1:3002")
+        response.headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        return response, 200
+
     query = request.args.get("query", default=None)
     print("Query: ", query, flush=True)
 
     # Fetch documents metadata
     documents = Document.get_documents(query)
 
-    return jsonify({"results": documents}), 200
-
-    
-    
-    
-    
-    
-
-
-
-
+    response = jsonify({"results": documents})
+    response.headers.add("Access-Control-Allow-Origin", "http://127.0.0.1:3002")
+    return response, 200
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
