@@ -46,7 +46,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                 <p className="text-gray-600">{document.summary}</p>
               )}
 
-              {isRuleBased && (
+              {document.confidence && isRuleBased && (
                 <div className="flex items-center gap-2 text-gray-600">
                   <span>Confidence Score:</span>
                   <span className="font-medium">{(document.confidence * 100).toFixed(1)}%</span>
