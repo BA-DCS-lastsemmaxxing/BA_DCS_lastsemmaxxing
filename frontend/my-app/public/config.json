@@ -4,7 +4,7 @@
         "clientId": "6728hti8d5j2fbiiv7mh35gp55"
     },
     "api": {
-        "backendUrl": "http://127.0.0.1:5001"
+        "backendUrl": "https://hj7m847hn7.execute-api.ap-southeast-1.amazonaws.com/Test"
     }
 }
 
