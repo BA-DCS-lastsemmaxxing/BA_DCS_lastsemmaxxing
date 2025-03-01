@@ -63,7 +63,7 @@ export function DocumentList({
             </div>
           </div>
           <button
-            onClick={(e) => handleDeleteClick(doc.id, e)}
+            onClick={(e) => handleDeleteClick(Number(doc.id), e)}
             className="text-red-500 ml-4"
           >
             Delete

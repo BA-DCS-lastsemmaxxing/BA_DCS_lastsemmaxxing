@@ -23,13 +23,13 @@ def get_db_connection():
         database=database
     )
 
-# Define timezone (Asia/Singapore in this case)
+# Define timezone (Asia/Singapore)
 local_tz = pytz.timezone("Asia/Singapore")
 
-###############################################################Login##############################################################################################################
+############################################################### Login ##############################################################################################################
 class User:
     def __init__(self, id, email, password):
-        self.id = id
+        self.id = int(id)  # Ensure ID is always an integer
         self.email = email
         self.password = password
 
@@ -43,13 +43,13 @@ class User:
         cursor.close()
         connection.close()
         if result:
-            return User(result['id'], result['email'], result['password'])
+            return User(int(result['id']), result['email'], result['password'])
         return None
 
-###############################################################Document##############################################################################################################
+############################################################### Document ##############################################################################################################
 class Document:
     def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None):
-        self.id = id
+        self.id = int(id)  # Ensure ID is always an integer
         self.name = name
         self.uploadedAt = uploadedAt
         self.status = status
@@ -74,12 +74,12 @@ class Document:
         documents = []
 
         for row in results:
-            # Convert uploadedAt to the local timezone
+            # Convert uploadedAt to local timezone
             uploaded_at = row["uploadedAt"].astimezone(local_tz) if row["uploadedAt"] else None
 
             documents.append(
                 Document(
-                    id=row["id"],
+                    id=int(row["id"]),  # Ensure ID is an integer
                     name=row["name"],
                     uploadedAt=uploaded_at.strftime("%d-%m-%y %H:%M") if uploaded_at else None,
                     status=row["status"],
@@ -111,7 +111,7 @@ class Document:
         connection.commit()
         cursor.close()
         connection.close()
-        return doc_id
+        return int(doc_id)  # Ensure the returned ID is an integer
 
     @staticmethod
     def update_file_classification(file_id, summary, classification):
