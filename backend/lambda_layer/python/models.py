@@ -93,7 +93,7 @@ class Document:
         return documents
     
     @staticmethod
-    def insert_file_record(filename):
+    def insert_file_record(fileid, filename):
         """Store document metadata in the database with dummy values."""
         connection = get_db_connection()
         cursor = connection.cursor()
@@ -102,14 +102,14 @@ class Document:
         current_time = datetime.now(local_tz)
 
         cursor.execute(
-            "INSERT INTO documents (name, uploadedAt, status, summary, confidence) VALUES (%s, %s, 'processing' , null, null)",
-            (filename, current_time)
+            "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence) VALUES (%s, %s, %s, 'processing' , null, null)",
+            (fileid, filename, current_time)
         )
-        doc_id = cursor.lastrowid
+
         connection.commit()
         cursor.close()
         connection.close()
-        return doc_id
+        return
 
     @staticmethod
     def update_file_classification(file_id, summary, classification, confidence):
