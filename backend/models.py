@@ -2,14 +2,15 @@ import mysql.connector
 import json
 import os
 from dotenv import load_dotenv
+from datetime import datetime
+import pytz
 
 # Load environment variables from .env file
 load_dotenv()
 
 # For RDS
-
 def get_db_connection():
-    # Use the RDS endpoint from the environment variable
+    """Establish a connection to the database using environment variables."""
     host = os.getenv('DB_HOST')
     user = os.getenv('DB_USER')
     password = os.getenv('DB_PASSWORD')
@@ -22,6 +23,9 @@ def get_db_connection():
         database=database
     )
 
+# Define timezone (Asia/Singapore in this case)
+local_tz = pytz.timezone("Asia/Singapore")
+
 ###############################################################Login##############################################################################################################
 class User:
     def __init__(self, id, email, password):
@@ -31,6 +35,7 @@ class User:
 
     @staticmethod
     def find_by_email(email):
+        """Find a user by their email."""
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
@@ -66,18 +71,23 @@ class Document:
 
         cursor.execute(sql, params)
         results = cursor.fetchall()
-        documents = [
-            Document(
-                id=row["id"],
-                name=row["name"],
-                uploadedAt=row["uploadedAt"].strftime("%d-%m-%y %H:%M"),
-                status=row["status"],
-                summary=row["summary"],
-                topics=json.loads(row["topics"]) if row["topics"] else None,  # Handle topics instead of tags
-                classification=row["classification"] if row['classification'] else None
-            ).__dict__
-            for row in results
-        ]
+        documents = []
+
+        for row in results:
+            # Convert uploadedAt to the local timezone
+            uploaded_at = row["uploadedAt"].astimezone(local_tz) if row["uploadedAt"] else None
+
+            documents.append(
+                Document(
+                    id=row["id"],
+                    name=row["name"],
+                    uploadedAt=uploaded_at.strftime("%d-%m-%y %H:%M") if uploaded_at else None,
+                    status=row["status"],
+                    summary=row["summary"],
+                    topics=json.loads(row["topics"]) if row["topics"] else None,
+                    classification=row["classification"] if row['classification'] else None
+                ).__dict__
+            )
 
         cursor.close()
         connection.close()
@@ -86,14 +96,16 @@ class Document:
     
     @staticmethod
     def insert_file_record(filename):
-        print("filename: ", filename)
         """Store document metadata in the database with dummy values."""
         connection = get_db_connection()
         cursor = connection.cursor()
 
+        # Get current time in local timezone
+        current_time = datetime.now(local_tz)
+
         cursor.execute(
-            "INSERT INTO documents (name, uploadedAt, status, summary) VALUES (%s, NOW(), 'processing' , 'This is a dummy summary.')",
-            (filename,)
+            "INSERT INTO documents (name, uploadedAt, status, summary) VALUES (%s, %s, 'processing' , 'This is a dummy summary.')",
+            (filename, current_time)
         )
         doc_id = cursor.lastrowid
         connection.commit()
@@ -103,11 +115,9 @@ class Document:
 
     @staticmethod
     def update_file_classification(file_id, summary, classification):
-        """Store document metadata in the database with dummy values."""
+        """Store document metadata in the database with updated classification and summary."""
         connection = get_db_connection()
         cursor = connection.cursor()
-        print(classification)
-        print(summary)
         cursor.execute(
             "UPDATE documents SET summary = %s, classification = %s, status='completed' WHERE id = %s;",
             (summary, classification, file_id)
@@ -115,3 +125,26 @@ class Document:
         connection.commit()
         cursor.close()
         connection.close()
+
+    @staticmethod
+    def delete_document(doc_id):
+        """Delete a document from the database by its ID."""
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            
+            # Delete the document by its ID
+            cursor.execute("DELETE FROM documents WHERE id = %s;", (doc_id,))
+            connection.commit()
+            
+            # Check if the document was successfully deleted
+            if cursor.rowcount == 0:
+                print(f"No document found with ID {doc_id}.")
+                return False
+            print(f"Document with ID {doc_id} has been deleted successfully.")
+            cursor.close()
+            connection.close()
+            return True
+        except Exception as e:
+            print(f"Error deleting document: {e}")
+            return False

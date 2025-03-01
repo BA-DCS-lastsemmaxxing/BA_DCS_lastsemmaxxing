@@ -6,9 +6,21 @@ interface DocumentListProps {
   documents: Document[];
   isLoading: boolean;
   onDocumentClick: (doc: Document) => void;
+  onDelete: (docId: number) => void; // Add onDelete prop for parent callback
 }
 
-export function DocumentList({ documents, isLoading, onDocumentClick }: DocumentListProps) {
+export function DocumentList({
+  documents,
+  isLoading,
+  onDocumentClick,
+  onDelete,
+}: DocumentListProps) {
+  
+  const handleDeleteClick = (docId: number, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering onClick for the document
+    onDelete(docId); // Call the delete handler passed from the parent
+  };
+
   if (isLoading) {
     return (
       <div className="text-center py-8">
@@ -27,30 +39,37 @@ export function DocumentList({ documents, isLoading, onDocumentClick }: Document
 
   return (
     <div className="grid gap-4">
-    {documents.map((doc) => (
-      <div
-        key={String(doc.id)} // Ensure doc.id is a string
-        onClick={() => onDocumentClick(doc)}
-        className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 cursor-pointer"
-      >
-        <div className="flex items-center space-x-4">
-          <div className="flex-shrink-0">
-            <div className={`h-3 w-3 rounded-full ${
-              doc.status === 'completed' ? 'bg-green-500' :
-              doc.status === 'processing' ? 'bg-yellow-500' :
-              'bg-red-500'
-            }`} />
+      {documents.map((doc) => (
+        <div
+          key={String(doc.id)} // Ensure doc.id is a string
+          onClick={() => onDocumentClick(doc)}
+          className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 cursor-pointer"
+        >
+          <div className="flex items-center space-x-4">
+            <div className="flex-shrink-0">
+              <div
+                className={`h-3 w-3 rounded-full ${
+                  doc.status === 'completed'
+                    ? 'bg-green-500'
+                    : doc.status === 'processing'
+                    ? 'bg-yellow-500'
+                    : 'bg-red-500'
+                }`}
+              />
+            </div>
+            <div>
+              <h3 className="font-medium">{doc.name}</h3>
+              <p className="text-sm text-gray-500">{doc.uploadedAt}</p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-medium">{doc.name}</h3>
-            <p className="text-sm text-gray-500">
-              {doc.uploadedAt}
-            </p>
-          </div>
+          <button
+            onClick={(e) => handleDeleteClick(doc.id, e)}
+            className="text-red-500 ml-4"
+          >
+            Delete
+          </button>
         </div>
-      </div>
-    ))}
-
+      ))}
     </div>
   );
-} 
+}

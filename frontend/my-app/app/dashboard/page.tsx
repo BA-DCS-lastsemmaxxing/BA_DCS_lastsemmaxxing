@@ -7,6 +7,7 @@ import { UploadSection } from '@/components/dashboard/UploadSection';
 import { SearchBar } from '@/components/dashboard/SearchBar';
 import { DocumentList } from '@/components/dashboard/DocumentList';
 import { DocumentModal } from '@/components/dashboard/DocumentModal';
+import axios from 'axios';
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,11 +43,25 @@ export default function Dashboard() {
     }
   };
 
+  const handleDelete = async (docId: number) => {
+    try {
+      const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
+      if (response.status === 200) {
+        alert(`Document ${docId} deleted successfully.`);
+        // Remove the document from the list
+        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
+      }
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      alert('Failed to delete the document.');
+    }
+  };
+
   return (
     <div className="h-[calc(100vh-4rem)] bg-gray-100">
       <div className="h-full max-w-6xl mx-auto px-4 py-6 flex flex-col">
         <UploadSection onUploadSuccess={handleSearch} />
-        
+
         <div className="bg-white rounded-lg shadow p-6 flex flex-col flex-1 min-h-0">
           <SearchBar
             searchQuery={searchQuery}
@@ -54,7 +69,7 @@ export default function Dashboard() {
             handleSearch={handleSearch}
             isSearching={isSearching}
           />
-          
+
           <div className="overflow-y-auto flex-1">
             <DocumentList
               documents={documents}
@@ -63,6 +78,7 @@ export default function Dashboard() {
                 setSelectedDoc(doc);
                 setIsModalOpen(true);
               }}
+              onDelete={handleDelete} // Pass handleDelete function here
             />
           </div>
         </div>
@@ -75,4 +91,4 @@ export default function Dashboard() {
       </div>
     </div>
   );
-} 
+}
