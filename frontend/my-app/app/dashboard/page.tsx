@@ -34,6 +34,7 @@ export default function Dashboard() {
         summary: doc.summary,
         topics: doc.topics,
         classification: doc.classification,
+        confidence: doc.confidence
       }));
       setDocuments(mappedDocuments);
     } catch (error) {

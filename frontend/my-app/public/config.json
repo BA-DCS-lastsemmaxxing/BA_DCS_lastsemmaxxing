@@ -1,9 +1,10 @@
 {
     "cognito": {
-        "userPoolId": "ap-southeast-1_xS5GrytF7",
-        "clientId": "1ilgat7tshk7bmmhhcs3kkjpdv"
+        "userPoolId": "ap-southeast-1_eWzxPr6UO",
+        "clientId": "6728hti8d5j2fbiiv7mh35gp55"
     },
     "api": {
-        "backendUrl": "https://hj7m847hn7.execute-api.ap-southeast-1.amazonaws.com/Test"
+        "backendUrl": "http://127.0.0.1:5001"
     }
 }
+

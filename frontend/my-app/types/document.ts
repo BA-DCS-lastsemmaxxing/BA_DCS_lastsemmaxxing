@@ -6,4 +6,5 @@ export interface Document {
   summary?: string;
   topics?: string[];
   classification?: string;
+  confidence?: number;
 } 

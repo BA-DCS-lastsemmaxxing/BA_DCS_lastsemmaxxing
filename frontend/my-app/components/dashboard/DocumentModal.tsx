@@ -13,7 +13,8 @@ interface DocumentModalProps {
 export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalProps) {
   if (!document) return null;
 
-  console.log(document);
+  const isLLMBased = document.summary !== null && document.summary !== undefined;
+  const isRuleBased = document.confidence !== null && document.confidence !== undefined;
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -32,7 +33,25 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
             </p>
           ) : (
             <>
-              <p className="text-gray-600">{document.summary}</p>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="text-blue-600 border-blue-600">
+                  {isLLMBased ? 'LLM-based' : 'Rule-based'}
+                </Badge>
+                <Badge className="bg-green-500 text-white">
+                  {document.classification}
+                </Badge>
+              </div>
+
+              {isLLMBased && (
+                <p className="text-gray-600">{document.summary}</p>
+              )}
+
+              {isRuleBased && (
+                <div className="flex items-center gap-2 text-gray-600">
+                  <span>Confidence Score:</span>
+                  <span className="font-medium">{(document.confidence * 100).toFixed(1)}%</span>
+                </div>
+              )}
               
               <div className="flex flex-wrap gap-2">
                 {document.topics?.map(topic => (
@@ -41,7 +60,6 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                   </Badge>
                 ))}
               </div>
-              <Badge className="bg-green-500 text-white">{document.classification}</Badge>
             </>
           )}
         </div>

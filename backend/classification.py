@@ -1,15 +1,11 @@
-import os
-import re
-import io
+import os, re, io, pickle, json, random, math, boto3
 import ipywidgets as widgets
 from IPython.display import display
 from pypdf import PdfReader
 from nltk.corpus import stopwords
-import pickle
-import json
 import pandas as pd
-import boto3
 from botocore.config import Config
+from sklearn.feature_extraction.text import CountVectorizer
 from dotenv import load_dotenv
 from models import Document
 load_dotenv(".env")
@@ -25,7 +21,7 @@ MODEL_ID_LLAMA = "arn:aws:bedrock:us-west-2:874280117166:inference-profile/us.me
 # Prevent Bedrock timeout
 config = Config(read_timeout=1000)
 
-client = boto3.client(
+bedrock_client = boto3.client(
     "bedrock-runtime",
     region_name=aws_region,
     aws_access_key_id=aws_access_key,
@@ -39,10 +35,20 @@ file_topic_mapping = pd.read_csv(mapping_file_path)
 unique_topics = file_topic_mapping['folder_name'].unique().tolist()
 unique_topics_str = ', '.join(unique_topics)
 
+#  Load Keyword Data for Rule-Based Classification
+top_keywords_per_topic = {}
+main_topics = set()
+
 def classify(file_content,filename, file_id):
     preprocess_pdf(file_content,filename)
-    summary, classification = evaluate_saved_file()
-    Document.update_file_classification(file_id, summary, classification)
+    filename, classification, confidence, summary, source = process_single_file()
+    print("filename: ", filename)
+    print("classification: ", classification)
+    print("confidence: ", confidence)
+    print("summary: ", summary)
+    print("source: ", source)
+    
+    Document.update_file_classification(file_id, summary if summary != "-" else None, classification, confidence if confidence != "-" else None)
     return
 
 def clean_text(text):
@@ -104,64 +110,110 @@ def preprocess_pdf(file_content, filename):
 
 
 
+df = pd.read_csv("refined_tfidf_bigrams.csv")
+for index, row in df.iterrows():
+    topic_name = row.iloc[0].strip()
+    keywords = [row[col] for col in df.columns[1:] if pd.notna(row[col])]
+    if keywords:
+        top_keywords_per_topic[topic_name] = keywords[:150]
+        main_topics.add(topic_name.split("/")[0])
 
+#  Tokenization (For Rule-Based Classifier)
+vectorizer = CountVectorizer(
+    stop_words="english",
+    lowercase=True,
+    token_pattern=r"(?u)\b\w+\b",
+    ngram_range=(1, 2)
+)
 
-def read_txt_file(file_path):
-    """Reads the content of a .txt file."""
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            return file.read()
-    except Exception as e:
-        print(f"Error reading {file_path}: {e}")
-        return None
+def fast_tokenize(text):
+    return set(vectorizer.build_analyzer()(text))
 
+#  Length Penalty
+def apply_length_penalty(score, doc_length):
+    return score / (1 + math.log(1 + doc_length) / 70)
 
-def map_to_category(predicted_output):
-    """Maps the model's output to a known category."""
-    predicted_output = predicted_output.lower().strip()
-    for topic in unique_topics:
-        if topic.lower() in predicted_output:
-            return topic
-    return "unknown"
+#  Rule-Based Classification
+def classify_document(text):
+    doc_words = fast_tokenize(text)
+    doc_length = len(doc_words)
 
-def extract_final_topic(response_text):
-    """
-    Extracts the final topic from the model's response using regex.
-    Ensures that we capture the topic stated explicitly at the end.
-    """
-    match = re.search(r"Final Topic:\s*(.+)", response_text, re.IGNORECASE)
-    if match:
-        return match.group(1).strip()
-    
-    # If no clear label is found, fall back to the last line
-    lines = response_text.strip().split("\n")
-    return lines[-1].strip() if lines else "unknown"
+    if doc_length < 100:
+        return None, 0.0  # Skip classification if document too short
 
+    best_match, best_score = None, 0
+    for topic in main_topics:
+        topic_keywords = set(word for subtopic in top_keywords_per_topic if subtopic.startswith(topic) for word in top_keywords_per_topic[subtopic])
+        matched_words = doc_words.intersection(topic_keywords)
+
+        weighted_score = sum(1.0 * (0.85 ** idx) for idx, word in enumerate(matched_words))
+        max_possible_score = sum(1.0 * (0.85 ** idx) for idx in range(len(topic_keywords)))
+        normalized_score = weighted_score / max_possible_score if max_possible_score > 0 else 0
+
+        adjusted_score = apply_length_penalty(normalized_score, doc_length)
+
+        if adjusted_score > best_score and len(matched_words) >= 30:
+            best_score = adjusted_score
+            best_match = topic
+
+    if best_score < 0.9:
+        return None, best_score  # Low confidence → No classification (fall back to LLM)
+
+    return best_match, best_score
+
+#  Sampling Logic for Hybrid Text Extraction (Intro, Middle Sample, Conclusion)
+def extract_intro_middle_conclusion(text, max_tokens=20000):
+    words = text.split()
+    total_words = len(words)
+
+    if total_words < 5000:
+        ratios = (0.15, 0.15, 0.15)
+    elif total_words < 20000:
+        ratios = (0.08, 0.12, 0.08)
+    elif total_words < 50000:
+        ratios = (0.04, 0.08, 0.04)
+    else:
+        ratios = (0.02, 0.06, 0.02)
+
+    intro_end = max(int(total_words * ratios[0]), 100)
+    conclusion_start = max(int(total_words * (1 - ratios[2])), total_words - 100)
+
+    middle = words[intro_end:conclusion_start]
+    middle_sample_size = int(len(middle) * ratios[1])
+    middle_sample = random.sample(middle, min(middle_sample_size, len(middle)))
+
+    hybrid_text_words = words[:intro_end] + middle_sample + words[conclusion_start:]
+    estimated_tokens = len(hybrid_text_words) * 1.3
+
+    if estimated_tokens > max_tokens:
+        allowed_words = int(max_tokens / 1.3)
+        hybrid_text_words = hybrid_text_words[:allowed_words]
+
+    return " ".join(hybrid_text_words)
+
+#  LLM Fallback (Uses Sampled Text)
 def evaluate_topic_with_llama(file_content):
-    """Classify the text using AWS Bedrock (Meta's Llama 3.3 70B Instruct) with an explanation."""
     try:
         prompt = f"""
-        Analyze the following document in depth and determine which topic it belongs to from the given list: {unique_topics_str}. 
-        Provide a justification first, then explicitly state the final topic in the format below:
+        Analyze the following document sample and classify it into only one of these topics: {unique_topics_str}.
+        After explaining your reasoning, clearly state the final topic at the end.
 
-        Explanation: <Your explanation>
-        Final Topic: <One of the topics from the list>
-
-        Text:
+        Document:
         {file_content}
 
-        Final classification:
+        Explanation:
+        Final Topic:
         """
 
         formatted_prompt = f"""
-            <|begin_of_text|>
-            <|start_header_id|>user<|end_header_id|>
-            {prompt}
-            <|eot_id|>
-            <|start_header_id|>assistant<|end_header_id|>
-            """
-        
-        response = client.invoke_model(
+        <|begin_of_text|>
+        <|start_header_id|>user<|end_header_id|>
+        {prompt}
+        <|eot_id|>
+        <|start_header_id|>assistant<|end_header_id|>
+        """
+
+        response = bedrock_client.invoke_model(
             modelId=MODEL_ID_LLAMA,
             body=json.dumps({
                 "prompt": formatted_prompt,
@@ -174,45 +226,36 @@ def evaluate_topic_with_llama(file_content):
         response_body = json.loads(response['body'].read())
         response_text = response_body.get("generation", "").strip()
 
-        if not response_text:
-            print("Empty response from AWS Bedrock Llama, defaulting to unknown.")
-            return "unknown", "unknown"
+        match = re.search(r"Final Topic:\s*(.+)", response_text, re.IGNORECASE)
+        predicted_topic = match.group(1).strip() if match else "Unknown"
 
-        predicted_topic = extract_final_topic(response_text)
-        return response_text, predicted_topic  # Return both full response and extracted topic
-    
+        return predicted_topic, response_text
+
     except Exception as e:
         print(f"Error calling AWS Bedrock API: {e}")
-        return "unknown", "unknown"
+        return "Unknown", "Error occurred during LLM call"
 
-def evaluate_saved_file():
-    """Loads metadata, reads file content, and evaluates it with explanation."""
-    try:
-        # Load metadata
-        with open("processed_file.pkl", "rb") as f:
-            metadata = pickle.load(f)
+#  Main Pipeline (Single File Upload)
+def process_single_file():
+    with open("processed_file.pkl", "rb") as f:
+        metadata = pickle.load(f)
 
-        filename = metadata["filename"]
-        file_path = metadata["file_path"]
+    file_path = metadata["file_path"]
+    filename = metadata["filename"]
 
-        print(f"Evaluating file: {filename}")
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
 
-        # Read file content
-        text_content = read_txt_file(file_path)
-        if text_content:
-            explanation, predicted_topic = evaluate_topic_with_llama(text_content)
-            explanation = explanation.strip("Explanation: ").split("Final Topic")[0]
-            print(f"Explanation: {explanation}\nPredicted Topic: {predicted_topic}")
-            return explanation, predicted_topic
-            
-        else:
-            print("Error: No content found in the file.")
+    # Rule-Based Attempt
+    predicted_topic, confidence = classify_document(content)
 
-    except FileNotFoundError:
-        print("Error: No processed file metadata found. Run `upload_pdf.py` first.")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
+    if predicted_topic:
+        print(f" Rule-Based Classification: {predicted_topic} (Confidence: {confidence:.2f})")
+        return filename, predicted_topic, confidence, "-", "Rule-Based"
 
+    # Fallback to LLM using Sampled Text (Hybrid)
+    sampled_text = extract_intro_middle_conclusion(content)
+    predicted_topic, explanation = evaluate_topic_with_llama(sampled_text)
 
-# Run the evaluation
-evaluate_saved_file()
+    print(f" LLM Classification: {predicted_topic}")
+    return filename, predicted_topic, "-", explanation, "LLM"

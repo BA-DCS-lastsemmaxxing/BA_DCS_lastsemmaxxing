@@ -48,7 +48,7 @@ class User:
 
 ###############################################################Document##############################################################################################################
 class Document:
-    def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None):
+    def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None, confidence=None):
         self.id = id
         self.name = name
         self.uploadedAt = uploadedAt
@@ -56,6 +56,7 @@ class Document:
         self.summary = summary
         self.topics = topics
         self.classification = classification
+        self.confidence = confidence
 
     @staticmethod
     def get_documents(query=None):
@@ -76,7 +77,6 @@ class Document:
         for row in results:
             # Convert uploadedAt to the local timezone
             uploaded_at = row["uploadedAt"].astimezone(local_tz) if row["uploadedAt"] else None
-
             documents.append(
                 Document(
                     id=row["id"],
@@ -85,7 +85,8 @@ class Document:
                     status=row["status"],
                     summary=row["summary"],
                     topics=json.loads(row["topics"]) if row["topics"] else None,
-                    classification=row["classification"] if row['classification'] else None
+                    classification=row["classification"] if row['classification'] else None,
+                    confidence = row["confidence"] if row["confidence"] else None
                 ).__dict__
             )
 
@@ -104,7 +105,7 @@ class Document:
         current_time = datetime.now(local_tz)
 
         cursor.execute(
-            "INSERT INTO documents (name, uploadedAt, status, summary) VALUES (%s, %s, 'processing' , 'This is a dummy summary.')",
+            "INSERT INTO documents (name, uploadedAt, status, summary, confidence) VALUES (%s, %s, 'processing' , null, null)",
             (filename, current_time)
         )
         doc_id = cursor.lastrowid
@@ -114,13 +115,13 @@ class Document:
         return doc_id
 
     @staticmethod
-    def update_file_classification(file_id, summary, classification):
+    def update_file_classification(file_id, summary, classification, confidence):
         """Store document metadata in the database with updated classification and summary."""
         connection = get_db_connection()
         cursor = connection.cursor()
         cursor.execute(
-            "UPDATE documents SET summary = %s, classification = %s, status='completed' WHERE id = %s;",
-            (summary, classification, file_id)
+            "UPDATE documents SET summary = %s, classification = %s, confidence = %s, status='completed' WHERE id = %s;",
+            (summary, classification, confidence, file_id)
         )
         connection.commit()
         cursor.close()
