@@ -27,7 +27,7 @@ export default function Dashboard() {
       setIsSearching(true);
       const data = await searchDocuments(searchQuery);
       const mappedDocuments = data.results.map((doc: any) => ({
-        id: doc.id,
+        id: Number(doc.id), // Ensure ID is a number
         name: doc.name,
         uploadedAt: doc.uploadedAt,
         status: doc.status,
@@ -49,8 +49,8 @@ export default function Dashboard() {
       const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
-        // Remove the document from the list
-        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId));
+        // Convert doc.id to a number before filtering
+        setDocuments((prevDocs) => prevDocs.filter((doc) => Number(doc.id) !== docId));
       }
     } catch (error) {
       console.error('Error deleting document:', error);

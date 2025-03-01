@@ -23,10 +23,10 @@ def get_db_connection():
         database=database
     )
 
-# Define timezone (Asia/Singapore in this case)
+# Define timezone (Asia/Singapore)
 local_tz = pytz.timezone("Asia/Singapore")
 
-###############################################################Login##############################################################################################################
+############################################################### Login ##############################################################################################################
 class User:
     def __init__(self, id, email, password):
         self.id = id
@@ -43,10 +43,10 @@ class User:
         cursor.close()
         connection.close()
         if result:
-            return User(result['id'], result['email'], result['password'])
+            return User(int(result['id']), result['email'], result['password'])
         return None
 
-###############################################################Document##############################################################################################################
+############################################################### Document ##############################################################################################################
 class Document:
     def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None, confidence=None):
         self.id = id
@@ -75,7 +75,7 @@ class Document:
         documents = []
 
         for row in results:
-            # Convert uploadedAt to the local timezone
+            # Convert uploadedAt to local timezone
             uploaded_at = row["uploadedAt"].astimezone(local_tz) if row["uploadedAt"] else None
             documents.append(
                 Document(
