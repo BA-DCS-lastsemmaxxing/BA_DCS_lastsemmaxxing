@@ -86,7 +86,7 @@ class Document:
                     summary=row["summary"],
                     topics=json.loads(row["topics"]) if row["topics"] else None,
                     classification=row["classification"] if row['classification'] else None,
-                    confidence = row["confidence"] if row["confidence"] else None
+                    confidence = float(row["confidence"]) if row["confidence"] else None
                 ).__dict__
             )
 

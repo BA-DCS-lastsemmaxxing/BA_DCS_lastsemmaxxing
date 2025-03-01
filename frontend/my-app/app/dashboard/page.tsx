@@ -26,6 +26,7 @@ export default function Dashboard() {
     try {
       setIsSearching(true);
       const data = await searchDocuments(searchQuery);
+      console.log("data: ", data);
       const mappedDocuments = data.results.map((doc: any) => ({
         id: Number(doc.id), // Ensure ID is a number
         name: doc.name,
