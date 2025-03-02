@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime
 import pytz
+import uuid  # Import the uuid module
 
 # Load environment variables from .env file
 load_dotenv()
@@ -101,32 +102,25 @@ class Document:
         connection = get_db_connection()
         cursor = connection.cursor()
 
+        # Generate a unique ID (UUID) for the document
+        generated_id = str(uuid.uuid4())  # Generate a UUID for the ID
+
         # Get current time in local timezone
         current_time = datetime.now(local_tz)
 
-        # Insert a new record into the documents table
+        # Insert a new record into the documents table with generated UUID for the ID
         cursor.execute(
-            "INSERT INTO documents (name, uploadedAt, status, summary, confidence) VALUES (%s, %s, 'processing' , NULL, NULL)",
-            (filename, current_time)
+            "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence) VALUES (%s, %s, %s, %s, %s, %s)",
+            (generated_id, filename, current_time, 'processing', None, None)
         )
 
         # Commit the transaction
         connection.commit()
 
-        # Retrieve the inserted document ID and return it
-        try:
-            # Recreate the cursor to ensure it's still connected and valid
-            cursor = connection.cursor()
-            cursor.execute("SELECT LAST_INSERT_ID();")
-            file_id = cursor.fetchone()[0]
-        except mysql.connector.Error as err:
-            print(f"Error retrieving last inserted ID: {err}")
-            file_id = None
-        finally:
-            cursor.close()
-            connection.close()
+        cursor.close()
+        connection.close()
 
-        return file_id
+        return generated_id
 
     @staticmethod
     def update_file_classification(file_id, summary, classification, confidence):
