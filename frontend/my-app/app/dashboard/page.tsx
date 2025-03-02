@@ -25,11 +25,34 @@ export default function Dashboard() {
     if (e) e.preventDefault();
     try {
       setIsSearching(true);
-      const data = await searchDocuments(searchQuery); // data is already parsed
-      console.log("data: ", data);
-
-      // Directly map the results without JSON.parse
-      const mappedDocuments = data.results.map((doc: any) => ({
+      setIsLoading(true);
+  
+      const data = await searchDocuments(searchQuery);
+      console.log("Parsed Response Data:", data);
+  
+      let results = data.results;
+  
+      // If results is a string, try parsing it
+      if (typeof results === "string") {
+        try {
+          results = JSON.parse(results);
+          console.log("Parsed results:", results);
+        } catch (error) {
+          console.error("Error parsing 'results':", error);
+          alert("Error parsing data. Please try again later.");
+          return;
+        }
+      }
+  
+      // Ensure results is an array
+      if (!Array.isArray(results)) {
+        console.error("Unexpected format for results:", results);
+        alert("Unexpected data format. Please try again later.");
+        return;
+      }
+  
+      // Map and set documents
+      const mappedDocuments = results.map((doc: any) => ({
         id: doc.id,
         name: doc.name,
         uploadedAt: doc.uploadedAt,
@@ -37,17 +60,20 @@ export default function Dashboard() {
         summary: doc.summary,
         topics: doc.topics,
         classification: doc.classification,
-        confidence: doc.confidence
+        confidence: doc.confidence,
       }));
-
-      setDocuments(mappedDocuments); // Set the documents state
+  
+      setDocuments(mappedDocuments);
     } catch (error) {
-      console.error('Search error:', error);
+      console.error("Search error:", error);
+      alert("Search failed. Please try again later.");
     } finally {
       setIsSearching(false);
+      setIsLoading(false);
     }
   };
-
+  
+  
   const handleDelete = async (docId: string) => { // Ensure the docId is a string (UUID)
     if (!docId) {
       console.error('Invalid document ID');
