@@ -90,6 +90,11 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
     policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
+resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
+    role = aws_iam_role.lambda_execution_role.name
+    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
 # Code for Lambda Edge Function - Lambda Authoriser
 provider "aws" {
     alias = "us-east-1"
