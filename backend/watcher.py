@@ -26,7 +26,8 @@ class NewFileHandler(FileSystemEventHandler):
             file_name = os.path.basename(file_path)  # Extract the filename
             print(f"New file detected: {file_name}")
 
-            file_id = Document.insert_file_record(file_name)  # Use filename
+            # Insert file record into the database
+            file_id = Document.insert_file_record(file_name)  # Only pass filename here
             process_new_file(file_path, file_id)
 
 # Function to start watching a directory

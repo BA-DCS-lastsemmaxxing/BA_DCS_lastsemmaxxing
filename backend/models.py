@@ -83,10 +83,10 @@ class Document:
                     name=row["name"],
                     uploadedAt=uploaded_at.strftime("%d-%m-%y %H:%M") if uploaded_at else None,
                     status=row["status"],
-                    summary=row["summary"] if row["summary"] else "",  # Ensure summary is empty if None
-                    topics=json.loads(row["topics"]) if row["topics"] else [],  # Ensure topics is an empty list if None
-                    classification=row["classification"] if row["classification"] else "",  # Ensure classification is empty if None
-                    confidence=float(row["confidence"]) if row["confidence"] else None  # Ensure confidence is None if missing
+                    summary=row["summary"],
+                    topics=json.loads(row["topics"]) if row["topics"] else None,
+                    classification=row["classification"] if row['classification'] else None,
+                    confidence = float(row["confidence"]) if row["confidence"] else None
                 ).__dict__
             )
 
@@ -96,7 +96,7 @@ class Document:
         return documents
 
     @staticmethod
-    def insert_file_record(fileid, filename):
+    def insert_file_record(filename):
         """Store document metadata in the database with dummy values."""
         connection = get_db_connection()
         cursor = connection.cursor()
@@ -104,15 +104,29 @@ class Document:
         # Get current time in local timezone
         current_time = datetime.now(local_tz)
 
+        # Insert a new record into the documents table
         cursor.execute(
-            "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence) VALUES (%s, %s, %s, 'processing' , null, null)",
-            (fileid, filename, current_time)
+            "INSERT INTO documents (name, uploadedAt, status, summary, confidence) VALUES (%s, %s, 'processing' , NULL, NULL)",
+            (filename, current_time)
         )
 
+        # Commit the transaction
         connection.commit()
-        cursor.close()
-        connection.close()
-        return
+
+        # Retrieve the inserted document ID and return it
+        try:
+            # Recreate the cursor to ensure it's still connected and valid
+            cursor = connection.cursor()
+            cursor.execute("SELECT LAST_INSERT_ID();")
+            file_id = cursor.fetchone()[0]
+        except mysql.connector.Error as err:
+            print(f"Error retrieving last inserted ID: {err}")
+            file_id = None
+        finally:
+            cursor.close()
+            connection.close()
+
+        return file_id
 
     @staticmethod
     def update_file_classification(file_id, summary, classification, confidence):
@@ -133,11 +147,11 @@ class Document:
         try:
             connection = get_db_connection()
             cursor = connection.cursor()
-            
+
             # Delete the document by its ID
             cursor.execute("DELETE FROM documents WHERE id = %s;", (doc_id,))
             connection.commit()
-            
+
             # Check if the document was successfully deleted
             if cursor.rowcount == 0:
                 print(f"No document found with ID {doc_id}.")
