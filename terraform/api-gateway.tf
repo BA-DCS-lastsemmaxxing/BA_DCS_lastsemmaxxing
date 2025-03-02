@@ -23,9 +23,9 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
     # edit this for the methods/integrations for api gateway
     depends_on = [
         aws_api_gateway_method.documents_method_get,
-        aws_api_gateway_method.documents_method_options,
+        # aws_api_gateway_method.documents_method_options,
         aws_api_gateway_method.upload_method_post,
-        aws_api_gateway_method.upload_method_options
+        # aws_api_gateway_method.upload_method_options
     ]
 }
 
@@ -58,43 +58,43 @@ resource "aws_api_gateway_method" "upload_method_post" {
     authorization = "AWS_IAM"
 }
 
-// all options methods are for CORS support
-resource "aws_api_gateway_method" "documents_method_options" {
-    rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id   = aws_api_gateway_resource.documents_resource.id
-    http_method   = "OPTIONS"
-    authorization = "NONE"
-}
+// all options methods are for CORS support - test without since same CF origin
+# resource "aws_api_gateway_method" "documents_method_options" {
+#     rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
+#     resource_id   = aws_api_gateway_resource.documents_resource.id
+#     http_method   = "OPTIONS"
+#     authorization = "NONE"
+# }
 
-resource "aws_api_gateway_method_response" "documents_method_options_response" {
-    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id = aws_api_gateway_resource.documents_resource.id
-    http_method = aws_api_gateway_method.documents_method_get.http_method
-    status_code = "200"
+# resource "aws_api_gateway_method_response" "documents_method_options_response" {
+#     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+#     resource_id = aws_api_gateway_resource.documents_resource.id
+#     http_method = aws_api_gateway_method.documents_method_get.http_method
+#     status_code = "200"
     
-    response_parameters = {
-        "method.response.header.Access-Control-Allow-Origin" = true
-        "method.response.header.Access-Control-Allow-Methods" = true
-        "method.response.header.Access-Control-Allow-Headers" = true
-    }
-}
+#     response_parameters = {
+#         "method.response.header.Access-Control-Allow-Origin" = true
+#         "method.response.header.Access-Control-Allow-Methods" = true
+#         "method.response.header.Access-Control-Allow-Headers" = true
+#     }
+# }
 
-resource "aws_api_gateway_method" "upload_method_options" {
-    rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id   = aws_api_gateway_resource.upload_resource.id
-    http_method   = "OPTIONS"
-    authorization = "AWS_IAM"
-}
+# resource "aws_api_gateway_method" "upload_method_options" {
+#     rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
+#     resource_id   = aws_api_gateway_resource.upload_resource.id
+#     http_method   = "OPTIONS"
+#     authorization = "AWS_IAM"
+# }
 
-resource "aws_api_gateway_method_response" "upload_method_options_response" {
-    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id = aws_api_gateway_resource.upload_resource.id
-    http_method = aws_api_gateway_method.upload_method_post.http_method
-    status_code = "200"
+# resource "aws_api_gateway_method_response" "upload_method_options_response" {
+#     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+#     resource_id = aws_api_gateway_resource.upload_resource.id
+#     http_method = aws_api_gateway_method.upload_method_post.http_method
+#     status_code = "200"
     
-    response_parameters = {
-        "method.response.header.Access-Control-Allow-Origin" = true
-        "method.response.header.Access-Control-Allow-Methods" = true
-        "method.response.header.Access-Control-Allow-Headers" = true
-    }
-}
+#     response_parameters = {
+#         "method.response.header.Access-Control-Allow-Origin" = true
+#         "method.response.header.Access-Control-Allow-Methods" = true
+#         "method.response.header.Access-Control-Allow-Headers" = true
+#     }
+# }
