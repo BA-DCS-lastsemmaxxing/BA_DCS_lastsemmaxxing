@@ -8,7 +8,7 @@ from routes import auth_blueprint
 from models import Document
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, origins="http://localhost:3000", methods=["GET", "POST", "DELETE", "OPTIONS"], allow_headers=["Content-Type"])
 
 app.config.from_object(Config)
 app.register_blueprint(auth_blueprint)
@@ -74,7 +74,7 @@ def search_documents():
     return response  # No need to specify status code (default is 200)
 
 
-@app.route("/delete_document/<int:doc_id>", methods=["DELETE"])
+@app.route("/delete_document/<string:doc_id>", methods=["DELETE"])
 def delete_document(doc_id):
     """Endpoint to delete a document by ID."""
     try:
@@ -87,6 +87,8 @@ def delete_document(doc_id):
     except Exception as e:
         print(f"Error during document deletion: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

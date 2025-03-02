@@ -1,12 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import { Document } from '@/types/document';
 
 interface DocumentListProps {
   documents: Document[];
   isLoading: boolean;
   onDocumentClick: (doc: Document) => void;
-  onDelete: (docId: number) => void; // Add onDelete prop for parent callback
+  onDelete: (docId: string) => void; // Ensure we handle docId as string (UUID)
 }
 
 export function DocumentList({
@@ -15,8 +16,8 @@ export function DocumentList({
   onDocumentClick,
   onDelete,
 }: DocumentListProps) {
-  
-  const handleDeleteClick = (docId: number, e: React.MouseEvent) => {
+
+  const handleDeleteClick = (docId: string, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent triggering onClick for the document
     onDelete(docId); // Call the delete handler passed from the parent
   };
@@ -41,7 +42,7 @@ export function DocumentList({
     <div className="grid gap-4">
       {documents.map((doc) => (
         <div
-          key={String(doc.id)} // Ensure doc.id is a string
+          key={String(doc.id)} // Ensure doc.id is a string (UUID)
           onClick={() => onDocumentClick(doc)}
           className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 cursor-pointer"
         >
@@ -63,7 +64,7 @@ export function DocumentList({
             </div>
           </div>
           <button
-            onClick={(e) => handleDeleteClick(Number(doc.id), e)} // Ensure doc.id is a number
+            onClick={(e) => handleDeleteClick(doc.id, e)} // Ensure doc.id is passed as string (UUID)
             className="text-red-500 ml-4"
           >
             Delete

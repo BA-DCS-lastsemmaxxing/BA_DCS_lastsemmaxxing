@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { searchDocuments } from '@/service/classification';
-import type { Document } from '@/types/document';
+import { Document } from '@/types/document';
 import { UploadSection } from '@/components/dashboard/UploadSection';
 import { SearchBar } from '@/components/dashboard/SearchBar';
 import { DocumentList } from '@/components/dashboard/DocumentList';
@@ -25,7 +25,7 @@ export default function Dashboard() {
     if (e) e.preventDefault();
     try {
       setIsSearching(true);
-      const data = await searchDocuments(searchQuery);  // data is already parsed
+      const data = await searchDocuments(searchQuery); // data is already parsed
       console.log("data: ", data);
 
       // Directly map the results without JSON.parse
@@ -40,7 +40,7 @@ export default function Dashboard() {
         confidence: doc.confidence
       }));
 
-      setDocuments(mappedDocuments);  // Set the documents state
+      setDocuments(mappedDocuments); // Set the documents state
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -48,13 +48,20 @@ export default function Dashboard() {
     }
   };
 
-  const handleDelete = async (docId: number) => {
+  const handleDelete = async (docId: string) => { // Ensure the docId is a string (UUID)
+    if (!docId) {
+      console.error('Invalid document ID');
+      alert('Invalid document ID');
+      return;
+    }
+
     try {
+      console.log("Deleting document with ID:", docId); // Log the docId
       const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
-        // Convert doc.id to a number before filtering
-        setDocuments((prevDocs) => prevDocs.filter((doc) => Number(doc.id) !== docId));
+        // Remove the deleted document from the state
+        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId)); // Compare string ID
       }
     } catch (error) {
       console.error('Error deleting document:', error);
@@ -83,7 +90,7 @@ export default function Dashboard() {
                 setSelectedDoc(doc);
                 setIsModalOpen(true);
               }}
-              onDelete={handleDelete} // Pass handleDelete function here
+              onDelete={handleDelete} // Pass handleDelete directly as the onDelete handler
             />
           </div>
         </div>
