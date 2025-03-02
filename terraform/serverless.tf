@@ -26,6 +26,11 @@ resource "aws_iam_policy" "lambda_policy" {
         Effect   = "Allow",
         Action   = [
           "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListBucket",
+          "s3:DeleteObject",
+          "s3:PutObjectAcl",
+          "s3:GetObjectAcl",
           "rds-db:connect",
           "rds-data:ExecuteStatement",
           "rds-data:BatchExecuteStatement",
@@ -36,8 +41,10 @@ resource "aws_iam_policy" "lambda_policy" {
         Resource = [
           "${aws_s3_bucket.serverless_bucket_ap.arn}",
           "${aws_s3_bucket.serverless_bucket_ap.arn}/*",
-          "${aws_db_instance.lsm-fyp-db.arn}",
-          "${aws_db_instance.lsm-fyp-db.arn}/*"  
+          "${aws_s3_bucket.document_storage_bucket.arn}",
+          "${aws_s3_bucket.document_storage_bucket.arn}/*",
+          "${aws_db_instance.rds.arn}",
+          "${aws_db_instance.rds.arn}/*"  
         ]
       }
     ]
