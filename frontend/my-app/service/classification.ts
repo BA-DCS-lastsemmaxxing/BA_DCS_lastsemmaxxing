@@ -3,7 +3,6 @@ import { configService } from './config';
 const { api } = configService.get();
 
 export async function upload(input: File[]) {
-    
     console.log("Upload service reached");
 
     // Create a FormData object
@@ -11,7 +10,7 @@ export async function upload(input: File[]) {
 
     // Append each file individually
     input.forEach((file) => {
-        formData.append(`files`, file);
+        formData.append('files', file);
     });
 
     // Perform the fetch request
@@ -30,22 +29,46 @@ export async function upload(input: File[]) {
 
 export async function searchDocuments(query: string) {
     console.log("Search document service reached");
-    console.log(api);
     const encodedQuery = encodeURIComponent(query); // Encode query for spaces/special characters
     const url = `${api.backendUrl}/documents?query=${encodedQuery}`;
 
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            // Add any other headers your backend expects
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        // Log full response headers and status code
+        console.log('Response Status:', response.status);
+        console.log('Response Headers:', [...response.headers]);
+
+        // Check if the response is OK (status 200)
+        if (!response.ok) {
+            throw new Error(`Failed to fetch documents: ${response.statusText}`);
         }
-    });
 
-    if (!response.ok) {
-        console.log(response.status);
-        throw new Error('Failed to fetch documents');
+        // Check the response content type
+        const contentType = response.headers.get("Content-Type");
+        console.log("Response Content-Type:", contentType);
+
+        let responseData;
+        if (contentType && contentType.includes("application/json")) {
+            // If the response is JSON, just parse it once
+            responseData = await response.json();
+        } else {
+            // If it's not JSON, log the raw response body
+            const textResponse = await response.text();
+            console.log("Non-JSON response body:", textResponse);
+            responseData = textResponse; // Handle as required
+        }
+
+        console.log("Parsed Response Data:", responseData);
+        return responseData;
+
+    } catch (error) {
+        console.error("Error during search:", error);
+        throw new Error("An error occurred while searching documents");
     }
-    return await response.json();
 }
-

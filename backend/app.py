@@ -8,7 +8,7 @@ from routes import auth_blueprint
 from models import Document
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3001"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 app.config.from_object(Config)
 app.register_blueprint(auth_blueprint)
@@ -57,7 +57,7 @@ def upload_files():
 def search_documents():
     if request.method == "OPTIONS":
         response = jsonify({})
-        response.headers.add("Access-Control-Allow-Origin", "http://localhost:3001")
+        response.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
         response.headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type")
         return response, 200
@@ -68,9 +68,11 @@ def search_documents():
     # Fetch documents metadata
     documents = Document.get_documents(query)
 
+    # Make sure to return the response as JSON
     response = jsonify({"results": documents})
-    response.headers.add("Access-Control-Allow-Origin", "http://localhost:3001")
-    return response, 200
+    response.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
+    return response  # No need to specify status code (default is 200)
+
 
 @app.route("/delete_document/<int:doc_id>", methods=["DELETE"])
 def delete_document(doc_id):

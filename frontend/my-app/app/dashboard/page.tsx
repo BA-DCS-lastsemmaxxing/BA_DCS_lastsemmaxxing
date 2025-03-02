@@ -25,9 +25,11 @@ export default function Dashboard() {
     if (e) e.preventDefault();
     try {
       setIsSearching(true);
-      const data = await searchDocuments(searchQuery);
+      const data = await searchDocuments(searchQuery);  // data is already parsed
       console.log("data: ", data);
-      const mappedDocuments = JSON.parse(data.results).map((doc: any) => ({
+
+      // Directly map the results without JSON.parse
+      const mappedDocuments = data.results.map((doc: any) => ({
         id: doc.id,
         name: doc.name,
         uploadedAt: doc.uploadedAt,
@@ -37,7 +39,8 @@ export default function Dashboard() {
         classification: doc.classification,
         confidence: doc.confidence
       }));
-      setDocuments(mappedDocuments);
+
+      setDocuments(mappedDocuments);  // Set the documents state
     } catch (error) {
       console.error('Search error:', error);
     } finally {

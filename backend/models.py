@@ -83,10 +83,10 @@ class Document:
                     name=row["name"],
                     uploadedAt=uploaded_at.strftime("%d-%m-%y %H:%M") if uploaded_at else None,
                     status=row["status"],
-                    summary=row["summary"],
-                    topics=json.loads(row["topics"]) if row["topics"] else None,
-                    classification=row["classification"] if row['classification'] else None,
-                    confidence = float(row["confidence"]) if row["confidence"] else None
+                    summary=row["summary"] if row["summary"] else "",  # Ensure summary is empty if None
+                    topics=json.loads(row["topics"]) if row["topics"] else [],  # Ensure topics is an empty list if None
+                    classification=row["classification"] if row["classification"] else "",  # Ensure classification is empty if None
+                    confidence=float(row["confidence"]) if row["confidence"] else None  # Ensure confidence is None if missing
                 ).__dict__
             )
 
@@ -94,7 +94,7 @@ class Document:
         connection.close()
 
         return documents
-    
+
     @staticmethod
     def insert_file_record(fileid, filename):
         """Store document metadata in the database with dummy values."""
