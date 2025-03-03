@@ -8,6 +8,7 @@ import { SearchBar } from '@/components/dashboard/SearchBar';
 import { DocumentList } from '@/components/dashboard/DocumentList';
 import { DocumentModal } from '@/components/dashboard/DocumentModal';
 import axios from 'axios';
+import ClassificationFilter from '@/components/dashboard/ClassificationFilter'; // Import ClassificationFilter
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,6 +18,10 @@ export default function Dashboard() {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Filter & Sort states
+  const [classificationFilter, setClassificationFilter] = useState<string>('');
+  const [sortOption, setSortOption] = useState<string>('');
+
   useEffect(() => {
     handleSearch();
   }, []);
@@ -25,10 +30,30 @@ export default function Dashboard() {
     if (e) e.preventDefault();
     try {
       setIsSearching(true);
-      const data = await searchDocuments(searchQuery);  // data is already parsed
-      console.log("data: ", data);
+      setIsLoading(true);
 
-      const mappedDocuments = JSON.parse(data.results).map((doc: any) => ({
+      const data = await searchDocuments(searchQuery);
+      console.log("Parsed Response Data:", data);
+
+      let results = data.results;
+
+      if (typeof results === "string") {
+        try {
+          results = JSON.parse(results);
+        } catch (error) {
+          console.error("Error parsing 'results':", error);
+          alert("Error parsing data. Please try again later.");
+          return;
+        }
+      }
+
+      if (!Array.isArray(results)) {
+        console.error("Unexpected format for results:", results);
+        alert("Unexpected data format. Please try again later.");
+        return;
+      }
+
+      const mappedDocuments = results.map((doc: any) => ({
         id: doc.id,
         name: doc.name,
         uploadedAt: doc.uploadedAt,
@@ -38,7 +63,7 @@ export default function Dashboard() {
         classification: doc.classification,
         confidence: doc.confidence,
       }));
-  
+
       setDocuments(mappedDocuments);
     } catch (error) {
       console.error("Search error:", error);
@@ -48,9 +73,8 @@ export default function Dashboard() {
       setIsLoading(false);
     }
   };
-  
-  
-  const handleDelete = async (docId: string) => { // Ensure the docId is a string (UUID)
+
+  const handleDelete = async (docId: string) => {
     if (!docId) {
       console.error('Invalid document ID');
       alert('Invalid document ID');
@@ -58,18 +82,31 @@ export default function Dashboard() {
     }
 
     try {
-      console.log("Deleting document with ID:", docId); // Log the docId
+      console.log("Deleting document with ID:", docId);
       const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
-        // Remove the deleted document from the state
-        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id.toString() === docId.toString())); // Convert both to string for comparison
+        setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
       }
     } catch (error) {
       console.error('Error deleting document:', error);
       alert('Failed to delete the document.');
     }
   };
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOption(e.target.value);
+  };
+
+  const processedDocuments = [...documents]
+    .filter((doc) => (classificationFilter ? doc.classification === classificationFilter : true))
+    .sort((a, b) => {
+      if (sortOption === 'date-asc') return new Date(a.uploadedAt).getTime() - new Date(b.uploadedAt).getTime();
+      if (sortOption === 'date-desc') return new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime();
+      if (sortOption === 'title-asc') return a.name.localeCompare(b.name);
+      if (sortOption === 'title-desc') return b.name.localeCompare(a.name);
+      return 0;
+    });
 
   return (
     <div className="h-[calc(100vh-4rem)] bg-gray-100">
@@ -84,15 +121,42 @@ export default function Dashboard() {
             isSearching={isSearching}
           />
 
+          {/* Filters & Sorting */}
+          <div className="flex gap-4 mb-4">
+            {/* Classification Filter */}
+            <ClassificationFilter
+              classificationFilter={classificationFilter}
+              setClassificationFilter={setClassificationFilter}
+            />
+
+            {/* Sorting Options */}
+            <div className="flex-1">
+              <label className="block text-gray-700 text-sm font-bold mb-1">
+                Sort By:
+              </label>
+              <select
+                className="border rounded w-full p-2"
+                value={sortOption}
+                onChange={handleSortChange}
+              >
+                <option value="">None</option>
+                <option value="date-asc">Date (Oldest First)</option>
+                <option value="date-desc">Date (Newest First)</option>
+                <option value="title-asc">Title (A-Z)</option>
+                <option value="title-desc">Title (Z-A)</option>
+              </select>
+            </div>
+          </div>
+
           <div className="overflow-y-auto flex-1">
             <DocumentList
-              documents={documents}
+              documents={processedDocuments}
               isLoading={isLoading}
               onDocumentClick={(doc) => {
                 setSelectedDoc(doc);
                 setIsModalOpen(true);
               }}
-              onDelete={handleDelete} // Pass handleDelete directly as the onDelete handler
+              onDelete={handleDelete}
             />
           </div>
         </div>
