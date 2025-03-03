@@ -25,34 +25,10 @@ export default function Dashboard() {
     if (e) e.preventDefault();
     try {
       setIsSearching(true);
-      setIsLoading(true);
-  
-      const data = await searchDocuments(searchQuery);
-      console.log("Parsed Response Data:", data);
-  
-      let results = data.results;
-  
-      // If results is a string, try parsing it
-      if (typeof results === "string") {
-        try {
-          results = JSON.parse(results);
-          console.log("Parsed results:", results);
-        } catch (error) {
-          console.error("Error parsing 'results':", error);
-          alert("Error parsing data. Please try again later.");
-          return;
-        }
-      }
-  
-      // Ensure results is an array
-      if (!Array.isArray(results)) {
-        console.error("Unexpected format for results:", results);
-        alert("Unexpected data format. Please try again later.");
-        return;
-      }
-  
-      // Map and set documents
-      const mappedDocuments = results.map((doc: any) => ({
+      const data = await searchDocuments(searchQuery);  // data is already parsed
+      console.log("data: ", data);
+
+      const mappedDocuments = JSON.parse(data.results).map((doc: any) => ({
         id: doc.id,
         name: doc.name,
         uploadedAt: doc.uploadedAt,
@@ -87,7 +63,7 @@ export default function Dashboard() {
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
         // Remove the deleted document from the state
-        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId)); // Compare string ID
+        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id.toString() === docId.toString())); // Convert both to string for comparison
       }
     } catch (error) {
       console.error('Error deleting document:', error);

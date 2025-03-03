@@ -6,27 +6,30 @@ def lambda_handler(event, context):
     headers = request["headers"]
 
     # Allowed paths (accessible without authentication)
-    allowed_paths = ["/login.html", "/favicon.ico", "/_next/static/"]
+    allowed_paths = [
+        "/login.html",
+        "/favicon.ico",
+        "/_next/static/",
+        "/dashboard"  # ✅ Temporarily allow dashboard for redirection
+    ]
 
     # Check for authentication token in cookies
     authenticated = False
-    print("headers", headers, flush=True)
+    print("Headers:", headers, flush=True)
+
     if "cookie" in headers:
         cookies = headers["cookie"][0]["value"]
+        print("Cookies:", cookies, flush=True)  # Debugging: Check what cookies are sent
         if "CognitoToken" in cookies:
-            authenticated = True # User is authenticated
-                                
+            authenticated = True  # ✅ User is authenticated
+
+    print("Request URI:", request["uri"], flush=True)
 
     # ✅ Allow access to the login page & public assets
-    print("request uri: ", request["uri"],flush=True)
-    if request["uri"] == "/":
+    if request["uri"] == "/" or any(path in request["uri"] for path in allowed_paths):
         return request
-    for path in allowed_paths:
-        print("allowed path: ", path, flush=True)
-        if path in request["uri"]:
-            return request
 
-    # 🔄 Redirect all other requests to the login page if unauthenticated
+    # 🔄 Redirect unauthenticated users to login page
     if not authenticated:
         return {
             "status": "302",

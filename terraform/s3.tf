@@ -41,7 +41,15 @@ resource "aws_s3_bucket_policy" "s3_frontend_bucket_policy" {
 
 data "aws_caller_identity" "current" {}
 
-resource "aws_s3_bucket" "serverless_bucket" {
-  bucket = "${var.project_name}-serverless"
+resource "aws_s3_bucket" "serverless_bucket_us" {
+  bucket = "${var.project_name}-serverless-us"
   provider = aws.us-east-1
+}
+
+resource "aws_s3_bucket" "serverless_bucket_ap" {
+  bucket = "${var.project_name}-serverless-ap"
+}
+
+resource "aws_s3_bucket" "document_storage_bucket" {
+  bucket = "${var.project_name}-document-storage"
 }

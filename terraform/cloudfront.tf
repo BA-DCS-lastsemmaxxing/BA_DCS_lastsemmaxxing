@@ -93,7 +93,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     forwarded_values {
       query_string = true
       cookies {
-        forward = "none"
+        forward = "all"
       }
     }
 
@@ -113,8 +113,15 @@ resource "aws_cloudfront_distribution" "cdn" {
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 3600
+    default_ttl            = 0
+    max_ttl                = 0
+
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "all"
+      }
+    }
 
     lambda_function_association {
       event_type = "viewer-request"
@@ -131,6 +138,21 @@ resource "aws_cloudfront_distribution" "cdn" {
   
   viewer_certificate {
     cloudfront_default_certificate = true
+  }
+
+  # fix for rerouting problems
+  custom_error_response {
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/index.html"
+    error_caching_min_ttl = 0
+  }
+
+  custom_error_response {
+    error_code            = 404
+    response_code         = 200
+    response_page_path    = "/index.html"
+    error_caching_min_ttl = 0
   }
 }
 
