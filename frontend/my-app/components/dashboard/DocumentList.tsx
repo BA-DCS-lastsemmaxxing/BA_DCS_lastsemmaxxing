@@ -64,7 +64,7 @@ export function DocumentList({
             </div>
           </div>
           <button
-            onClick={(e) => handleDeleteClick(doc.id, e)} // Ensure doc.id is passed as string (UUID)
+            onClick={(e) => handleDeleteClick(String(doc.id), e)} // Ensure doc.id is passed as string (UUID)
             className="text-red-500 ml-4"
           >
             Delete
