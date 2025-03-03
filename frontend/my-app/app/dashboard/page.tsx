@@ -63,7 +63,7 @@ export default function Dashboard() {
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
         // Remove the deleted document from the state
-        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== docId)); // Compare string ID
+        setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id.toString() === docId.toString())); // Convert both to string for comparison
       }
     } catch (error) {
       console.error('Error deleting document:', error);
