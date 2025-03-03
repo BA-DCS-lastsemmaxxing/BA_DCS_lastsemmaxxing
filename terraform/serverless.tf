@@ -60,7 +60,6 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
 
   s3_bucket = "${var.project_name}-serverless-ap"
   s3_key = "fetch_documents.zip"
-  source_code_hash = filebase64sha256("fetch_documents.zip") # Ensure redeployment when the file changes
 
   role = aws_iam_role.lambda_execution_role.arn
 }
@@ -74,7 +73,6 @@ resource "aws_lambda_function" "upload_document_lambda" {
 
   s3_bucket = "${var.project_name}-serverless-ap"
   s3_key = "upload_document.zip"
-  source_code_hash = filebase64sha256("upload_document.zip")
 
   role = aws_iam_role.lambda_execution_role.arn
 
@@ -143,6 +141,5 @@ resource "aws_lambda_function" "auth_lambda_edge" {
     handler = "auth_lambda.lambda_handler"
     runtime = "python3.8"
     publish = true
-    source_code_hash = filebase64sha256("auth_lambda.zip") # Ensure redeployment when the file changes
 }
 
