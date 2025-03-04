@@ -140,9 +140,42 @@ resource "aws_wafv2_web_acl" "waf_acl" {
     allow {}
   }
 
+  # Rule for API Gateway (Allow JWT Auth)
   rule {
-    name     = "AllowOnlyCloudFront"
+    name     = "AllowJWTAuthToAPI"
     priority = 1
+
+    action {
+      allow {}
+    }
+
+    statement {
+      byte_match_statement {
+        field_to_match {
+          single_header {
+            name = "authorization"
+          }
+        }
+        positional_constraint = "STARTS_WITH"
+        search_string         = "Bearer " # JWT Token
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AllowJWTAuthToAPI"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  # Rule for S3 (Enforce SIGv4)
+  rule {
+    name     = "EnforceSIGV4ForS3"
+    priority = 2
 
     action {
       block {}
@@ -156,7 +189,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
           }
         }
         positional_constraint = "EXACTLY"
-        search_string         = "AWS4-HMAC-SHA256"
+        search_string         = "AWS4-HMAC-SHA256" # SIGv4 Auth Header
         text_transformation {
           priority = 0
           type     = "NONE"
@@ -166,17 +199,24 @@ resource "aws_wafv2_web_acl" "waf_acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AllowOnlyCloudFront"
+      metric_name                = "EnforceSIGV4ForS3"
       sampled_requests_enabled   = true
     }
   }
 
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "AllowOnlyCloudFront"
+    metric_name                = "WAFLogging"
     sampled_requests_enabled   = true
   }
 }
+
+# Associate WAF with API Gateway
+resource "aws_wafv2_web_acl_association" "waf_api_assoc" {
+  resource_arn = aws_api_gateway_stage.prod.arn
+  web_acl_arn  = aws_wafv2_web_acl.waf_acl.arn
+}
+
 
 # Associate WAF with API Gateway
 resource "aws_wafv2_web_acl_association" "waf_api_assoc" {
