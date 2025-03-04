@@ -80,13 +80,14 @@ export default function Dashboard() {
       alert('Invalid document ID');
       return;
     }
-
+  
     try {
       console.log("Deleting document with ID:", docId);
       
-      // Replace with your actual API Gateway or CloudFront URL
-      const response = await axios.delete(`https://d1ztk01ovm0zc3.cloudfront.net/delete_document/${docId}`);
-      
+      const apiUrl = "https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/prod/delete_document";
+  
+      const response = await axios.delete(apiUrl, { params: { docId } });
+  
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
         // Remove the deleted document from the state
@@ -100,6 +101,27 @@ export default function Dashboard() {
       alert('Failed to delete the document.');
     }
   };
+  
+
+  // const handleDelete = async (docId: string) => {
+  //   if (!docId) {
+  //     console.error('Invalid document ID');
+  //     alert('Invalid document ID');
+  //     return;
+  //   }
+
+  //   try {
+  //     console.log("Deleting document with ID:", docId);
+  //     const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
+  //     if (response.status === 200) {
+  //       alert(`Document ${docId} deleted successfully.`);
+  //       setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
+  //     }
+  //   } catch (error) {
+  //     console.error('Error deleting document:', error);
+  //     alert('Failed to delete the document.');
+  //   }
+  // };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOption(e.target.value);
