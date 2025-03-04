@@ -154,11 +154,11 @@ resource "aws_wafv2_web_acl" "waf_acl" {
       byte_match_statement {
         field_to_match {
           single_header {
-            name = "authorization"
+            name = "Cookie"
           }
         }
         positional_constraint = "STARTS_WITH"
-        search_string         = "Bearer " # JWT Token
+        search_string         = "CognitoToken= " # JWT Token
         text_transformation {
           priority = 0
           type     = "NONE"
@@ -220,11 +220,11 @@ resource "aws_wafv2_web_acl" "waf_acl" {
           byte_match_statement {
             field_to_match {
               single_header {
-                name = "authorization"
+                name = "Cookie"
               }
             }
             positional_constraint = "STARTS_WITH"
-            search_string         = "Bearer "
+            search_string         = "CognitoToken= "
             text_transformation {
               priority = 0
               type     = "NONE"
