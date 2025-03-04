@@ -29,7 +29,7 @@ export async function upload(input: File[]) {
         method: "POST",
         body: formData, // Attach FormData as the body,
         headers: {
-            "Authorization": `Bearer ${getCookie("CognitoToken")}`
+            "Authorization": `${getCookie("CognitoToken")}`
         }
     });
 
@@ -51,7 +51,7 @@ export async function searchDocuments(query: string) {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${getCookie("CognitoToken")}`,
+                "Authorization": `${getCookie("CognitoToken")}`,
             },
         });
 
