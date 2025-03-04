@@ -84,14 +84,13 @@ export default function Dashboard() {
     try {
       console.log("Deleting document with ID:", docId);
       
-      const apiUrl = "https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/prod/delete_document";
-  
-      const response = await axios.delete(apiUrl, { params: { docId } });
-  
+      const response = await axios.delete(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/prod/delete_document?docId=${docId}`);
+      
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
-        // Remove the deleted document from the state
-        setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
+        
+        // Fetch latest documents from backend
+        fetchDocuments();
       } else {
         console.error('Failed to delete document:', response);
         alert('Failed to delete the document.');
@@ -101,6 +100,7 @@ export default function Dashboard() {
       alert('Failed to delete the document.');
     }
   };
+  
   
 
   // const handleDelete = async (docId: string) => {
