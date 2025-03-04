@@ -81,22 +81,9 @@ export default function Dashboard() {
       return;
     }
 
-    // try {
-    //   console.log("Deleting document with ID:", docId);
-    //   const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
-    //   if (response.status === 200) {
-    //     alert(`Document ${docId} deleted successfully.`);
-    //     setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
-    //   }
-    // } catch (error) {
-    //   console.error('Error deleting document:', error);
-    //   alert('Failed to delete the document.');
-    // }
-
     try {
       console.log("Deleting document with ID:", docId);
-      const cloudfrontUrl = 'https://d1ztk01ovm0zc3.cloudfront.net/delete_document'; // Your CloudFront URL
-      const response = await axios.delete(`${cloudfrontUrl}/${docId}`);
+      const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
         setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
@@ -105,7 +92,6 @@ export default function Dashboard() {
       console.error('Error deleting document:', error);
       alert('Failed to delete the document.');
     }
-    
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
