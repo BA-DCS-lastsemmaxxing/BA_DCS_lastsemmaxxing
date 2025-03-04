@@ -60,29 +60,7 @@ data "aws_cloudfront_origin_request_policy" "managed_origin_request_policy" {
   name = "Managed-AllViewerExceptHostHeader"
 }
 
-resource "aws_cloudfront_origin_request_policy" "auth_cookie_policy" {
-  name    = "${var.project_name}-auth-cookie-policy"
-  comment = "Forwards Cognito authentication cookies and authorization header to API Gateway"
-
-  cookies_config {
-    cookie_behavior = "all"  # Forward all cookies
-  }
-
-  headers_config {
-    header_behavior = "whitelist"
-    headers {
-      items = ["Authorization"]  # Whitelist the headers you want to forward
-    }
-  }
-
-  query_strings_config {
-    query_string_behavior = "all"  # Forward all query strings
-  }
-}
-
-
 resource "aws_cloudfront_distribution" "cdn" {
-  
   enabled = true
   default_root_object = "index.html"
   
@@ -112,7 +90,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     allowed_methods   = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods    = ["GET", "HEAD"]
 
-    origin_request_policy_id = aws_cloudfront_origin_request_policy.auth_cookie_policy.id
+    origin_request_policy_id = "Managed-AllViewer"
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
