@@ -55,18 +55,18 @@ resource "aws_s3_bucket" "document_storage_bucket" {
 }
 
 // Add Lambda Function Zips as objects here
-resource "aws_s3_object" "auth_lambda_zip" {
+data "aws_s3_object" "auth_lambda_zip" {
   provider = aws.us-east-1
   bucket = aws_s3_bucket.serverless_bucket_us.bucket
   key = "auth_lambda.zip"
 }
 
-resource "aws_s3_object" "fetch_documents_lambda_zip" {
+data "aws_s3_object" "fetch_documents_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "fetch_documents.zip"
 }
 
-resource "aws_s3_object" "upload_document_lambda_zip" {
+data "aws_s3_object" "upload_document_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "upload_document.zip"
 }
