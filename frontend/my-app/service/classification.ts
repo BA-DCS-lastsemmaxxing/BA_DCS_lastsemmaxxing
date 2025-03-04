@@ -2,6 +2,17 @@ import { configService } from './config';
 
 const { api } = configService.get();
 
+function getCookie(name: string): string | undefined {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.split("=");
+        if (cookieName === name) {
+            return decodeURIComponent(cookieValue);
+        }
+    }
+    return undefined;
+}
+
 export async function upload(input: File[]) {
     console.log("Upload service reached");
 
@@ -12,11 +23,15 @@ export async function upload(input: File[]) {
     input.forEach((file) => {
         formData.append('files', file);
     });
-
+    
     // Perform the fetch request
     const response = await fetch(`${api.backendUrl}/upload`, {
         method: "POST",
-        body: formData, // Attach FormData as the body
+        body: formData, // Attach FormData as the body,
+        headers: {
+            "Authorization": `Bearer ${getCookie("CognitoToken")}`
+        }
+        
     });
 
     // Handle the response
@@ -37,6 +52,7 @@ export async function searchDocuments(query: string) {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${getCookie("CognitoToken")}`,
             },
         });
 
@@ -71,4 +87,14 @@ export async function searchDocuments(query: string) {
         console.error("Error during search:", error);
         throw new Error("An error occurred while searching documents");
     }
+}
+
+export async function getDownloadLink(documentId: string) {
+  const response = await fetch(`${api.backendUrl}/download/${documentId}`);
+  
+  if (!response.ok) {
+    throw new Error(`Failed to get download link. Status: ${response.status}`);
+  }
+
+  return await response.json();
 }

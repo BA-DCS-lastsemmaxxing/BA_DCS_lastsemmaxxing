@@ -100,7 +100,7 @@ resource "aws_api_gateway_integration_response" "documents_options_integration_r
     response_parameters = {
         "method.response.header.Access-Control-Allow-Origin" = "'*'"
         "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
-        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
+        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type, Authorization'"
     }
 }
 
@@ -146,7 +146,7 @@ resource "aws_api_gateway_integration_response" "upload_options_integration_resp
     response_parameters = {
         "method.response.header.Access-Control-Allow-Origin" = "'*'"
         "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
-        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
+        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type, Authorization'"
     }
 }
 
