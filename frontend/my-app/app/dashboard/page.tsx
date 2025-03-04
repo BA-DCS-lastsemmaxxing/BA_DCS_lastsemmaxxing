@@ -80,23 +80,20 @@ export default function Dashboard() {
       alert('Invalid document ID');
       return;
     }
-  
+
     try {
       console.log("Deleting document with ID:", docId);
       const response = await axios.delete(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/prod/delete_document?docId=${docId}`);
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
-        // Re-fetch the documents list after deletion
-        await handleSearch();  // Or manually fetch the updated list
+        // Refetch documents after deletion
+        handleSearch();
       }
     } catch (error) {
       console.error('Error deleting document:', error);
       alert('Failed to delete the document.');
     }
   };
-  
-  
-
   // const handleDelete = async (docId: string) => {
   //   if (!docId) {
   //     console.error('Invalid document ID');
