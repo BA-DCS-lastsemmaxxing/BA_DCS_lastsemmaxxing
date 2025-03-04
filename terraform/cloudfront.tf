@@ -116,13 +116,6 @@ resource "aws_cloudfront_distribution" "cdn" {
     default_ttl            = 0
     max_ttl                = 0
 
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "all"
-      }
-    }
-
     lambda_function_association {
       event_type = "viewer-request"
       lambda_arn = aws_lambda_function.auth_lambda_edge.qualified_arn
