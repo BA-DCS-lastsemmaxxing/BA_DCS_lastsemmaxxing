@@ -158,7 +158,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
           }
         }
         positional_constraint = "STARTS_WITH"
-        search_string         = "CognitoToken= " # JWT Token
+        search_string         = "CognitoToken=" # JWT Token
         text_transformation {
           priority = 0
           type     = "NONE"
