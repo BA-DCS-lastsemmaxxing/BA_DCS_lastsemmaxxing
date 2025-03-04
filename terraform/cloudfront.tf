@@ -60,10 +60,6 @@ data "aws_cloudfront_origin_request_policy" "managed_origin_request_policy" {
   name = "Managed-AllViewerExceptHostHeader"
 }
 
-data "aws_cloudfront_origin_request_policy" "managed_origin_request_policy_all" {
-  name = "Managed-AllViewer"
-}
-
 resource "aws_cloudfront_distribution" "cdn" {
   enabled = true
   default_root_object = "index.html"
@@ -95,7 +91,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     cached_methods    = ["GET", "HEAD"]
 
     cache_policy_id = data.aws_cloudfront_cache_policy.caching_disabled.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.managed_origin_request_policy_all.id
+    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.managed_origin_request_policy.id
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
