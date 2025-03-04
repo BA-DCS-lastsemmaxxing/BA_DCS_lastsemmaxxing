@@ -154,7 +154,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
       byte_match_statement {
         field_to_match {
           single_header {
-            name = "Cookie"
+            name = "cookie"
           }
         }
         positional_constraint = "STARTS_WITH"
@@ -220,7 +220,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
           byte_match_statement {
             field_to_match {
               single_header {
-                name = "Cookie"
+                name = "cookie"
               }
             }
             positional_constraint = "STARTS_WITH"
