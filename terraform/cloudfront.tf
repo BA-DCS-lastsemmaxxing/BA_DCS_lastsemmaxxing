@@ -3,7 +3,7 @@ locals {
   s3_domain_name = "${var.project_name}-frontend.s3.${var.region}.amazonaws.com"  # Updated to regular S3 domain for HTTPS
 
   api_origin_id   = "${var.project_name}-api-origin"
-  api_domain_name = "${aws_api_gateway_rest_api.lsm-fyp-api.id}.execute-api.${var.region}.amazonaws.com/prod"
+  api_domain_name = "${aws_api_gateway_rest_api.lsm-fyp-api.id}.execute-api.${var.region}.amazonaws.com"
 }
 
 resource "aws_cloudfront_origin_access_control" "oac" {
@@ -74,6 +74,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   origin {
     domain_name = local.api_domain_name
     origin_id   = local.api_origin_id
+    origin_path = "/prod"
 
     custom_origin_config {
       http_port              = 80
