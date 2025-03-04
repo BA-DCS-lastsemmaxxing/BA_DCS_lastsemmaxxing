@@ -9,7 +9,12 @@ resource "aws_api_gateway_stage" "prod" {
     deployment_id = aws_api_gateway_deployment.prod_deployment.id
 }
 
-
+resource "aws_api_gateway_authorizer" "lsm-fyp-authorizer" {
+    name = "${var.project_name}-authorizer"
+    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+    type = "COGNITO_USER_POOLS"
+    provider_arns = [aws_cognito_user_pool.lsm-fyp-user-pool.arn]
+}
 
 resource "aws_api_gateway_deployment" "prod_deployment" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
