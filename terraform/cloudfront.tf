@@ -94,14 +94,17 @@ resource "aws_cloudfront_distribution" "cdn" {
     forwarded_values {
       query_string = true
       cookies {
-        forward = "none"
+        forward = "all"
+      }
+      headers = {
+        items = ["Authorization", "Cookie"]
       }
     }
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 300  # Slightly longer TTL for API responses
-    max_ttl                = 3600
+    default_ttl            = 0  # Disable caching to avoid auth issues
+    max_ttl                = 0
   }
 
     default_cache_behavior {
