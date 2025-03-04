@@ -71,7 +71,7 @@ resource "aws_cloudfront_origin_request_policy" "auth_cookie_policy" {
   headers_config {
     header_behavior = "whitelist"
     headers {
-      items = ["Authorization", "Cookie"]  # Whitelist the headers you want to forward
+      items = ["Authorization"]  # Whitelist the headers you want to forward
     }
   }
 
