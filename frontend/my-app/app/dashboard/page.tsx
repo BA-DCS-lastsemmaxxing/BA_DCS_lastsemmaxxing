@@ -83,10 +83,17 @@ export default function Dashboard() {
 
     try {
       console.log("Deleting document with ID:", docId);
-      const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
+      
+      // Replace with your actual API Gateway or CloudFront URL
+      const response = await axios.delete(`https://d1ztk01ovm0zc3.cloudfront.net/delete_document/${docId}`);
+      
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
+        // Remove the deleted document from the state
         setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
+      } else {
+        console.error('Failed to delete document:', response);
+        alert('Failed to delete the document.');
       }
     } catch (error) {
       console.error('Error deleting document:', error);
