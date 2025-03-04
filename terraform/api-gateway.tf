@@ -9,6 +9,8 @@ resource "aws_api_gateway_stage" "prod" {
     deployment_id = aws_api_gateway_deployment.prod_deployment.id
 }
 
+
+
 resource "aws_api_gateway_deployment" "prod_deployment" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
     triggers = {
@@ -42,7 +44,8 @@ resource "aws_api_gateway_method" "documents_method_get" {
     rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
     resource_id   = aws_api_gateway_resource.documents_resource.id
     http_method   = "GET"
-    authorization = "AWS_IAM"
+    authorization = "COGNITO_USER_POOLS"
+    authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
 }
 
 resource "aws_api_gateway_resource" "upload_resource" {
@@ -55,7 +58,8 @@ resource "aws_api_gateway_method" "upload_method_post" {
     rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
     resource_id   = aws_api_gateway_resource.upload_resource.id
     http_method   = "POST"
-    authorization = "AWS_IAM"
+    authorization = "COGNITO_USER_POOLS"
+    authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
 }
 
 // all options methods are for CORS support - test without since same CF origin
@@ -76,6 +80,7 @@ resource "aws_api_gateway_method_response" "documents_method_options_response" {
         "method.response.header.Access-Control-Allow-Origin" = true
         "method.response.header.Access-Control-Allow-Methods" = true
         "method.response.header.Access-Control-Allow-Headers" = true
+        "method.response.header.Access-Control-Allow-Credentials" = true
     }
 }
 
@@ -109,7 +114,7 @@ resource "aws_api_gateway_method" "upload_method_options" {
     rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
     resource_id   = aws_api_gateway_resource.upload_resource.id
     http_method   = "OPTIONS"
-    authorization = "AWS_IAM"
+    authorization = "NONE"
 }
 
 resource "aws_api_gateway_method_response" "upload_method_options_response" {
@@ -122,6 +127,7 @@ resource "aws_api_gateway_method_response" "upload_method_options_response" {
         "method.response.header.Access-Control-Allow-Origin" = true
         "method.response.header.Access-Control-Allow-Methods" = true
         "method.response.header.Access-Control-Allow-Headers" = true
+        "method.response.header.Access-Control-Allow-Credentials" = true
     }
 }
 
