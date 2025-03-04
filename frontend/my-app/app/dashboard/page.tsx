@@ -80,13 +80,14 @@ export default function Dashboard() {
       alert('Invalid document ID');
       return;
     }
-
+  
     try {
       console.log("Deleting document with ID:", docId);
       const response = await axios.delete(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/prod/delete_document?docId=${docId}`);
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
-        setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
+        // Re-fetch the documents list after deletion
+        await handleSearch();  // Or manually fetch the updated list
       }
     } catch (error) {
       console.error('Error deleting document:', error);
