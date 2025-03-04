@@ -11,7 +11,7 @@ resource "aws_cognito_user_pool" "lsm-fyp-user-pool" {
     }
 }
 
-resource "aws_cognito_gateway+authorizer" "lsm-fyp-authorizer" {
+resource "aws_cognito_gateway_authorizer" "lsm-fyp-authorizer" {
     name = "${var.project_name}-authorizer"
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
     type = "COGNITO_USER_POOLS"
