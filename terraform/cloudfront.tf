@@ -216,10 +216,3 @@ resource "aws_wafv2_web_acl_association" "waf_api_assoc" {
   resource_arn = aws_api_gateway_stage.prod.arn
   web_acl_arn  = aws_wafv2_web_acl.waf_acl.arn
 }
-
-
-# Associate WAF with API Gateway
-resource "aws_wafv2_web_acl_association" "waf_api_assoc" {
-  resource_arn = aws_api_gateway_stage.prod.arn
-  web_acl_arn  = aws_wafv2_web_acl.waf_acl.arn
-}
