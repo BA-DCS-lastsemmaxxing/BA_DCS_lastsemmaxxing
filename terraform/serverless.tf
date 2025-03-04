@@ -62,6 +62,7 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   s3_key = "fetch_documents.zip"
 
   role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = filebase64sha256("fetch_documents.zip")
 }
 
 # Upload Document Function
@@ -75,6 +76,7 @@ resource "aws_lambda_function" "upload_document_lambda" {
   s3_key = "upload_document.zip"
 
   role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = filebase64sha256("upload_document.zip")
 
   environment {
     variables = {
@@ -141,5 +143,7 @@ resource "aws_lambda_function" "auth_lambda_edge" {
     handler = "auth_lambda.lambda_handler"
     runtime = "python3.8"
     publish = true
+
+    source_code_hash = filebase64sha256("auth_lambda.zip")
 }
 
