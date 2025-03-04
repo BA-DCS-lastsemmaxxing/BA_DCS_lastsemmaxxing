@@ -51,6 +51,7 @@ resource "aws_iam_policy" "lambda_policy" {
   })
 }
 
+# NOTE: The approach of source_code_hash used here only supports zip files up to 5MB large
 # Fetch Documents Function
 resource "aws_lambda_function" "fetch_documents_lambda" {
   function_name = "fetch_documents"
@@ -62,6 +63,7 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   s3_key = "fetch_documents.zip"
 
   role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.fetch_documents_lambda_zip.etag
 }
 
 # Upload Document Function
@@ -75,6 +77,7 @@ resource "aws_lambda_function" "upload_document_lambda" {
   s3_key = "upload_document.zip"
 
   role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.upload_document_lambda_zip.etag
 
   environment {
     variables = {
@@ -141,5 +144,7 @@ resource "aws_lambda_function" "auth_lambda_edge" {
     handler = "auth_lambda.lambda_handler"
     runtime = "python3.8"
     publish = true
+
+    source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
 }
 
