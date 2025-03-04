@@ -28,7 +28,6 @@ jobs:
           for lambda_file in ./serverless/*.py; do
             function_name=$(basename $lambda_file .py)
             zip -j dist/$function_name.zip $lambda_file
-            sha256sum dist/$function_name.zip | awk '{print $1}' > dist/$function_name.zip.sha256
             aws s3 cp dist/$function_name.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-ap
           done
 
@@ -45,6 +44,5 @@ jobs:
           for lambda_file in ./serverless/authoriser/*.py; do
             function_name=$(basename $lambda_file .py)
             zip -j dist/$function_name.zip $lambda_file
-            sha256sum dist/$function_name.zip | awk '{print $1}' > dist/$function_name.zip.sha256
             aws s3 cp dist/$function_name.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-us
           done
