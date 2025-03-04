@@ -4,6 +4,11 @@ import re
 def lambda_handler(event, context):
     request = event["Records"][0]["cf"]["request"]
     headers = request["headers"]
+    uri = request["uri"]
+    if '.' not in uri and not uri.endswith('/'):
+        request['uri'] += '/index.html'
+    elif uri.endswith('/'):
+        request['uri'] += 'index.html'
 
     # Allowed paths (accessible without authentication)
     allowed_paths = [
