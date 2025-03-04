@@ -131,13 +131,14 @@ resource "aws_cloudfront_distribution" "cdn" {
 }
 
 # AWS WAF Web ACL
+# AWS WAF Web ACL
 resource "aws_wafv2_web_acl" "waf_acl" {
   name        = "${var.project_name}-waf-acl"
   scope       = "REGIONAL"
-  description = "WAF to restrict non-CloudFront requests"
+  description = "WAF to enforce SIGv4 for S3 and JWT for API"
 
   default_action {
-    allow {}
+    block {}  # Block by default
   }
 
   # Rule for API Gateway (Allow JWT Auth)
@@ -172,13 +173,13 @@ resource "aws_wafv2_web_acl" "waf_acl" {
     }
   }
 
-  # Rule for S3 (Enforce SIGv4)
+  # Rule for S3 (Allow SIGv4)
   rule {
-    name     = "EnforceSIGV4ForS3"
+    name     = "AllowSIGV4ForS3"
     priority = 2
 
     action {
-      block {}
+      allow {}
     }
 
     statement {
@@ -188,7 +189,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
             name = "authorization"
           }
         }
-        positional_constraint = "EXACTLY"
+        positional_constraint = "STARTS_WITH"
         search_string         = "AWS4-HMAC-SHA256" # SIGv4 Auth Header
         text_transformation {
           priority = 0
@@ -199,7 +200,43 @@ resource "aws_wafv2_web_acl" "waf_acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "EnforceSIGV4ForS3"
+      metric_name                = "AllowSIGV4ForS3"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  # Rule to Block Non-JWT API Requests
+  rule {
+    name     = "BlockNonJWTAPIRequests"
+    priority = 3
+
+    action {
+      block {}  # Block requests without a valid JWT
+    }
+
+    statement {
+      not_statement {
+        statement {
+          byte_match_statement {
+            field_to_match {
+              single_header {
+                name = "authorization"
+              }
+            }
+            positional_constraint = "STARTS_WITH"
+            search_string         = "Bearer "
+            text_transformation {
+              priority = 0
+              type     = "NONE"
+            }
+          }
+        }
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "BlockNonJWTAPIRequests"
       sampled_requests_enabled   = true
     }
   }
