@@ -32,8 +32,11 @@ def lambda_handler(event, context):
     if "authorization" in headers:
         del headers["authorization"]
 
-    # Extract API Gateway Host
-    api_host = headers["host"][0]["value"]  # Fix: Use host header instead of request["origin"]
+    # Extract API Gateway Host from the Host header
+    api_host = headers.get("host", [{}])[0].get("value", "")
+
+    if not api_host:
+        return {"status": "500", "body": "Missing API Host"}
 
     # Retrieve AWS Credentials from IAM role
     session = boto3.Session()
