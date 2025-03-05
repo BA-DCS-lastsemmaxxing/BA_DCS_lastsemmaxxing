@@ -91,7 +91,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     cached_methods    = ["GET", "HEAD"]
 
     forwarded_values {
-      headers = ["Authorization"]
+      headers = ["Authorization", "x-aws-access-key", "x-aws-secret-key", "x-aws-security-token", "Host"]
       query_string = true
       cookies {
         forward = "all"
