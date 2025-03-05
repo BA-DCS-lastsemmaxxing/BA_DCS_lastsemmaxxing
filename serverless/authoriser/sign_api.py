@@ -64,9 +64,9 @@ def lambda_handler(event, context):
     # Compute Payload Hash (Fix: Read actual request body if available)
     payload_hash = hashlib.sha256(request.get("body", {}).get("data", b"")).hexdigest()
 
-    # Canonical Headers
-    canonical_headers = f"host:{api_host}\n"
-    signed_headers = "host"
+    # Canonical Headers (Include x-amz-date here)
+    canonical_headers = f"host:{api_host}\nx-amz-date:{amz_date}\n"
+    signed_headers = "host;x-amz-date"
 
     # Construct Canonical Request
     canonical_request = (
