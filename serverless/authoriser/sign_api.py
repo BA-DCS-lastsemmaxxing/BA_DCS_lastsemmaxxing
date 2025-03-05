@@ -32,8 +32,8 @@ def lambda_handler(event, context):
     if "authorization" in headers:
         del headers["authorization"]
 
-    # IMPT: Set API Gateway Host Manually
-    api_host = "kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com"
+    # Extract API Gateway Host from 'host' header
+    api_host = headers["host"][0]["value"]
 
     # Generate Timestamp for Signature
     t = datetime.datetime.utcnow()
@@ -42,7 +42,18 @@ def lambda_handler(event, context):
 
     # Extract HTTP Method, URI, and Query String
     http_method = request["method"]
-    canonical_uri = "/prod" + request["uri"]
+    original_uri = request["uri"]
+
+    # Strip out '/api' if present in the CloudFront URI
+    if original_uri.startswith("/api"):
+        canonical_uri = original_uri[4:]  # Remove "/api"
+    else:
+        canonical_uri = original_uri
+
+    # **Ensure '/prod' is added to the URI if not already present**
+    # If 'prod' is not part of the URI, add it here
+    if not canonical_uri.startswith("/prod"):
+        canonical_uri = "/prod" + canonical_uri
 
     # Ensure Query String is Sorted for SigV4 (Handle empty query string)
     raw_query_string = request.get("querystring", "")
