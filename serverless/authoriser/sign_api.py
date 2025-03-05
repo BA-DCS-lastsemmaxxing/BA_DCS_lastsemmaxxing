@@ -32,8 +32,8 @@ def lambda_handler(event, context):
     if "authorization" in headers:
         del headers["authorization"]
 
-    # Extract API Gateway Host from 'host' header
-    api_host = headers["host"][0]["value"]
+    # IMPT: Set API Gateway Host Manually
+    api_host = "kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com"
 
     # Generate Timestamp for Signature
     t = datetime.datetime.utcnow()
