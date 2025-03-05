@@ -100,4 +100,6 @@ def lambda_handler(event, context):
     if jwt_token:
         headers["cookie"] = [{"key": "Cookie", "value": jwt_token}]
 
+    print(request)
+    
     return request
