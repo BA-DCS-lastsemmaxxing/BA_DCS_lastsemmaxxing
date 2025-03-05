@@ -33,12 +33,12 @@ def lambda_handler(event, context):
         del headers["authorization"]
 
     # Extract API Gateway Host from the Host header
-    api_host = headers.get("host", [{}])[0].get("value", "")
+    api_gateway_host = 'kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com'
 
-    if not api_host:
-        return {"status": "500", "body": "Missing API Host"}
+    # Update the Host header to point to the API Gateway (not CloudFront)
+    headers["host"] = [{"key": "Host", "value": api_gateway_host}]
 
-    print(f"API Gateway Host: {api_host}")  # Debugging
+    print(f"API Gateway Host: {api_gateway_host}")  # Debugging
 
     # Extract AWS Credentials from CloudFront headers
     access_key = headers.get("x-aws-access-key", [{}])[0].get("value", "")
@@ -65,7 +65,7 @@ def lambda_handler(event, context):
         payload_hash = hashlib.sha256(b"").hexdigest()  # Empty body for GET requests
 
     # Canonical Headers (Include x-amz-date here)
-    canonical_headers = f"host:{api_host}\nx-amz-date:{amz_date}\n"
+    canonical_headers = f"host:{api_gateway_host}\nx-amz-date:{amz_date}\n"
     signed_headers = "host;x-amz-date"
 
     # Construct Canonical Request
