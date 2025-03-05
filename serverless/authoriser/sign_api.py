@@ -7,7 +7,6 @@ from datetime import datetime
 AWS_REGION = "ap-southeast-1"  # Change to your API Gateway region
 SERVICE = "execute-api"
 
-
 def lambda_handler(event, context):
     """Lambda@Edge function to sign API Gateway requests with SigV4 and forward JWT"""
     request = event["Records"][0]["cf"]["request"]
@@ -15,6 +14,7 @@ def lambda_handler(event, context):
 
     # Extract JWT Token from Cookie Header (if present)
     jwt_token = headers.get("cookie", [{}])[0].get("value", "")
+    print(f"JWT Token: {jwt_token}")
 
     # Remove any existing Authorization headers to avoid conflicts
     if "authorization" in headers:
@@ -54,16 +54,22 @@ def lambda_handler(event, context):
     # Add the signed authorization header to the request
     signed_headers = dict(aws_request.headers)
 
-    # Ensure that 'Authorization' header is in the correct format for CloudFront
+    # Ensure that 'Authorization' header is in the correct format for CloudFront (array of dicts)
     if "authorization" in signed_headers:
         signed_headers["authorization"] = [{"key": "Authorization", "value": signed_headers["authorization"]}]
     else:
         signed_headers["authorization"] = [{"key": "Authorization", "value": ""}]  # Default to empty if missing
-    
-    # If a JWT token exists, forward it in the Cookie header, also as an array of dicts
+
+    # If a JWT token exists, forward it in the Authorization header, also as an array of dicts
+    if jwt_token:
+        signed_headers["authorization"] = [{"key": "Authorization", "value": f"Bearer {jwt_token}"}]
+
+    # If no JWT token is found, ensure the cookie header is correctly set as an array of dicts
     if jwt_token:
         signed_headers["cookie"] = [{"key": "Cookie", "value": jwt_token}]
-    
+    else:
+        signed_headers["cookie"] = [{"key": "Cookie", "value": ""}]  # Optional: You can remove this if not needed
+
     # Update headers in the original request
     request["headers"] = signed_headers
 
