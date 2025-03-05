@@ -104,7 +104,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     max_ttl                = 0
 
     lambda_function_association {
-      event_type = "origin-request"
+      event_type = "viewer-request"
       lambda_arn = aws_lambda_function.sign_api_lambda_edge.qualified_arn
       include_body = false
     }
