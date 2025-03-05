@@ -31,26 +31,26 @@ resource "aws_iam_role" "cloudfront_role" {
   })
 }
 
-# resource "aws_iam_policy" "cloudfront_sigv4_policy" {
-#   name = "${var.project_name}-cloudfront-sigv4-policy"
-#   description = "Allow CloudFront to sign API Gateway Requests"
+resource "aws_iam_policy" "cloudfront_sigv4_policy" {
+  name = "${var.project_name}-cloudfront-sigv4-policy"
+  description = "Allow CloudFront to sign API Gateway Requests"
 
-#   policy = jsonencode({
-#     Version = "2012-10-17",
-#     Statement = [
-#       {
-#         Effect   = "Allow"
-#         Action   = ["execute-api:Invoke"]
-#         Resource = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
-#       }
-#     ]
-#   })
-# }
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["execute-api:Invoke"]
+        Resource = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
+      }
+    ]
+  })
+}
 
-# resource "aws_iam_role_policy_attachment" "cloudfront_policy_attachment" {
-#   role       = aws_iam_role.cloudfront_role.name
-#   policy_arn = aws_iam_policy.cloudfront_sigv4_policy.arn
-# }
+resource "aws_iam_role_policy_attachment" "cloudfront_policy_attachment" {
+  role       = aws_iam_role.cloudfront_role.name
+  policy_arn = aws_iam_policy.cloudfront_sigv4_policy.arn
+}
 
 data "aws_cloudfront_cache_policy" "caching_disabled" {
   name = "Managed-CachingDisabled"
