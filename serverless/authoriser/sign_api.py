@@ -54,8 +54,11 @@ def lambda_handler(event, context):
     # Add the signed authorization header to the request
     signed_headers = dict(aws_request.headers)
 
-    # Ensure that headers are in array format for CloudFront
-    signed_headers["authorization"] = [{"key": "Authorization", "value": signed_headers["authorization"]}]
+    # Ensure that 'Authorization' header is in the correct format for CloudFront
+    if "authorization" in signed_headers:
+        signed_headers["authorization"] = [{"key": "Authorization", "value": signed_headers["authorization"]}]
+    else:
+        signed_headers["authorization"] = [{"key": "Authorization", "value": ""}]  # Default to empty if missing
     
     # If a JWT token exists, forward it in the Cookie header, also as an array of dicts
     if jwt_token:
