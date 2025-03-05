@@ -62,7 +62,10 @@ def lambda_handler(event, context):
     canonical_querystring = "&".join(query_params)
 
     # Compute Payload Hash (Fix: Read actual request body if available)
-    payload_hash = hashlib.sha256(request.get("body", {}).get("data", b"")).hexdigest()
+    if request.get("body"):
+        payload_hash = hashlib.sha256(request["body"]["data"].encode("utf-8")).hexdigest()
+    else:
+        payload_hash = hashlib.sha256(b"").hexdigest()  # Empty body for GET requests
 
     # Canonical Headers (Include x-amz-date here)
     canonical_headers = f"host:{api_host}\nx-amz-date:{amz_date}\n"
@@ -74,7 +77,7 @@ def lambda_handler(event, context):
         f"{canonical_headers}\n{signed_headers}\n{payload_hash}"
     )
     
-    print(canonical_request)
+    print("Canonical Request:", canonical_request)  # Debugging
 
     # Construct String to Sign
     credential_scope = f"{date_stamp}/{AWS_REGION}/{SERVICE}/aws4_request"
@@ -83,7 +86,7 @@ def lambda_handler(event, context):
         f"{hashlib.sha256(canonical_request.encode('utf-8')).hexdigest()}"
     )
     
-    print(string_to_sign)
+    print("String to Sign:", string_to_sign)  # Debugging
 
     # Generate Signature
     signing_key = get_signature_key(secret_key, date_stamp, AWS_REGION, SERVICE)
@@ -97,6 +100,9 @@ def lambda_handler(event, context):
 
     # Attach Signed Headers
     headers["authorization"] = [{"key": "Authorization", "value": sigv4_authorization_header}]
+
+    # Add x-amz-date header for SigV4
+    headers["x-amz-date"] = [{"key": "x-amz-date", "value": amz_date}]
 
     # Forward JWT Token in Cookie Header (if exists)
     if jwt_token:
