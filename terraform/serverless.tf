@@ -135,12 +135,12 @@ resource "aws_iam_role" "lambda_edge_role" {
   })
 }
 
-# resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
-#   provider   = aws.us-east-1
-#   name       = "lambda-edge-policy-attach"
-#   roles      = [aws_iam_role.lambda_edge_role.name]
-#   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-# }
+resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
+  provider   = aws.us-east-1
+  name       = "lambda-edge-policy-attach"
+  roles      = [aws_iam_role.lambda_edge_role.name]
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
 
 # IAM Policy for Lambda@Edge (Logging & API Gateway Access)
 resource "aws_iam_policy" "lambda_edge_policy" {
