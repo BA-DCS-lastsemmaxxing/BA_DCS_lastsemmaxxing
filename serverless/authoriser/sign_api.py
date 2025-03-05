@@ -2,25 +2,23 @@ import json
 import datetime
 import hashlib
 import hmac
+import boto3
 
-AWS_REGION = "ap-southeast-1"  # Change to your API Gateway region
+AWS_REGION = "ap-southeast-1"
 SERVICE = "execute-api"
 ALGORITHM = "AWS4-HMAC-SHA256"
-
 
 def sign(key, msg):
     """Generate HMAC signature"""
     return hmac.new(key, msg.encode("utf-8"), hashlib.sha256).digest()
 
-
 def get_signature_key(secret_key, date_stamp, region, service):
-    """Generate the AWS Signature Version 4 signing key"""
+    """Generate AWS Signature Version 4 signing key"""
     k_date = sign(("AWS4" + secret_key).encode("utf-8"), date_stamp)
     k_region = sign(k_date, region)
     k_service = sign(k_region, service)
     k_signing = sign(k_service, "aws4_request")
     return k_signing
-
 
 def lambda_handler(event, context):
     """Lambda@Edge function to sign API Gateway requests with SigV4 and forward JWT"""
@@ -35,11 +33,13 @@ def lambda_handler(event, context):
         del headers["authorization"]
 
     # Extract API Gateway Host
-    api_host = request["origin"]["custom"]["domainName"]
+    api_host = headers["host"][0]["value"]  # Fix: Use host header instead of request["origin"]
 
-    # Extract AWS Credentials (IAM Role will be used, no env vars needed)
-    access_key = headers.get("x-aws-access-key", [{}])[0].get("value", "")
-    secret_key = headers.get("x-aws-secret-key", [{}])[0].get("value", "")
+    # Retrieve AWS Credentials from IAM role
+    session = boto3.Session()
+    credentials = session.get_credentials()
+    access_key = credentials.access_key
+    secret_key = credentials.secret_key
 
     if not access_key or not secret_key:
         return {"status": "500", "body": "Missing AWS credentials"}
@@ -58,12 +58,12 @@ def lambda_handler(event, context):
     query_params = sorted(raw_query_string.split("&"))
     canonical_querystring = "&".join(query_params)
 
+    # Compute Payload Hash (Fix: Read actual request body if available)
+    payload_hash = hashlib.sha256(request.get("body", {}).get("data", b"")).hexdigest()
+
     # Canonical Headers
     canonical_headers = f"host:{api_host}\n"
     signed_headers = "host"
-
-    # Compute Payload Hash
-    payload_hash = hashlib.sha256(b"").hexdigest()
 
     # Construct Canonical Request
     canonical_request = (
