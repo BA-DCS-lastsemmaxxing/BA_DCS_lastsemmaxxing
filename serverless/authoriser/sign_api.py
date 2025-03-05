@@ -44,10 +44,12 @@ def lambda_handler(event, context):
     http_method = request["method"]
     canonical_uri = request["uri"]
 
-    # Ensure Query String is Sorted for SigV4
+    # Ensure Query String is Sorted for SigV4 (Handle empty query string)
     raw_query_string = request.get("querystring", "")
-    query_params = sorted(raw_query_string.split("&"))
-    canonical_querystring = "&".join(query_params)
+    canonical_querystring = ""
+    if raw_query_string:
+        query_params = sorted(raw_query_string.split("&"))
+        canonical_querystring = "&".join(query_params)
 
     # Canonical Headers (Add host header for SigV4)
     canonical_headers = f"host:{api_host}\n"
