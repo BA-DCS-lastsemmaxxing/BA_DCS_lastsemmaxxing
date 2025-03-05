@@ -73,6 +73,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   origin {
     domain_name = local.api_domain_name
     origin_id   = local.api_origin_id
+    origin_path = "/prod"
 
     custom_origin_config {
       http_port              = 80
@@ -84,7 +85,7 @@ resource "aws_cloudfront_distribution" "cdn" {
 
   # Custom cache behavior for API Gateway requests, with stricter TTLs
   ordered_cache_behavior {
-    path_pattern      = "/api/*"  # Adjust this for API paths
+    path_pattern      = "/prod/api/*"  # Adjust this for API paths
     target_origin_id  = local.api_origin_id
     allowed_methods   = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods    = ["GET", "HEAD"]
