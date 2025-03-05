@@ -42,7 +42,7 @@ def lambda_handler(event, context):
 
     # Extract HTTP Method, URI, and Query String
     http_method = request["method"]
-    canonical_uri = request["uri"]
+    canonical_uri = "/prod" + request["uri"]
 
     # Ensure Query String is Sorted for SigV4 (Handle empty query string)
     raw_query_string = request.get("querystring", "")
