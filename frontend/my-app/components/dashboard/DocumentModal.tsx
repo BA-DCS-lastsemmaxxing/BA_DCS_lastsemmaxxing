@@ -42,7 +42,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle>{document.name}</DialogTitle>
