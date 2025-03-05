@@ -58,9 +58,9 @@ def lambda_handler(event, context):
     query_params = sorted(raw_query_string.split("&"))
     canonical_querystring = "&".join(query_params)
 
-    # Canonical Headers
-    canonical_headers = f"host:{api_host}\n"
-    signed_headers = "host"
+    # Canonical Headers (Include x-amz-date here)
+    canonical_headers = f"host:{api_host}\nx-amz-date:{amz_date}\n"
+    signed_headers = "host;x-amz-date"
 
     # Compute Payload Hash
     payload_hash = hashlib.sha256(b"").hexdigest()
