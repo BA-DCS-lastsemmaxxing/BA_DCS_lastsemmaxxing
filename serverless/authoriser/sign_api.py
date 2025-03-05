@@ -32,8 +32,8 @@ def lambda_handler(event, context):
     if "authorization" in headers:
         del headers["authorization"]
 
-    # Extract API Gateway Host
-    api_host = request["origin"]["custom"]["domainName"]
+    # Extract API Gateway Host from 'host' header
+    api_host = headers["host"][0]["value"]
 
     # Generate Timestamp for Signature
     t = datetime.datetime.utcnow()
@@ -63,6 +63,8 @@ def lambda_handler(event, context):
         f"{http_method}\n{canonical_uri}\n{canonical_querystring}\n"
         f"{canonical_headers}\n{signed_headers}\n{payload_hash}"
     )
+
+    print("Canonical Request: ", canonical_request)  # Debugging step
 
     # Construct String to Sign
     credential_scope = f"{date_stamp}/{AWS_REGION}/{SERVICE}/aws4_request"
