@@ -35,7 +35,12 @@ def lambda_handler(event, context):
         del headers["authorization"]
 
     # Extract API Gateway Host
-    api_host = request["origin"]["custom"]["domainName"]
+    # api_host = request["origin"]["custom"]["domainName"]
+    
+    # Extract API Gateway Host from the Host header
+    api_host = headers.get("host", [{}])[0].get("value", "")
+    
+    print(f"API Host: {api_host}")
 
     # Extract AWS Credentials (IAM Role will be used, no env vars needed)
     access_key = headers.get("x-aws-access-key", [{}])[0].get("value", "")
