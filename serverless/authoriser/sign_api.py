@@ -38,6 +38,8 @@ def lambda_handler(event, context):
     if not api_host:
         return {"status": "500", "body": "Missing API Host"}
 
+    print(f"API Gateway Host: {api_host}")  # Debugging
+
     # Extract AWS Credentials from CloudFront headers
     access_key = headers.get("x-aws-access-key", [{}])[0].get("value", "")
     secret_key = headers.get("x-aws-secret-key", [{}])[0].get("value", "")
@@ -98,6 +100,8 @@ def lambda_handler(event, context):
 
     # Add x-amz-date header for SigV4
     headers["x-amz-date"] = [{"key": "x-amz-date", "value": amz_date}]
+    
+    print("Updated Headers: ", json.dumps(headers, indent=2))  # Debugging
 
     # Forward JWT Token in Cookie Header (if exists)
     if jwt_token:
