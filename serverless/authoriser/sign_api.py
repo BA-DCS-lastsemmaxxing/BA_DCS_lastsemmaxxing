@@ -38,14 +38,9 @@ def lambda_handler(event, context):
     if not api_host:
         return {"status": "500", "body": "Missing API Host"}
 
-    # Retrieve AWS Credentials from IAM role
-    session = boto3.Session()
-    credentials = session.get_credentials()
-    access_key = credentials.access_key
-    secret_key = credentials.secret_key
-
-    if not access_key or not secret_key:
-        return {"status": "500", "body": "Missing AWS credentials"}
+    # Extract AWS Credentials from CloudFront headers
+    access_key = headers.get("x-aws-access-key", [{}])[0].get("value", "")
+    secret_key = headers.get("x-aws-secret-key", [{}])[0].get("value", "")
 
     # Generate Timestamp for Signature
     t = datetime.datetime.utcnow()
