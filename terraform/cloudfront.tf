@@ -31,26 +31,26 @@ resource "aws_iam_role" "cloudfront_role" {
   })
 }
 
-resource "aws_iam_policy" "cloudfront_sigv4_policy" {
-  name = "${var.project_name}-cloudfront-sigv4-policy"
-  description = "Allow CloudFront to sign API Gateway Requests"
+# resource "aws_iam_policy" "cloudfront_sigv4_policy" {
+#   name = "${var.project_name}-cloudfront-sigv4-policy"
+#   description = "Allow CloudFront to sign API Gateway Requests"
 
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect   = "Allow"
-        Action   = ["execute-api:Invoke"]
-        Resource = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
-      }
-    ]
-  })
-}
+#   policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [
+#       {
+#         Effect   = "Allow"
+#         Action   = ["execute-api:Invoke"]
+#         Resource = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
+#       }
+#     ]
+#   })
+# }
 
-resource "aws_iam_role_policy_attachment" "cloudfront_policy_attachment" {
-  role       = aws_iam_role.cloudfront_role.name
-  policy_arn = aws_iam_policy.cloudfront_sigv4_policy.arn
-}
+# resource "aws_iam_role_policy_attachment" "cloudfront_policy_attachment" {
+#   role       = aws_iam_role.cloudfront_role.name
+#   policy_arn = aws_iam_policy.cloudfront_sigv4_policy.arn
+# }
 
 data "aws_cloudfront_cache_policy" "caching_disabled" {
   name = "Managed-CachingDisabled"
@@ -61,7 +61,6 @@ data "aws_cloudfront_origin_request_policy" "managed_origin_request_policy" {
 }
 
 resource "aws_cloudfront_distribution" "cdn" {
-  
   enabled = true
   default_root_object = "index.html"
   
@@ -74,6 +73,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   origin {
     domain_name = local.api_domain_name
     origin_id   = local.api_origin_id
+    origin_path = "/prod"
 
     custom_origin_config {
       http_port              = 80
@@ -91,16 +91,23 @@ resource "aws_cloudfront_distribution" "cdn" {
     cached_methods    = ["GET", "HEAD"]
 
     forwarded_values {
+      headers = ["Authorization"]
       query_string = true
       cookies {
-        forward = "none"
+        forward = "all"
       }
     }
 
     viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
-    default_ttl            = 300  # Slightly longer TTL for API responses
-    max_ttl                = 3600
+    default_ttl            = 0  # Disable caching to avoid auth issues
+    max_ttl                = 0
+
+    lambda_function_association {
+      event_type = "viewer-request"
+      lambda_arn = aws_lambda_function.sign_api_lambda_edge.qualified_arn
+      include_body = false
+    }
   }
 
     default_cache_behavior {
@@ -135,32 +142,34 @@ resource "aws_cloudfront_distribution" "cdn" {
 }
 
 # AWS WAF Web ACL
+# AWS WAF Web ACL
 resource "aws_wafv2_web_acl" "waf_acl" {
   name        = "${var.project_name}-waf-acl"
   scope       = "REGIONAL"
-  description = "WAF to restrict non-CloudFront requests"
+  description = "WAF to enforce SIGv4 for S3 and JWT for API"
 
   default_action {
-    allow {}
+    block {}  # Block by default
   }
 
+  # Rule for API Gateway (Allow JWT Auth)
   rule {
-    name     = "AllowOnlyCloudFront"
+    name     = "AllowJWTAuthToAPI"
     priority = 1
 
     action {
-      block {}
+      allow {}
     }
 
     statement {
       byte_match_statement {
         field_to_match {
           single_header {
-            name = "authorization"
+            name = "cookie"
           }
         }
-        positional_constraint = "EXACTLY"
-        search_string         = "AWS4-HMAC-SHA256"
+        positional_constraint = "STARTS_WITH"
+        search_string         = "CognitoToken=" # JWT Token
         text_transformation {
           priority = 0
           type     = "NONE"
@@ -170,14 +179,82 @@ resource "aws_wafv2_web_acl" "waf_acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AllowOnlyCloudFront"
+      metric_name                = "AllowJWTAuthToAPI"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  # Rule for S3 (Allow SIGv4)
+  rule {
+    name     = "AllowSIGV4ForS3"
+    priority = 2
+
+    action {
+      allow {}
+    }
+
+    statement {
+      byte_match_statement {
+        field_to_match {
+          single_header {
+            name = "authorization"
+          }
+        }
+        positional_constraint = "STARTS_WITH"
+        search_string         = "AWS4-HMAC-SHA256" # SIGv4 Auth Header
+        text_transformation {
+          priority = 0
+          type     = "NONE"
+        }
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AllowSIGV4ForS3"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  # Rule to Block Non-JWT API Requests
+  rule {
+    name     = "BlockNonJWTAPIRequests"
+    priority = 3
+
+    action {
+      block {}  # Block requests without a valid JWT
+    }
+
+    statement {
+      not_statement {
+        statement {
+          byte_match_statement {
+            field_to_match {
+              single_header {
+                name = "cookie"
+              }
+            }
+            positional_constraint = "STARTS_WITH"
+            search_string         = "CognitoToken= "
+            text_transformation {
+              priority = 0
+              type     = "NONE"
+            }
+          }
+        }
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "BlockNonJWTAPIRequests"
       sampled_requests_enabled   = true
     }
   }
 
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "AllowOnlyCloudFront"
+    metric_name                = "WAFLogging"
     sampled_requests_enabled   = true
   }
 }

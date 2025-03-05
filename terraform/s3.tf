@@ -61,6 +61,12 @@ data "aws_s3_object" "auth_lambda_zip" {
   key = "auth_lambda.zip"
 }
 
+data "aws_s3_object" "sign_api_lambda_zip" {
+  provider = aws.us-east-1
+  bucket = aws_s3_bucket.serverless_bucket_us.bucket
+  key = "sign_api.zip"
+}
+
 data "aws_s3_object" "fetch_documents_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "fetch_documents.zip"

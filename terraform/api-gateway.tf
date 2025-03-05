@@ -53,6 +53,24 @@ resource "aws_api_gateway_method" "documents_method_get" {
     authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
 }
 
+resource "aws_api_gateway_integration" "documents_method_get_integration" {
+    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+    resource_id = aws_api_gateway_resource.documents_resource.id
+    http_method = aws_api_gateway_method.documents_method_get.http_method
+    
+    integration_http_method = "POST" # Always POST for Lambda proxy integration
+    type = "AWS_PROXY"
+    uri = aws_lambda_function.fetch_documents_lambda.invoke_arn
+}
+
+resource "aws_lambda_permission" "documents_method_get_lambda_permission" {
+    statement_id  = "AllowAPIGatewayInvoke"
+    action        = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.fetch_documents_lambda.function_name
+    principal     = "apigateway.amazonaws.com"
+    source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
+}
+
 resource "aws_api_gateway_resource" "upload_resource" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
     parent_id   = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
@@ -65,6 +83,24 @@ resource "aws_api_gateway_method" "upload_method_post" {
     http_method   = "POST"
     authorization = "COGNITO_USER_POOLS"
     authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
+}
+
+resource "aws_api_gateway_integration" "upload_method_post_integration" {
+    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+    resource_id = aws_api_gateway_resource.upload_resource.id
+    http_method = aws_api_gateway_method.upload_method_post.http_method
+    
+    integration_http_method = "POST" # Always POST for Lambda proxy integration
+    type = "AWS_PROXY"
+    uri = aws_lambda_function.upload_document_lambda.invoke_arn
+}
+
+resource "aws_lambda_permission" "upload_method_post_lambda_permission" {
+    statement_id  = "AllowAPIGatewayInvoke"
+    action        = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.upload_document_lambda.function_name
+    principal     = "apigateway.amazonaws.com"
+    source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
 
 // all options methods are for CORS support - test without since same CF origin
