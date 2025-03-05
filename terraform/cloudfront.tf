@@ -94,7 +94,7 @@ resource "aws_cloudfront_distribution" "cdn" {
       headers = ["Authorization"]
       query_string = true
       cookies {
-        forward = "none"
+        forward = "all"
       }
     }
 
