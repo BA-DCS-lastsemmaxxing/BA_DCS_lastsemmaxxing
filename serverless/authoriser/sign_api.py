@@ -33,7 +33,7 @@ def lambda_handler(event, context):
         del headers["authorization"]
 
     # Extract API Gateway Host
-    api_host = headers["host"][0]["value"]  # Fix: Use host header instead of request["origin"]
+    api_host = headers["host"][0]["value"]
 
     # Retrieve AWS Credentials from IAM role
     session = boto3.Session()
@@ -61,9 +61,9 @@ def lambda_handler(event, context):
     # Compute Payload Hash (Fix: Read actual request body if available)
     payload_hash = hashlib.sha256(request.get("body", {}).get("data", b"")).hexdigest()
 
-    # Canonical Headers
-    canonical_headers = f"host:{api_host}\n"
-    signed_headers = "host"
+    # Canonical Headers (Add X-Amz-Date here)
+    canonical_headers = f"host:{api_host}\n" + f"x-amz-date:{amz_date}\n"
+    signed_headers = "host;x-amz-date"
 
     # Construct Canonical Request
     canonical_request = (
@@ -90,6 +90,9 @@ def lambda_handler(event, context):
 
     # Attach Signed Headers
     headers["authorization"] = [{"key": "Authorization", "value": sigv4_authorization_header}]
+    
+    # Add X-Amz-Date to headers
+    headers["x-amz-date"] = [{"key": "X-Amz-Date", "value": amz_date}]
 
     # Forward JWT Token in Cookie Header (if exists)
     if jwt_token:
