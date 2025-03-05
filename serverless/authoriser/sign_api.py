@@ -52,8 +52,8 @@ def lambda_handler(event, context):
         canonical_querystring = "&".join(query_params)
 
     # Canonical Headers (Add host header for SigV4)
-    canonical_headers = f"host:{api_host}\n"
-    signed_headers = "host"
+    canonical_headers = f"host:{api_host}\nx-amz-date:{amz_date}\n"
+    signed_headers = "host;x-amz-date"
 
     # Compute Payload Hash (empty body in case of API Gateway request)
     payload_hash = hashlib.sha256(b"").hexdigest()
@@ -72,6 +72,8 @@ def lambda_handler(event, context):
         f"{ALGORITHM}\n{amz_date}\n{credential_scope}\n"
         f"{hashlib.sha256(canonical_request.encode('utf-8')).hexdigest()}"
     )
+
+    print("String to Sign: ", string_to_sign)  # Debugging step
 
     # Use Boto3 to get AWS credentials automatically
     session = boto3.Session()
