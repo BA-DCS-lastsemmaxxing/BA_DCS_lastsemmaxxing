@@ -65,6 +65,11 @@ def lambda_handler(event, context):
     # Ensure Authorization and x-amz-date headers are set properly
     signed_headers["authorization"] = [{"key": "Authorization", "value": signed_auth_header}]
     signed_headers["x-amz-date"] = [{"key": "x-amz-date", "value": date_now}]
+    
+    # Add x-amz-security-token if using temporary credentials
+    if credentials.token:
+        signed_headers["x-amz-security-token"] = [{"key": "x-amz-security-token", "value": credentials.token}]
+
 
     # Preserve Cookie header if it exists and add the JWT token back (without "CognitoToken=")
     if jwt_token:
