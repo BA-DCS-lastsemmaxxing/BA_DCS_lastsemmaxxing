@@ -59,9 +59,12 @@ def lambda_handler(event, context):
         headers=signing_headers
     )
 
-    # Log the canonical request
+    # Convert HTTPHeaders object to a dictionary for logging
+    canonical_headers = dict(aws_request.headers.items())
+
+    # Log the canonical request headers
     print(f"Canonical Request URL: https://{api_host}{path}?{query_string}")
-    print(f"Canonical Request Headers: {json.dumps(aws_request.headers, indent=2)}")
+    print(f"Canonical Request Headers: {json.dumps(canonical_headers, indent=2)}")
 
     # Sign the request using AWS SigV4
     session = boto3.Session()
