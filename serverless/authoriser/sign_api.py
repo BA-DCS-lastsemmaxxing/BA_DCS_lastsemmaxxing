@@ -9,7 +9,7 @@ AWS_REGION = "ap-southeast-1"  # Change to your API Gateway region
 SERVICE = "execute-api"
 
 def lambda_handler(event, context):
-    """Lambda@Edge function to sign API Gateway requests with SigV4 while preserving the Cognito token in Cookie"""
+    """Lambda@Edge function to sign API Gateway requests with SigV4 while preserving the Cognito token in Authorization header"""
     request = event["Records"][0]["cf"]["request"]
     headers = request["headers"]
     
@@ -122,9 +122,9 @@ def lambda_handler(event, context):
     # Log the final signed headers
     print(f"Final Signed Headers: {json.dumps(signed_headers, indent=2)}")
 
-    # Preserve Cookie header if it exists and add the JWT token back (without "CognitoToken=")
+    # If the Cognito token was found, add it to the Authorization header
     if jwt_token:
-        signed_headers["cookie"] = [{"key": "cookie", "value": f"CognitoToken={jwt_token}"}]
+        signed_headers["authorization"] = [{"key": "Authorization", "value": f"Bearer {jwt_token}"}]
 
     # Update request headers
     request["headers"] = signed_headers
