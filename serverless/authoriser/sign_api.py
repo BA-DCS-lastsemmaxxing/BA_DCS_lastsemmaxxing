@@ -36,7 +36,7 @@ def lambda_handler(event, context):
     # Create a dictionary of headers to sign
     signing_headers = {
         "host": api_host,
-        "x-amz-date": date_now
+        "x-amz-date": date_now  # Ensure this is always present
     }
 
     # Construct AWSRequest for signing
@@ -56,11 +56,12 @@ def lambda_handler(event, context):
     # Extract signed headers
     signed_auth_header = aws_request.headers["Authorization"]
     
-    # Add signed Authorization header (without modifying CloudFront's structure)
+    # Add signed headers back into the request
     signed_headers = headers.copy()
     
-    # Ensure Authorization header follows CloudFront format
+    # Ensure Authorization and x-amz-date headers are set properly
     signed_headers["authorization"] = [{"key": "Authorization", "value": signed_auth_header}]
+    signed_headers["x-amz-date"] = [{"key": "x-amz-date", "value": date_now}]
 
     # Preserve Cookie header if it exists
     if "cookie" in headers:
