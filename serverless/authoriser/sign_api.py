@@ -64,9 +64,20 @@ def lambda_handler(event, context):
     canonical_querystring = query_string
     print(f"Canonical Query String: {canonical_querystring}")
 
-    # Canonical Request Part 4: Canonical Headers (Host and x-amz-date)
+    # Canonical Request Part 4: Canonical Headers (Host, x-amz-date, and x-amz-security-token if present)
     canonical_headers = f"host:{api_host}\nx-amz-date:{date_now}\n"
+    if credentials.token:
+        canonical_headers += f"x-amz-security-token:{credentials.token}\n"  # Include token if available
     print(f"Canonical Headers: {canonical_headers}")
+
+    # Create a dictionary of headers to sign (including x-amz-security-token if available)
+    signing_headers = {
+        "host": api_host,
+        "x-amz-date": date_now  # Ensure this is always present
+    }
+    if credentials.token:
+        signing_headers["x-amz-security-token"] = credentials.token  # Include token if available
+
 
     # Canonical Request Part 5: Signed Headers
     signed_headers = "host;x-amz-date"
@@ -110,10 +121,6 @@ def lambda_handler(event, context):
     signed_headers["authorization"] = [{"key": "Authorization", "value": aws_request.headers['Authorization']}]
     signed_headers["x-amz-date"] = [{"key": "x-amz-date", "value": date_now}]
     
-    # Add x-amz-security-token if using temporary credentials
-    if credentials.token:
-        signed_headers["x-amz-security-token"] = [{"key": "x-amz-security-token", "value": credentials.token}]
-
     # Log the final signed headers
     print(f"Final Signed Headers: {json.dumps(signed_headers, indent=2)}")
 
