@@ -3,6 +3,7 @@ import boto3
 from botocore.auth import SigV4Auth
 from botocore.awsrequest import AWSRequest
 from datetime import datetime
+import hashlib
 
 AWS_REGION = "ap-southeast-1"  # Change to your API Gateway region
 SERVICE = "execute-api"
@@ -93,7 +94,11 @@ def lambda_handler(event, context):
     # Construct the String-to-Sign (Part 1)
     date_stamp = date_now[:8]
     credential_scope = f"{date_stamp}/{AWS_REGION}/{SERVICE}/aws4_request"
-    string_to_sign = f"AWS4-HMAC-SHA256\n{date_now}\n{credential_scope}\n{hash(canonical_request)}"
+    # Create the SHA-256 hash of the canonical request
+    canonical_request_hash = hashlib.sha256(canonical_request.encode('utf-8')).hexdigest()
+
+    # Create the String to Sign
+    string_to_sign = f"AWS4-HMAC-SHA256\n{date_now}\n{credential_scope}\n{canonical_request_hash}"
     print(f"String to Sign: {string_to_sign}")
 
     # Sign the request using AWS SigV4
