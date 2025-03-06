@@ -67,9 +67,9 @@ def lambda_handler(event, context):
     signed_headers["authorization"] = [{"key": "Authorization", "value": signed_auth_header}]
     signed_headers["x-amz-date"] = [{"key": "x-amz-date", "value": date_now}]
 
-    # Preserve Cookie header if it exists
-    if "cookie" in headers:
-        signed_headers["cookie"] = headers["cookie"]
+    # Preserve Cookie header if it exists and add the JWT token back
+    if jwt_token:
+        signed_headers["cookie"] = [{"key": "cookie", "value": f"CognitoToken={jwt_token}"}]
 
     # Update request headers
     request["headers"] = signed_headers
