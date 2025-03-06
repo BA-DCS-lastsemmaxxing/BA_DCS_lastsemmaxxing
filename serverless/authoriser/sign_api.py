@@ -23,7 +23,6 @@ def lambda_handler(event, context):
     jwt_token = None
     if "cookie" in headers:
         for cookie in headers["cookie"]:
-            # Find the cookie that starts with "CognitoToken=" and extract just the token
             if cookie["value"].startswith("CognitoToken="):
                 jwt_token = cookie["value"].split('=')[1]  # Get the token part only
                 break
@@ -35,7 +34,7 @@ def lambda_handler(event, context):
     body = ""  # Adjust if needed
     date_now = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
 
-    # Log the request details that are being prepared for signing
+    # Log the request details
     print(f"Request Method: {method}")
     print(f"Request Path: {path}")
     print(f"Query String: {query_string}")
@@ -51,20 +50,39 @@ def lambda_handler(event, context):
     # Log the signing headers
     print(f"Signing Headers: {json.dumps(signing_headers, indent=2)}")
 
-    # Construct AWSRequest for signing
-    aws_request = AWSRequest(
-        method=method,
-        url=f"https://{api_host}{path}?{query_string}",
-        data=body,
-        headers=signing_headers
-    )
+    # Canonical Request Part 1: HTTP Method
+    canonical_method = method
+    print(f"Canonical Method: {canonical_method}")
 
-    # Convert HTTPHeaders object to a dictionary for logging
-    canonical_headers = dict(aws_request.headers.items())
+    # Canonical Request Part 2: Request Path
+    canonical_path = path
+    print(f"Canonical Path: {canonical_path}")
 
-    # Log the canonical request headers
-    print(f"Canonical Request URL: https://{api_host}{path}?{query_string}")
-    print(f"Canonical Request Headers: {json.dumps(canonical_headers, indent=2)}")
+    # Canonical Request Part 3: Query String
+    canonical_querystring = query_string
+    print(f"Canonical Query String: {canonical_querystring}")
+
+    # Canonical Request Part 4: Canonical Headers (Host and x-amz-date)
+    canonical_headers = f"host:{api_host}\nx-amz-date:{date_now}\n"
+    print(f"Canonical Headers: {canonical_headers}")
+
+    # Canonical Request Part 5: Signed Headers
+    signed_headers = "host;x-amz-date"
+    print(f"Signed Headers: {signed_headers}")
+
+    # Canonical Request Part 6: Payload Hash (Empty body here, so hash is the empty string)
+    payload_hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"  # SHA-256 of empty string
+    print(f"Payload Hash: {payload_hash}")
+
+    # Construct the Canonical Request
+    canonical_request = f"{canonical_method}\n{canonical_path}\n{canonical_querystring}\n{canonical_headers}\n{signed_headers}\n{payload_hash}"
+    print(f"Canonical Request: {canonical_request}")
+
+    # Construct the String-to-Sign (Part 1)
+    date_stamp = date_now[:8]
+    credential_scope = f"{date_stamp}/{AWS_REGION}/{SERVICE}/aws4_request"
+    string_to_sign = f"AWS4-HMAC-SHA256\n{date_now}\n{credential_scope}\n{hash(canonical_request)}"
+    print(f"String to Sign: {string_to_sign}")
 
     # Sign the request using AWS SigV4
     session = boto3.Session()
@@ -74,27 +92,28 @@ def lambda_handler(event, context):
     print(f"AWS Session Token: {'Exists' if credentials.token else 'Missing'}")
 
     signer = SigV4Auth(credentials, SERVICE, AWS_REGION)
+    aws_request = AWSRequest(
+        method=method,
+        url=f"https://{api_host}{path}?{query_string}",
+        data=body,
+        headers=signing_headers
+    )
     signer.add_auth(aws_request)
 
-    # The string to sign is not directly accessible, but you can log important components.
+    # Log the signed authorization header
     print(f"Signed Authorization Header: {aws_request.headers.get('Authorization')}")
 
-    # Extract signed headers
-    signed_auth_header = aws_request.headers["Authorization"]
-    
     # Add signed headers back into the request
     signed_headers = headers.copy()
-    
-    # Ensure Authorization and x-amz-date headers are set properly
-    signed_headers["authorization"] = [{"key": "Authorization", "value": signed_auth_header}]
+    signed_headers["authorization"] = [{"key": "Authorization", "value": aws_request.headers['Authorization']}]
     signed_headers["x-amz-date"] = [{"key": "x-amz-date", "value": date_now}]
     
     # Add x-amz-security-token if using temporary credentials
     if credentials.token:
         signed_headers["x-amz-security-token"] = [{"key": "x-amz-security-token", "value": credentials.token}]
 
-    # Log the signed headers
-    print(f"Signed Headers: {json.dumps(signed_headers, indent=2)}")
+    # Log the final signed headers
+    print(f"Final Signed Headers: {json.dumps(signed_headers, indent=2)}")
 
     # Preserve Cookie header if it exists and add the JWT token back (without "CognitoToken=")
     if jwt_token:
@@ -106,7 +125,5 @@ def lambda_handler(event, context):
     # Log the final signed request
     print(f"Final Signed Request: {json.dumps(request, indent=2)}")
     print(f"🚀 Final Signed Request URL: https://{api_host}{path}?{query_string}")
-    
-    print(f"JWT Token in Cookie: {jwt_token}")
     
     return request
