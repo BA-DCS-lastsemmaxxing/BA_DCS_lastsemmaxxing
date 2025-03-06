@@ -43,11 +43,18 @@ def lambda_handler(event, context):
     print(f"Request Body: {body}")
     print(f"x-amz-date: {date_now}")
 
+    # Fetch credentials (before using them in headers)
+    session = boto3.Session()
+    credentials = session.get_credentials()
+
     # Create a dictionary of headers to sign
     signing_headers = {
         "host": api_host,
         "x-amz-date": date_now  # Ensure this is always present
     }
+
+    if credentials.token:
+        signing_headers["x-amz-security-token"] = credentials.token  # Include token if available
 
     # Log the signing headers
     print(f"Signing Headers: {json.dumps(signing_headers, indent=2)}")
@@ -70,17 +77,9 @@ def lambda_handler(event, context):
         canonical_headers += f"x-amz-security-token:{credentials.token}\n"  # Include token if available
     print(f"Canonical Headers: {canonical_headers}")
 
-    # Create a dictionary of headers to sign (including x-amz-security-token if available)
-    signing_headers = {
-        "host": api_host,
-        "x-amz-date": date_now  # Ensure this is always present
-    }
-    if credentials.token:
-        signing_headers["x-amz-security-token"] = credentials.token  # Include token if available
-
-
     # Canonical Request Part 5: Signed Headers
-    signed_headers = "host;x-amz-date"
+    # Dynamically generate the signed headers based on the headers used in canonical headers
+    signed_headers = ";".join(sorted(signing_headers.keys()))  # Sorting ensures consistency
     print(f"Signed Headers: {signed_headers}")
 
     # Canonical Request Part 6: Payload Hash (Empty body here, so hash is the empty string)
@@ -98,12 +97,6 @@ def lambda_handler(event, context):
     print(f"String to Sign: {string_to_sign}")
 
     # Sign the request using AWS SigV4
-    session = boto3.Session()
-    credentials = session.get_credentials()
-    print(f"AWS Access Key: {credentials.access_key}")
-    print(f"AWS Secret Key: {'Exists' if credentials.secret_key else 'Missing'}")
-    print(f"AWS Session Token: {'Exists' if credentials.token else 'Missing'}")
-
     signer = SigV4Auth(credentials, SERVICE, AWS_REGION)
     aws_request = AWSRequest(
         method=method,
@@ -126,7 +119,7 @@ def lambda_handler(event, context):
 
     # Preserve Cookie header if it exists and add the JWT token back (without "CognitoToken=")
     if jwt_token:
-        signed_headers["cookie"] = [{"key": "cookie", "value": f"{jwt_token}"}]
+        signed_headers["cookie"] = [{"key": "cookie", "value": f"CognitoToken={jwt_token}"}]
 
     # Update request headers
     request["headers"] = signed_headers
