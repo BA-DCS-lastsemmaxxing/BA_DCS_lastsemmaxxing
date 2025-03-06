@@ -13,18 +13,17 @@ def lambda_handler(event, context):
     headers = request["headers"]
 
     # Extract API Gateway Host (DO NOT modify it)
-    api_host = headers["host"][0]["value"]  
+    api_host = headers["host"][0]["value"]
     print(f"API Host: {api_host}")
 
     # Extract Cognito Token from Cookie (If present)
     jwt_token = None
     if "cookie" in headers:
         for cookie in headers["cookie"]:
-            if "CognitoToken=" in cookie["value"]:
-                jwt_token = cookie["value"]
+            # Find the cookie that starts with "CognitoToken=" and extract just the token
+            if cookie["value"].startswith("CognitoToken="):
+                jwt_token = cookie["value"].split('=')[1]  # Get the token part only
                 break
-
-    print(f"JWT Token from Cookie: {jwt_token}")
 
     # Prepare request details for signing
     method = request["method"]
@@ -67,14 +66,18 @@ def lambda_handler(event, context):
     signed_headers["authorization"] = [{"key": "Authorization", "value": signed_auth_header}]
     signed_headers["x-amz-date"] = [{"key": "x-amz-date", "value": date_now}]
 
-    # Preserve Cookie header if it exists and add the JWT token back
+    # Preserve Cookie header if it exists and add the JWT token back (without "CognitoToken=")
     if jwt_token:
-        signed_headers["cookie"] = [{"key": "cookie", "value": f"CognitoToken={jwt_token}"}]
+        signed_headers["cookie"] = [{"key": "cookie", "value": f"{jwt_token}"}]
 
     # Update request headers
     request["headers"] = signed_headers
 
     print(f"Final Signed Request: {json.dumps(request, indent=2)}")
     print(f"🚀 Final Signed Request URL: https://{api_host}{path}?{query_string}")
+    
+    print(f"Request Headers before signing: {json.dumps(request['headers'], indent=2)}")
+    print(f"Authorization Header: {signed_headers.get('authorization')}")
+    print(f"JWT Token in Cookie: {jwt_token}")
     
     return request
