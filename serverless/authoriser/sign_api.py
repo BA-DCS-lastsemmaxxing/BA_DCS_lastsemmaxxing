@@ -28,6 +28,10 @@ def lambda_handler(event, context):
                 jwt_token = cookie["value"].split('=')[1]  # Get the token part only
                 break
 
+    # If JWT token exists, add it to the Authorization header in the correct format
+    if jwt_token:
+        headers["authorization"] = [{"key": "Authorization", "value": f"Bearer {jwt_token}"}]
+
     # Prepare request details for signing
     method = request["method"]
     path = request["uri"]
