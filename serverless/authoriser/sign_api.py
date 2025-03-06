@@ -50,6 +50,10 @@ def lambda_handler(event, context):
     # Sign the request using AWS SigV4
     session = boto3.Session()
     credentials = session.get_credentials()
+    print(f"AWS Access Key: {credentials.access_key}")
+    print(f"AWS Secret Key: {'Exists' if credentials.secret_key else 'Missing'}")
+    print(f"AWS Session Token: {'Exists' if credentials.token else 'Missing'}")
+
     signer = SigV4Auth(credentials, SERVICE, AWS_REGION)
     signer.add_auth(aws_request)
 
@@ -71,5 +75,6 @@ def lambda_handler(event, context):
     request["headers"] = signed_headers
 
     print(f"Final Signed Request: {json.dumps(request, indent=2)}")
+    print(f"🚀 Final Signed Request URL: https://{api_host}{path}?{query_string}")
     
     return request
