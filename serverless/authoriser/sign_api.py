@@ -79,7 +79,6 @@ def lambda_handler(event, context):
     print(f"Canonical Headers: {canonical_headers}")
 
     # Canonical Request Part 5: Signed Headers
-    # Dynamically generate the signed headers based on the headers used in canonical headers
     signed_headers = ";".join(sorted(signing_headers.keys()))  # Sorting ensures consistency
     print(f"Signed Headers: {signed_headers}")
 
@@ -94,7 +93,6 @@ def lambda_handler(event, context):
     # Construct the String-to-Sign (Part 1)
     date_stamp = date_now[:8]
     credential_scope = f"{date_stamp}/{AWS_REGION}/{SERVICE}/aws4_request"
-    # Create the SHA-256 hash of the canonical request
     canonical_request_hash = hashlib.sha256(canonical_request.encode('utf-8')).hexdigest()
 
     # Create the String to Sign
@@ -122,9 +120,10 @@ def lambda_handler(event, context):
     # Log the final signed headers
     print(f"Final Signed Headers: {json.dumps(signed_headers, indent=2)}")
 
-    # If the Cognito token was found, add it to the Authorization header
+    # If the Cognito token was found, add it to the Authorization header **separately**
     if jwt_token:
-        signed_headers["authorization"] = [{"key": "Authorization", "value": f"Bearer {jwt_token}"}]
+        # Don't overwrite the previous Authorization header, just add another one with the Bearer token.
+        signed_headers["authorization"].append({"key": "Authorization", "value": f"Bearer {jwt_token}"})
 
     # Update request headers
     request["headers"] = signed_headers
