@@ -168,6 +168,13 @@ resource "aws_iam_policy" "lambda_edge_policy" {
                     "execute-api:Invoke"
                 ],
                 Resource = "*"  # Optional: Restrict to your API Gateway ARN
+            },
+            {
+              Effect   = "Allow",
+              Action   = [
+                "sts:GetSessionToken"
+              ],
+              Resource = "*"  # You can also restrict to a specific resource ARN if needed
             }
         ]
     })
