@@ -36,7 +36,8 @@ resource "aws_iam_policy" "lambda_policy" {
           "rds-data:BatchExecuteStatement",
           "rds-data:BeginTransaction",
           "rds-data:CommitTransaction",
-          "rds-data:RollbackTransaction"
+          "rds-data:RollbackTransaction",
+          "execute-api:Invoke"
         ],
         Resource = [
           "${aws_s3_bucket.serverless_bucket_ap.arn}",
@@ -44,7 +45,8 @@ resource "aws_iam_policy" "lambda_policy" {
           "${aws_s3_bucket.document_storage_bucket.arn}",
           "${aws_s3_bucket.document_storage_bucket.arn}/*",
           "${aws_db_instance.rds.arn}",
-          "${aws_db_instance.rds.arn}/*"  
+          "${aws_db_instance.rds.arn}/*",
+          "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
         ]
       }
     ]
@@ -125,11 +127,11 @@ resource "aws_iam_role" "lambda_edge_role" {
         }
       },
       {
-                Effect = "Allow"
-                Action = "sts:AssumeRole"
-                Principal = {
-                    Service = "cloudfront.amazonaws.com"
-                }
+        Effect = "Allow"
+        Action = "sts:AssumeRole"
+        Principal = {
+            Service = "cloudfront.amazonaws.com"
+        }
       }
     ]
   })
