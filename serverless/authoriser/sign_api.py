@@ -8,11 +8,11 @@ AWS_REGION = "ap-southeast-1"  # Change to your API Gateway region
 SERVICE = "execute-api"
 
 def lambda_handler(event, context):
-    """Lambda@Edge function to sign API Gateway requests with SigV4 and forward JWT in Cookie"""
+    """Lambda@Edge function to sign API Gateway requests with SigV4 and preserve JWT in Cookie"""
     request = event["Records"][0]["cf"]["request"]
     headers = request["headers"]
 
-    # Extract API Gateway Host (DO NOT MODIFY IT)
+    # Extract API Gateway Host (DO NOT modify)
     api_host = headers["host"][0]["value"]  
     print(f"API Host: {api_host}")
 
@@ -33,9 +33,10 @@ def lambda_handler(event, context):
     body = ""  # Adjust if needed
     date_now = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
 
-    # Headers required for SigV4 signing (DO NOT modify Host)
+    # Headers required for SigV4 signing (Do NOT modify `host`)
     signing_headers = {
-        "x-amz-date": date_now
+        "x-amz-date": date_now,
+        "host": api_host
     }
 
     # Use AWSRequest to prepare the request
@@ -52,13 +53,14 @@ def lambda_handler(event, context):
     signer.add_auth(aws_request)
 
     # Convert signed headers to the correct format
-    signed_headers = {
-        key.lower(): [{"key": key, "value": value}] for key, value in aws_request.headers.items()
-    }
+    signed_headers = headers.copy()  # Preserve original headers
+    for key, value in aws_request.headers.items():
+        if key.lower() not in ["authorization", "host"]:  # Do NOT modify read-only headers
+            signed_headers[key.lower()] = [{"key": key, "value": value}]
 
-    # Preserve the original Cookie header (Do NOT modify it)
-    if jwt_token:
-        signed_headers["cookie"] = [{"key": "Cookie", "value": jwt_token}]
+    # Preserve original Cookie header (Do NOT modify structure)
+    if "cookie" in headers:
+        signed_headers["cookie"] = headers["cookie"]
 
     # Update request headers
     request["headers"] = signed_headers
