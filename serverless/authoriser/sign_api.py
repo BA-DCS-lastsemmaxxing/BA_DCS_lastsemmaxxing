@@ -4,7 +4,7 @@ from botocore.auth import SigV4Auth
 from botocore.awsrequest import AWSRequest
 from datetime import datetime
 
-AWS_REGION = "ap-southeast-1"  # Change to your API Gateway region
+AWS_REGION = "ap-southeast-1"  # Change this to your region
 SERVICE = "execute-api"
 
 def lambda_handler(event, context):
@@ -16,13 +16,8 @@ def lambda_handler(event, context):
     jwt_token = headers.get("cookie", [{}])[0].get("value", "")
     print(f"JWT Token: {jwt_token}")
 
-    # Remove any existing Authorization headers to avoid conflicts
-    if "authorization" in headers:
-        del headers["authorization"]
-
     # Extract API Gateway Host from Host header
     api_host = headers.get("host", [{}])[0].get("value", "")
-    
     print(f"API Host: {api_host}")
 
     # Prepare the HTTP request for signing
@@ -46,33 +41,27 @@ def lambda_handler(event, context):
         headers=request_headers
     )
 
-    # Use SigV4Auth to sign the request with the Lambda execution role credentials
-    session = boto3.Session()  # Automatically uses IAM role credentials
+    # Use SigV4Auth to sign the request
+    session = boto3.Session()
     signer = SigV4Auth(session.get_credentials(), SERVICE, AWS_REGION)
     signer.add_auth(aws_request)
 
-    # Add the signed authorization header to the request
-    signed_headers = dict(aws_request.headers)
+    # Add the signed authorization header
+    signed_headers = {key.lower(): [{"key": key, "value": value}] for key, value in aws_request.headers.items()}
 
-    # Ensure that 'Authorization' header is in the correct format for CloudFront (array of dicts)
-    if "authorization" in signed_headers:
-        signed_headers["authorization"] = [{"key": "Authorization", "value": signed_headers["authorization"]}]
-    else:
-        signed_headers["authorization"] = [{"key": "Authorization", "value": ""}]  # Default to empty if missing
-
-    # If a JWT token exists, forward it in the Authorization header, also as an array of dicts
+    # If a JWT token exists, add it to the Authorization header
     if jwt_token:
-        signed_headers["authorization"] = [{"key": "Authorization", "value": f"Bearer {jwt_token}"}]
+        signed_headers["authorization"] = [
+            {"key": "Authorization", "value": f"Bearer {jwt_token}"}
+        ]
 
-    # If no JWT token is found, ensure the cookie header is correctly set as an array of dicts
+    # Ensure the cookie header is formatted as an array
     if jwt_token:
-        signed_headers["cookie"] = [{"key": "Cookie", "value": jwt_token}]
-    else:
-        signed_headers["cookie"] = [{"key": "Cookie", "value": ""}]  # Optional: You can remove this if not needed
+        signed_headers["cookie"] = [{"key": "Cookie", "value": f"CognitoToken={jwt_token}"}]
 
-    # Update headers in the original request
+    # Update request headers
     request["headers"] = signed_headers
 
-    print(f"Signed Request: {request}")
+    print(f"Signed Request: {json.dumps(request, indent=2)}")
     
     return request
