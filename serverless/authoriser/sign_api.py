@@ -11,6 +11,9 @@ def lambda_handler(event, context):
     """Lambda@Edge function to sign API Gateway requests with SigV4 while preserving the Cognito token in Cookie"""
     request = event["Records"][0]["cf"]["request"]
     headers = request["headers"]
+    
+    # Log the original request headers
+    print(f"Original Request Headers: {json.dumps(headers, indent=2)}")
 
     # Extract API Gateway Host (DO NOT modify it)
     api_host = headers["host"][0]["value"]
@@ -32,11 +35,21 @@ def lambda_handler(event, context):
     body = ""  # Adjust if needed
     date_now = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
 
+    # Log the request details that are being prepared for signing
+    print(f"Request Method: {method}")
+    print(f"Request Path: {path}")
+    print(f"Query String: {query_string}")
+    print(f"Request Body: {body}")
+    print(f"x-amz-date: {date_now}")
+
     # Create a dictionary of headers to sign
     signing_headers = {
         "host": api_host,
         "x-amz-date": date_now  # Ensure this is always present
     }
+
+    # Log the signing headers
+    print(f"Signing Headers: {json.dumps(signing_headers, indent=2)}")
 
     # Construct AWSRequest for signing
     aws_request = AWSRequest(
@@ -45,6 +58,10 @@ def lambda_handler(event, context):
         data=body,
         headers=signing_headers
     )
+
+    # Log the canonical request
+    print(f"Canonical Request URL: https://{api_host}{path}?{query_string}")
+    print(f"Canonical Request Headers: {json.dumps(aws_request.headers, indent=2)}")
 
     # Sign the request using AWS SigV4
     session = boto3.Session()
@@ -55,6 +72,9 @@ def lambda_handler(event, context):
 
     signer = SigV4Auth(credentials, SERVICE, AWS_REGION)
     signer.add_auth(aws_request)
+
+    # Log the string to sign before adding the signature
+    print(f"String to Sign: {aws_request.context['signing']['string_to_sign']}")
 
     # Extract signed headers
     signed_auth_header = aws_request.headers["Authorization"]
@@ -70,6 +90,8 @@ def lambda_handler(event, context):
     if credentials.token:
         signed_headers["x-amz-security-token"] = [{"key": "x-amz-security-token", "value": credentials.token}]
 
+    # Log the signed headers
+    print(f"Signed Headers: {json.dumps(signed_headers, indent=2)}")
 
     # Preserve Cookie header if it exists and add the JWT token back (without "CognitoToken=")
     if jwt_token:
@@ -78,11 +100,10 @@ def lambda_handler(event, context):
     # Update request headers
     request["headers"] = signed_headers
 
+    # Log the final signed request
     print(f"Final Signed Request: {json.dumps(request, indent=2)}")
     print(f"🚀 Final Signed Request URL: https://{api_host}{path}?{query_string}")
     
-    print(f"Request Headers before signing: {json.dumps(request['headers'], indent=2)}")
-    print(f"Authorization Header: {signed_headers.get('authorization')}")
     print(f"JWT Token in Cookie: {jwt_token}")
     
     return request
