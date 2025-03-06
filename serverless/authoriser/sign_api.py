@@ -30,6 +30,8 @@ def lambda_handler(event, context):
     # Prepare request details for signing
     method = request["method"]
     path = request["uri"]
+    if not path.startswith('/prod'):
+        path = '/prod' + path  # Prepend the stage name (e.g., "/prod") to the path if needed
     query_string = request.get("querystring", "")
     body = ""  # Adjust if needed
     date_now = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
