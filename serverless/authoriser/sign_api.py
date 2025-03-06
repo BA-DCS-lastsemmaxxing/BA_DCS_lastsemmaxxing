@@ -28,10 +28,6 @@ def lambda_handler(event, context):
                 jwt_token = cookie["value"].split('=')[1]  # Get the token part only
                 break
 
-    # If JWT token exists, add it to the Authorization header in the correct format
-    if jwt_token:
-        headers["authorization"] = [{"key": "Authorization", "value": f"Bearer {jwt_token}"}]
-
     # Prepare request details for signing
     method = request["method"]
     path = request["uri"]
@@ -120,13 +116,15 @@ def lambda_handler(event, context):
 
     # Add signed headers back into the request
     signed_headers = headers.copy()
+
+    # Now, use the AWS-generated Authorization header
     signed_headers["authorization"] = [{"key": "Authorization", "value": aws_request.headers['Authorization']}]
     signed_headers["x-amz-date"] = [{"key": "x-amz-date", "value": date_now}]
     
     # Log the final signed headers
     print(f"Final Signed Headers: {json.dumps(signed_headers, indent=2)}")
 
-    # Preserve Cookie header if it exists and add the JWT token back (without "CognitoToken=")
+    # Preserve Cookie header if it exists and add the JWT token back (without modifying the signature)
     if jwt_token:
         signed_headers["cookie"] = [{"key": "cookie", "value": f"CognitoToken={jwt_token}"}]
 
