@@ -76,8 +76,8 @@ def lambda_handler(event, context):
     signer = SigV4Auth(credentials, SERVICE, AWS_REGION)
     signer.add_auth(aws_request)
 
-    # Log the string to sign before adding the signature
-    print(f"String to Sign: {aws_request.context['signing']['string_to_sign']}")
+    # The string to sign is not directly accessible, but you can log important components.
+    print(f"Signed Authorization Header: {aws_request.headers.get('Authorization')}")
 
     # Extract signed headers
     signed_auth_header = aws_request.headers["Authorization"]
