@@ -5,3 +5,4 @@ venv/
 backend/.DS_Store
 frontend/my-app/public/config.json
 .DS_Store
+backend/.env
