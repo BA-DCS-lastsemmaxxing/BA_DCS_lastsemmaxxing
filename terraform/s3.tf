@@ -42,7 +42,7 @@ resource "aws_s3_bucket_policy" "s3_frontend_bucket_policy" {
 data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "serverless_bucket_us" {
-  bucket   = "${var.project_name}-serverless-us"
+  bucket = "${var.project_name}-serverless-us"
   provider = aws.us-east-1
 }
 
@@ -61,10 +61,10 @@ resource "aws_s3_bucket" "document_storage_bucket" {
   bucket = "${var.project_name}-document-storage"
 }
 
-# Lambda Layer
+// Lambda Layer
 data "aws_s3_object" "lambda_layer" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key    = "lambda_layer.zip"
+  key = "lambda_layer.zip"
 }
 
 resource "aws_lambda_layer_version" "lambda_layer" {
@@ -75,132 +75,19 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   source_code_hash = data.aws_s3_object.lambda_layer.etag
 }
 
-# Add Lambda Function Zips as objects here
+// Add Lambda Function Zips as objects here
 data "aws_s3_object" "auth_lambda_zip" {
   provider = aws.us-east-1
-  bucket   = aws_s3_bucket.serverless_bucket_us.bucket
-  key      = "auth_lambda.zip"
+  bucket = aws_s3_bucket.serverless_bucket_us.bucket
+  key = "auth_lambda.zip"
 }
 
 data "aws_s3_object" "fetch_documents_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key    = "fetch_documents.zip"
+  key = "fetch_documents.zip"
 }
 
 data "aws_s3_object" "fetch_upload_url_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key    = "fetch_upload_url.zip"
-}
-
-# New Delete Document Lambda Function
-data "aws_s3_object" "delete_document_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key    = "delete_document.zip"
-}
-
-resource "aws_lambda_function" "delete_document_lambda" {
-  function_name = "deleteDocumentFunction"
-  s3_bucket     = aws_s3_bucket.serverless_bucket_ap.bucket
-  s3_key        = "delete_document.zip"
-  handler       = "index.handler"
-  runtime       = "nodejs14.x" # Update based on your runtime
-
-  environment {
-    variables = {
-      DOCUMENT_STORAGE_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-    }
-  }
-
-  role = aws_iam_role.lambda_execution_role.arn
-
-  layers = [
-    aws_lambda_layer_version.lambda_layer.arn
-  ]
-}
-
-resource "aws_iam_role" "lambda_execution_role" {
-  name = "lambda_execution_role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
-        Effect   = "Allow"
-        Sid      = ""
-      }
-    ]
-  })
-}
-
-resource "aws_iam_policy" "lambda_execution_policy" {
-  name        = "lambda_execution_policy"
-  description = "IAM policy for Lambda execution role"
-  policy      = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action   = [
-          "s3:DeleteObject",
-          "s3:GetObject"
-        ]
-        Effect   = "Allow"
-        Resource = "${aws_s3_bucket.document_storage_bucket.arn}/*"
-      },
-      {
-        Action   = "logs:*"
-        Effect   = "Allow"
-        Resource = "*"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  role       = aws_iam_role.lambda_execution_role.name
-  policy_arn = aws_iam_policy.lambda_execution_policy.arn
-}
-
-# Allow API Gateway to invoke the Lambda function
-resource "aws_lambda_permission" "delete_document_lambda_permission" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.delete_document_lambda.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
-}
-
-resource "aws_api_gateway_method" "delete_document_method" {
-  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id   = aws_api_gateway_resource.documents_resource.id
-  http_method   = "DELETE"
-  authorization = "COGNITO_USER_POOLS"
-  authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
-}
-
-resource "aws_api_gateway_integration" "delete_document_method_integration" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.documents_resource.id
-  http_method = aws_api_gateway_method.delete_document_method.http_method
-  
-  integration_http_method = "POST" # Always POST for Lambda proxy integration
-  type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.delete_document_lambda.invoke_arn
-}
-
-resource "aws_api_gateway_method_response" "delete_document_method_response" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.documents_resource.id
-  http_method = aws_api_gateway_method.delete_document_method.http_method
-  status_code = "200"
-  
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
-    "method.response.header.Access-Control-Allow-Methods" = true
-    "method.response.header.Access-Control-Allow-Headers" = true
-    "method.response.header.Access-Control-Allow-Credentials" = true
-  }
+  key = "fetch_upload_url.zip"
 }
