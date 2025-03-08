@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { fetchUploadUrl } from "@/service/classification";
+import { fetchUploadUrl } from "@/service/classification";
 import { useToast } from "@/hooks/use-toast";
 
 interface UploadSectionProps {
@@ -71,16 +72,11 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
     setIsLoading(true);
     try {
       // Get presigned URLs for each file
-      const responses = await Promise.all(files.map(file => fetchUploadUrl()));
-      const uploadDetails = responses.map(response => ({
-        uploadUrl: JSON.parse(response.body).upload_url,
-        fileId: JSON.parse(response.body).file_id
-      }));
-      
+      const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl()));
       console.log("upload details: ", uploadDetails);
       // Upload files to S3 using presigned URLs
       await Promise.all(uploadDetails.map((details, index) => {
-        return fetch(details.uploadUrl, {
+        return fetch(details.upload_url, {
           method: 'PUT',
           body: files[index],
           headers: {
