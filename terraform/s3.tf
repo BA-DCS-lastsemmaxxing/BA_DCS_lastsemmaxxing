@@ -71,6 +71,8 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   layer_name = "Lambda_Layer"
   s3_bucket  = aws_s3_bucket.serverless_bucket_ap.bucket
   s3_key     = "lambda_layer.zip"
+
+  source_code_hash = data.aws_s3_object.lambda_layer.etag
 }
 
 // Add Lambda Function Zips as objects here
