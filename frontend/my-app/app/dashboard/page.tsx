@@ -32,7 +32,7 @@ export default function Dashboard() {
       setIsSearching(true);
       setIsLoading(true);
 
-      var results = await searchDocuments(searchQuery);
+      let results = await searchDocuments(searchQuery);
       console.log("Parsed Response Data:", results);
 
       if (typeof results === "string") {
