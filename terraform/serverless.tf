@@ -78,6 +78,15 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   source_code_hash = data.aws_s3_object.fetch_documents_lambda_zip.etag
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  environment {
+    variables = {
+      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
+      DB_USER = "admin"
+      DB_PASSWORD = "testpassword"
+      DB_NAME = "lsm_fyp"
+    }
+  }
 }
 
 # Upload Document Function
