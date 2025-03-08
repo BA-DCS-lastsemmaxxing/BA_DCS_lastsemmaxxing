@@ -36,21 +36,17 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
     ]
 }
 
-resource "aws_api_gateway_resource" "api_resource" {
-    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-    parent_id   = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
-    path_part   = "api"
-}
-
 # use these to create endpoints
 # create a resource for the API (e.g /users)
 
+# create a method for /documents
 resource "aws_api_gateway_resource" "documents_resource" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-    parent_id   = aws_api_gateway_resource.api_resource.id
+    parent_id   = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
     path_part   = "documents"
 }
 
+# GET for /documents
 resource "aws_api_gateway_method" "documents_method_get" {
     rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
     resource_id   = aws_api_gateway_resource.documents_resource.id
@@ -59,6 +55,8 @@ resource "aws_api_gateway_method" "documents_method_get" {
     authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
 }
 
+# When using Lambda proxy integration, the HTTP method must be POST
+# Trigger fetch documents lambda function when GET method called on /documents
 resource "aws_api_gateway_integration" "documents_method_get_integration" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
     resource_id = aws_api_gateway_resource.documents_resource.id
@@ -69,6 +67,21 @@ resource "aws_api_gateway_integration" "documents_method_get_integration" {
     uri = aws_lambda_function.fetch_documents_lambda.invoke_arn
 }
 
+resource "aws_api_gateway_method_response" "documents_method_get_response" {
+    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+    resource_id = aws_api_gateway_resource.documents_resource.id
+    http_method = aws_api_gateway_method.documents_method_get.http_method
+    status_code = "200"
+    
+    response_parameters = {
+        "method.response.header.Access-Control-Allow-Origin" = true
+        "method.response.header.Access-Control-Allow-Methods" = true
+        "method.response.header.Access-Control-Allow-Headers" = true
+        "method.response.header.Access-Control-Allow-Credentials" = true
+  }
+}
+
+# Allow API Gateway to invoke the Lambda function
 resource "aws_lambda_permission" "documents_method_get_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
@@ -79,7 +92,7 @@ resource "aws_lambda_permission" "documents_method_get_lambda_permission" {
 
 resource "aws_api_gateway_resource" "upload_resource" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-    parent_id   = aws_api_gateway_resource.api_resource.id
+    parent_id   = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
     path_part   = "upload"
 }
 
@@ -149,12 +162,12 @@ resource "aws_api_gateway_integration_response" "documents_method_options_integr
   http_method = aws_api_gateway_method.documents_method_options.http_method
   status_code = "200"
   
-  response_parameters = {
+    response_parameters = {
     "method.response.header.Access-Control-Allow-Origin" = "'*'"
-    "method.response.header.Access-Control-Allow-Methods" = "'GET, POST, OPTIONS'"
-    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type, Authorization, X-Amz-Date, X-Api-Key, X-Amz-Security-Token, X-XSRF-TOKEN, Access-Control-Allow-Headers, Access-Control-Allow-Origin'"
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
     "method.response.header.Access-Control-Allow-Credentials" = "'true'"
-  }
+    }
 }
 
 resource "aws_api_gateway_method" "upload_method_options" {
@@ -200,6 +213,7 @@ resource "aws_api_gateway_integration_response" "upload_options_integration_resp
         "method.response.header.Access-Control-Allow-Origin" = "'*'"
         "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
         "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
+        "method.response.header.Access-Control-Allow-Credentials" = "'true'"
     }
 }
 

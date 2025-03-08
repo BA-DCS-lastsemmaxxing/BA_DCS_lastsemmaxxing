@@ -48,6 +48,16 @@ resource "aws_iam_policy" "lambda_policy" {
           "${aws_db_instance.rds.arn}/*",
           "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
         ]
+      },
+      # CloudWatch Logs Access
+      {
+        Effect   = "Allow",
+        Action   = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Resource = "arn:aws:logs:ap-southeast-1:874280117166:*"
       }
     ]
   })
@@ -58,7 +68,7 @@ resource "aws_iam_policy" "lambda_policy" {
 resource "aws_lambda_function" "fetch_documents_lambda" {
   function_name = "fetch_documents"
 
-  runtime = "python3.8"
+  runtime = "python3.9"
   handler = "fetch_documents.lambda_handler"
 
   s3_bucket = "${var.project_name}-serverless-ap"
@@ -66,13 +76,24 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
 
   role = aws_iam_role.lambda_execution_role.arn
   source_code_hash = data.aws_s3_object.fetch_documents_lambda_zip.etag
+
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  environment {
+    variables = {
+      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
+      DB_USER = "admin"
+      DB_PASSWORD = "testpassword"
+      DB_NAME = "lsm_fyp"
+    }
+  }
 }
 
 # Upload Document Function
 resource "aws_lambda_function" "upload_document_lambda" {
   function_name = "upload_document"
 
-  runtime = "python3.8"
+  runtime = "python3.9"
   handler = "upload_document.lambda_handler"
 
   s3_bucket = "${var.project_name}-serverless-ap"
@@ -144,49 +165,6 @@ resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# IAM Policy for Lambda@Edge (Logging & API Gateway Access)
-resource "aws_iam_policy" "lambda_edge_policy" {
-    provider = aws.us-east-1
-    name        = "lambda-edge-policy"
-    description = "Policy for Lambda@Edge to sign API Gateway requests with SigV4"
-
-    policy = jsonencode({
-        Version = "2012-10-17",
-        Statement = [
-            {
-                Effect   = "Allow",
-                Action   = [
-                    "logs:CreateLogGroup",
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents"
-                ],
-                Resource = "*"
-            },
-            {
-                Effect   = "Allow",
-                Action   = [
-                    "execute-api:Invoke"
-                ],
-                Resource = "*"  # Optional: Restrict to your API Gateway ARN
-            },
-            {
-              Effect   = "Allow",
-              Action   = [
-                "sts:GetSessionToken"
-              ],
-              Resource = "*"  # You can also restrict to a specific resource ARN if needed
-            }
-        ]
-    })
-}
-
-# Attach policy to Lambda@Edge role
-resource "aws_iam_role_policy_attachment" "lambda_edge_policy_attach" {
-    provider   = aws.us-east-1
-    role       = aws_iam_role.lambda_edge_role.name
-    policy_arn = aws_iam_policy.lambda_edge_policy.arn
-}
-
 resource "aws_lambda_function" "auth_lambda_edge" {
     provider = aws.us-east-1
     s3_bucket = "${var.project_name}-serverless-us"
@@ -194,21 +172,8 @@ resource "aws_lambda_function" "auth_lambda_edge" {
     function_name = "auth_lambda_edge"
     role = aws_iam_role.lambda_edge_role.arn
     handler = "auth_lambda.lambda_handler"
-    runtime = "python3.8"
+    runtime = "python3.9"
     publish = true
 
     source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
-}
-
-resource "aws_lambda_function" "sign_api_lambda_edge" {
-    provider = aws.us-east-1
-    s3_bucket = "${var.project_name}-serverless-us"
-    s3_key = "sign_api.zip"
-    function_name = "sign_api_lambda_edge"
-    role = aws_iam_role.lambda_edge_role.arn
-    handler = "sign_api.lambda_handler"
-    runtime = "python3.8"
-    publish = true
-
-    source_code_hash = data.aws_s3_object.sign_api_lambda_zip.etag
 }

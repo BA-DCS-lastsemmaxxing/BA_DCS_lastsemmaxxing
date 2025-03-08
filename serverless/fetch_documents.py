@@ -14,6 +14,11 @@ def lambda_handler(event, context):
     # Return a valid API Gateway response
     return {
         "statusCode": 200,
-        "headers": { "Content-Type": "application/json" },
-        "results": json.dumps(documents)
+        "headers": { 
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS, GET, POST, PUT, DELETE",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization"
+        },
+        "body": json.dumps(documents)
     }

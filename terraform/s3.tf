@@ -50,8 +50,29 @@ resource "aws_s3_bucket" "serverless_bucket_ap" {
   bucket = "${var.project_name}-serverless-ap"
 }
 
+resource "aws_s3_bucket_versioning" "serverless_bucket_versioning_ap" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket" "document_storage_bucket" {
   bucket = "${var.project_name}-document-storage"
+}
+
+// Lambda Layer
+data "aws_s3_object" "lambda_layer" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "lambda_layer.zip"
+}
+
+resource "aws_lambda_layer_version" "lambda_layer" {
+  layer_name = "Lambda_Layer"
+  s3_bucket  = aws_s3_bucket.serverless_bucket_ap.bucket
+  s3_key     = "lambda_layer.zip"
+
+  source_code_hash = data.aws_s3_object.lambda_layer.etag
 }
 
 // Add Lambda Function Zips as objects here
@@ -59,12 +80,6 @@ data "aws_s3_object" "auth_lambda_zip" {
   provider = aws.us-east-1
   bucket = aws_s3_bucket.serverless_bucket_us.bucket
   key = "auth_lambda.zip"
-}
-
-data "aws_s3_object" "sign_api_lambda_zip" {
-  provider = aws.us-east-1
-  bucket = aws_s3_bucket.serverless_bucket_us.bucket
-  key = "sign_api.zip"
 }
 
 data "aws_s3_object" "fetch_documents_lambda_zip" {
