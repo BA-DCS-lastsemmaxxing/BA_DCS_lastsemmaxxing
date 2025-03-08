@@ -204,12 +204,3 @@ resource "aws_api_gateway_method_response" "delete_document_method_response" {
     "method.response.header.Access-Control-Allow-Credentials" = true
   }
 }
-
-# Allow API Gateway to invoke the Lambda function (Delete Document)
-resource "aws_lambda_permission" "delete_document_lambda_permission" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.delete_document_lambda.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
-}
