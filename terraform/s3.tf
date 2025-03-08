@@ -87,7 +87,7 @@ data "aws_s3_object" "fetch_documents_lambda_zip" {
   key = "fetch_documents.zip"
 }
 
-data "aws_s3_object" "upload_document_lambda_zip" {
+data "aws_s3_object" "fetch_upload_url_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "upload_document.zip"
+  key = "fetch_upload_url.zip"
 }
