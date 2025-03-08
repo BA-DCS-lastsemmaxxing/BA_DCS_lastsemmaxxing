@@ -87,33 +87,7 @@ data "aws_s3_object" "fetch_documents_lambda_zip" {
   key = "fetch_documents.zip"
 }
 
-data "aws_s3_object" "upload_document_lambda_zip" {
+data "aws_s3_object" "fetch_upload_url_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "upload_document.zip"
-}
-
-// Test for delete
-data "aws_s3_object" "delete_document_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "delete_document.zip"
-}
-
-// Lambda function to delete documents
-resource "aws_lambda_function" "delete_document_lambda" {
-  function_name = "delete_document"
-
-  runtime = "python3.9"
-  handler = "delete_document.lambda_handler"
-
-  s3_bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  s3_key = "delete_document.zip"
-
-  role = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
-
-  environment {
-    variables = {
-      BUCKET_NAME = aws_s3_bucket.document_storage_bucket.bucket
-    }
-  }
+  key = "fetch_upload_url.zip"
 }

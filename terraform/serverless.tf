@@ -88,43 +88,22 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   }
 }
 
-# Upload Document Function
-resource "aws_lambda_function" "upload_document_lambda" {
-  function_name = "upload_document"
+# Fetch upload url function
+resource "aws_lambda_function" "fetch_upload_url_lambda" {
+  function_name = "fetch_upload_url"
 
   runtime = "python3.9"
-  handler = "upload_document.lambda_handler"
+  handler = "fetch_upload_url.lambda_handler"
 
   s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key = "upload_document.zip"
+  s3_key = "fetch_upload_url.zip"
 
   role = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.upload_document_lambda_zip.etag
+  source_code_hash = data.aws_s3_object.fetch_upload_url_lambda_zip.etag
 
   environment {
     variables = {
-      BUCKET_NAME = aws_s3_bucket.document_storage_bucket.bucket
-      ORIGIN = aws_cloudfront_distribution.cdn.domain_name
-    }
-  }
-}
-
-# Delete Document Function
-resource "aws_lambda_function" "delete_document_lambda" {
-  function_name = "delete_document"
-
-  runtime = "python3.9"
-  handler = "delete_document.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key = "delete_document.zip"
-
-  role = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
-
-  environment {
-    variables = {
-      BUCKET_NAME = aws_s3_bucket.document_storage_bucket.bucket
+      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     }
   }
 }
