@@ -1,24 +1,24 @@
 resource "aws_iam_role" "lambda_execution_role" {
-    name = "${var.project_name}-lambda-execution-role"
-    assume_role_policy = jsonencode({
-        Version = "2012-10-17",
-        Statement = [
-            {
-                Effect = "Allow",
-                Principal = {
-                    Service = "lambda.amazonaws.com"
-                },
-                Action = "sts:AssumeRole"
-            }
-        ]
-    })
+  name = "${var.project_name}-lambda-execution-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
 }
 
 # Allow Lambda to access other AWS resources
 resource "aws_iam_policy" "lambda_policy" {
-    name = "${var.project_name}-lambda-policy"
-    description = "Allow Lambda to access other AWS resources"
-    policy = jsonencode({
+  name = "${var.project_name}-lambda-policy"
+  description = "Allow Lambda to access other AWS resources"
+  policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       # S3 and RDS access
@@ -28,7 +28,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "s3:GetObject",
           "s3:PutObject",
           "s3:ListBucket",
-          "s3:DeleteObject",
+          "s3:DeleteObject",  # Added for delete document
           "s3:PutObjectAcl",
           "s3:GetObjectAcl",
           "rds-db:connect",
@@ -63,7 +63,6 @@ resource "aws_iam_policy" "lambda_policy" {
   })
 }
 
-# NOTE: The approach of source_code_hash used here only supports zip files up to 5MB large
 # Fetch Documents Function
 resource "aws_lambda_function" "fetch_documents_lambda" {
   function_name = "fetch_documents"
@@ -109,27 +108,47 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
   }
 }
 
+# Delete Document Function
+resource "aws_lambda_function" "delete_document_lambda" {
+  function_name = "delete_document"
+
+  runtime = "python3.9"
+  handler = "delete_document.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "delete_document.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
+
+  environment {
+    variables = {
+      BUCKET_NAME = aws_s3_bucket.document_storage_bucket.bucket
+    }
+  }
+}
+
 # Attach the policy to the role
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-    role = aws_iam_role.lambda_execution_role.name
-    policy_arn = aws_iam_policy.lambda_policy.arn
+  role = aws_iam_role.lambda_execution_role.name
+  policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-    role = aws_iam_role.lambda_execution_role.name
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role = aws_iam_role.lambda_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 # Code for Lambda Edge Function - Lambda Authoriser
 provider "aws" {
-    alias = "us-east-1"
-    region = "us-east-1"
+  alias = "us-east-1"
+  region = "us-east-1"
 }
 
 resource "aws_iam_role" "lambda_edge_role" {
-    provider = aws.us-east-1
-    name = "lambda-edge-role"
-    assume_role_policy = jsonencode({
+  provider = aws.us-east-1
+  name = "lambda-edge-role"
+  assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
@@ -150,7 +169,7 @@ resource "aws_iam_role" "lambda_edge_role" {
         Effect = "Allow"
         Action = "sts:AssumeRole"
         Principal = {
-            Service = "cloudfront.amazonaws.com"
+          Service = "cloudfront.amazonaws.com"
         }
       }
     ]
@@ -165,14 +184,14 @@ resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
 }
 
 resource "aws_lambda_function" "auth_lambda_edge" {
-    provider = aws.us-east-1
-    s3_bucket = "${var.project_name}-serverless-us"
-    s3_key = "auth_lambda.zip"
-    function_name = "auth_lambda_edge"
-    role = aws_iam_role.lambda_edge_role.arn
-    handler = "auth_lambda.lambda_handler"
-    runtime = "python3.9"
-    publish = true
+  provider = aws.us-east-1
+  s3_bucket = "${var.project_name}-serverless-us"
+  s3_key = "auth_lambda.zip"
+  function_name = "auth_lambda_edge"
+  role = aws_iam_role.lambda_edge_role.arn
+  handler = "auth_lambda.lambda_handler"
+  runtime = "python3.9"
+  publish = true
 
-    source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
+  source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
 }

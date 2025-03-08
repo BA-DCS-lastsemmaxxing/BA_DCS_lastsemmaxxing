@@ -13,21 +13,12 @@ function getCookie(name: string): string | undefined {
     return undefined;
 }
 
-export async function upload(input: File[]) {
+export async function fetchUploadUrl() {
     console.log("Upload service reached");
 
-    // Create a FormData object
-    const formData = new FormData();
-
-    // Append each file individually
-    input.forEach((file) => {
-        formData.append('files', file);
-    });
-
     // Perform the fetch request
-    const response = await fetch(`${api.backendUrl}/upload`, {
-        method: "POST",
-        body: formData, // Attach FormData as the body,
+    const response = await fetch(`${api.backendUrl}/upload/url`, {
+        method: "GET",
         headers: {
             "Authorization": `${getCookie("CognitoToken")}`
         }
@@ -35,7 +26,7 @@ export async function upload(input: File[]) {
 
     // Handle the response
     if (!response.ok) {
-        throw new Error(`Failed to upload. Status: ${response.status}`);
+        throw new Error(`Failed to fetch upload url. Status: ${response.status}`);
     }
 
     return await response.json(); // Assuming the backend responds with JSON
