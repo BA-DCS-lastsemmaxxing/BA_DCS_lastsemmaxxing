@@ -1,9 +1,6 @@
 locals {
   s3_origin_id   = "${var.project_name}-frontend-origin"
   s3_domain_name = "${var.project_name}-frontend.s3.${var.region}.amazonaws.com"  # Updated to regular S3 domain for HTTPS
-
-  api_origin_id   = "${var.project_name}-api-origin"
-  api_domain_name = "${aws_api_gateway_rest_api.lsm-fyp-api.id}.execute-api.${var.region}.amazonaws.com"
 }
 
 resource "aws_cloudfront_origin_access_control" "oac" {
@@ -31,27 +28,6 @@ resource "aws_iam_role" "cloudfront_role" {
   })
 }
 
-resource "aws_iam_policy" "cloudfront_sigv4_policy" {
-  name = "${var.project_name}-cloudfront-sigv4-policy"
-  description = "Allow CloudFront to sign API Gateway Requests"
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect   = "Allow"
-        Action   = ["execute-api:Invoke"]
-        Resource = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "cloudfront_policy_attachment" {
-  role       = aws_iam_role.cloudfront_role.name
-  policy_arn = aws_iam_policy.cloudfront_sigv4_policy.arn
-}
-
 data "aws_cloudfront_cache_policy" "caching_disabled" {
   name = "Managed-CachingDisabled"
 }
@@ -70,42 +46,7 @@ resource "aws_cloudfront_distribution" "cdn" {
     domain_name              = local.s3_domain_name
   }
 
-  origin {
-    domain_name = local.api_domain_name
-    origin_id   = local.api_origin_id
-    origin_path = "/prod"
-
-    custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "https-only"
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-    }
-  }
-
-  # Custom cache behavior for API Gateway requests, with stricter TTLs
-  ordered_cache_behavior {
-    path_pattern      = "/api/*"  # Adjust this for API paths
-    target_origin_id  = local.api_origin_id
-    allowed_methods   = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods    = ["GET", "HEAD"]
-
-    cache_policy_id = data.aws_cloudfront_cache_policy.caching_disabled.id
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.managed_origin_request_policy.id
-
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 0  # Disable caching to avoid auth issues
-    max_ttl                = 0
-
-    lambda_function_association {
-      event_type = "origin-request"
-      lambda_arn = aws_lambda_function.sign_api_lambda_edge.qualified_arn
-      include_body = false
-    }
-  }
-
-    default_cache_behavior {
+  default_cache_behavior {
     target_origin_id = local.s3_origin_id
     allowed_methods = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
@@ -137,17 +78,16 @@ resource "aws_cloudfront_distribution" "cdn" {
 }
 
 # AWS WAF Web ACL
-# AWS WAF Web ACL
 resource "aws_wafv2_web_acl" "waf_acl" {
   name        = "${var.project_name}-waf-acl"
   scope       = "REGIONAL"
-  description = "WAF to enforce SIGv4 for S3 and JWT for API"
+  description = "WAF for API Gateway and CloudFront-S3 security"
 
   default_action {
-    block {}  # Block by default
+    block {}  # Block all requests unless explicitly allowed
   }
 
-  # Rule for API Gateway (Allow JWT Auth)
+  # 1️⃣ Allow API Gateway Requests with JWT Authentication
   rule {
     name     = "AllowJWTAuthToAPI"
     priority = 1
@@ -164,7 +104,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
           }
         }
         positional_constraint = "STARTS_WITH"
-        search_string         = "CognitoToken=" # JWT Token
+        search_string         = "CognitoToken=" # Ensures valid JWT token is present
         text_transformation {
           priority = 0
           type     = "NONE"
@@ -179,61 +119,60 @@ resource "aws_wafv2_web_acl" "waf_acl" {
     }
   }
 
-  # Rule for S3 (Allow SIGv4)
+  # 2️⃣ Rate Limiting for API Gateway (e.g., 100 requests per 5 minutes)
   rule {
-    name     = "AllowSIGV4ForS3"
+    name     = "RateLimitAPIRequests"
     priority = 2
 
     action {
-      allow {}
+      block {}
     }
 
     statement {
-      byte_match_statement {
-        field_to_match {
-          single_header {
-            name = "authorization"
-          }
-        }
-        positional_constraint = "STARTS_WITH"
-        search_string         = "AWS4-HMAC-SHA256" # SIGv4 Auth Header
-        text_transformation {
-          priority = 0
-          type     = "NONE"
-        }
+      rate_based_statement {
+        limit              = 50  # Adjust based on expected traffic
+        aggregate_key_type = "IP"
       }
     }
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "AllowSIGV4ForS3"
+      metric_name                = "RateLimitAPIRequests"
       sampled_requests_enabled   = true
     }
   }
 
-  # Rule to Block Non-JWT API Requests
+  # 3️⃣ SQL Injection & XSS Protection for API Gateway
   rule {
-    name     = "BlockNonJWTAPIRequests"
+    name     = "SQLInjectionAndXSSProtection"
     priority = 3
 
     action {
-      block {}  # Block requests without a valid JWT
+      block {}
     }
 
     statement {
-      not_statement {
+      or_statement {
         statement {
-          byte_match_statement {
+          sqli_match_statement {
             field_to_match {
-              single_header {
-                name = "cookie"
-              }
+              all_query_arguments {}
             }
-            positional_constraint = "STARTS_WITH"
-            search_string         = "CognitoToken= "
             text_transformation {
               priority = 0
-              type     = "NONE"
+              type     = "URL_DECODE"
+            }
+          }
+        }
+
+        statement {
+          xss_match_statement {
+            field_to_match {
+              all_query_arguments {}
+            }
+            text_transformation {
+              priority = 0
+              type     = "HTML_ENTITY_DECODE"
             }
           }
         }
@@ -242,7 +181,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "BlockNonJWTAPIRequests"
+      metric_name                = "SQLInjectionAndXSSProtection"
       sampled_requests_enabled   = true
     }
   }
