@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { upload } from "@/service/classification";
+import { fetchUploadUrl } from "@/service/classification";
 import { useToast } from "@/hooks/use-toast";
 
 interface UploadSectionProps {
@@ -70,20 +70,39 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
     if (!files) return;
     setIsLoading(true);
     try {
-      const response = await upload(files);
+      // Get presigned URLs for each file
+      const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl()));
+      console.log("upload details: ", uploadDetails);
+      // Upload files to S3 using presigned URLs
+      await Promise.all(uploadDetails.map((details, index) => {
+        return fetch(details.upload_url, {
+          method: 'PUT',
+          body: files[index],
+          headers: {
+            'Content-Type': files[index].type
+          }
+        });
+      }));
+
+      // Update RDS with file details
+      // await updateRds(files.map((file, index) => ({
+      //   filename: file.name,
+      //   size: file.size,
+      //   type: file.type,
+      //   fileId: uploadDetails[index].fileId
+      // })));
+
       setUploadStatus("Upload successful");
       setFiles(null);
       onUploadSuccess();
-      // Reset the file input after successful upload
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
     } catch (error) {
       console.error("Upload failed:", error);
       setUploadStatus("Upload failed: " + error);
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   return (
