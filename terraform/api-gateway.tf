@@ -162,12 +162,12 @@ resource "aws_api_gateway_integration_response" "documents_method_options_integr
   http_method = aws_api_gateway_method.documents_method_options.http_method
   status_code = "200"
   
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "*"
-    "method.response.header.Access-Control-Allow-Methods" = "GET, POST, OPTIONS"
-    "method.response.header.Access-Control-Allow-Headers" = "Content-Type, Authorization"
-    "method.response.header.Access-Control-Allow-Credentials" = "true"
-  }
+    response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
+    "method.response.header.Access-Control-Allow-Credentials" = "'true'"
+    }
 }
 
 resource "aws_api_gateway_method" "upload_method_options" {
@@ -213,6 +213,7 @@ resource "aws_api_gateway_integration_response" "upload_options_integration_resp
         "method.response.header.Access-Control-Allow-Origin" = "'*'"
         "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
         "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
+        "method.response.header.Access-Control-Allow-Credentials" = "'true'"
     }
 }
 
