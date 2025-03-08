@@ -108,26 +108,6 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
   }
 }
 
-# Delete Document Function
-resource "aws_lambda_function" "delete_document_lambda" {
-  function_name = "delete_document"
-
-  runtime = "python3.9"
-  handler = "delete_document.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key = "delete_document.zip"
-
-  role = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
-
-  environment {
-    variables = {
-      BUCKET_NAME = aws_s3_bucket.document_storage_bucket.bucket
-    }
-  }
-}
-
 # Attach the policy to the role
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
   role = aws_iam_role.lambda_execution_role.name
