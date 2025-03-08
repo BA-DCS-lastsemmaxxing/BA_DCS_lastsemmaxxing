@@ -76,6 +76,8 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
 
   role = aws_iam_role.lambda_execution_role.arn
   source_code_hash = data.aws_s3_object.fetch_documents_lambda_zip.etag
+
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
 }
 
 # Upload Document Function

@@ -25,7 +25,7 @@ jobs:
       - name: Zip Layer and Deploy
         run: |
           mkdir -p dist
-          zip -r dist/lambda_layer.zip ./serverless/lambda_layer
+          zip -r dist/lambda_layer.zip ./serverless/lambda_layer/python
           aws s3 cp dist/lambda_layer.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-ap
 
       - name: Zip Functions and Deploy

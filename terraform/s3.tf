@@ -54,6 +54,18 @@ resource "aws_s3_bucket" "document_storage_bucket" {
   bucket = "${var.project_name}-document-storage"
 }
 
+// Lambda Layer
+data "aws_s3_object" "lambda_layer" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "lambda_layer.zip"
+}
+
+resource "aws_lambda_layer_version" "lambda_layer" {
+  layer_name = "Lambda_Layer"
+  s3_bucket  = aws_s3_bucket.serverless_bucket_ap.bucket
+  s3_key     = "lambda_layer.zip"
+}
+
 // Add Lambda Function Zips as objects here
 data "aws_s3_object" "auth_lambda_zip" {
   provider = aws.us-east-1
