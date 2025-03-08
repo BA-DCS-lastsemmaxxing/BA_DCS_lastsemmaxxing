@@ -173,6 +173,8 @@ resource "aws_api_gateway_integration_response" "upload_url_options_integration_
         "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
     }
+    
+    depends_on = [aws_api_gateway_integration.upload_url_options_integration]
 }
 
 // all options methods are for CORS support - test without since same CF origin
