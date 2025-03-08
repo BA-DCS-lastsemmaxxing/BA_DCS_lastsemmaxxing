@@ -156,19 +156,19 @@ resource "aws_api_gateway_integration" "documents_options_integration" {
     }
 }
 
-resource "aws_api_gateway_integration_response" "documents_method_options_integration_response" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.documents_resource.id
-  http_method = aws_api_gateway_method.documents_method_options.http_method
-  status_code = "200"
+# resource "aws_api_gateway_integration_response" "documents_method_options_integration_response" {
+#   rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+#   resource_id = aws_api_gateway_resource.documents_resource.id
+#   http_method = aws_api_gateway_method.documents_method_options.http_method
+#   status_code = "200"
   
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "*"
-    "method.response.header.Access-Control-Allow-Methods" = "GET, POST, OPTIONS"
-    "method.response.header.Access-Control-Allow-Headers" = "Content-Type, Authorization"
-    "method.response.header.Access-Control-Allow-Credentials" = true
-  }
-}
+#   response_parameters = {
+#     "method.response.header.Access-Control-Allow-Origin" = "*"
+#     "method.response.header.Access-Control-Allow-Methods" = "GET, POST, OPTIONS"
+#     "method.response.header.Access-Control-Allow-Headers" = "Content-Type, Authorization"
+#     "method.response.header.Access-Control-Allow-Credentials" = true
+#   }
+# }
 
 resource "aws_api_gateway_method" "upload_method_options" {
     rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
