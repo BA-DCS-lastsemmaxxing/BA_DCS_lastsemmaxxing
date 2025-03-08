@@ -60,6 +60,11 @@ resource "aws_api_gateway_integration" "documents_method_get_integration" {
   resource_id = aws_api_gateway_resource.documents_resource.id
   http_method = aws_api_gateway_method.documents_method_get.http_method
 
+  type = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri = aws_lambda_function.fetch_documents_lambda.invoke_arn
+}
+
 resource "aws_api_gateway_method_response" "documents_method_get_response" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
     resource_id = aws_api_gateway_resource.documents_resource.id
