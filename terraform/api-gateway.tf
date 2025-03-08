@@ -175,32 +175,6 @@ resource "aws_api_gateway_integration_response" "upload_url_options_integration_
     }
 }
 
-resource "aws_api_gateway_method" "upload_method_post" {
-    rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id   = aws_api_gateway_resource.upload_resource.id
-    http_method   = "POST"
-    authorization = "COGNITO_USER_POOLS"
-    authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
-}
-
-resource "aws_api_gateway_integration" "upload_method_post_integration" {
-    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id = aws_api_gateway_resource.upload_resource.id
-    http_method = aws_api_gateway_method.upload_method_post.http_method
-    
-    integration_http_method = "POST" # Always POST for Lambda proxy integration
-    type = "AWS_PROXY"
-    uri = aws_lambda_function.upload_document_lambda.invoke_arn
-}
-
-resource "aws_lambda_permission" "upload_method_post_lambda_permission" {
-    statement_id  = "AllowAPIGatewayInvoke"
-    action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.upload_document_lambda.function_name
-    principal     = "apigateway.amazonaws.com"
-    source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
-}
-
 // all options methods are for CORS support - test without since same CF origin
 resource "aws_api_gateway_method" "documents_method_options" {
     rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
