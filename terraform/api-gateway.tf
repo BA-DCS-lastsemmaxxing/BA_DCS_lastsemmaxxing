@@ -125,7 +125,7 @@ resource "aws_api_gateway_integration" "upload_url_method_get_integration" {
 resource "aws_lambda_permission" "upload_url_method_get_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.get_upload_url_lambda.function_name
+    function_name = aws_lambda_function.fetch_upload_url_lambda.function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
