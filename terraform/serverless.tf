@@ -48,6 +48,16 @@ resource "aws_iam_policy" "lambda_policy" {
           "${aws_db_instance.rds.arn}/*",
           "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
         ]
+      },
+      # CloudWatch Logs Access
+      {
+        Effect   = "Allow",
+        Action   = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Resource = "arn:aws:logs:ap-southeast-1:874280117166:*"
       }
     ]
   })
@@ -58,7 +68,7 @@ resource "aws_iam_policy" "lambda_policy" {
 resource "aws_lambda_function" "fetch_documents_lambda" {
   function_name = "fetch_documents"
 
-  runtime = "python3.8"
+  runtime = "python3.9"
   handler = "fetch_documents.lambda_handler"
 
   s3_bucket = "${var.project_name}-serverless-ap"
@@ -72,7 +82,7 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
 resource "aws_lambda_function" "upload_document_lambda" {
   function_name = "upload_document"
 
-  runtime = "python3.8"
+  runtime = "python3.9"
   handler = "upload_document.lambda_handler"
 
   s3_bucket = "${var.project_name}-serverless-ap"
@@ -151,7 +161,7 @@ resource "aws_lambda_function" "auth_lambda_edge" {
     function_name = "auth_lambda_edge"
     role = aws_iam_role.lambda_edge_role.arn
     handler = "auth_lambda.lambda_handler"
-    runtime = "python3.8"
+    runtime = "python3.9"
     publish = true
 
     source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
