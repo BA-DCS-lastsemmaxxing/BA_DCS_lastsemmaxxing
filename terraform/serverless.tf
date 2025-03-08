@@ -40,11 +40,8 @@ resource "aws_iam_policy" "lambda_policy" {
           "execute-api:Invoke"
         ],
         Resource = [
-          "${aws_s3_bucket.serverless_bucket_ap.arn}",
           "${aws_s3_bucket.serverless_bucket_ap.arn}/*",
-          "${aws_s3_bucket.document_storage_bucket.arn}",
           "${aws_s3_bucket.document_storage_bucket.arn}/*",
-          "${aws_db_instance.rds.arn}",
           "${aws_db_instance.rds.arn}/*",
           "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
         ]
@@ -101,6 +98,26 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
 
   role = aws_iam_role.lambda_execution_role.arn
   source_code_hash = data.aws_s3_object.fetch_upload_url_lambda_zip.etag
+
+  environment {
+    variables = {
+      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+    }
+  }
+}
+
+# Delete Document function
+resource "aws_lambda_function" "delete_document_lambda" {
+  function_name = "delete_document"
+
+  runtime = "python3.9"
+  handler = "delete_document.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "delete_document.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
 
   environment {
     variables = {
