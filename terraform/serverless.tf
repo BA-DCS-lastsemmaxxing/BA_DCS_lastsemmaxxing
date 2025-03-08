@@ -90,8 +90,8 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
 }
 
 # Fetch upload url function
-resource "aws_lambda_function" "fetch_upload_url" {
-  function_name = "fetch_documents"
+resource "aws_lambda_function" "fetch_upload_url_lambda" {
+  function_name = "fetch_upload_url"
 
   runtime = "python3.9"
   handler = "fetch_upload_url.lambda_handler"
