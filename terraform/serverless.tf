@@ -100,7 +100,7 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
   s3_key = "fetch_upload_url.zip"
 
   role = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_upload_url_zip.etag
+  source_code_hash = data.aws_s3_object.fetch_upload_url_lambda_zip.etag
 
   environment {
     variables = {
