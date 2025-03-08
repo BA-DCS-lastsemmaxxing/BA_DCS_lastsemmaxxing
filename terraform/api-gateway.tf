@@ -297,5 +297,3 @@ resource "aws_api_gateway_integration_response" "upload_options_integration_resp
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
     }
 }
-
-
