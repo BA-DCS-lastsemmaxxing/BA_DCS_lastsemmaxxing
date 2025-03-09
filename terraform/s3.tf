@@ -132,5 +132,5 @@ data "aws_s3_object" "insert_rds_new_document_lambda_zip" {
 
 data "aws_s3_object" "deleteDocumentFunction_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "deleteDocumentFunction_document.zip"
+  key = "deleteDocumentFunction.zip"
 }
