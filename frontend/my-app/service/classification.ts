@@ -32,7 +32,7 @@ export async function fetchUploadUrl(filetype: string) {
     return await response.json(); // Assuming the backend responds with JSON
 }
 
-export async function insertDocumentToRDS(file_id: string, file_name: string) {
+export async function insertDocumentToRDS(file_name: string, file_id: string) {
     console.log("Upload service reached");
 
     // Perform the fetch request
