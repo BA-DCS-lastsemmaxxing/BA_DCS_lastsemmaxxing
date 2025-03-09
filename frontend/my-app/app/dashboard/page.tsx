@@ -82,7 +82,7 @@ export default function Dashboard() {
     try {
       console.log("Deleting document with ID:", docId);
       // Make the API call to delete the document
-      const response = await axios.delete(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/prod/delete_document?docId=${docId}`);
+      const response = await axios.delete(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/test/delete_document?docId=${docId}`);
   
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
