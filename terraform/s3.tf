@@ -73,6 +73,27 @@ resource "aws_s3_bucket_cors_configuration" "cors" {
   }
 }
 
+resource "aws_s3_bucket_policy" "allow_presigned_uploads" {
+  bucket = aws_s3_bucket.document_storage_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = "*"
+        Action = "s3:PutObject"
+        Resource = "arn:aws:s3:::${aws_s3_bucket.document_storage_bucket.id}/*"
+        Condition = {
+          StringLike = {
+            "aws:Referer" = ["https://d1ztk01ovm0zc3.cloudfront.net"]
+          }
+        }
+      }
+    ]
+  })
+}
+
 // Lambda Layer
 data "aws_s3_object" "lambda_layer" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
