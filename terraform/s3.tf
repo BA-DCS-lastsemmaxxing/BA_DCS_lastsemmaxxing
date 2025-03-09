@@ -61,6 +61,39 @@ resource "aws_s3_bucket" "document_storage_bucket" {
   bucket = "${var.project_name}-document-storage"
 }
 
+resource "aws_s3_bucket_cors_configuration" "cors" {
+  bucket = aws_s3_bucket.document_storage_bucket.id
+
+  cors_rule {
+    allowed_methods = ["PUT", "POST", "GET", "HEAD"]
+    allowed_origins = ["*"]
+    allowed_headers = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3000
+  }
+}
+
+resource "aws_s3_bucket_policy" "allow_presigned_uploads" {
+  bucket = aws_s3_bucket.document_storage_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = "*"
+        Action = "s3:PutObject"
+        Resource = "arn:aws:s3:::${aws_s3_bucket.document_storage_bucket.id}/*"
+        Condition = {
+          StringLike = {
+            "aws:Referer" = ["https://d1ztk01ovm0zc3.cloudfront.net"]
+          }
+        }
+      }
+    ]
+  })
+}
+
 // Lambda Layer
 data "aws_s3_object" "lambda_layer" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
@@ -90,4 +123,9 @@ data "aws_s3_object" "fetch_documents_lambda_zip" {
 data "aws_s3_object" "fetch_upload_url_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "fetch_upload_url.zip"
+}
+
+data "aws_s3_object" "insert_rds_new_document_lambda_zip" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "insert_rds_new_document.zip"
 }
