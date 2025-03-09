@@ -104,7 +104,7 @@ resource "aws_api_gateway_method" "upload_method_post" {
 resource "aws_api_gateway_integration" "upload_method_post_integration" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
     resource_id = aws_api_gateway_resource.upload_resource.id
-    http_method = aws_api_gateway_method.upload_url_method_post.http_method
+    http_method = aws_api_gateway_method.upload_method_post.http_method
     
     integration_http_method = "POST" # Always POST for Lambda proxy integration
     type = "AWS_PROXY"
