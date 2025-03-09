@@ -61,6 +61,18 @@ resource "aws_s3_bucket" "document_storage_bucket" {
   bucket = "${var.project_name}-document-storage"
 }
 
+resource "aws_s3_bucket_cors_configuration" "cors" {
+  bucket = aws_s3_bucket.document_storage_bucket.id
+
+  cors_rule {
+    allowed_methods = ["PUT", "POST", "GET", "HEAD"]
+    allowed_origins = ["*"]
+    allowed_headers = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3000
+  }
+}
+
 // Lambda Layer
 data "aws_s3_object" "lambda_layer" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
