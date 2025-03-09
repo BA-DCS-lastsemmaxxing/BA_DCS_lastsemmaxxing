@@ -7,6 +7,8 @@ s3 = boto3.client("s3")
 S3_BUCKET = os.getenv("S3_BUCKET")
 
 def lambda_handler(event, context):
+    query_params = event.get("queryStringParameters", {})
+    file_type = query_params.get("file_type")
     try:
         # Generate a unique filename
         file_id = f"{uuid.uuid4()}"
@@ -14,7 +16,7 @@ def lambda_handler(event, context):
         # Generate a presigned URL for S3 upload
         presigned_url = s3.generate_presigned_url(
             "put_object",
-            Params={"Bucket": S3_BUCKET, "Key": file_id, "ContentType": "application/octet-stream"},
+            Params={"Bucket": S3_BUCKET, "Key": file_id, "ContentType": file_type},
             ExpiresIn=3600  # URL expires in 1 hour
         )
 
