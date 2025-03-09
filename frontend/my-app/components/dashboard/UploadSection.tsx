@@ -2,7 +2,6 @@
 
 import { useState, useRef } from "react";
 import { fetchUploadUrl } from "@/service/classification";
-import { fetchUploadUrl } from "@/service/classification";
 import { useToast } from "@/hooks/use-toast";
 
 interface UploadSectionProps {
