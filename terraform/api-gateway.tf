@@ -221,11 +221,11 @@ resource "aws_api_gateway_method_response" "documents_method_options_response" {
     "method.response.header.Access-Control-Allow-Origin"       = true
     "method.response.header.Access-Control-Allow-Methods"      = true
     "method.response.header.Access-Control-Allow-Headers"      = true
-    "method.response.header.Access-Control-Allow-Credentials"  = true
+    "method.response.header.Access-Control-Allow-Credentials" = true
   }
 }
 
-resource "aws_api_gateway_integration" "documents_options_integration" {
+resource "aws_api_gateway_integration" "documents_method_options_integration" {
   rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
   resource_id             = aws_api_gateway_resource.documents_resource.id
   http_method             = aws_api_gateway_method.documents_method_options.http_method
@@ -244,73 +244,9 @@ resource "aws_api_gateway_integration_response" "documents_method_options_integr
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"       = "'*'"
-    "method.response.header.Access-Control-Allow-Methods"      = "'GET,POST,OPTIONS,DELETE'"
-    "method.response.header.Access-Control-Allow-Headers"      = "'Content-Type,Authorization'"
-    "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
-  }
-}
-
-# DELETE /documents/{docId} resource
-resource "aws_api_gateway_resource" "delete_document_resource" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  parent_id   = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
-  path_part   = "delete_document"
-}
-
-# DELETE method for /delete_document
-resource "aws_api_gateway_method" "delete_document_method" {
-  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id   = aws_api_gateway_resource.delete_document_resource.id
-  http_method   = "DELETE"
-  authorization = "COGNITO_USER_POOLS"
-  authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
-}
-
-# Add CORS support for DELETE /delete_document
-resource "aws_api_gateway_method" "delete_document_method_options" {
-  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id   = aws_api_gateway_resource.delete_document_resource.id
-  http_method   = "OPTIONS"
-  authorization = "NONE"
-}
-
-resource "aws_api_gateway_method_response" "delete_document_method_options_response" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.delete_document_resource.id
-  http_method = aws_api_gateway_method.delete_document_method_options.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"       = true
-    "method.response.header.Access-Control-Allow-Methods"      = true
-    "method.response.header.Access-Control-Allow-Headers"      = true
-    "method.response.header.Access-Control-Allow-Credentials"  = true
-  }
-}
-
-resource "aws_api_gateway_integration" "delete_document_options_integration" {
-  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id             = aws_api_gateway_resource.delete_document_resource.id
-  http_method             = aws_api_gateway_method.delete_document_method_options.http_method
-  type                    = "MOCK"
-  request_templates = {
-    "application/json" = jsonencode({
-      statusCode = 200
-    })
-  }
-}
-
-resource "aws_api_gateway_integration_response" "delete_document_options_integration_response" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.delete_document_resource.id
-  http_method = aws_api_gateway_method.delete_document_method_options.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"       = "'*'"
-    "method.response.header.Access-Control-Allow-Methods"      = "'GET,POST,DELETE,OPTIONS'"
-    "method.response.header.Access-Control-Allow-Headers"      = "'Content-Type,Authorization'"
-    "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
+    "method.response.header.Access-Control-Allow-Credentials" = "'true'"
   }
 }
