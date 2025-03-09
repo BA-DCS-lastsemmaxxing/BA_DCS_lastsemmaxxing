@@ -200,3 +200,57 @@ resource "aws_lambda_function" "auth_lambda_edge" {
 
   source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
 }
+
+
+
+# Lambda function to delete a document from S3
+resource "aws_lambda_function" "delete_document_lambda" {
+  function_name = "delete_document"
+
+  runtime = "python3.9"
+  handler = "deleteDocumentFunction.lambda_handler"  # Update to your function's handler
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key    = "deleteDocumentFunction.zip"  # Ensure your zip file is uploaded to S3 with the correct name
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.deleteDocumentFunction_lambda_zip.etag  # Update with correct object reference if needed
+
+  environment {
+    variables = {
+      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+    }
+  }
+}
+
+# Attach delete document permissions to Lambda execution role
+resource "aws_iam_policy" "lambda_delete_document_policy" {
+  name        = "${var.project_name}-lambda-delete-document-policy"
+  description = "Allow Lambda to delete documents from S3"
+  policy      = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "s3:DeleteObject"
+        ]
+        Resource = [
+          "${aws_s3_bucket.document_storage_bucket.arn}/*"
+        ]
+      }
+    ]
+  })
+}
+
+# Attach the delete document policy to the Lambda execution role
+resource "aws_iam_role_policy_attachment" "lambda_delete_document_policy_attachment" {
+  role       = aws_iam_role.lambda_execution_role.name
+  policy_arn = aws_iam_policy.lambda_delete_document_policy.arn
+}
+
+# Add basic Lambda execution role permissions (logging)
+resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
+  role       = aws_iam_role.lambda_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
