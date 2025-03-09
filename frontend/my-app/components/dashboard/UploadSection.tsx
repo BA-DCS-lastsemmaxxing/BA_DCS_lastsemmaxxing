@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { fetchUploadUrl } from "@/service/classification";
 import { useToast } from "@/hooks/use-toast";
 
@@ -14,7 +14,10 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
-
+  
+  useEffect(() => {
+    console.log("files: ", files);
+  }, [files]);
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
