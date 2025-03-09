@@ -110,6 +110,14 @@ resource "aws_api_gateway_integration" "upload_method_post_integration" {
     type = "AWS_PROXY"
     uri = aws_lambda_function.insert_rds_new_document_lambda.invoke_arn
 }
+resource "aws_lambda_permission" "upload_method_post_lambda_permission" {
+    statement_id  = "AllowAPIGatewayInvoke"
+    action        = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.insert_rds_new_document_lambda.function_name
+    principal     = "apigateway.amazonaws.com"
+    source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
+}
+
 # Create /upload/url resource under /upload
 resource "aws_api_gateway_resource" "upload_url_resource" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
