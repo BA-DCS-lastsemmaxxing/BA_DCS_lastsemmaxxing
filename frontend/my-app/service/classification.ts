@@ -50,7 +50,7 @@ export async function insertDocumentToRDS(file_id: string, file_name: string) {
 
     // Handle the response
     if (!response.ok) {
-        throw new Error(`Failed to fetch upload url. Status: ${response.status}`);
+        throw new Error(`Failed to insert document record into database. Status: ${response.status}`);
     }
 
     return await response.json(); // Assuming the backend responds with JSON
