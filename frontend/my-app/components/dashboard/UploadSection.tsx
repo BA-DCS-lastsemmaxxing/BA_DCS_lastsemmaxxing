@@ -94,7 +94,7 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
       await Promise.all(files.map((file, index) => {
         return insertDocumentToRDS(
           file.name,
-          uploadDetails[index].fileId
+          uploadDetails[index].file_id
         )
       }));
 
