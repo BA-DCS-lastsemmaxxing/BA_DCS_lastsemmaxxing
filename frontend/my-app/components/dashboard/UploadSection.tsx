@@ -80,7 +80,7 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
           method: 'PUT',
           body: files[index],
           headers: {
-            'Content-Type': files[index].type
+            'Content-Type': "application/octet-stream"
           }
         });
       }));
