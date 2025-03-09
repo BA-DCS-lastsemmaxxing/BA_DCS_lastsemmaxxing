@@ -13,11 +13,11 @@ function getCookie(name: string): string | undefined {
     return undefined;
 }
 
-export async function fetchUploadUrl() {
+export async function fetchUploadUrl(filetype: string) {
     console.log("Upload service reached");
 
     // Perform the fetch request
-    const response = await fetch(`${api.backendUrl}/upload/url`, {
+    const response = await fetch(`${api.backendUrl}/upload/url?file_type=${encodeURIComponent(filetype)}`, {
         method: "GET",
         headers: {
             "Authorization": `${getCookie("CognitoToken")}`
@@ -27,6 +27,30 @@ export async function fetchUploadUrl() {
     // Handle the response
     if (!response.ok) {
         throw new Error(`Failed to fetch upload url. Status: ${response.status}`);
+    }
+
+    return await response.json(); // Assuming the backend responds with JSON
+}
+
+export async function insertDocumentToRDS(file_name: string, file_id: string) {
+    console.log("Upload service reached");
+
+    // Perform the fetch request
+    const response = await fetch(`${api.backendUrl}/upload`, {
+        method: "POST",
+        headers: {
+            "Authorization": `${getCookie("CognitoToken")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            file_id: file_id,
+            file_name: file_name,
+        })
+    });
+
+    // Handle the response
+    if (!response.ok) {
+        throw new Error(`Failed to insert document record into database. Status: ${response.status}`);
     }
 
     return await response.json(); // Assuming the backend responds with JSON

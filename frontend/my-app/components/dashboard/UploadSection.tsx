@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { fetchUploadUrl } from "@/service/classification";
+import { useState, useRef, useEffect } from "react";
+import { fetchUploadUrl, insertDocumentToRDS } from "@/service/classification";
 import { useToast } from "@/hooks/use-toast";
 
 interface UploadSectionProps {
@@ -14,7 +14,10 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
-
+  
+  useEffect(() => {
+    console.log("files: ", files);
+  }, [files]);
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles) {
@@ -68,13 +71,16 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
 
   const handleUploadToBackend = async () => {
     if (!files) return;
+    console.log("files: ", files);
     setIsLoading(true);
     try {
       // Get presigned URLs for each file
-      const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl()));
+      const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl(file.type)));
       console.log("upload details: ", uploadDetails);
+      
       // Upload files to S3 using presigned URLs
       await Promise.all(uploadDetails.map((details, index) => {
+        console.log("Current file: ", files[index])
         return fetch(details.upload_url, {
           method: 'PUT',
           body: files[index],
@@ -85,12 +91,12 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
       }));
 
       // Update RDS with file details
-      // await updateRds(files.map((file, index) => ({
-      //   filename: file.name,
-      //   size: file.size,
-      //   type: file.type,
-      //   fileId: uploadDetails[index].fileId
-      // })));
+      await Promise.all(files.map((file, index) => {
+        return insertDocumentToRDS(
+          file.name,
+          uploadDetails[index].file_id
+        )
+      }));
 
       setUploadStatus("Upload successful");
       setFiles(null);
