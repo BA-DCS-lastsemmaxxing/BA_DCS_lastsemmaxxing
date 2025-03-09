@@ -108,6 +108,31 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
   }
 }
 
+# Insert new document into RDS function
+resource "aws_lambda_function" "insert_rds_new_document_lambda" {
+  function_name = "insert_rds_new_document"
+
+  runtime = "python3.9"
+  handler = "insert_rds_new_document.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "insert_rds_new_document.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.insert_rds_new_document_lambda_zip.etag
+
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  environment {
+    variables = {
+      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
+      DB_USER = "admin"
+      DB_PASSWORD = "testpassword"
+      DB_NAME = "lsm_fyp"
+    }
+  }
+}
+
 # Attach the policy to the role
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
   role = aws_iam_role.lambda_execution_role.name
