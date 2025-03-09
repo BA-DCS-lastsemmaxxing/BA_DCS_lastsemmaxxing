@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { fetchUploadUrl } from "@/service/classification";
+import { fetchUploadUrl, insertDocumentToRDS } from "@/service/classification";
 import { useToast } from "@/hooks/use-toast";
 
 interface UploadSectionProps {
@@ -91,12 +91,12 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
       }));
 
       // Update RDS with file details
-      // await updateRds(files.map((file, index) => ({
-      //   filename: file.name,
-      //   size: file.size,
-      //   type: file.type,
-      //   fileId: uploadDetails[index].fileId
-      // })));
+      await Promise.all(files.map((file, index) => {
+        return insertDocumentToRDS(
+          file.name,
+          uploadDetails[index].fileId
+        )
+      }));
 
       setUploadStatus("Upload successful");
       setFiles(null);

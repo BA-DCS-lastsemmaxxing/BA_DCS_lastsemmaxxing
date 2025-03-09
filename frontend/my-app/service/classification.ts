@@ -32,6 +32,30 @@ export async function fetchUploadUrl(filetype: string) {
     return await response.json(); // Assuming the backend responds with JSON
 }
 
+export async function insertDocumentToRDS(file_id: string, file_name: string) {
+    console.log("Upload service reached");
+
+    // Perform the fetch request
+    const response = await fetch(`${api.backendUrl}/upload`, {
+        method: "POST",
+        headers: {
+            "Authorization": `${getCookie("CognitoToken")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            file_id: file_id,
+            file_name: file_name,
+        })
+    });
+
+    // Handle the response
+    if (!response.ok) {
+        throw new Error(`Failed to fetch upload url. Status: ${response.status}`);
+    }
+
+    return await response.json(); // Assuming the backend responds with JSON
+}
+
 export async function searchDocuments(query: string) {
     console.log("Search document service reached");
     const encodedQuery = encodeURIComponent(query); // Encode query for spaces/special characters
