@@ -68,12 +68,13 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
 
   const handleUploadToBackend = async () => {
     if (!files) return;
+    console.log("files: ", files);
     setIsLoading(true);
     try {
       // Get presigned URLs for each file
       const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl()));
       console.log("upload details: ", uploadDetails);
-      console.log("files: ", files);
+      
       // Upload files to S3 using presigned URLs
       await Promise.all(uploadDetails.map((details, index) => {
         
