@@ -139,11 +139,6 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-  role = aws_iam_role.lambda_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
-
 # Code for Lambda Edge Function - Lambda Authoriser
 provider "aws" {
   alias = "us-east-1"
@@ -201,8 +196,6 @@ resource "aws_lambda_function" "auth_lambda_edge" {
   source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
 }
 
-
-
 # Lambda function to delete a document from S3
 resource "aws_lambda_function" "delete_document_lambda" {
   function_name = "delete_document"
@@ -247,10 +240,4 @@ resource "aws_iam_policy" "lambda_delete_document_policy" {
 resource "aws_iam_role_policy_attachment" "lambda_delete_document_policy_attachment" {
   role       = aws_iam_role.lambda_execution_role.name
   policy_arn = aws_iam_policy.lambda_delete_document_policy.arn
-}
-
-# Add basic Lambda execution role permissions (logging)
-resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-  role       = aws_iam_role.lambda_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
