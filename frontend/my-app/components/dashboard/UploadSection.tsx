@@ -75,6 +75,8 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
       console.log("upload details: ", uploadDetails);
       // Upload files to S3 using presigned URLs
       await Promise.all(uploadDetails.map((details, index) => {
+        console.log("file: ", files[index]);
+        console.log("file type: ", files[index].type);
         return fetch(details.upload_url, {
           method: 'PUT',
           body: files[index],
