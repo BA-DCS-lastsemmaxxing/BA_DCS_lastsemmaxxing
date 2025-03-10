@@ -77,14 +77,6 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
       // Get presigned URLs for each file
       const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl(file.type)));
       console.log("upload details: ", uploadDetails);
-      
-      // Update RDS with file details
-      await Promise.all(files.map((file, index) => {
-        return insertDocumentToRDS(
-          file.name,
-          uploadDetails[index].file_id
-        )
-      }));
 
       // Upload files to S3 using presigned URLs
       await Promise.all(uploadDetails.map((details, index) => {
