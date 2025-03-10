@@ -173,8 +173,7 @@ resource "aws_lambda_function" "document_classification_lambda" {
 
   layers = [
     aws_lambda_layer_version.lambda_layer.arn,
-    aws_lambda_layer_version.document_classification_dependencies_1.arn,
-    aws_lambda_layer_version.document_classification_dependencies_2.arn]
+    aws_lambda_layer_version.document_classification_dependencies.arn]
 
   environment {
     variables = {

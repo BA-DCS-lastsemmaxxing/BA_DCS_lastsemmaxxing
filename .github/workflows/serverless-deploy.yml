@@ -31,17 +31,10 @@ jobs:
 
       - name: Zip Document Classification Dependencies and Deploy
         run: |
-          cd ./serverless/document_classification_dependencies_layer_1
+          cd ./serverless/document_classification_dependencies_layer
           mkdir -p dist
-          zip -r dist/document_classification_dependencies_1.zip python
-          aws s3 cp dist/document_classification_dependencies_1.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-ap
-
-      - name: Zip Document Classification Dependencies and Deploy
-        run: |
-          cd ./serverless/document_classification_dependencies_layer_2
-          mkdir -p dist
-          zip -r dist/document_classification_dependencies_2.zip python
-          aws s3 cp dist/document_classification_dependencies_2.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-ap
+          zip -r dist/document_classification_dependencies.zip python
+          aws s3 cp dist/document_classification_dependencies.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-ap
 
       - name: Zip Functions and Deploy
         run: |

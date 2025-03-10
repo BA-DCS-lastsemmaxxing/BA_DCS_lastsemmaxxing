@@ -125,30 +125,16 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   source_code_hash = data.aws_s3_object.lambda_layer.etag
 }
 
-// Document classification dependencies layer 1
-data "aws_s3_object" "document_classification_dependencies_1" {
+// Document classification dependencies layer
+data "aws_s3_object" "document_classification_dependencies" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "document_classification_dependencies_1.zip"
+  key = "document_classification_dependencies.zip"
 }
 
-resource "aws_lambda_layer_version" "document_classification_dependencies_1" {
-  layer_name = "document_classification_dependencies_1"
+resource "aws_lambda_layer_version" "document_classification_dependencies" {
+  layer_name = "document_classification_dependencies"
   s3_bucket  = aws_s3_bucket.serverless_bucket_ap.bucket
-  s3_key     = "document_classification_dependencies_1.zip"
-
-  source_code_hash = data.aws_s3_object.lambda_layer.etag
-}
-
-// Document classification dependencies layer 2
-data "aws_s3_object" "document_classification_dependencies_2" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "document_classification_dependencies_2.zip"
-}
-
-resource "aws_lambda_layer_version" "document_classification_dependencies_2" {
-  layer_name = "document_classification_dependencies_2"
-  s3_bucket  = aws_s3_bucket.serverless_bucket_ap.bucket
-  s3_key     = "document_classification_dependencies_2.zip"
+  s3_key     = "document_classification_dependencies.zip"
 
   source_code_hash = data.aws_s3_object.lambda_layer.etag
 }
