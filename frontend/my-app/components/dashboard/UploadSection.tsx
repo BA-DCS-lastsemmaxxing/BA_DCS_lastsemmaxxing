@@ -75,7 +75,7 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
     setIsLoading(true);
     try {
       // Get presigned URLs for each file
-      const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl(file.type)));
+      const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl(file.type, file.name)));
       console.log("upload details: ", uploadDetails);
 
       // Upload files to S3 using presigned URLs
@@ -85,8 +85,7 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
           method: 'PUT',
           body: files[index],
           headers: {
-            'Content-Type': files[index].type,
-            "x-amz-meta-file-name": files[index].name,
+            'Content-Type': files[index].type
           }
         });
       }));
