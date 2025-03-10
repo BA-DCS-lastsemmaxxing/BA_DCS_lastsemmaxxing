@@ -161,7 +161,7 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
 # Document classification lambda
 resource "aws_lambda_function" "document_classification_lambda" {
   function_name = "document_classification"
-
+  timeout = 30
   runtime = "python3.9"
   handler = "document_classification.lambda_handler"
 
