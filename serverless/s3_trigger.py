@@ -6,7 +6,7 @@ sfn_client = boto3.client("stepfunctions")
 
 def lambda_handler(event, context):
     print("Received S3 event:", json.dumps(event))
-    
+    print("event: ", event)
     # Extract bucket name and object key
     bucket_name = event["Records"][0]["s3"]["bucket"]["name"]
     object_key = event["Records"][0]["s3"]["object"]["key"]

@@ -271,3 +271,56 @@ resource "aws_sfn_state_machine" "s3_workflow" {
   EOF
 }
 
+# IAM role for step function
+resource "aws_iam_role" "step_function_role" {
+  name = "StepFunctionsExecutionRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "states.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "step_function_policy" {
+  name        = "StepFunctionsLambdaInvokePolicy"
+  description = "Allows Step Functions to invoke Lambda functions"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "lambda:InvokeFunction"
+        ]
+        Resource = [
+          aws_lambda_function.insert_rds_new_document_lambda.arn,
+          aws_lambda_function.document_classification_lambda.arn
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "arn:aws:logs:*:*:*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_policy" {
+  policy_arn = aws_iam_policy.step_function_policy.arn
+  role       = aws_iam_role.step_function_role.name
+}
+
