@@ -133,6 +133,51 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
   }
 }
 
+# Lambda function triggered on new object in S3
+resource "aws_lambda_function" "s3_trigger_lambda" {
+  function_name = "s3_trigger"
+
+  runtime = "python3.9"
+  handler = "s3_trigger.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "s3_trigger.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.s3_trigger_lambda_zip.etag
+
+  environment {
+    variables = {
+      STEP_FUNCTION_ARN = aws_sfn_state_machine.s3_workflow.arn
+    }
+  }
+}
+
+# Document classification lambda
+resource "aws_lambda_function" "document_classification_lambda" {
+  function_name = "document_classification"
+
+  runtime = "python3.9"
+  handler = "document_classification.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "document_classification.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.document_classification_lambda_zip.etag
+
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  environment {
+    variables = {
+      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
+      DB_USER = "admin"
+      DB_PASSWORD = "testpassword"
+      DB_NAME = "lsm_fyp"
+    }
+  }
+}
+
 # Attach the policy to the role
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
   role = aws_iam_role.lambda_execution_role.name
@@ -200,3 +245,29 @@ resource "aws_lambda_function" "auth_lambda_edge" {
 
   source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
 }
+
+# Document processing workflow
+resource "aws_sfn_state_machine" "s3_workflow" {
+  name     = "s3-file-processing-workflow"
+  role_arn = aws_iam_role.step_function_role.arn
+
+  definition = <<EOF
+  {
+    "Comment": "Workflow to process uploaded files",
+    "StartAt": "InsertIntoRDS",
+    "States": {
+      "InsertIntoRDS": {
+        "Type": "Task",
+        "Resource": "${aws_lambda_function.insert_rds_new_document_lambda.arn}",
+        "Next": "ProcessDocument"
+      },
+      "ProcessDocument": {
+        "Type": "Task",
+        "Resource": "${aws_lambda_function.document_classification_lambda.arn}",
+        "End": true
+      }
+    }
+  }
+  EOF
+}
+
