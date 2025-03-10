@@ -33,7 +33,7 @@ jobs:
         run: |
           cd ./serverless/document_classification_dependencies_layer
           mkdir -p dist
-          zip -r dist/document_classification_dependencies.zip python
+          zip -r dist/document_classification_dependencies.zip python final_file_topic_mapping.csv
           aws s3 cp dist/document_classification_dependencies.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-ap
 
       - name: Zip Functions and Deploy
