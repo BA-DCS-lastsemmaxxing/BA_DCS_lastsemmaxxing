@@ -86,7 +86,7 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
           body: files[index],
           headers: {
             'Content-Type': files[index].type,
-            "x-amz-meta-file_name": files[index].name,
+            "x-amz-meta-file-name": files[index].name,
           }
         });
       }));
