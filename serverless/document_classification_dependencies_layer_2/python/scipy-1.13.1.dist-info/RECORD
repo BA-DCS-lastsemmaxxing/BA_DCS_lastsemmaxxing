@@ -2,6 +2,7 @@ scipy-1.13.1.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwv
 scipy-1.13.1.dist-info/LICENSE.txt,sha256=GBKL4U2eo7yUQAdaiYqUjjMn6WiG0BZ47o4FJRBXFYA,46805
 scipy-1.13.1.dist-info/METADATA,sha256=EuvQ1I0s8tPC5xnjIJ_nHVzUhFlzNQYiO-gQSSGn5Sw,60568
 scipy-1.13.1.dist-info/RECORD,,
+scipy-1.13.1.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
 scipy-1.13.1.dist-info/WHEEL,sha256=jMyS45pfVQQNgqjilq2bIfG3aDgtWNCCOi-3M7NZx5A,133
 scipy.libs/libgfortran-040039e1.so.5.0.0,sha256=FK-zEpsai1C8QKOwggx_EVLqm8EBIaqxUpQ_cFdHKIY,2686065
 scipy.libs/libopenblasp-r0-01191904.3.27.so,sha256=m5H2uo_bqc92gjcf2lO7IodjvVBz_4JO28S4Hi3cRrw,34990041
