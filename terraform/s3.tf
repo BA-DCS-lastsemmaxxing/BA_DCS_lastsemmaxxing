@@ -61,6 +61,14 @@ resource "aws_s3_bucket" "document_storage_bucket" {
   bucket = "${var.project_name}-document-storage"
 }
 
+resource "aws_lambda_permission" "allow_s3_trigger" {
+  statement_id  = "AllowS3Invoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.s3_trigger_lambda.function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = aws_s3_bucket.document_storage_bucket.arn
+}
+
 resource "aws_s3_bucket_notification" "file_upload_trigger" {
   bucket = aws_s3_bucket.document_storage_bucket.id
 
@@ -68,14 +76,6 @@ resource "aws_s3_bucket_notification" "file_upload_trigger" {
     lambda_function_arn = aws_lambda_function.s3_trigger_lambda.arn
     events              = ["s3:ObjectCreated:*"]
   }
-}
-
-resource "aws_lambda_permission" "allow_s3_trigger" {
-  statement_id  = "AllowS3Invoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.s3_trigger_lambda.function_name
-  principal     = "s3.amazonaws.com"
-  source_arn    = aws_s3_bucket.document_storage_bucket.arn
 }
 
 resource "aws_s3_bucket_cors_configuration" "cors" {
