@@ -9,6 +9,7 @@ S3_BUCKET = os.getenv("S3_BUCKET")
 def lambda_handler(event, context):
     query_params = event.get("queryStringParameters", {})
     file_type = query_params.get("file_type")
+    file_name = query_params.get("file_name")
     try:
         # Generate a unique filename
         file_id = f"{uuid.uuid4()}"
@@ -21,7 +22,7 @@ def lambda_handler(event, context):
                 "Key": file_id,
                 "ContentType": file_type,
                 "Metadata": {
-                "file_name": ""
+                "file-name": file_name
             }},
             ExpiresIn=3600  # URL expires in 1 hour
         )

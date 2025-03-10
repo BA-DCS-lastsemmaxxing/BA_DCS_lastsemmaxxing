@@ -4,9 +4,9 @@ from models import *
 def lambda_handler(event, context):
 
     try:
-        body = json.loads(event["body"]) if "body" in event and event["body"] else {}
-        file_id = body.get("file_id")
-        file_name = body.get("file_name")
+        print("Event: ", event, flush=True)
+        file_id = event.get("file_id")
+        file_name = event.get("file_name")
         Document.insert_file_record(file_id,file_name)
 
         return {
