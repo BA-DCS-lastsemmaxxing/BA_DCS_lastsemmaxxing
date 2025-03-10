@@ -49,6 +49,11 @@ resource "aws_iam_policy" "lambda_policy" {
           "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
         ]
       },
+      {
+        Effect   = "Allow",
+        Action   = "states:StartExecution",
+        Resource = aws_sfn_state_machine.s3_workflow.arn
+      },
       # CloudWatch Logs Access
       {
         Effect   = "Allow",
