@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from models import Document
 
 # AWS credentials
-aws_region = os.environ.get("AWS_REGION")
+aws_region = os.environ.get("REGION")
 
 # AWS Bedrock model configuration
 MODEL_ID_LLAMA = "arn:aws:bedrock:us-west-2:874280117166:inference-profile/us.meta.llama3-3-70b-instruct-v1:0"

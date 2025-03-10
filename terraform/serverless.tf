@@ -179,7 +179,7 @@ resource "aws_lambda_function" "document_classification_lambda" {
       DB_USER = "admin"
       DB_PASSWORD = "testpassword"
       DB_NAME = "lsm_fyp"
-      AWS_REGION = var.region
+      REGION = var.region
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
 
     }
