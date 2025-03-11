@@ -25,6 +25,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const [feedbackTriggered, setFeedbackTriggered] = useState(false);
   const [userCategory, setUserCategory] = useState('');
   const [feedbackText, setFeedbackText] = useState('');
+  const [isFeedbackCorrected, setIsFeedbackCorrected] = useState(false); // Track if the user chose "No"
 
   if (!document) return null;
 
@@ -115,16 +116,28 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
               <div className="mt-6">
                 <p className="text-sm text-gray-700 mb-2">Was this classification accurate?</p>
                 <div className="flex gap-3">
-                  <Button variant="outline" onClick={() => setFeedbackTriggered(true)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setIsFeedbackCorrected(false); // User chose "Yes"
+                      setFeedbackTriggered(false); // Don't show feedback form
+                    }}
+                  >
                     👍 Yes
                   </Button>
-                  <Button variant="outline" onClick={() => setFeedbackTriggered(true)}>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setIsFeedbackCorrected(true); // User chose "No"
+                      setFeedbackTriggered(true); // Show feedback form
+                    }}
+                  >
                     👎 No
                   </Button>
                 </div>
               </div>
 
-              {feedbackTriggered && (
+              {isFeedbackCorrected ? (
                 <div className="mt-4 space-y-3">
                   <div>
                     <label className="text-sm font-medium text-gray-700 block mb-1">
@@ -151,6 +164,10 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                     ✅ Submit Feedback
                   </Button>
                 </div>
+              ) : (
+                feedbackTriggered && (
+                  <p className="text-green-500 text-center">Thank you for your feedback!</p>
+                )
               )}
               {/* ---------- Feedback UI Ends Here ---------- */}
             </>
