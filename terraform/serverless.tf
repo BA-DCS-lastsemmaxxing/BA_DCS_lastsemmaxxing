@@ -3,6 +3,8 @@ resource "aws_ecr_repository" "lsm_fyp_repo" {
   name = "${var.project_name}-repo"
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_iam_role" "lambda_execution_role" {
   name = "${var.project_name}-lambda-execution-role"
   assume_role_policy = jsonencode({
@@ -58,6 +60,11 @@ resource "aws_iam_policy" "lambda_policy" {
         Effect   = "Allow",
         Action   = "states:StartExecution",
         Resource = aws_sfn_state_machine.s3_workflow.arn
+      },
+      {
+        Effect   = "Allow",
+        Action   = "bedrock:InvokeModel",
+        Resource = "arn:aws:bedrock:us-west-2:${data.aws_caller_identity.current.account_id}:model/meta.llama3-70b-instruct"
       },
       # CloudWatch Logs Access
       {
