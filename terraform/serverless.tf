@@ -184,35 +184,6 @@ resource "aws_lambda_function" "document_classification_lambda" {
   }
 }
 
-resource "aws_lambda_function" "document_classification_lambda" {
-  function_name = "document_classification"
-  timeout = 30
-  runtime = "python3.9"
-  handler = "document_classification.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key = "document_classification.zip"
-
-  role = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.document_classification_lambda_zip.etag
-
-  layers = [
-    aws_lambda_layer_version.lambda_layer.arn,
-    aws_lambda_layer_version.document_classification_dependencies.arn]
-
-  environment {
-    variables = {
-      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
-      DB_USER = "admin"
-      DB_PASSWORD = "testpassword"
-      DB_NAME = "lsm_fyp"
-      REGION = var.region
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-
-    }
-  }
-}
-
 # Attach the policy to the role
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
   role = aws_iam_role.lambda_execution_role.name
