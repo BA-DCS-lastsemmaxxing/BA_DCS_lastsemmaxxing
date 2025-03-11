@@ -46,6 +46,9 @@ def lambda_handler(event, context):
     response = s3_client.get_object(Bucket=bucket_name, Key=file_id)
     file_content = response["Body"].read()
     preprocess_pdf(file_content,filename)
+    pickle_path = "/tmp/processed_file.pkl"
+    if not os.path.exists(pickle_path):
+        raise FileNotFoundError(f"Error: Pickle file not found at {pickle_path}. Something went wrong in `preprocess_pdf()`.")
     filename, classification, confidence, summary, source = process_single_file()
     print("filename: ", filename)
     print("classification: ", classification)
