@@ -125,20 +125,6 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   source_code_hash = data.aws_s3_object.lambda_layer.etag
 }
 
-// Document classification dependencies layer
-data "aws_s3_object" "document_classification_dependencies" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "document_classification_dependencies.zip"
-}
-
-resource "aws_lambda_layer_version" "document_classification_dependencies" {
-  layer_name = "document_classification_dependencies"
-  s3_bucket  = aws_s3_bucket.serverless_bucket_ap.bucket
-  s3_key     = "document_classification_dependencies.zip"
-
-  source_code_hash = data.aws_s3_object.lambda_layer.etag
-}
-
 // Add Lambda Function Zips as objects here
 data "aws_s3_object" "auth_lambda_zip" {
   provider = aws.us-east-1
