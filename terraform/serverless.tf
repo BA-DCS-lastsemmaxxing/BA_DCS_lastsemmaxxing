@@ -165,7 +165,7 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
 
 # Document classification lambda
 resource "aws_lambda_function" "document_classification_lambda" {
-  function_name = "${var.project_name}-document-classification"
+  function_name = "document_classification"
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.lsm_fyp_repo.repository_url}:latest"
   timeout       = 30
