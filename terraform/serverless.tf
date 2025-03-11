@@ -63,7 +63,7 @@ resource "aws_iam_policy" "lambda_policy" {
       {
         Effect   = "Allow",
         Action   = "bedrock:InvokeModel",
-        Resource = "arn:aws:bedrock:us-west-2:${data.aws_caller_identity.current.account_id}:model/meta.llama3-70b-instruct"
+        Resource = "arn:aws:bedrock:us-west-2:${data.aws_caller_identity.current.account_id}:inference-profile/meta.llama3-70b-instruct-v1:0"
       },
       # CloudWatch Logs Access
       {
