@@ -78,15 +78,15 @@ export default function Dashboard() {
       alert('Invalid document ID');
       return;
     }
-  
+
     try {
       console.log("Deleting document with ID:", docId);
       // Make the API call to delete the document
       const response = await axios.delete(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/delete_document?docId=${docId}`);
-  
+
       if (response.status === 200) {
         alert(`Document ${docId} deleted successfully.`);
-  
+
         // Optimistically update the UI by removing the document from the list
         setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
       } else {
@@ -98,26 +98,6 @@ export default function Dashboard() {
       alert('Failed to delete the document. Please try again later.');
     }
   };
-  
-  // const handleDelete = async (docId: string) => {
-  //   if (!docId) {
-  //     console.error('Invalid document ID');
-  //     alert('Invalid document ID');
-  //     return;
-  //   }
-
-  //   try {
-  //     console.log("Deleting document with ID:", docId);
-  //     const response = await axios.delete(`http://localhost:5001/delete_document/${docId}`);
-  //     if (response.status === 200) {
-  //       alert(`Document ${docId} deleted successfully.`);
-  //       setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
-  //     }
-  //   } catch (error) {
-  //     console.error('Error deleting document:', error);
-  //     alert('Failed to delete the document.');
-  //   }
-  // };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOption(e.target.value);
@@ -191,6 +171,16 @@ export default function Dashboard() {
           onOpenChange={setIsModalOpen}
           document={selectedDoc}
         />
+      </div>
+
+      {/* Submit Feedback Button */}
+      <div className="mt-4 flex justify-center">
+        <button
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
+          onClick={() => alert('Feedback Submitted!')}
+        >
+          ✅ Submit Feedback
+        </button>
       </div>
     </div>
   );
