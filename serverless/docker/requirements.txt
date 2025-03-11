@@ -1,0 +1,6 @@
+pytz==2025.1
+mysql-connector==2.2.9
+pandas==2.2.3
+nltk==3.9.1
+scikit-learn==1.6.1
+pypdf==5.3.1

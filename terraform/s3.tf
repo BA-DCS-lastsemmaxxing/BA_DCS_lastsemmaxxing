@@ -61,6 +61,23 @@ resource "aws_s3_bucket" "document_storage_bucket" {
   bucket = "${var.project_name}-document-storage"
 }
 
+resource "aws_lambda_permission" "allow_s3_trigger" {
+  statement_id  = "AllowS3Invoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.s3_trigger_lambda.function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = aws_s3_bucket.document_storage_bucket.arn
+}
+
+resource "aws_s3_bucket_notification" "file_upload_trigger" {
+  bucket = aws_s3_bucket.document_storage_bucket.id
+
+  lambda_function {
+    lambda_function_arn = aws_lambda_function.s3_trigger_lambda.arn
+    events              = ["s3:ObjectCreated:*"]
+  }
+}
+
 resource "aws_s3_bucket_cors_configuration" "cors" {
   bucket = aws_s3_bucket.document_storage_bucket.id
 
@@ -128,4 +145,9 @@ data "aws_s3_object" "fetch_upload_url_lambda_zip" {
 data "aws_s3_object" "insert_rds_new_document_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "insert_rds_new_document.zip"
+}
+
+data "aws_s3_object" "s3_trigger_lambda_zip" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "s3_trigger.zip"
 }
