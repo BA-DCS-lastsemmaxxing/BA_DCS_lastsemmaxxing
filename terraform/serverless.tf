@@ -168,7 +168,8 @@ resource "aws_lambda_function" "document_classification_lambda" {
   function_name = "document_classification"
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.lsm_fyp_repo.repository_url}:latest"
-  timeout       = 30
+  timeout       = 900
+  memory_size   = 2000
   role = aws_iam_role.lambda_execution_role.arn
 
   environment {
