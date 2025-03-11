@@ -16,11 +16,11 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Methods": "OPTIONS, POST",
                 "Access-Control-Allow-Headers": "Content-Type, Authorization"
             },
-            "body": json.dumps({
+            "body": {
                 "message": "File(s) uploaded successfully",
                 "file_id": file_id,
                 "file_name": file_name
-            })
+            }
         }
 
     except Exception as e:
