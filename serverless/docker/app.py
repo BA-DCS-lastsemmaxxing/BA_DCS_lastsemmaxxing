@@ -10,14 +10,14 @@ from models import Document
 aws_region = os.environ.get("REGION")
 
 # AWS Bedrock model configuration
-MODEL_ID_LLAMA = "meta.llama3-70b-instruct"
+MODEL_ID_LLAMA = "arn:aws:bedrock:us-west-2:874280117166:inference-profile/us.meta.llama3-3-70b-instruct-v1:0"
 
 # Prevent Bedrock timeout
 config = Config(read_timeout=1000)
 
 bedrock_client = boto3.client(
     "bedrock-runtime",
-    region_name=aws_region,
+    region_name='us-west-2',
     config=config
 )
 
