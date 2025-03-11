@@ -163,7 +163,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                   </div>
 
                   <Button
-                    className="mt-2 border border-blue-600 text-blue-600 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="text-sm font-medium text-gray-700 block mb-1"
                     onClick={handleFeedbackSubmit}
                   >
                     ✅ Submit Feedback
