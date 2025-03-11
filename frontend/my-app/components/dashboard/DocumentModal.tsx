@@ -163,11 +163,12 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                   </div>
 
                   <Button
-                    className="text-sm font-medium text-gray-700 block mb-1"
-                    onClick={handleFeedbackSubmit}
+                      className="text-sm font-medium text-black border border-black bg-transparent hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black"
+                      onClick={handleFeedbackSubmit}
                   >
-                    ✅ Submit Feedback
+                    Submit Feedback
                   </Button>
+
                 </div>
               ) : (
                 feedbackTriggered && (
