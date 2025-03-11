@@ -8,7 +8,7 @@ from routes import auth_blueprint
 from models import Document
 
 app = Flask(__name__)
-CORS(app, origins="http://localhost:3000", methods=["GET", "POST", "DELETE", "OPTIONS"], allow_headers=["Content-Type"])
+CORS(app, origins="http://localhost:3000", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"], allow_headers=["Content-Type"])
 
 app.config.from_object(Config)
 app.register_blueprint(auth_blueprint)
@@ -17,7 +17,6 @@ app.register_blueprint(auth_blueprint)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FOLDER = os.path.join(BASE_DIR, "input_data")
 OUTPUT_FOLDER = os.path.join(BASE_DIR, "output_data")
-CLASSIFICATION_SCRIPT = os.path.join(BASE_DIR, "classification.py")
 
 # Ensure folders exist
 os.makedirs(INPUT_FOLDER, exist_ok=True)
@@ -41,14 +40,15 @@ def upload_files():
                     print(f"Error deleting file {file_path}: {e}")
 
         files = request.files.getlist("files")
-
         for file in files:
             if file.filename.endswith(".pdf"):
                 file_path = os.path.join(INPUT_FOLDER, file.filename)
                 file.save(file_path)
 
-        return jsonify({"message": "Files uploaded and processing started."})
+                # Insert metadata into the database
+                Document.insert_file_record(file.filename)
 
+        return jsonify({"message": "Files uploaded and processing started."})
     except Exception as e:
         print(f"Error during file upload: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
@@ -63,32 +63,58 @@ def search_documents():
         return response, 200
 
     query = request.args.get("query", default=None)
-    print("Query: ", query, flush=True)
-
-    # Fetch documents metadata
     documents = Document.get_documents(query)
-
-    # Make sure to return the response as JSON
     response = jsonify({"results": documents})
     response.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
-    return response  # No need to specify status code (default is 200)
+    return response
 
-
-@app.route("/delete_document/<string:doc_id>", methods=["DELETE"])
-def delete_document(doc_id):
-    """Endpoint to delete a document by ID."""
+@app.route("/update_document/<string:id>", methods=["POST"])
+def update_document(id):
+    """Endpoint to update user-corrected category and feedback."""
     try:
-        # Call the delete_document method to delete the document
-        success = Document.delete_document(doc_id)
+        id = id.strip()  # Remove any leading/trailing whitespace or newline characters
+        print(f"Received request to update document ID: {id}")
+        
+        if not request.is_json:
+            return jsonify({"error": "Request body must be JSON"}), 400
+
+        data = request.get_json()
+        print(f"Request Data: {data}")
+
+        if not data:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        user_corrected_category = data.get("user_corrected_category")
+        feedback = data.get("feedback")
+
+        if not user_corrected_category or not feedback:
+            return jsonify({"error": "Missing required fields"}), 400
+
+        # Log data before updating the document
+        print(f"Updating document with category: {user_corrected_category}, feedback: {feedback}")
+
+        success = Document.update_document(id, user_corrected_category, feedback)
         if success:
-            return jsonify({"message": f"Document {doc_id} deleted successfully."}), 200
+            return jsonify({"message": f"Document {id} updated successfully."}), 200
         else:
-            return jsonify({"error": f"Document {doc_id} not found."}), 404
+            return jsonify({"error": f"Document {id} not found."}), 404
     except Exception as e:
-        print(f"Error during document deletion: {e}")
+        print(f"Error updating document: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
 
 
+@app.route("/delete_document/<string:id>", methods=["DELETE"])
+def delete_document(id):
+    """Endpoint to delete a document by ID."""
+    try:
+        success = Document.delete_document(id)
+        if success:
+            return jsonify({"message": f"Document {id} deleted successfully."}), 200
+        else:
+            return jsonify({"error": f"Document {id} not found."}), 404
+    except Exception as e:
+        print(f"Error during document deletion: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

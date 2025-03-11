@@ -1,10 +1,10 @@
-import mysql.connector
-import json
 import os
+import json
+import uuid
+import mysql.connector
 from dotenv import load_dotenv
 from datetime import datetime
 import pytz
-import uuid  # Import the uuid module
 
 # Load environment variables from .env file
 load_dotenv()
@@ -49,7 +49,7 @@ class User:
 
 ############################################################### Document ##############################################################################################################
 class Document:
-    def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None, confidence=None):
+    def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None, confidence=None, user_corrected_category=None, feedback=None):
         self.id = id
         self.name = name
         self.uploadedAt = uploadedAt
@@ -58,6 +58,8 @@ class Document:
         self.topics = topics
         self.classification = classification
         self.confidence = confidence
+        self.user_corrected_category = user_corrected_category
+        self.feedback = feedback
 
     @staticmethod
     def get_documents(query=None):
@@ -76,7 +78,6 @@ class Document:
         documents = []
 
         for row in results:
-            # Convert uploadedAt to local timezone
             uploaded_at = row["uploadedAt"].astimezone(local_tz) if row["uploadedAt"] else None
             documents.append(
                 Document(
@@ -87,7 +88,9 @@ class Document:
                     summary=row["summary"],
                     topics=json.loads(row["topics"]) if row["topics"] else None,
                     classification=row["classification"] if row['classification'] else None,
-                    confidence = float(row["confidence"]) if row["confidence"] else None
+                    confidence=float(row["confidence"]) if row["confidence"] else None,
+                    user_corrected_category=row["user_corrected_category"],
+                    feedback=row["feedback"]
                 ).__dict__
             )
 
@@ -102,21 +105,15 @@ class Document:
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        # Generate a unique ID (UUID) for the document
-        generated_id = str(uuid.uuid4())  # Generate a UUID for the ID
-
-        # Get current time in local timezone
+        generated_id = str(uuid.uuid4())
         current_time = datetime.now(local_tz)
 
-        # Insert a new record into the documents table with generated UUID for the ID
         cursor.execute(
-            "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence) VALUES (%s, %s, %s, %s, %s, %s)",
-            (generated_id, filename, current_time, 'processing', None, None)
+            "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence, user_corrected_category, feedback) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+            (generated_id, filename, current_time, 'processing', None, None, None, None)
         )
 
-        # Commit the transaction
         connection.commit()
-
         cursor.close()
         connection.close()
 
@@ -136,21 +133,41 @@ class Document:
         connection.close()
 
     @staticmethod
-    def delete_document(doc_id):
+    def update_document(file_id, user_corrected_category, feedback):
+        """Update document metadata with user feedback."""
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            print(f"Executing query to update document {file_id}")
+            cursor.execute(
+                "UPDATE documents SET user_corrected_category = %s, feedback = %s WHERE id = %s;",
+                (user_corrected_category, feedback, file_id)
+            )
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return True
+        except Exception as e:
+            print(f"Error executing database query: {e}")
+            return False
+        
+        
+        
+        
+    @staticmethod
+    def delete_document(file_id):
         """Delete a document from the database by its ID."""
         try:
             connection = get_db_connection()
             cursor = connection.cursor()
 
-            # Delete the document by its ID
-            cursor.execute("DELETE FROM documents WHERE id = %s;", (doc_id,))
+            cursor.execute("DELETE FROM documents WHERE id = %s;", (file_id,))
             connection.commit()
 
-            # Check if the document was successfully deleted
             if cursor.rowcount == 0:
-                print(f"No document found with ID {doc_id}.")
+                print(f"No document found with ID {file_id}.")
                 return False
-            print(f"Document with ID {doc_id} has been deleted successfully.")
+            print(f"Document with ID {file_id} has been deleted successfully.")
             cursor.close()
             connection.close()
             return True
