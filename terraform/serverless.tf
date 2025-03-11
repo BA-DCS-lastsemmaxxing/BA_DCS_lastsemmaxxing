@@ -3,7 +3,6 @@ resource "aws_ecr_repository" "lsm_fyp_repo" {
   name = "${var.project_name}-repo"
 }
 
-data "aws_caller_identity" "current" {}
 
 resource "aws_iam_role" "lambda_execution_role" {
   name = "${var.project_name}-lambda-execution-role"
