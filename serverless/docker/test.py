@@ -18,4 +18,6 @@ response = bedrock_client.invoke_model(
             contentType="application/json"
         )
 
-print(response)
+response_body = json.loads(response['body'].read())
+
+print(response_body)
