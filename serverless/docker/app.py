@@ -10,7 +10,7 @@ from models import Document
 aws_region = os.environ.get("REGION")
 
 # AWS Bedrock model configuration
-MODEL_ID_LLAMA = "arn:aws:bedrock:us-west-2:874280117166:inference-profile/us.meta.llama3-3-70b-instruct-v1:0"
+MODEL_ID_LLAMA = "us.meta.llama3-1-70b-instruct-v1:0"
 
 # Prevent Bedrock timeout
 config = Config(read_timeout=1000)
