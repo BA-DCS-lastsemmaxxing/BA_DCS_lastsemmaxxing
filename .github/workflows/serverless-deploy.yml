@@ -28,7 +28,7 @@ jobs:
           mkdir -p dist
           zip -r dist/lambda_layer.zip python
           aws s3 cp dist/lambda_layer.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-ap
-          
+
       - name: Log in to Amazon ECR
         run: |
           aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com
@@ -36,8 +36,8 @@ jobs:
       - name: Build and push docker image for large document classification dependencies
         run: |
           docker build -t document-classification ./serverless/docker/
-          docker tag document-classification:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com/document-classification:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com/document-classification:latest
+          docker tag document-classification:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com/lsm_fyp_repo:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com/lsm_fyp_repo:latest
 
       - name: Zip Functions and Deploy
         run: |
