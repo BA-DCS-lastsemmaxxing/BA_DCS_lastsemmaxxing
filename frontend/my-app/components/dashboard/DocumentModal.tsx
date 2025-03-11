@@ -2,10 +2,19 @@
 
 import { useState } from 'react';
 import { Document } from '@/types/document';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { getDownloadLink } from '@/service/classification';
 import { Icons } from '@/components/Icons';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface DocumentModalProps {
   isOpen: boolean;
@@ -15,6 +24,9 @@ interface DocumentModalProps {
 
 export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalProps) {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [feedbackTriggered, setFeedbackTriggered] = useState(false);
+  const [userCategory, setUserCategory] = useState('');
+  const [feedbackText, setFeedbackText] = useState('');
 
   if (!document) return null;
 
@@ -25,8 +37,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     try {
       setIsDownloading(true);
       const data = await getDownloadLink(String(document.id));
-      
-      // Use window.document instead of document prop
+
       const link = window.document.createElement('a');
       link.href = data.downloadUrl;
       link.download = document.name;
@@ -38,6 +49,15 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     } finally {
       setIsDownloading(false);
     }
+  };
+
+  const handleFeedbackSubmit = () => {
+    console.log('Feedback submitted:', {
+      documentId: document.id,
+      userCategory,
+      feedbackText,
+    });
+    // Optional: Show toast here or reset state
   };
 
   return (
@@ -59,9 +79,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
               {isDownloading ? 'Downloading...' : 'Download'}
             </button>
           </div>
-          <DialogDescription>
-            Uploaded on {document.uploadedAt}
-          </DialogDescription>
+          <DialogDescription>Uploaded on {document.uploadedAt}</DialogDescription>
         </DialogHeader>
 
         <div className="mt-4 space-y-4">
@@ -75,14 +93,10 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                 <Badge variant="outline" className="text-blue-600 border-blue-600">
                   {isLLMBased ? 'LLM-based' : 'Rule-based'}
                 </Badge>
-                <Badge className="bg-green-500 text-white">
-                  {document.classification}
-                </Badge>
+                <Badge className="bg-green-500 text-white">{document.classification}</Badge>
               </div>
 
-              {isLLMBased && (
-                <p className="text-gray-600">{document.summary}</p>
-              )}
+              {isLLMBased && <p className="text-gray-600">{document.summary}</p>}
 
               {document.confidence && isRuleBased && (
                 <div className="flex items-center gap-2 text-gray-600">
@@ -90,18 +104,68 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                   <span className="font-medium">{(document.confidence * 100).toFixed(1)}%</span>
                 </div>
               )}
-              
+
               <div className="flex flex-wrap gap-2">
-                {document.topics?.map(topic => (
+                {document.topics?.map((topic) => (
                   <Badge key={topic} variant="secondary">
                     {topic}
                   </Badge>
                 ))}
               </div>
+
+              {/* ---------- Feedback UI Starts Here ---------- */}
+              <div className="mt-6">
+                <p className="text-sm text-gray-700 mb-2">Was this classification accurate?</p>
+                <div className="flex gap-3">
+                  <Button variant="outline" onClick={() => setFeedbackTriggered(true)}>
+                    👍 Yes
+                  </Button>
+                  <Button variant="outline" onClick={() => setFeedbackTriggered(true)}>
+                    👎 No
+                  </Button>
+                </div>
+              </div>
+
+              {feedbackTriggered && (
+                <div className="mt-4 space-y-3">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 block mb-1">
+                      User Corrected Category
+                    </label>
+                    <Select onValueChange={setUserCategory}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Anti Money Laundering">Anti Money Laundering</SelectItem>
+                        <SelectItem value="Regulatory Compliance">Regulatory Compliance</SelectItem>
+                        <SelectItem value="Risk Management">Risk Management</SelectItem>
+                        {/* Add more categories as needed */}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-gray-700 block mb-1">
+                      Feedback
+                    </label>
+                    <Textarea
+                      placeholder="Tell us why you agree or disagree..."
+                      value={feedbackText}
+                      onChange={(e) => setFeedbackText(e.target.value)}
+                    />
+                  </div>
+
+                  <Button className="mt-2" onClick={handleFeedbackSubmit}>
+                    ✅ Submit Feedback
+                  </Button>
+                </div>
+              )}
+              {/* ---------- Feedback UI Ends Here ---------- */}
             </>
           )}
         </div>
       </DialogContent>
     </Dialog>
   );
-} 
+}
