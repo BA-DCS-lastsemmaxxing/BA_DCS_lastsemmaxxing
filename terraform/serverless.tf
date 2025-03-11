@@ -181,6 +181,7 @@ resource "aws_lambda_function" "document_classification_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
 
     }
+  }
 }
 
 resource "aws_lambda_function" "document_classification_lambda" {
