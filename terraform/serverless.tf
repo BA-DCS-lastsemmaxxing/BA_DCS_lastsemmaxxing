@@ -1,3 +1,8 @@
+# ECR Repository
+resource "aws_ecr_repository" "lsm_fyp_repo" {
+  name = "${var.project_name}-repo"
+}
+
 resource "aws_iam_role" "lambda_execution_role" {
   name = "${var.project_name}-lambda-execution-role"
   assume_role_policy = jsonencode({
@@ -159,6 +164,25 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
 }
 
 # Document classification lambda
+resource "aws_lambda_function" "document_classification_lambda" {
+  function_name = "${var.project_name}-document-classification"
+  package_type  = "Image"
+  image_uri     = "${aws_ecr_repository.lsm_fyp_repo.repository_url}:latest"
+  timeout       = 30
+  role = aws_iam_role.lambda_execution_role.arn
+
+  environment {
+    variables = {
+      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
+      DB_USER = "admin"
+      DB_PASSWORD = "testpassword"
+      DB_NAME = "lsm_fyp"
+      REGION = var.region
+      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+
+    }
+}
+
 resource "aws_lambda_function" "document_classification_lambda" {
   function_name = "document_classification"
   timeout = 30
