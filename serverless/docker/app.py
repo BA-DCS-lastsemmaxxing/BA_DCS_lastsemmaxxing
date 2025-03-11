@@ -36,9 +36,10 @@ main_topics = set()
 
 def lambda_handler(event, context):
     print("Document classification triggered")
+    print("Event: ", event, flush=True)
     body = event.get("body")
-    filename = body.get("file_name")
-    file_id = body.get("file_id")
+    filename = event.get("file_name")
+    file_id = event.get("file_id")
     response = s3_client.get_object(Bucket=bucket_name, Key=file_id)
     file_content = response["Body"].read()
     preprocess_pdf(file_content,filename)
