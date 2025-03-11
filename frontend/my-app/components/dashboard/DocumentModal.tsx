@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { Document } from '@/types/document';
 import {
@@ -14,7 +12,7 @@ import { getDownloadLink } from '@/service/classification';
 import { Icons } from '@/components/Icons';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import ClassificationFilter from '@/components/dashboard/ClassificationFilter'; // Import the ClassificationFilter component
 
 interface DocumentModalProps {
   isOpen: boolean;
@@ -132,17 +130,10 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                     <label className="text-sm font-medium text-gray-700 block mb-1">
                       User Corrected Category
                     </label>
-                    <Select onValueChange={setUserCategory}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Anti Money Laundering">Anti Money Laundering</SelectItem>
-                        <SelectItem value="Regulatory Compliance">Regulatory Compliance</SelectItem>
-                        <SelectItem value="Risk Management">Risk Management</SelectItem>
-                        {/* Add more categories as needed */}
-                      </SelectContent>
-                    </Select>
+                    <ClassificationFilter
+                      classificationFilter={userCategory}
+                      setClassificationFilter={setUserCategory}
+                    />
                   </div>
 
                   <div>
