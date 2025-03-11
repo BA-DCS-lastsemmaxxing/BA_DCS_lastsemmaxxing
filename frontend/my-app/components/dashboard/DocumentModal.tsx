@@ -57,6 +57,8 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       feedbackText,
     });
     // Optional: Show toast here or reset state
+    setIsFeedbackCorrected(false); // Reset after submitting
+    setFeedbackTriggered(false); // Hide the feedback form
   };
 
   return (
@@ -120,7 +122,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                     variant="outline"
                     onClick={() => {
                       setIsFeedbackCorrected(false); // User chose "Yes"
-                      setFeedbackTriggered(false); // Don't show feedback form
+                      setFeedbackTriggered(false); // Hide the feedback form
                     }}
                   >
                     👍 Yes
