@@ -93,7 +93,9 @@ def preprocess_pdf(file_content, filename):
         cleaned_text = remove_stop_words(cleaned_text)
 
         # Save cleaned text to file
-        output_path = os.path.join(os.getcwd(), "output_data", f"{filename}.txt")
+        output_dir = "/tmp/output_data"
+        os.makedirs(output_dir, exist_ok=True)  # Ensure the directory exists
+        output_path = os.path.join(output_dir, f"{filename}.txt")
         with open(output_path, "w", encoding="utf-8") as text_file:
             text_file.write(cleaned_text)
 
@@ -105,10 +107,11 @@ def preprocess_pdf(file_content, filename):
             "filename": filename,
             "file_path": output_path
         }
-        with open("processed_file.pkl", "wb") as f:
+        pickle_path = "/tmp/processed_file.pkl"  # Use /tmp for Lambda compatibility
+        with open(pickle_path, "wb") as f:
             pickle.dump(metadata, f)
 
-        print("Metadata saved for evaluation script.")
+        print(f"Metadata saved to: {pickle_path}")
 
     except Exception as e:
         print(f"Error processing PDF: {e}")
@@ -242,10 +245,16 @@ def evaluate_topic_with_llama(file_content):
 
 #  Main Pipeline (Single File Upload)
 def process_single_file():
-    with open("processed_file.pkl", "rb") as f:
+    pickle_path = "/tmp/processed_file.pkl"  # Use /tmp for Lambda
+
+    with open(pickle_path, "rb") as f:
         metadata = pickle.load(f)
 
-    file_path = metadata["file_path"]
+    file_path = os.path.join("/tmp/output_data", metadata["filename"] + ".txt")
+
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"Cleaned text file not found at {file_path}")
+
     filename = metadata["filename"]
 
     with open(file_path, "r", encoding="utf-8") as f:
