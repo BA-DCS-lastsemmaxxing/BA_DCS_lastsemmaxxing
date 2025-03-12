@@ -26,6 +26,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const [userCategory, setUserCategory] = useState('');
   const [feedbackText, setFeedbackText] = useState('');
   const [isFeedbackCorrected, setIsFeedbackCorrected] = useState(false);
+  const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState(false);  // New state for feedback submission
 
   if (!document) return null;
 
@@ -51,20 +52,24 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   };
 
   const handleFeedbackSubmit = async () => {
-    if (!userCategory || !feedbackText) {
+    // If user clicked "Yes", set feedback as 'N.A.'
+    const finalCategory = userCategory || 'N.A.';
+    const finalFeedback = feedbackText || '';
+
+    if (!finalCategory || !finalFeedback) {
       alert("Please fill in both the category and feedback.");
       return;
     }
 
     try {
-      const response = await fetch(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/${document.id}`, {
+      const response = await fetch(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/update_document/${document.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_corrected_category: userCategory,
-          feedback: feedbackText,
+          user_corrected_category: finalCategory,
+          feedback: finalFeedback,
         }),
       });
 
@@ -73,6 +78,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       if (response.ok) {
         console.log('Feedback submitted successfully:', result);
         alert(result.message || 'Feedback submitted successfully!');
+        setIsFeedbackSubmitted(true);  // Set feedback as submitted
         setIsFeedbackCorrected(false);
         setFeedbackTriggered(false);
         setUserCategory('');
@@ -149,7 +155,11 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                     onClick={() => {
                       setIsFeedbackCorrected(false);
                       setFeedbackTriggered(false);
+                      setIsFeedbackSubmitted(true);  // Disable further editing if "Yes"
+                      setUserCategory('N.A.');  // Set to 'N.A.' when "Yes" is clicked
+                      setFeedbackText('');  // Clear the feedback text
                     }}
+                    disabled={isFeedbackSubmitted}  // Disable "Yes" after submission
                   >
                     👍 Yes
                   </Button>
@@ -165,7 +175,9 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                 </div>
               </div>
 
-              {isFeedbackCorrected ? (
+              {isFeedbackSubmitted ? (
+                <p className="text-green-500 text-center">Thanks for the feedback!</p>
+              ) : isFeedbackCorrected ? (
                 <div className="mt-4 space-y-3">
                   <div>
                     <label className="text-sm font-medium text-gray-700 block mb-1">
