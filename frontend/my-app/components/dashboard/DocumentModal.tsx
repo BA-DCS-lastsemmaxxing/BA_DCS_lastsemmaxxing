@@ -50,7 +50,6 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     }
   };
 
-  // ---------- Feedback Submission with AWS Lambda Integration ----------
   const handleFeedbackSubmit = async () => {
     if (!userCategory || !feedbackText) {
       alert("Please fill in both the category and feedback.");
@@ -58,8 +57,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     }
 
     try {
-      // Call the API Gateway endpoint that triggers the Lambda function
-      const response = await fetch(`https://xyz123.execute-api.ap-southeast-1.amazonaws.com/prod/feedback`, {
+      const response = await fetch(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/${document.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +73,6 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       if (response.ok) {
         console.log('Feedback submitted successfully:', result);
         alert(result.message || 'Feedback submitted successfully!');
-        // Reset feedback form
         setIsFeedbackCorrected(false);
         setFeedbackTriggered(false);
         setUserCategory('');
@@ -89,7 +86,6 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       alert('An error occurred while submitting feedback.');
     }
   };
-  // ---------- End of Feedback Submission Integration ----------
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
