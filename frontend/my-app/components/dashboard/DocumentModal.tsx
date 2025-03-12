@@ -12,7 +12,7 @@ import { getDownloadLink } from '@/service/classification';
 import { Icons } from '@/components/Icons';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import ClassificationFilter from '@/components/dashboard/ClassificationFilter'; // Import the ClassificationFilter component
+import ClassificationFilter from '@/components/dashboard/ClassificationFilter';
 
 interface DocumentModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const [feedbackTriggered, setFeedbackTriggered] = useState(false);
   const [userCategory, setUserCategory] = useState('');
   const [feedbackText, setFeedbackText] = useState('');
-  const [isFeedbackCorrected, setIsFeedbackCorrected] = useState(false); // Track if the user chose "No"
+  const [isFeedbackCorrected, setIsFeedbackCorrected] = useState(false);
 
   if (!document) return null;
 
@@ -50,16 +50,46 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     }
   };
 
-  const handleFeedbackSubmit = () => {
-    console.log('Feedback submitted:', {
-      documentId: document.id,
-      userCategory,
-      feedbackText,
-    });
-    // Optional: Show toast here or reset state
-    setIsFeedbackCorrected(false); // Reset after submitting
-    setFeedbackTriggered(false); // Hide the feedback form
+  // ---------- Feedback Submission with AWS Lambda Integration ----------
+  const handleFeedbackSubmit = async () => {
+    if (!userCategory || !feedbackText) {
+      alert("Please fill in both the category and feedback.");
+      return;
+    }
+
+    try {
+      // Call the API Gateway endpoint that triggers the Lambda function
+      const response = await fetch(`https://xyz123.execute-api.ap-southeast-1.amazonaws.com/prod/feedback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_corrected_category: userCategory,
+          feedback: feedbackText,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log('Feedback submitted successfully:', result);
+        alert(result.message || 'Feedback submitted successfully!');
+        // Reset feedback form
+        setIsFeedbackCorrected(false);
+        setFeedbackTriggered(false);
+        setUserCategory('');
+        setFeedbackText('');
+      } else {
+        console.error('Submission error:', result);
+        alert(result.error || 'Failed to submit feedback');
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      alert('An error occurred while submitting feedback.');
+    }
   };
+  // ---------- End of Feedback Submission Integration ----------
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -121,8 +151,8 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                   <Button
                     variant="outline"
                     onClick={() => {
-                      setIsFeedbackCorrected(false); // User chose "Yes"
-                      setFeedbackTriggered(false); // Hide the feedback form
+                      setIsFeedbackCorrected(false);
+                      setFeedbackTriggered(false);
                     }}
                   >
                     👍 Yes
@@ -130,8 +160,8 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                   <Button
                     variant="outline"
                     onClick={() => {
-                      setIsFeedbackCorrected(true); // User chose "No"
-                      setFeedbackTriggered(true); // Show feedback form
+                      setIsFeedbackCorrected(true);
+                      setFeedbackTriggered(true);
                     }}
                   >
                     👎 No
@@ -163,12 +193,11 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                   </div>
 
                   <Button
-                      className="text-sm font-medium text-black border border-black bg-transparent hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black"
-                      onClick={handleFeedbackSubmit}
+                    className="text-sm font-medium text-black border border-black bg-transparent hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black"
+                    onClick={handleFeedbackSubmit}
                   >
                     Submit Feedback
                   </Button>
-
                 </div>
               ) : (
                 feedbackTriggered && (
