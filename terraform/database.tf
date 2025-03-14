@@ -1,3 +1,7 @@
+locals {
+    credentials = jsondecode(data.aws_ssm_parameter.db_credentials.value)
+}
+
 resource "aws_db_instance" "rds" {
     identifier = "${var.project_name}-rds"
     allocated_storage = 20
@@ -6,8 +10,8 @@ resource "aws_db_instance" "rds" {
     engine_version = "8.0"
     instance_class = "db.t3.micro"
     db_name = "lsm_fyp"
-    username = "admin" // todo - set this as secrets/values
-    password = "testpassword"
+    username = local.credentials.username
+    password = local.credentials.password
     publicly_accessible = true
     skip_final_snapshot = true
 
