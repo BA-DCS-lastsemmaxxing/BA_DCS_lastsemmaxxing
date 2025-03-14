@@ -1,10 +1,10 @@
 locals {
-    credentials = jsondecode(data.aws_ssm_parameter.db_credentials.value)
+    rds_credentials = jsondecode(data.aws_ssm_parameter.db_credentials.value)
 
     lambda_db_variables = {
         DB_HOST = aws_db_instance.rds.address
-        DB_USER = local.credentials.username
-        DB_PASSWORD = local.credentials.password
+        DB_USER = local.rds_credentials.username
+        DB_PASSWORD = local.rds_credentials.password
         DB_NAME = aws_db_instance.rds.db_name
     }
 }
