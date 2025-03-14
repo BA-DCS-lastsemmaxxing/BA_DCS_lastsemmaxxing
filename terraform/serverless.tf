@@ -1,3 +1,14 @@
+locals {
+    credentials = jsondecode(data.aws_ssm_parameter.db_credentials.value)
+
+    lambda_db_variables = {
+        DB_HOST = aws_db_instance.rds.address
+        DB_USER = local.credentials.username
+        DB_PASSWORD = local.credentials.password
+        DB_NAME = aws_db_instance.rds.db_name
+    }
+}
+
 # ECR Repository
 resource "aws_ecr_repository" "lsm_fyp_repo" {
   name = "${var.project_name}-repo"
@@ -99,12 +110,7 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   environment {
-    variables = {
-      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
-      DB_USER = "admin"
-      DB_PASSWORD = "testpassword"
-      DB_NAME = "lsm_fyp"
-    }
+    variables = local.lambda_db_variables
   }
 }
 
@@ -144,12 +150,7 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   environment {
-    variables = {
-      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
-      DB_USER = "admin"
-      DB_PASSWORD = "testpassword"
-      DB_NAME = "lsm_fyp"
-    }
+    variables = local.lambda_db_variables
   }
 }
 
@@ -183,15 +184,10 @@ resource "aws_lambda_function" "document_classification_lambda" {
   role = aws_iam_role.lambda_execution_role.arn
 
   environment {
-    variables = {
-      DB_HOST = "lsm-fyp-rds.cpk00i8mcpir.ap-southeast-1.rds.amazonaws.com"
-      DB_USER = "admin"
-      DB_PASSWORD = "testpassword"
-      DB_NAME = "lsm_fyp"
+    variables = merge(local.lambda_db_variables, {
       REGION = var.region
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-
-    }
+    })
   }
 }
 
