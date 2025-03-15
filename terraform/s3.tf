@@ -120,7 +120,7 @@ resource "aws_s3_object" "rds_init_script" {
 
 resource "aws_s3_object" "rds_init_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "rds_init_lambda.zip"
+  key = "rds_init.zip"
 }
 
 // Lambda Layer
