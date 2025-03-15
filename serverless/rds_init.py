@@ -11,7 +11,7 @@ def lambda_handler(event, context):
         # Fetch DB credentials from SSM
         db_host = os.getenv("DB_HOST")
         db_user = os.getenv("DB_USER")
-        db_pass = os.getenv("DB_PASS")
+        db_pass = os.getenv("DB_PASSWORD")
         db_name = os.getenv("DB_NAME")
         s3_bucket = os.getenv("S3_BUCKET")
         sql_file_key = os.getenv("SQL_FILE_KEY")
