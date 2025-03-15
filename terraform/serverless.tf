@@ -410,9 +410,9 @@ resource "aws_lambda_function" "rds_init_lambda" {
   function_name = "rds_init_lambda"
   runtime = "python3.9"
   handler = "rds_init.lambda_handler"
-  s3_bucket = resource.aws_s3_bucket.serverless_bucket_ap.bucket
-  s3_key = data.rds_init_lambda_zip.key
-  role = resource.aws_iam_role.rds_init_lambda_role.arn
+  s3_bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  s3_key = "rds_init.zip"
+  role = aws_iam_role.rds_init_lambda_role.arn
   source_code_hash = data.aws_s3_object.rds_init_lambda_zip.etag
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
