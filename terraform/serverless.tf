@@ -415,6 +415,8 @@ resource "aws_lambda_function" "rds_init_lambda" {
   role = aws_iam_role.rds_init_lambda_role.arn
   source_code_hash = data.aws_s3_object.rds_init_lambda_zip.etag
 
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
+
   environment {
     variables = merge(
       local.lambda_db_variables,
