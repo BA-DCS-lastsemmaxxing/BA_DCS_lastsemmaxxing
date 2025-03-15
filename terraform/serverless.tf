@@ -337,3 +337,91 @@ resource "aws_iam_role_policy_attachment" "attach_policy" {
   role       = aws_iam_role.step_function_role.name
 }
 
+# db init lambda iam
+resource "aws_iam_role" "rds_init_lambda_role" {
+  name = "rds_init_lambda_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_policy" "rds_init_lambda_policy" {
+  name        = "rds_init_lambda_policy"
+  description = "Policy for Lambda to access S3, RDS, SSM, and Logs"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "${aws_s3_bucket.serverless_bucket_ap.arn}/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameter",
+        "ssm:GetParameters"
+      ],
+      "Resource": [
+        "arn:aws:ssm:*:*:parameter/rds/db_host",
+        "arn:aws:ssm:*:*:parameter/rds/db_user",
+        "arn:aws:ssm:*:*:parameter/rds/db_pass"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "rds-db:connect",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_attach" {
+  role       = aws_iam_role.rds_init_lambda_role.name
+  policy_arn = aws_iam_policy.rds_init_lambda_policy.arn
+}
+
+resource "aws_lambda_function" "rds_init_lambda" {
+  function_name = "rds_init_lambda"
+  runtime = "python3.9"
+  handler = "rds_init.lambda_handler"
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "rds_init.zip"
+  role = aws_iam_role.rds_init_lambda_role.arn
+  source_code_hash = data.aws_s3_object.rds_init_lambda_zip.etag
+
+  environment {
+    variables = merge(
+      local.lambda_db_variables,
+      {
+        S3_BUCKET = aws_s3_bucket.serverless_bucket_ap.bucket,
+        SQL_FILE_KEY = "rds_init_script.sql"
+      }
+    )
+  }
+}
