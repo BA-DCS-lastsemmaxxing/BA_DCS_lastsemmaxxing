@@ -104,7 +104,7 @@ export async function searchDocuments(query: string) {
 }
 
 export async function getDownloadLink(documentId: string) {
-    const response = await fetch(`${api.backendUrl}/download/${documentId}`);
+    const response = await fetch(`${api.backendUrl}/download/url/${documentId}`);
     
     if (!response.ok) {
       throw new Error(`Failed to get download link. Status: ${response.status}`);
