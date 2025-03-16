@@ -84,12 +84,13 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     const finalCategory = userCategory || 'N.A.';
     const finalFeedback = feedbackText || '';
   
+    // Validation: Ensure both category and feedback are provided
     if (!finalCategory || !finalFeedback) {
       alert("Please fill in both the category and feedback.");
       return;
     }
   
-    // Sending feedback without error handling
+    // Sending feedback to the API without error handling
     const response = await fetch(`${api.backendUrl}/send_feedback?document_id=${encodeURIComponent(String(document.id))}`, {
       method: 'POST',
       headers: {
@@ -102,6 +103,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       }),
     });
   
+    // Handle the API response
     const result = await response.json();
   
     if (response.ok) {
