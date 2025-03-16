@@ -44,7 +44,7 @@ def lambda_handler(event, context):
             "headers": {
                 "Access-Control-Allow-Origin": origin,  # Modify for security
                 "Access-Control-Allow-Methods": "OPTIONS, GET",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization"
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
                 "Content-Type": "application/json"
             },
             "body": json.dumps({"download_url": presigned_url})
