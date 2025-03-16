@@ -72,13 +72,11 @@ def search_documents():
 def update_document():
     """Endpoint to update user-corrected category and feedback."""
     try:
-        # Get the document_id from the query string
-        document_id = request.args.get('document_id')
-        
+        document_id = request.args.get('document_id')  # Get document_id from the query string
         if not document_id:
-            return jsonify({"error": "Missing document_id parameter"}), 400
+            return jsonify({"error": "Missing document_id parameter"}), 400  # Return error if missing
 
-        print(f"Received request to update document ID: {document_id}")
+        print(f"Received document_id: {document_id}")
         
         if not request.is_json:
             return jsonify({"error": "Request body must be JSON"}), 400
@@ -95,7 +93,6 @@ def update_document():
         if not user_corrected_category or not feedback:
             return jsonify({"error": "Missing required fields"}), 400
 
-        # Log data before updating the document
         print(f"Updating document with category: {user_corrected_category}, feedback: {feedback}")
 
         success = Document.update_document(document_id, user_corrected_category, feedback)
@@ -106,6 +103,7 @@ def update_document():
     except Exception as e:
         print(f"Error updating document: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
+
 
 
 @app.route("/delete_document/<string:id>", methods=["DELETE"])
