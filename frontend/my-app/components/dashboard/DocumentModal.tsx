@@ -37,7 +37,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     try {
       setIsDownloading(true);
       // console.log("Getting download for: ", document.id)
-      const data = await getDownloadLink(document.id);
+      // const data = await getDownloadLink(document.id);
       
       // console.log(data)
       // if (!data || !data["download_url"]) {
