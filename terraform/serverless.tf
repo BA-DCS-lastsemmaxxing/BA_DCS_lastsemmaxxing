@@ -134,6 +134,26 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
   }
 }
 
+# Fetch download url function
+resource "aws_lambda_function" "fetch_download_url_lambda" {
+  function_name = "fetch_download_url"
+
+  runtime = "python3.9"
+  handler = "fetch_download_url.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "fetch_download_url.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.fetch_download_url_lambda_zip.etag
+  
+  environment {
+    variables = {
+      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+    }
+  }
+}
+
 # Insert new document into RDS function
 resource "aws_lambda_function" "insert_rds_new_document_lambda" {
   function_name = "insert_rds_new_document"
