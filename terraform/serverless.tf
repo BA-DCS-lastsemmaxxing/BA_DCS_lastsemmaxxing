@@ -114,6 +114,11 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "fetch_documents_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.fetch_documents_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
+}
+
 # Fetch upload url function
 resource "aws_lambda_function" "fetch_upload_url_lambda" {
   function_name = "fetch_upload_url"
@@ -132,6 +137,11 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     }
   }
+}
+
+resource "aws_cloudwatch_log_group" "fetch_upload_url_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.fetch_upload_url_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
 }
 
 # Fetch download url function
@@ -154,6 +164,11 @@ resource "aws_lambda_function" "fetch_download_url_lambda" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "fetch_download_url_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.fetch_download_url_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
+}
+
 # Insert new document into RDS function
 resource "aws_lambda_function" "insert_rds_new_document_lambda" {
   function_name = "insert_rds_new_document"
@@ -173,6 +188,12 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
     variables = local.lambda_db_variables
   }
 }
+
+resource "aws_cloudwatch_log_group" "insert_rds_new_document_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.insert_rds_new_document_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
+}
+
 
 # Lambda function triggered on new object in S3
 resource "aws_lambda_function" "s3_trigger_lambda" {
@@ -194,6 +215,11 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "s3_trigger_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.s3_trigger_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
+}
+
 # Document classification lambda
 resource "aws_lambda_function" "document_classification_lambda" {
   function_name = "document_classification"
@@ -209,6 +235,11 @@ resource "aws_lambda_function" "document_classification_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     })
   }
+}
+
+resource "aws_cloudwatch_log_group" "document_classification_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.document_classification_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
 }
 
 # Attach the policy to the role
@@ -283,6 +314,12 @@ resource "aws_lambda_function" "auth_lambda_edge" {
   publish = true
 
   source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
+}
+
+resource "aws_cloudwatch_log_group" "auth_lambda_edge_logs" {
+  provider          = aws.us-east-1
+  name              = "/aws/lambda/${aws_lambda_function.rds_init_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
 }
 
 # Document processing workflow
@@ -456,4 +493,9 @@ resource "aws_lambda_function" "rds_init_lambda" {
       }
     )
   }
+}
+
+resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.rds_init_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
 }
