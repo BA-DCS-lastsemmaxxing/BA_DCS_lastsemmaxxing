@@ -154,9 +154,9 @@ data "aws_s3_object" "fetch_upload_url_lambda_zip" {
   key = "fetch_upload_url.zip"
 }
 
-data "aws_s3_object" "fetch_upload_url_lambda_zip" {
+data "aws_s3_object" "fetch_download_url_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_upload_url.zip"
+  key = "fetch_download_url.zip"
 }
 
 data "aws_s3_object" "insert_rds_new_document_lambda_zip" {
