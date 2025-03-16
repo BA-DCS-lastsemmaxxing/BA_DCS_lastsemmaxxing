@@ -111,6 +111,18 @@ resource "aws_s3_bucket_policy" "allow_presigned_uploads" {
   })
 }
 
+// db init script 
+resource "aws_s3_object" "rds_init_script" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "rds_init_script.sql"
+  source = "${path.module}/../mysql/lsm_fyp.sql"
+}
+
+data "aws_s3_object" "rds_init_lambda_zip" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "rds_init.zip"
+}
+
 // Lambda Layer
 data "aws_s3_object" "lambda_layer" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
