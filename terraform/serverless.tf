@@ -195,11 +195,15 @@ resource "aws_lambda_function" "document_classification_lambda" {
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
   role = aws_iam_role.lambda_execution_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
+
+  depends_on = [aws_iam_role.lambda_execution_role, aws_iam_policy.lambda_policy]
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   role = aws_iam_role.lambda_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+
+  depends_on = [aws_iam_role.lambda_execution_role]
 }
 
 # Code for Lambda Edge Function - Lambda Authoriser
@@ -335,6 +339,8 @@ resource "aws_iam_policy" "step_function_policy" {
 resource "aws_iam_role_policy_attachment" "attach_policy" {
   policy_arn = aws_iam_policy.step_function_policy.arn
   role       = aws_iam_role.step_function_role.name
+
+  depends_on = [ aws_iam_role.step_function_role, aws_iam_policy.step_function_policy ]
 }
 
 # db init lambda iam
@@ -404,6 +410,8 @@ EOF
 resource "aws_iam_role_policy_attachment" "lambda_attach" {
   role       = aws_iam_role.rds_init_lambda_role.name
   policy_arn = aws_iam_policy.rds_init_lambda_policy.arn
+
+  depends_on = [aws_iam_role.rds_init_lambda_role, aws_iam_policy.rds_init_lambda_policy]
 }
 
 resource "aws_lambda_function" "rds_init_lambda" {
