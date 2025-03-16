@@ -20,6 +20,21 @@ interface DocumentModalProps {
   document: Document | null;
 }
 
+
+
+
+function getCookie(name: string): string | undefined {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.split("=");
+        if (cookieName === name) {
+            return decodeURIComponent(cookieValue);
+        }
+    }
+    return undefined;
+}
+
+
 export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalProps) {
   const [isDownloading, setIsDownloading] = useState(false);
   const [feedbackTriggered, setFeedbackTriggered] = useState(false);
@@ -33,6 +48,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const isLLMBased = document.summary !== null && document.summary !== undefined;
   const isRuleBased = document.confidence !== null && document.confidence !== undefined;
 
+  
   const handleDownload = async () => {
     try {
       setIsDownloading(true);
@@ -70,15 +86,13 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       alert("Please fill in both the category and feedback.");
       return;
     }
-    // https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/
-    // http://127.0.0.1:5001/
+    
     try {
-      const token = localStorage.getItem("authToken"); // Or get it from your state
       const response = await fetch(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`, {
         method: 'POST',
         headers: {
+          "Authorization": `${getCookie("CognitoToken")}`,
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           user_corrected_category: finalCategory,
