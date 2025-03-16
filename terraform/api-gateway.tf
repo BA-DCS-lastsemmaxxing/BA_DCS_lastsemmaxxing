@@ -98,31 +98,6 @@ resource "aws_api_gateway_resource" "upload_resource" {
     path_part   = "upload"
 }
 
-resource "aws_api_gateway_method" "upload_method_post" {
-    rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id   = aws_api_gateway_resource.upload_resource.id
-    http_method   = "POST"
-    authorization = "COGNITO_USER_POOLS"
-    authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
-}
-
-resource "aws_api_gateway_integration" "upload_method_post_integration" {
-    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id = aws_api_gateway_resource.upload_resource.id
-    http_method = aws_api_gateway_method.upload_method_post.http_method
-    
-    integration_http_method = "POST" # Always POST for Lambda proxy integration
-    type = "AWS_PROXY"
-    uri = aws_lambda_function.insert_rds_new_document_lambda.invoke_arn
-}
-resource "aws_lambda_permission" "upload_method_post_lambda_permission" {
-    statement_id  = "AllowAPIGatewayInvoke"
-    action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.insert_rds_new_document_lambda.function_name
-    principal     = "apigateway.amazonaws.com"
-    source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
-}
-
 # Create /upload/url resource under /upload
 resource "aws_api_gateway_resource" "upload_url_resource" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
@@ -253,56 +228,6 @@ resource "aws_api_gateway_integration_response" "documents_method_options_integr
   }
 
   depends_on = [ aws_api_gateway_integration.documents_options_integration ]
-}
-
-# Options method for CORS support (POST /upload)
-resource "aws_api_gateway_method" "upload_method_options" {
-  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id   = aws_api_gateway_resource.upload_resource.id
-  http_method   = "OPTIONS"
-  authorization = "NONE"
-}
-
-resource "aws_api_gateway_method_response" "upload_method_options_response" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.upload_resource.id
-  http_method = aws_api_gateway_method.upload_method_options.http_method
-  status_code = "200"
-  
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"       = true
-    "method.response.header.Access-Control-Allow-Methods"      = true
-    "method.response.header.Access-Control-Allow-Headers"      = true
-    "method.response.header.Access-Control-Allow-Credentials"  = true
-  }
-}
-
-resource "aws_api_gateway_integration" "upload_options_integration" {
-  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id             = aws_api_gateway_resource.upload_resource.id
-  http_method             = aws_api_gateway_method.upload_method_options.http_method
-  type                    = "MOCK"
-  request_templates = {
-    "application/json" = jsonencode({
-      statusCode = 200
-    })
-  }
-}
-
-resource "aws_api_gateway_integration_response" "upload_options_integration_response" {
-    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-    resource_id = aws_api_gateway_resource.upload_resource.id
-    http_method = aws_api_gateway_method.upload_method_options.http_method
-    status_code = "200"
-
-    response_parameters = {
-        "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
-        "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
-        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
-        "method.response.header.Access-Control-Allow-Credentials" = "'true'"
-    }
-
-    depends_on = [ aws_api_gateway_integration.upload_options_integration ]
 }
 
 # Create /download resource
