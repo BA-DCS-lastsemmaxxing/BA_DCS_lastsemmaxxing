@@ -74,17 +74,22 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       // Assuming the token is stored in localStorage or a global state
       const token = localStorage.getItem("authToken"); // Or get it from your state
   
-      const response = await fetch(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,  // Pass the token in the Authorization header
-        },
-        body: JSON.stringify({
-          user_corrected_category: finalCategory,
-          feedback: finalFeedback,
-        }),
-      });
+      // Ensure the Authorization header is passed
+      const response = await fetch(
+        `https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,  // Pass the token in the Authorization header
+            'Origin': 'https://d1ztk01ovm0zc3.cloudfront.net',  // Set your CloudFront Origin here
+          },
+          body: JSON.stringify({
+            user_corrected_category: finalCategory,
+            feedback: finalFeedback,
+          }),
+        }
+      );
   
       const result = await response.json();
   
