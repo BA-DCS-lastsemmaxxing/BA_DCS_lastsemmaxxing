@@ -246,6 +246,8 @@ resource "aws_api_gateway_integration_response" "documents_method_options_integr
     "method.response.header.Access-Control-Allow-Headers"      = "'Content-Type,Authorization'"
     "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
   }
+
+  depends_on = [ aws_api_gateway_integration.documents_options_integration ]
 }
 
 # Options method for CORS support (POST /upload)
@@ -294,6 +296,8 @@ resource "aws_api_gateway_integration_response" "upload_options_integration_resp
         "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
     }
+
+    depends_on = [ aws_api_gateway_integration.upload_options_integration ]
 }
 
 # Create /download resource
