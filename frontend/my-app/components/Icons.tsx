@@ -3,7 +3,8 @@ import{
     User,
     ChevronDown,
     FilePlus2,
-    Download
+    Download,
+    Loader
 } from "lucide-react";
 
 export const Icons: any = {
@@ -11,5 +12,6 @@ export const Icons: any = {
     User: User,
     ChevronDown: ChevronDown,
     NewDocument: FilePlus2,
-    Download: Download
+    Download: Download,
+    Loader: Loader
 }
