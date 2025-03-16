@@ -13,7 +13,7 @@ import { Icons } from '@/components/Icons';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import ClassificationFilter from '@/components/dashboard/ClassificationFilter';
-const { api } = require('./service/configService').get();
+const { api } = require('../service/configService').get();
 
 
 interface DocumentModalProps {
