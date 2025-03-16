@@ -87,11 +87,40 @@ resource "aws_wafv2_web_acl" "waf_acl" {
     block {}  # Block all requests unless explicitly allowed
   }
 
+  rule {
+  name     = "AllowCORSPreflight"
+  priority = 1
+
+  action {
+    allow {}
+  }
+
+  statement {
+    byte_match_statement {
+      field_to_match {
+        method {}
+      }
+      positional_constraint = "EXACTLY"
+      search_string         = "OPTIONS"
+      text_transformation {
+        priority = 0
+        type     = "NONE"
+      }
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "AllowCORSPreflight"
+    sampled_requests_enabled   = true
+  }
+}
+
   # 1️⃣ Allow API Gateway Requests with JWT Authentication
   # 1️⃣ Allow API Gateway Requests with JWT Authentication
   rule {
     name     = "AllowJWTAuthToAPI"
-    priority = 1
+    priority = 2
 
     action {
       allow {}
@@ -124,7 +153,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
   # # 2️⃣ Rate Limiting for API Gateway (e.g., 100 requests per 5 minutes)
   # rule {
   #   name     = "RateLimitAPIRequests"
-  #   priority = 2
+  #   priority = 3
 
   #   action {
   #     block {}
@@ -147,7 +176,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
   # 3️⃣ SQL Injection & XSS Protection for API Gateway
   rule {
     name     = "SQLInjectionAndXSSProtection"
-    priority = 3
+    priority = 4
 
     action {
       block {}
