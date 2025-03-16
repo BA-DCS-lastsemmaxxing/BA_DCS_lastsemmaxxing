@@ -33,6 +33,7 @@ def lambda_handler(event, context):
 
         # Generate a presigned URL for the requested file
         presigned_url = generate_presigned_url(S3_BUCKET, file_id)
+        print(presigned_url)
 
         if not presigned_url:
             return {"statusCode": 500, "body": json.dumps({"error": "Failed to generate presigned URL"})}

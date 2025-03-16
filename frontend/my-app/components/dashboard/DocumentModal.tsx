@@ -38,11 +38,11 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       setIsDownloading(true);
       console.log("Getting download for: ", document.id)
       const data = await getDownloadLink(document.id);
-
+      
+      console.log(data)
       if (!data || !data.downloadUrl) {
         throw new Error("Download link not found in response.");
       }
-      console.log(data)
       console.log('Download link:', data.downloadUrl);
 
       const link = window.document.createElement('a');
