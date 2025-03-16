@@ -1,5 +1,5 @@
 export interface Document {
-  id: BigInteger;
+  id: string;
   name: string;
   uploadedAt: string;
   status: 'processing' | 'completed' | 'failed';

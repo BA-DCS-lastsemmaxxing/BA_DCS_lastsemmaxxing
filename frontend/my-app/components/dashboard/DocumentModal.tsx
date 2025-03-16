@@ -36,7 +36,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const handleDownload = async () => {
     try {
       setIsDownloading(true);
-      const data = await getDownloadLink(String(document.id));
+      const data = await getDownloadLink(document.id);
 
       const link = window.document.createElement('a');
       link.href = data.downloadUrl;
