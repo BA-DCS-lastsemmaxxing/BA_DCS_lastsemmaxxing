@@ -88,6 +88,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
   }
 
   # 1️⃣ Allow API Gateway Requests with JWT Authentication
+  # 1️⃣ Allow API Gateway Requests with JWT Authentication
   rule {
     name     = "AllowJWTAuthToAPI"
     priority = 1
@@ -100,11 +101,11 @@ resource "aws_wafv2_web_acl" "waf_acl" {
       byte_match_statement {
         field_to_match {
           single_header {
-            name = "cookie"
+            name = "Authorization"  # Change from "cookie" to "Authorization"
           }
         }
         positional_constraint = "STARTS_WITH"
-        search_string         = "CognitoToken=" # Ensures valid JWT token is present
+        search_string         = ""  # No prefix, just match the token directly
         text_transformation {
           priority = 0
           type     = "NONE"
@@ -118,6 +119,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
       sampled_requests_enabled   = true
     }
   }
+
 
   # 2️⃣ Rate Limiting for API Gateway (e.g., 100 requests per 5 minutes)
   rule {
