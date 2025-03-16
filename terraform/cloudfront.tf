@@ -132,7 +132,7 @@ resource "aws_wafv2_web_acl" "waf_acl" {
 
     statement {
       rate_based_statement {
-        limit              = 50  # Adjust based on expected traffic
+        limit              = 1000  # Adjust based on expected traffic
         aggregate_key_type = "IP"
       }
     }
