@@ -13,7 +13,7 @@ import { Icons } from '@/components/Icons';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import ClassificationFilter from '@/components/dashboard/ClassificationFilter';
-const { api } = require('../../service/configService').get();
+
 
 
 interface DocumentModalProps {
@@ -91,7 +91,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     }
   
     // Sending feedback to the API without error handling
-    const response = await fetch(`${api.backendUrl}/send_feedback?document_id=${encodeURIComponent(String(document.id))}`, {
+    const response = await fetch(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback?document_id=${encodeURIComponent(String(document.id))}`, {
       method: 'POST',
       headers: {
         "Authorization": `${getCookie("CognitoToken")}`,
