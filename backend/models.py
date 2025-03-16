@@ -153,6 +153,7 @@ class Document:
         
         
         
+        
     @staticmethod
     def delete_document(file_id):
         """Delete a document from the database by its ID."""

@@ -68,15 +68,12 @@ def search_documents():
     response.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
     return response
 
-@app.route("/send_feedback", methods=["POST"])
-def update_document():
+@app.route("/send_feedback/<string:id>", methods=["POST"])
+def update_document(id):
     """Endpoint to update user-corrected category and feedback."""
     try:
-        document_id = request.args.get('document_id')  # Get document_id from the query string
-        if not document_id:
-            return jsonify({"error": "Missing document_id parameter"}), 400  # Return error if missing
-
-        print(f"Received document_id: {document_id}")
+        id = id.strip()  # Remove any leading/trailing whitespace or newline characters
+        print(f"Received request to update document ID: {id}")
         
         if not request.is_json:
             return jsonify({"error": "Request body must be JSON"}), 400
@@ -93,17 +90,17 @@ def update_document():
         if not user_corrected_category or not feedback:
             return jsonify({"error": "Missing required fields"}), 400
 
+        # Log data before updating the document
         print(f"Updating document with category: {user_corrected_category}, feedback: {feedback}")
 
-        success = Document.update_document(document_id, user_corrected_category, feedback)
+        success = Document.update_document(id, user_corrected_category, feedback)
         if success:
-            return jsonify({"message": f"Document {document_id} updated successfully."}), 200
+            return jsonify({"message": f"Document {id} updated successfully."}), 200
         else:
-            return jsonify({"error": f"Document {document_id} not found."}), 404
+            return jsonify({"error": f"Document {id} not found."}), 404
     except Exception as e:
         print(f"Error updating document: {e}")
         return jsonify({"error": "Internal Server Error"}), 500
-
 
 
 @app.route("/delete_document/<string:id>", methods=["DELETE"])
