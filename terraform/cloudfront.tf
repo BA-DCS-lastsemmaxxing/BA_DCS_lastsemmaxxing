@@ -121,28 +121,28 @@ resource "aws_wafv2_web_acl" "waf_acl" {
   }
 
 
-  # 2️⃣ Rate Limiting for API Gateway (e.g., 100 requests per 5 minutes)
-  rule {
-    name     = "RateLimitAPIRequests"
-    priority = 2
+  # # 2️⃣ Rate Limiting for API Gateway (e.g., 100 requests per 5 minutes)
+  # rule {
+  #   name     = "RateLimitAPIRequests"
+  #   priority = 2
 
-    action {
-      block {}
-    }
+  #   action {
+  #     block {}
+  #   }
 
-    statement {
-      rate_based_statement {
-        limit              = 1000  # Adjust based on expected traffic
-        aggregate_key_type = "IP"
-      }
-    }
+  #   statement {
+  #     rate_based_statement {
+  #       limit              = 1000  # Adjust based on expected traffic
+  #       aggregate_key_type = "IP"
+  #     }
+  #   }
 
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "RateLimitAPIRequests"
-      sampled_requests_enabled   = true
-    }
-  }
+  #   visibility_config {
+  #     cloudwatch_metrics_enabled = true
+  #     metric_name                = "RateLimitAPIRequests"
+  #     sampled_requests_enabled   = true
+  #   }
+  # }
 
   # 3️⃣ SQL Injection & XSS Protection for API Gateway
   rule {
