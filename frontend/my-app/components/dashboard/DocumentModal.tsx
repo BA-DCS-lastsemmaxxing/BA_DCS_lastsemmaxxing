@@ -48,31 +48,11 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       // Open the download link in a new tab
       // const newTab = window.open(data.download_url, '_blank');
 
-      // Fetch the file from the URL
-      const response = await fetch(data.download_url);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch file: ${response.statusText}`);
-      }
-
-      const blob = await response.blob();
-      const blobURL = URL.createObjectURL(blob);
-
-      // Create a hidden anchor element for downloading
-      const anchor = window.document.createElement("a");
-      anchor.href = blobURL;
-      anchor.download = document.name || "download"; // Set filename
-      window.document.body.appendChild(anchor);
-      anchor.click();
-
-      // Cleanup
-      window.document.body.removeChild(anchor);
-      URL.revokeObjectURL(blobURL);
-
-        // check if the new tab was opened
-        // if (newTab) {
-        //   newTab.focus();
-        // } else {
-        //   console.error("Failed to open download link in a new tab.")
+      // check if the new tab was opened
+      // if (newTab) {
+      //   newTab.focus();
+      // } else {
+      //   console.error("Failed to open download link in a new tab.")
       // }
     } catch (error) {
       console.error('Download failed:', error);
