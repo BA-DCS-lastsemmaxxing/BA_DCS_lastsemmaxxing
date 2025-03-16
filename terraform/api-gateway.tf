@@ -196,7 +196,7 @@ resource "aws_api_gateway_integration_response" "upload_url_options_integration_
     status_code = "200"
 
     response_parameters = {
-        "method.response.header.Access-Control-Allow-Origin" = "'*'"
+        "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
         "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
         "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
@@ -246,7 +246,7 @@ resource "aws_api_gateway_integration_response" "documents_method_options_integr
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"       = "'*'"
+    "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
     "method.response.header.Access-Control-Allow-Methods"      = "'GET,POST,OPTIONS,DELETE'"
     "method.response.header.Access-Control-Allow-Headers"      = "'Content-Type,Authorization'"
     "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
@@ -296,7 +296,7 @@ resource "aws_api_gateway_integration_response" "upload_options_integration_resp
     status_code = "200"
 
     response_parameters = {
-        "method.response.header.Access-Control-Allow-Origin" = "'*'"
+        "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
         "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
         "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
@@ -385,7 +385,7 @@ resource "aws_api_gateway_integration_response" "download_url_options_integratio
     status_code = "200"
 
     response_parameters = {
-        "method.response.header.Access-Control-Allow-Origin" = "'*'"
+        "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
         "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
         "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
