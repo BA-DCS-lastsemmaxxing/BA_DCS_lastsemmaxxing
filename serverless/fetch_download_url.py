@@ -6,8 +6,6 @@ import os
 S3_BUCKET = os.getenv("S3_BUCKET")  # Ensure this is set in Lambda environment variables
 s3 = boto3.client("s3")
 
-origin = os.getenv("ORIGIN")
-
 def generate_presigned_url(bucket_name, object_key, expiration=300):  # 5 minutes expiration
     """
     Generate a presigned URL for downloading an S3 object.
@@ -26,7 +24,7 @@ def generate_presigned_url(bucket_name, object_key, expiration=300):  # 5 minute
 def lambda_handler(event, context):
     try:
         # Parse request body
-        print("Event : ", event, flush = true)
+        print("Event : ", event, flush = True)
         query_params = event.get("queryStringParameters", {}) or {}  # Handles None case
         file_id = query_params.get("file_id")
 
@@ -42,7 +40,7 @@ def lambda_handler(event, context):
         return {
             "statusCode": 200,
             "headers": {
-                "Access-Control-Allow-Origin": origin,  # Modify for security
+                "Access-Control-Allow-Origin": "*",  # Modify for security
                 "Access-Control-Allow-Methods": "OPTIONS, GET",
                 "Access-Control-Allow-Headers": "Content-Type, Authorization",
                 "Content-Type": "application/json"
