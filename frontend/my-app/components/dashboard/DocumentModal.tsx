@@ -62,41 +62,36 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   };
 
   const handleFeedbackSubmit = async () => {
+    // If user clicked "Yes", set feedback as 'N.A.'
     const finalCategory = userCategory || 'N.A.';
     const finalFeedback = feedbackText || '';
-  
+
     if (!finalCategory || !finalFeedback) {
       alert("Please fill in both the category and feedback.");
       return;
     }
-  
+    // https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/
+    // http://127.0.0.1:5001/
     try {
-      // Assuming the token is stored in localStorage or a global state
       const token = localStorage.getItem("authToken"); // Or get it from your state
-  
-      // Ensure the Authorization header is passed
-      const response = await fetch(
-        `https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,  // Pass the token in the Authorization header
-            'Origin': 'https://d1ztk01ovm0zc3.cloudfront.net',  // Set your CloudFront Origin here
-          },
-          body: JSON.stringify({
-            user_corrected_category: finalCategory,
-            feedback: finalFeedback,
-          }),
-        }
-      );
-  
+      const response = await fetch(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          user_corrected_category: finalCategory,
+          feedback: finalFeedback,
+        }),
+      });
+
       const result = await response.json();
-  
+
       if (response.ok) {
         console.log('Feedback submitted successfully:', result);
         alert(result.message || 'Feedback submitted successfully!');
-        setIsFeedbackSubmitted(true);
+        setIsFeedbackSubmitted(true);  // Set feedback as submitted
         setIsFeedbackCorrected(false);
         setFeedbackTriggered(false);
         setUserCategory('');
@@ -110,7 +105,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       alert('An error occurred while submitting feedback.');
     }
   };
-  
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
