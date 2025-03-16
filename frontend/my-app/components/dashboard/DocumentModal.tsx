@@ -36,12 +36,18 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const handleDownload = async () => {
     try {
       setIsDownloading(true);
+      console.log("Getting download for: ", document.id)
       const data = await getDownloadLink(document.id);
+
+      if (!data || !data.downloadUrl) {
+        throw new Error("Download link not found in response.");
+      }
+      console.log(data)
+      console.log('Download link:', data.downloadUrl);
 
       const link = window.document.createElement('a');
       link.href = data.downloadUrl;
       link.download = document.name;
-      console.log('Download link:', data.downloadUrl);
       window.document.body.appendChild(link);
       link.click();
       window.document.body.removeChild(link);
