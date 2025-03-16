@@ -105,8 +105,6 @@ export async function searchDocuments(query: string) {
 
 export async function getDownloadLink(documentId: string) {
     console.log("getting download link...")
-    console.log("document id: ", documentId);
-    console.log("document id type: ", typeof documentId);
     const response = await fetch(`${api.backendUrl}/download/url?file_id=${encodeURIComponent(documentId)}`, {
         method : "GET",
         headers: {
