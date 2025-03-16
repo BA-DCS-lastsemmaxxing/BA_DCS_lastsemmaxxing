@@ -45,12 +45,15 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       }
       console.log('Download link:', data["download_url"]);
 
-      const link = window.document.createElement('a');
-      link.href = data["download_url"];
-      link.download = document.name;
-      window.document.body.appendChild(link);
-      link.click();
-      window.document.body.removeChild(link);
+      // Open the download link in a new tab
+      const newTab = window.open(data["download_url"], '_blank');
+
+      // check if the new tab was opened
+      if (newTab) {
+        newTab.focus();
+      } else {
+        console.error("Failed to open download link in a new tab.")
+      }
     } catch (error) {
       console.error('Download failed:', error);
     } finally {
