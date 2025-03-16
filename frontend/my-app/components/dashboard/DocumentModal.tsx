@@ -60,9 +60,10 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       alert("Please fill in both the category and feedback.");
       return;
     }
-
+    // https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/
+    // http://127.0.0.1:5001/
     try {
-      const response = await fetch(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/send_feedback/${encodeURIComponent(String(document.id))}`, {
+      const response = await fetch(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/send_feedback?document_id=${encodeURIComponent(String(document.id))}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
