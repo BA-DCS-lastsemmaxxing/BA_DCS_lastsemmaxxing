@@ -13,6 +13,8 @@ import { Icons } from '@/components/Icons';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import ClassificationFilter from '@/components/dashboard/ClassificationFilter';
+const { api } = require('./service/configService').get();
+
 
 interface DocumentModalProps {
   isOpen: boolean;
@@ -81,14 +83,14 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     // If user clicked "Yes", set feedback as 'N.A.'
     const finalCategory = userCategory || 'N.A.';
     const finalFeedback = feedbackText || '';
-
+  
     if (!finalCategory || !finalFeedback) {
       alert("Please fill in both the category and feedback.");
       return;
     }
     
     try {
-      const response = await fetch(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`, {
+      const response = await fetch(`${api.backendUrl}/send_feedback?document_id=${encodeURIComponent(String(document.id))}`, {
         method: 'POST',
         headers: {
           "Authorization": `${getCookie("CognitoToken")}`,
@@ -99,9 +101,9 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
           feedback: finalFeedback,
         }),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok) {
         console.log('Feedback submitted successfully:', result);
         alert(result.message || 'Feedback submitted successfully!');
@@ -119,7 +121,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       alert('An error occurred while submitting feedback.');
     }
   };
-
+  
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
