@@ -40,13 +40,13 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       const data = await getDownloadLink(document.id);
       
       console.log(data)
-      if (!data || !data.downloadUrl) {
+      if (!data || !data["download_url"]) {
         throw new Error("Download link not found in response.");
       }
-      console.log('Download link:', data.downloadUrl);
+      console.log('Download link:', data["download_url"]);
 
       const link = window.document.createElement('a');
-      link.href = data.downloadUrl;
+      link.href = data["download_url"];
       link.download = document.name;
       window.document.body.appendChild(link);
       link.click();
