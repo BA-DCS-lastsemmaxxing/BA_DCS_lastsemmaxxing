@@ -199,4 +199,6 @@ resource "aws_wafv2_web_acl" "waf_acl" {
 resource "aws_wafv2_web_acl_association" "waf_api_assoc" {
   resource_arn = aws_api_gateway_stage.prod.arn
   web_acl_arn  = aws_wafv2_web_acl.waf_acl.arn
+
+  depends_on = [ aws_api_gateway_stage.prod, aws_wafv2_web_acl.waf_acl ]
 }

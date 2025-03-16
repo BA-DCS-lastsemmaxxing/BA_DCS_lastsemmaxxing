@@ -268,6 +268,8 @@ resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
   name       = "lambda-edge-policy-attach"
   roles      = [aws_iam_role.lambda_edge_role.name]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+
+  depends_on = [ aws_iam_role.lambda_edge_role ]
 }
 
 resource "aws_lambda_function" "auth_lambda_edge" {
