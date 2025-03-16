@@ -13,7 +13,7 @@ import { Icons } from '@/components/Icons';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import ClassificationFilter from '@/components/dashboard/ClassificationFilter';
-const { api } = require('../service/configService').get();
+const { api } = require('../../service/configService').get();
 
 
 interface DocumentModalProps {
@@ -88,39 +88,36 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       alert("Please fill in both the category and feedback.");
       return;
     }
-    
-    try {
-      const response = await fetch(`${api.backendUrl}/send_feedback?document_id=${encodeURIComponent(String(document.id))}`, {
-        method: 'POST',
-        headers: {
-          "Authorization": `${getCookie("CognitoToken")}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_corrected_category: finalCategory,
-          feedback: finalFeedback,
-        }),
-      });
   
-      const result = await response.json();
+    // Sending feedback without error handling
+    const response = await fetch(`${api.backendUrl}/send_feedback?document_id=${encodeURIComponent(String(document.id))}`, {
+      method: 'POST',
+      headers: {
+        "Authorization": `${getCookie("CognitoToken")}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_corrected_category: finalCategory,
+        feedback: finalFeedback,
+      }),
+    });
   
-      if (response.ok) {
-        console.log('Feedback submitted successfully:', result);
-        alert(result.message || 'Feedback submitted successfully!');
-        setIsFeedbackSubmitted(true);  // Set feedback as submitted
-        setIsFeedbackCorrected(false);
-        setFeedbackTriggered(false);
-        setUserCategory('');
-        setFeedbackText('');
-      } else {
-        console.error('Submission error:', result);
-        alert(result.error || 'Failed to submit feedback');
-      }
-    } catch (error) {
-      console.error('Error submitting feedback:', error);
-      alert('An error occurred while submitting feedback.');
+    const result = await response.json();
+  
+    if (response.ok) {
+      console.log('Feedback submitted successfully:', result);
+      alert(result.message || 'Feedback submitted successfully!');
+      setIsFeedbackSubmitted(true);  // Set feedback as submitted
+      setIsFeedbackCorrected(false);
+      setFeedbackTriggered(false);
+      setUserCategory('');
+      setFeedbackText('');
+    } else {
+      console.error('Submission error:', result);
+      alert(result.error || 'Failed to submit feedback');
     }
   };
+  
   
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
