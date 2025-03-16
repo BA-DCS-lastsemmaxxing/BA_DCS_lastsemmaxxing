@@ -110,7 +110,7 @@ export async function getDownloadLink(documentId: string) {
         headers: {
             "Authorization": `${getCookie("CognitoToken")}`
         }
-});
+    });
     
     if (!response.ok) {
       throw new Error(`Failed to get download link. Status: ${response.status}`);
