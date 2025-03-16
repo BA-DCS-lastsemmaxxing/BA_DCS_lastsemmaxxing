@@ -68,7 +68,7 @@ def search_documents():
     response.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
     return response
 
-@app.route("/update_document/<string:id>", methods=["POST"])
+@app.route("/send_feedback/<string:id>", methods=["POST"])
 def update_document(id):
     """Endpoint to update user-corrected category and feedback."""
     try:
