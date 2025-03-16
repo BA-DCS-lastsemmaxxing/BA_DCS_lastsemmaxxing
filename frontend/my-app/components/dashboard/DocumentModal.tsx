@@ -41,6 +41,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       const link = window.document.createElement('a');
       link.href = data.downloadUrl;
       link.download = document.name;
+      console.log('Download link:', data.downloadUrl);
       window.document.body.appendChild(link);
       link.click();
       window.document.body.removeChild(link);
