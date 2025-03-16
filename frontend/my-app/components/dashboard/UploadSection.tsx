@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { fetchUploadUrl, insertDocumentToRDS } from "@/service/classification";
+import { fetchUploadUrl } from "@/service/classification";
 import { useToast } from "@/hooks/use-toast";
 
 interface UploadSectionProps {

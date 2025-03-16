@@ -43,10 +43,10 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       if (!data || !data["download_url"]) {
         throw new Error("Download link not found in response.");
       }
-      console.log('Download link:', data["download_url"]);
+      console.log('Download link:', data.download_url);
 
       // Open the download link in a new tab
-      const newTab = window.open(data["download_url"], '_blank');
+      const newTab = window.open(data.download_url, '_blank');
 
       // check if the new tab was opened
       if (newTab) {
