@@ -87,10 +87,40 @@ resource "aws_wafv2_web_acl" "waf_acl" {
     block {}  # Block all requests unless explicitly allowed
   }
 
+  rule {
+  name     = "AllowCORSPreflight"
+  priority = 1
+
+  action {
+    allow {}
+  }
+
+  statement {
+    byte_match_statement {
+      field_to_match {
+        method {}
+      }
+      positional_constraint = "EXACTLY"
+      search_string         = "OPTIONS"
+      text_transformation {
+        priority = 0
+        type     = "NONE"
+      }
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "AllowCORSPreflight"
+    sampled_requests_enabled   = true
+  }
+}
+
+  # 1️⃣ Allow API Gateway Requests with JWT Authentication
   # 1️⃣ Allow API Gateway Requests with JWT Authentication
   rule {
     name     = "AllowJWTAuthToAPI"
-    priority = 1
+    priority = 2
 
     action {
       allow {}
@@ -100,11 +130,11 @@ resource "aws_wafv2_web_acl" "waf_acl" {
       byte_match_statement {
         field_to_match {
           single_header {
-            name = "cookie"
+            name = "authorization"  # Change from "cookie" to "Authorization"
           }
         }
         positional_constraint = "STARTS_WITH"
-        search_string         = "CognitoToken=" # Ensures valid JWT token is present
+        search_string         = "ey" 
         text_transformation {
           priority = 0
           type     = "NONE"
@@ -119,33 +149,34 @@ resource "aws_wafv2_web_acl" "waf_acl" {
     }
   }
 
-  # 2️⃣ Rate Limiting for API Gateway (e.g., 100 requests per 5 minutes)
-  rule {
-    name     = "RateLimitAPIRequests"
-    priority = 2
 
-    action {
-      block {}
-    }
+  # # 2️⃣ Rate Limiting for API Gateway (e.g., 100 requests per 5 minutes)
+  # rule {
+  #   name     = "RateLimitAPIRequests"
+  #   priority = 3
 
-    statement {
-      rate_based_statement {
-        limit              = 50  # Adjust based on expected traffic
-        aggregate_key_type = "IP"
-      }
-    }
+  #   action {
+  #     block {}
+  #   }
 
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "RateLimitAPIRequests"
-      sampled_requests_enabled   = true
-    }
-  }
+  #   statement {
+  #     rate_based_statement {
+  #       limit              = 1000  # Adjust based on expected traffic
+  #       aggregate_key_type = "IP"
+  #     }
+  #   }
+
+  #   visibility_config {
+  #     cloudwatch_metrics_enabled = true
+  #     metric_name                = "RateLimitAPIRequests"
+  #     sampled_requests_enabled   = true
+  #   }
+  # }
 
   # 3️⃣ SQL Injection & XSS Protection for API Gateway
   rule {
     name     = "SQLInjectionAndXSSProtection"
-    priority = 3
+    priority = 4
 
     action {
       block {}
@@ -197,4 +228,6 @@ resource "aws_wafv2_web_acl" "waf_acl" {
 resource "aws_wafv2_web_acl_association" "waf_api_assoc" {
   resource_arn = aws_api_gateway_stage.prod.arn
   web_acl_arn  = aws_wafv2_web_acl.waf_acl.arn
+
+  depends_on = [ aws_api_gateway_stage.prod, aws_wafv2_web_acl.waf_acl ]
 }

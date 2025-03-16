@@ -36,14 +36,24 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const handleDownload = async () => {
     try {
       setIsDownloading(true);
-      const data = await getDownloadLink(String(document.id));
+      console.log("Getting download for: ", document.id)
+      const data = await getDownloadLink(document.id);
+      
+      console.log(data)
+      if (!data || !data["download_url"]) {
+        throw new Error("Download link not found in response.");
+      }
+      console.log('Download link:', data["download_url"]);
 
-      const link = window.document.createElement('a');
-      link.href = data.downloadUrl;
-      link.download = document.name;
-      window.document.body.appendChild(link);
-      link.click();
-      window.document.body.removeChild(link);
+      // Open the download link in a new tab
+      const newTab = window.open(data["download_url"], '_blank');
+
+      // check if the new tab was opened
+      if (newTab) {
+        newTab.focus();
+      } else {
+        console.error("Failed to open download link in a new tab.")
+      }
     } catch (error) {
       console.error('Download failed:', error);
     } finally {
@@ -63,7 +73,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     // https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/
     // http://127.0.0.1:5001/
     try {
-      const response = await fetch(`https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`, {
+      const response = await fetch(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

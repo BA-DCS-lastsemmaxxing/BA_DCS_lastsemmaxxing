@@ -104,7 +104,13 @@ export async function searchDocuments(query: string) {
 }
 
 export async function getDownloadLink(documentId: string) {
-    const response = await fetch(`${api.backendUrl}/download/${documentId}`);
+    console.log("getting download link...")
+    const response = await fetch(`${api.backendUrl}/download/url?file_id=${encodeURIComponent(documentId)}`, {
+        method : "GET",
+        headers: {
+            "Authorization": `${getCookie("CognitoToken")}`
+        }
+});
     
     if (!response.ok) {
       throw new Error(`Failed to get download link. Status: ${response.status}`);
