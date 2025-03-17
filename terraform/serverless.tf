@@ -94,6 +94,34 @@ resource "aws_iam_policy" "lambda_policy" {
   })
 }
 
+# Delete Document Function
+resource "aws_lambda_function" "delete_document_lambda" {
+  function_name = "delete_document"
+
+  runtime = "python3.9"
+  handler = "delete_document.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "delete_document.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
+
+  environment {
+    variables = merge(
+      local.lambda_db_variables,
+      {
+        S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+      }
+    )
+  }
+}
+
+resource "aws_cloudwatch_log_group" "delete_document_lambda_logs" {
+  name = "/aws/lambda/${aws_lambda_function.delete_document_lambda.function_name}"
+  retention_in_days = 7
+}
+
 # Fetch Documents Function
 resource "aws_lambda_function" "fetch_documents_lambda" {
   function_name = "fetch_documents"
