@@ -11,18 +11,19 @@ export default function Navbar() {
   const pathname = usePathname();
   const [user, setUser] = useState<any>(null);
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
-  const isLoginPage = pathname === '/login';
+  const isLoginPage = pathname === '/login/';
 
   useEffect(() => {
     checkUser();
     console.log(pathname);
-    console.log("user: ",user);
+    
   }, []);
 
   const checkUser = async () => {
     try {
       const currentUser = await auth.getCurrentUser();
       setUser(currentUser);
+      console.log("user: ",currentUser);
     } catch (error) {
       console.error('No user session');
     }
