@@ -34,7 +34,9 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
     aws_api_gateway_method.upload_url_method_get,
     aws_api_gateway_method.upload_url_method_options,
     aws_api_gateway_method.download_url_method_get,
-    aws_api_gateway_method.download_url_method_options
+    aws_api_gateway_method.download_url_method_options,
+    aws_api_gateway_method.feedback_method_post,
+    aws_api_gateway_method.feedback_method_options
   ]
 }
 
