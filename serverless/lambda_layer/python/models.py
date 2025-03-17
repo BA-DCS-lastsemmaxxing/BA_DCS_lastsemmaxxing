@@ -99,11 +99,16 @@ class Document:
         cursor = connection.cursor()
 
         # Get current time in local timezone
-        current_time = datetime.now(local_tz)
+        current_time = datetime.now(local_tz).isoformat()
+        print("current time for insert: ",current_time, flush=True)
+
+        current_time_naive = current_time.replace(tzinfo=None)
+
+        print("current time naive: ", current_time_naive, flush=True)
 
         cursor.execute(
             "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence) VALUES (%s, %s, %s, 'processing' , null, null)",
-            (fileid, filename, current_time)
+            (fileid, filename, current_time_naive)
         )
 
         connection.commit()
