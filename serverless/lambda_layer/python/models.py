@@ -78,7 +78,7 @@ class Document:
                 Document(
                     id=row["id"],
                     name=row["name"],
-                    uploadedAt=uploaded_at.strftime("%d-%m-%y %H:%M:%S") if uploaded_at else None,
+                    uploadedAt=uploaded_at.strftime("%Y-%m-%d %H:%M:%S") if uploaded_at else None,
                     status=row["status"],
                     summary=row["summary"],
                     topics=json.loads(row["topics"]) if row["topics"] else None,
