@@ -15,6 +15,8 @@ export default function Navbar() {
 
   useEffect(() => {
     checkUser();
+    console.log(pathname);
+    console.log("user: ",user);
   }, []);
 
   const checkUser = async () => {

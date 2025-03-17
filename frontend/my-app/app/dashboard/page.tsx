@@ -115,7 +115,13 @@ export default function Dashboard() {
     });
 
   return (
+    
     <div className="h-[calc(100vh-4rem)] bg-gray-100">
+      <div className="bg-white border-b">
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <h1 className="text-2xl font-bold">Model Management</h1>
+        </div>
+      </div>
       <div className="h-full max-w-6xl mx-auto px-4 py-6 flex flex-col">
         <UploadSection onUploadSuccess={handleSearch} />
 
