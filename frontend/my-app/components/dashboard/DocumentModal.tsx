@@ -14,11 +14,28 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import ClassificationFilter from '@/components/dashboard/ClassificationFilter';
 
+
+
 interface DocumentModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   document: Document | null;
 }
+
+
+
+
+function getCookie(name: string): string | undefined {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.split("=");
+        if (cookieName === name) {
+            return decodeURIComponent(cookieValue);
+        }
+    }
+    return undefined;
+}
+
 
 export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalProps) {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -33,6 +50,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const isLLMBased = document.summary !== null && document.summary !== undefined;
   const isRuleBased = document.confidence !== null && document.confidence !== undefined;
 
+  
   const handleDownload = async () => {
     try {
       setIsDownloading(true);
@@ -43,10 +61,10 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       if (!data || !data["download_url"]) {
         throw new Error("Download link not found in response.");
       }
-      console.log('Download link:', data.download_url);
+      console.log('Download link:', data["download_url"]);
 
       // Open the download link in a new tab
-      const newTab = window.open(data.download_url, '_blank');
+      const newTab = window.open(data["download_url"], '_blank');
 
       // check if the new tab was opened
       if (newTab) {
@@ -65,45 +83,44 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     // If user clicked "Yes", set feedback as 'N.A.'
     const finalCategory = userCategory || 'N.A.';
     const finalFeedback = feedbackText || '';
-
+  
+    // Validation: Ensure both category and feedback are provided
     if (!finalCategory || !finalFeedback) {
       alert("Please fill in both the category and feedback.");
       return;
     }
-    // https://kay8ehgv4g.execute-api.ap-southeast-1.amazonaws.com/Test/
-    // http://127.0.0.1:5001/
-    try {
-      const response = await fetch(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback/?document_id=${encodeURIComponent(String(document.id))}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user_corrected_category: finalCategory,
-          feedback: finalFeedback,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        console.log('Feedback submitted successfully:', result);
-        alert(result.message || 'Feedback submitted successfully!');
-        setIsFeedbackSubmitted(true);  // Set feedback as submitted
-        setIsFeedbackCorrected(false);
-        setFeedbackTriggered(false);
-        setUserCategory('');
-        setFeedbackText('');
-      } else {
-        console.error('Submission error:', result);
-        alert(result.error || 'Failed to submit feedback');
-      }
-    } catch (error) {
-      console.error('Error submitting feedback:', error);
-      alert('An error occurred while submitting feedback.');
+  
+    // Sending feedback to the API without error handling
+    const response = await fetch(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/send_feedback?document_id=${encodeURIComponent(String(document.id))}`, {
+      method: 'POST',
+      headers: {
+        "Authorization": `${getCookie("CognitoToken")}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_corrected_category: finalCategory,
+        feedback: finalFeedback,
+      }),
+    });
+  
+    // Handle the API response
+    const result = await response.json();
+  
+    if (response.ok) {
+      console.log('Feedback submitted successfully:', result);
+      alert(result.message || 'Feedback submitted successfully!');
+      setIsFeedbackSubmitted(true);  // Set feedback as submitted
+      setIsFeedbackCorrected(false);
+      setFeedbackTriggered(false);
+      setUserCategory('');
+      setFeedbackText('');
+    } else {
+      console.error('Submission error:', result);
+      alert(result.error || 'Failed to submit feedback');
     }
   };
-
+  
+  
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
