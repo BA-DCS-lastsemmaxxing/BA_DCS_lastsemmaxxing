@@ -318,6 +318,7 @@ resource "aws_api_gateway_integration_response" "download_url_options_integratio
 }
 
 # Create /feedback resource
+# OPTIONS for /feedback
 resource "aws_api_gateway_resource" "feedback_resource" {
   rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
   parent_id = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
@@ -371,4 +372,31 @@ resource "aws_api_gateway_integration_response" "feedback_options_integration_re
     }
     
     depends_on = [aws_api_gateway_integration.feedback_options_integration]
+}
+
+# POST for /feedback
+resource "aws_api_gateway_method" "feedback_method_post" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.feedback_resource.id
+  http_method = "POST"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
+}
+
+resource "aws_api_gateway_integration" "feedback_method_post_integration" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.feedback_resource.id
+  http_method = aws_api_gateway_method.feedback_method_post.http_method
+
+  integration_http_method = "POST"
+  type = "AWS_PROXY"
+  uri = aws_lambda_function.send_feedback_lambda.invoke_arn
+}
+
+resource "aws_lambda_permission" "download_url_method_get_lambda_permission" {
+    statement_id  = "AllowAPIGatewayInvoke"
+    action        = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.send_feedback_lambda.function_name
+    principal     = "apigateway.amazonaws.com"
+    source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
