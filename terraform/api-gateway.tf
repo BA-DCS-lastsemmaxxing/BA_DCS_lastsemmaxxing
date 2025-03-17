@@ -30,6 +30,7 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
 
   depends_on = [
     aws_api_gateway_method.documents_method_get,
+    aws_api_gateway_method.documents_method_delete,
     aws_api_gateway_method.documents_method_options,
     aws_api_gateway_method.upload_url_method_get,
     aws_api_gateway_method.upload_url_method_options,
