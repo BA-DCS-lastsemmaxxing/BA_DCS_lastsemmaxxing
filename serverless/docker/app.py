@@ -59,7 +59,7 @@ def lambda_handler(event, context):
     print("summary: ", summary)
     print("source: ", source)
     
-    Document.update_file_classification(file_id, summary if summary != "-" else None, classification, confidence if confidence != "-" else None)
+    Document.update_file_classification(file_id, summary if summary != "-" else None, classification, float(confidence) if confidence != "-" else None)
     return
 
 def clean_text(text):
