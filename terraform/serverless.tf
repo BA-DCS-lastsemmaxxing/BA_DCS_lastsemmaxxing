@@ -107,6 +107,8 @@ resource "aws_lambda_function" "delete_document_lambda" {
   role = aws_iam_role.lambda_execution_role.arn
   source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
 
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
+
   environment {
     variables = merge(
       local.lambda_db_variables,
