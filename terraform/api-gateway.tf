@@ -29,12 +29,35 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
   }
 
   depends_on = [
+    # API Resources
+    aws_api_gateway_resource.documents_resource,
+    aws_api_gateway_resource.download_resource,
+    aws_api_gateway_resource.download_url_resource,
+    aws_api_gateway_resource.feedback_resource,
+    aws_api_gateway_resource.upload_resource,
+    aws_api_gateway_resource.upload_url_resource,
+
+    # API Methods
     aws_api_gateway_method.documents_method_get,
+    aws_api_gateway_method.documents_method_delete,
     aws_api_gateway_method.documents_method_options,
     aws_api_gateway_method.upload_url_method_get,
     aws_api_gateway_method.upload_url_method_options,
     aws_api_gateway_method.download_url_method_get,
-    aws_api_gateway_method.download_url_method_options
+    aws_api_gateway_method.download_url_method_options,
+    aws_api_gateway_method.feedback_method_post,
+    aws_api_gateway_method.feedback_method_options,
+
+    # API Method Integrations
+    aws_api_gateway_integration.documents_method_delete_integration,
+    aws_api_gateway_integration.documents_method_get_integration,
+    aws_api_gateway_integration.documents_options_integration,
+    aws_api_gateway_integration.download_url_method_get_integration,
+    aws_api_gateway_integration.download_url_options_integration,
+    aws_api_gateway_integration.feedback_method_post_integration,
+    aws_api_gateway_integration.feedback_options_integration,
+    aws_api_gateway_integration.upload_url_method_get_integration,
+    aws_api_gateway_integration.upload_url_options_integration
   ]
 }
 
@@ -137,6 +160,47 @@ resource "aws_lambda_permission" "documents_method_get_lambda_permission" {
     function_name = aws_lambda_function.fetch_documents_lambda.function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
+}
+
+# DELETE method for /documents
+resource "aws_api_gateway_method" "documents_method_delete" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.documents_resource.id
+  http_method = "DELETE"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
+}
+
+resource "aws_api_gateway_integration" "documents_method_delete_integration" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.documents_resource.id
+  http_method = aws_api_gateway_method.documents_method_delete.http_method
+
+  type = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri = aws_lambda_function.delete_document_lambda.invoke_arn
+}
+
+resource "aws_api_gateway_method_response" "documents_method_delete_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.documents_resource.id
+  http_method = aws_api_gateway_method.documents_method_delete.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"       = true
+    "method.response.header.Access-Control-Allow-Methods"      = true
+    "method.response.header.Access-Control-Allow-Headers"      = true
+    "method.response.header.Access-Control-Allow-Credentials"  = true
+  }
+}
+
+resource "aws_lambda_permission" "documents_method_delete_lambda_permission" {
+  statement_id = "AllowAPIGatewayInvoke"
+  action = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.delete_document_lambda.function_name
+  principal = "apigateway.amazonaws.com"
+  source_arn = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
 
 # Create /upload resource

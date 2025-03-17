@@ -144,6 +144,11 @@ data "aws_s3_object" "auth_lambda_zip" {
   key = "auth_lambda.zip"
 }
 
+data "aws_s3_object" "delete_document_lambda_zip" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "delete_document.zip"
+}
+
 data "aws_s3_object" "fetch_documents_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "fetch_documents.zip"

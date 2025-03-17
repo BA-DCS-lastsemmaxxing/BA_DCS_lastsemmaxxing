@@ -94,6 +94,34 @@ resource "aws_iam_policy" "lambda_policy" {
   })
 }
 
+# Delete Document Function
+resource "aws_lambda_function" "delete_document_lambda" {
+  function_name = "delete_document"
+
+  runtime = "python3.9"
+  handler = "delete_document.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "delete_document.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
+
+  environment {
+    variables = merge(
+      local.lambda_db_variables,
+      {
+        S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+      }
+    )
+  }
+}
+
+resource "aws_cloudwatch_log_group" "delete_document_lambda_logs" {
+  name = "/aws/lambda/${aws_lambda_function.delete_document_lambda.function_name}"
+  retention_in_days = 7
+}
+
 # Fetch Documents Function
 resource "aws_lambda_function" "fetch_documents_lambda" {
   function_name = "fetch_documents"
@@ -194,7 +222,6 @@ resource "aws_cloudwatch_log_group" "insert_rds_new_document_lambda_logs" {
   retention_in_days = 7  # Adjust retention as needed
 }
 
-
 # Lambda function triggered on new object in S3
 resource "aws_lambda_function" "s3_trigger_lambda" {
   function_name = "s3_trigger"
@@ -238,6 +265,11 @@ resource "aws_lambda_function" "send_feedback_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
+}
+
+resource "aws_cloudwatch_log_group" "send_feedback_lambda_logs" {
+  name = "/aws/lambda/${aws_lambda_function.send_feedback_lambda.function_name}"
+  retention_in_days = 7
 }
 
 # Document classification lambda
