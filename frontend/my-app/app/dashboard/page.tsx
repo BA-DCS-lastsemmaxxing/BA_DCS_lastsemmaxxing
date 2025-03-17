@@ -63,6 +63,7 @@ export default function Dashboard() {
       }));
 
       setDocuments(mappedDocuments);
+      console.log("documents: ", mappedDocuments);
     } catch (error) {
       console.error("Search error:", error);
       alert("Search failed. Please try again later.");
@@ -108,6 +109,16 @@ export default function Dashboard() {
   const processedDocuments = [...documents]
     .filter((doc) => (classificationFilter ? doc.classification === classificationFilter : true))
     .sort((a, b) => {
+      // Add console.log to debug date values
+      if (sortOption === 'date-asc' || sortOption === 'date-desc') {
+        console.log('Date values:', {
+          a: a.uploadedAt,
+          b: b.uploadedAt,
+          aTime: new Date(a.uploadedAt).getTime(),
+          bTime: new Date(b.uploadedAt).getTime()
+        });
+      }
+      
       if (sortOption === 'date-asc') return new Date(a.uploadedAt).getTime() - new Date(b.uploadedAt).getTime();
       if (sortOption === 'date-desc') return new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime();
       if (sortOption === 'title-asc') return a.name.localeCompare(b.name);
