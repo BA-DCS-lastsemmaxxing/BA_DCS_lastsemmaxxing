@@ -4,6 +4,7 @@ from nltk.corpus import stopwords
 import pandas as pd
 from botocore.config import Config
 from models import Document
+from joblib import parallel_backend
 
 # AWS credentials
 aws_region = os.environ.get("REGION")
@@ -31,8 +32,9 @@ unique_topics_str = ', '.join(unique_topics)
 
 #  Load Trained Model & Vectorizer** 
 print(" Loading Trained TF-IDF Vectorizer and Random Forest Model...")
-tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
-rf_model = joblib.load("rf_model.pkl")
+with parallel_backend("threading"):  # Forces threading instead of multiprocessing
+    tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
+    rf_model = joblib.load("rf_model.pkl")
 
 def lambda_handler(event, context):
     print("Document classification triggered")
@@ -122,8 +124,9 @@ def preprocess_pdf(file_content, filename):
 #  Random Forest Classification** 
 def rf_classify_document(text, confidence_threshold=0.99):
     """Classifies a document using the trained Random Forest model."""
-    text_tfidf = tfidf_vectorizer.transform([text])  # Convert text to TF-IDF features
-    y_pred_proba = rf_model.predict_proba(text_tfidf)[0]  # Get probability scores
+    with parallel_backend("threading"):
+        text_tfidf = tfidf_vectorizer.transform([text])  # Convert text to TF-IDF features
+        y_pred_proba = rf_model.predict_proba(text_tfidf)[0]  # Get probability scores
     
     max_prob = max(y_pred_proba)
     predicted_topic = rf_model.classes_[y_pred_proba.argmax()]
