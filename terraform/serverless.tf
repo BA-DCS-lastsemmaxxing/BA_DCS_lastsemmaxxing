@@ -194,7 +194,6 @@ resource "aws_cloudwatch_log_group" "insert_rds_new_document_lambda_logs" {
   retention_in_days = 7  # Adjust retention as needed
 }
 
-
 # Lambda function triggered on new object in S3
 resource "aws_lambda_function" "s3_trigger_lambda" {
   function_name = "s3_trigger"
@@ -238,6 +237,11 @@ resource "aws_lambda_function" "send_feedback_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
+}
+
+resource "aws_cloudwatch_log_group" "send_feedback_lambda_logs" {
+  name = "/aws/lambda/${aws_lambda_function.send_feedback_lambda.function_name}"
+  retention_in_days = 7
 }
 
 # Document classification lambda
