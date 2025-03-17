@@ -109,8 +109,8 @@ export default function Dashboard() {
   const processedDocuments = [...documents]
     .filter((doc) => (classificationFilter ? doc.classification === classificationFilter : true))
     .sort((a, b) => {
-      if (sortOption === 'date-asc') return new Date(a.uploadedAt + ":00").getTime() - new Date(b.uploadedAt + ":00").getTime();
-      if (sortOption === 'date-desc') return new Date(b.uploadedAt + ":00").getTime() - new Date(a.uploadedAt  + ":00").getTime();
+      if (sortOption === 'date-asc') return new Date(a.uploadedAt).getTime() - new Date(b.uploadedAt).getTime();
+      if (sortOption === 'date-desc') return new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime();
       if (sortOption === 'title-asc') return a.name.localeCompare(b.name);
       if (sortOption === 'title-desc') return b.name.localeCompare(a.name);
       return 0;
