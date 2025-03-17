@@ -231,7 +231,7 @@ resource "aws_lambda_function" "send_feedback_lambda" {
   s3_key = "send_feedback.zip"
 
   role = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.send_feedback_lambda_zip
+  source_code_hash = data.aws_s3_object.send_feedback_lambda_zip.etag
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
