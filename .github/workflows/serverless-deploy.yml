@@ -29,6 +29,10 @@ jobs:
           zip -r dist/lambda_layer.zip python
           aws s3 cp dist/lambda_layer.zip s3://${{ vars.AWS_LAMBDA_BUCKET }}-ap
 
+      - name: Download model file from S3
+        run: |
+          aws s3 cp s3://lsm-fyp-serverless-ap/rf_model.pkl serverless/docker/rf_model.pkl
+
       - name: Log in to Amazon ECR
         run: |
           aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com

@@ -1,9 +1,8 @@
-import os, re, io, pickle, json, random, math, boto3
+import os, re, io, pickle, json, random, math, boto3, joblib
 from pypdf import PdfReader
 from nltk.corpus import stopwords
 import pandas as pd
 from botocore.config import Config
-from sklearn.feature_extraction.text import CountVectorizer
 from models import Document
 
 # AWS credentials
@@ -30,9 +29,10 @@ file_topic_mapping = pd.read_csv(mapping_file_path)
 unique_topics = file_topic_mapping['folder_name'].unique().tolist()
 unique_topics_str = ', '.join(unique_topics)
 
-#  Load Keyword Data for Rule-Based Classification
-top_keywords_per_topic = {}
-main_topics = set()
+#  Load Trained Model & Vectorizer** 
+print(" Loading Trained TF-IDF Vectorizer and Random Forest Model...")
+tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
+rf_model = joblib.load("rf_model.pkl")
 
 def lambda_handler(event, context):
     print("Document classification triggered")
@@ -119,58 +119,22 @@ def preprocess_pdf(file_content, filename):
     except Exception as e:
         print(f"Error processing PDF: {e}")
 
+#  Random Forest Classification** 
+def rf_classify_document(text, confidence_threshold=0.99):
+    """Classifies a document using the trained Random Forest model."""
+    text_tfidf = tfidf_vectorizer.transform([text])  # Convert text to TF-IDF features
+    y_pred_proba = rf_model.predict_proba(text_tfidf)[0]  # Get probability scores
+    
+    max_prob = max(y_pred_proba)
+    predicted_topic = rf_model.classes_[y_pred_proba.argmax()]
 
+    if predicted_topic == "Financial Regulations":
+        return None, max_prob  # Defer to LLM for Financial Regulations
 
-df = pd.read_csv("refined_tfidf_bigrams.csv")
-for index, row in df.iterrows():
-    topic_name = row.iloc[0].strip()
-    keywords = [row[col] for col in df.columns[1:] if pd.notna(row[col])]
-    if keywords:
-        top_keywords_per_topic[topic_name] = keywords[:150]
-        main_topics.add(topic_name.split("/")[0])
+    if max_prob < confidence_threshold:
+        return None, max_prob  # Defer to LLM
 
-#  Tokenization (For Rule-Based Classifier)
-vectorizer = CountVectorizer(
-    stop_words="english",
-    lowercase=True,
-    token_pattern=r"(?u)\b\w+\b",
-    ngram_range=(1, 2)
-)
-
-def fast_tokenize(text):
-    return set(vectorizer.build_analyzer()(text))
-
-#  Length Penalty
-def apply_length_penalty(score, doc_length):
-    return score / (1 + math.log(1 + doc_length) / 70)
-
-#  Rule-Based Classification
-def classify_document(text):
-    doc_words = fast_tokenize(text)
-    doc_length = len(doc_words)
-
-    if doc_length < 100:
-        return None, 0.0  # Skip classification if document too short
-
-    best_match, best_score = None, 0
-    for topic in main_topics:
-        topic_keywords = set(word for subtopic in top_keywords_per_topic if subtopic.startswith(topic) for word in top_keywords_per_topic[subtopic])
-        matched_words = doc_words.intersection(topic_keywords)
-
-        weighted_score = sum(1.0 * (0.85 ** idx) for idx, word in enumerate(matched_words))
-        max_possible_score = sum(1.0 * (0.85 ** idx) for idx in range(len(topic_keywords)))
-        normalized_score = weighted_score / max_possible_score if max_possible_score > 0 else 0
-
-        adjusted_score = apply_length_penalty(normalized_score, doc_length)
-
-        if adjusted_score > best_score and len(matched_words) >= 30:
-            best_score = adjusted_score
-            best_match = topic
-
-    if best_score < 0.9:
-        return None, best_score  # Low confidence → No classification (fall back to LLM)
-
-    return best_match, best_score
+    return predicted_topic, max_prob
 
 #  Sampling Logic for Hybrid Text Extraction (Intro, Middle Sample, Conclusion)
 def extract_intro_middle_conclusion(text, max_tokens=20000):
@@ -263,15 +227,14 @@ def process_single_file():
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Rule-Based Attempt
-    predicted_topic, confidence = classify_document(content)
+    sampled_text = extract_intro_middle_conclusion(content)
+    predicted_topic, confidence = rf_classify_document(sampled_text)
 
     if predicted_topic:
-        print(f" Rule-Based Classification: {predicted_topic} (Confidence: {confidence:.2f})")
-        return filename, predicted_topic, confidence, "-", "Rule-Based"
+        print(f" Random Forest Classification: {predicted_topic} (Confidence: {confidence:.2f})")
+        return filename, predicted_topic, confidence, "-", "Random Forest Rule-Based Classification"
 
     # Fallback to LLM using Sampled Text (Hybrid)
-    sampled_text = extract_intro_middle_conclusion(content)
     predicted_topic, explanation = evaluate_topic_with_llama(sampled_text)
 
     print(f" LLM Classification: {predicted_topic}")
