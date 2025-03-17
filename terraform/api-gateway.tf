@@ -393,7 +393,7 @@ resource "aws_api_gateway_integration" "feedback_method_post_integration" {
   uri = aws_lambda_function.send_feedback_lambda.invoke_arn
 }
 
-resource "aws_lambda_permission" "download_url_method_get_lambda_permission" {
+resource "aws_lambda_permission" "feedback_method_post_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
     function_name = aws_lambda_function.send_feedback_lambda.function_name
