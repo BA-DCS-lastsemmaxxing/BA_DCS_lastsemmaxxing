@@ -97,13 +97,10 @@ export default function Dashboard() {
       }
     catch (error) {
       console.error('Error deleting document:', error);
-      alert('Failed to delete the document. Please try again later.');
     }
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("sort option selected: ", e.target.value);
-    console.log("documents: ", documents);
     setSortOption(e.target.value);
   };
 
