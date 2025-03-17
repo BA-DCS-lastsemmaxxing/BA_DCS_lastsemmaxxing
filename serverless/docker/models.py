@@ -78,7 +78,7 @@ class Document:
                 Document(
                     id=row["id"],
                     name=row["name"],
-                    uploadedAt=uploaded_at.strftime("%d-%m-%y %H:%M") if uploaded_at else None,
+                    uploadedAt=uploaded_at.strftime("%Y-%m-%d %H:%M:%S") if uploaded_at else None,
                     status=row["status"],
                     summary=row["summary"],
                     topics=json.loads(row["topics"]) if row["topics"] else None,
@@ -114,6 +114,7 @@ class Document:
     @staticmethod
     def update_file_classification(file_id, summary, classification, confidence):
         """Store document metadata in the database with updated classification and summary."""
+        print("file_id type: ", type(file_id),flush=True)
         connection = get_db_connection()
         cursor = connection.cursor()
         cursor.execute(

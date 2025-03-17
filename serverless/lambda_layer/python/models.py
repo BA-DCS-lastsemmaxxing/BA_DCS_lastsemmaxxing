@@ -115,6 +115,7 @@ class Document:
     @staticmethod
     def update_file_classification(file_id, summary, classification, confidence):
         """Store document metadata in the database with updated classification and summary."""
+        print("file_id type: ", type(file_id),flush=True)
         connection = get_db_connection()
         cursor = connection.cursor()
         cursor.execute(

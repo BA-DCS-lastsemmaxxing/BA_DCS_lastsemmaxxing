@@ -11,6 +11,8 @@ COPY app.py /var/task
 COPY models.py /var/task
 COPY final_file_topic_mapping.csv /var/task
 COPY refined_tfidf_bigrams.csv /var/task
+COPY rf_model.pkl /var/task
+COPY tfidf_vectorizer.pkl /var/task
 
 # Set the CMD to the Lambda function handler
 CMD ["app.lambda_handler"]
