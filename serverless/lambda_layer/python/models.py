@@ -99,7 +99,7 @@ class Document:
         cursor = connection.cursor()
 
         # Get current time in local timezone
-        current_time = datetime.now(local_tz).isoformat()
+        current_time = datetime.now(local_tz)
         print("current time for insert: ",current_time, flush=True)
 
         current_time_naive = current_time.replace(tzinfo=None)
