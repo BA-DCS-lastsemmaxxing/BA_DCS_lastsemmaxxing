@@ -220,6 +220,26 @@ resource "aws_cloudwatch_log_group" "s3_trigger_lambda_logs" {
   retention_in_days = 7  # Adjust retention as needed
 }
 
+# Send Feedback Lambda
+resource "aws_lambda_function" "send_feedback_lambda" {
+  function_name = "send_feedback"
+  
+  runtime = "python3.9"
+  handler = send_feedback.lambda_handler
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "send_feedback.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.send_feedback_lambda_zip
+
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  environment {
+    variables = local.lambda_db_variables
+  }
+}
+
 # Document classification lambda
 resource "aws_lambda_function" "document_classification_lambda" {
   function_name = "document_classification"

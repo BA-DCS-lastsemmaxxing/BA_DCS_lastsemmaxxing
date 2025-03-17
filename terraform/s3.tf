@@ -168,3 +168,8 @@ data "aws_s3_object" "s3_trigger_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "s3_trigger.zip"
 }
+
+data "aws_s3_object" "send_feedback_lambda_zip" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "send_feedback.zip"
+}
