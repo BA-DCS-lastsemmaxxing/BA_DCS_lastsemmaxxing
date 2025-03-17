@@ -1,4 +1,4 @@
-import os, re, io, pickle, json, random, math, boto3, joblib
+import os, re, io, pickle, json, random, boto3, joblib
 from pypdf import PdfReader
 from nltk.corpus import stopwords
 import pandas as pd
@@ -31,7 +31,8 @@ unique_topics = file_topic_mapping['folder_name'].unique().tolist()
 unique_topics_str = ', '.join(unique_topics)
 
 #  Load Trained Model & Vectorizer** 
-print(" Loading Trained TF-IDF Vectorizer and Random Forest Model...")
+print(" Loading Trained TF-IDF Vectorizer and Random Forest Model...",flush=True)
+os.environ["JOBLIB_TEMP_FOLDER"] = "/tmp"
 with parallel_backend("threading"):  # Forces threading instead of multiprocessing
     tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
     rf_model = joblib.load("rf_model.pkl")
