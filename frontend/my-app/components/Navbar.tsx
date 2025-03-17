@@ -3,8 +3,8 @@
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { auth } from '@/service/auth';
-import Image from 'next/image';
 import { Icons } from '@/components/Icons';
+import Link from 'next/link';
 
 export default function Navbar() {
   const router = useRouter();
@@ -36,14 +36,35 @@ export default function Navbar() {
       <nav className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            {/* Center section - Logo */}
-            <div className="flex-shrink-0 flex items-center mx-auto">
-              <h1 className="text-2xl font-bold">Document Classifier</h1>
-            </div>
+            {/* Left section - Navigation Links */}
+            {!isLoginPage && (
+              <div className="flex space-x-8">
+                <Link 
+                  href="/dashboard" 
+                  className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
+                    pathname === '/dashboard' 
+                      ? 'text-blue-600 border-b-2 border-blue-600' 
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  Documents
+                </Link>
+                <Link 
+                  href="/model-management" 
+                  className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
+                    pathname === '/model-management' 
+                      ? 'text-blue-600 border-b-2 border-blue-600' 
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  Model Management
+                </Link>
+              </div>
+            )}
 
             {/* Right section - User menu */}
             {!isLoginPage && (
-              <div className="flex items-center absolute right-8">
+              <div className="flex items-center">
                 <div className="relative">
                   <button
                     onClick={() => setUserMenuOpen(!isUserMenuOpen)}
@@ -55,7 +76,6 @@ export default function Navbar() {
                     <Icons.ChevronDown className="h-4 w-4 text-gray-600" />
                   </button>
 
-                  {/* User dropdown menu */}
                   {isUserMenuOpen && (
                     <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                       <div className="py-1">
