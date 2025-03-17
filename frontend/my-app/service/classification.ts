@@ -118,3 +118,18 @@ export async function getDownloadLink(documentId: string) {
   
     return await response.json();
   }
+
+export async function deleteDocument(documentId: string) {
+    const response = await fetch(`${api.backendUrl}/documents?docId=${encodeURIComponent(documentId)}`, {
+        method : "DELETE",
+        headers: {
+            "Authorization": `${getCookie("CognitoToken")}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to delete document. Status: ${response.status}`);
+      }
+    
+    return await response.json();
+}

@@ -1,14 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { searchDocuments } from '@/service/classification';
+import { searchDocuments, deleteDocument } from '@/service/classification';
 import { Document } from '@/types/document';
 import { UploadSection } from '@/components/dashboard/UploadSection';
 import { SearchBar } from '@/components/dashboard/SearchBar';
 import { DocumentList } from '@/components/dashboard/DocumentList';
 import { DocumentModal } from '@/components/dashboard/DocumentModal';
-import axios from 'axios';
 import ClassificationFilter from '@/components/dashboard/ClassificationFilter'; // Import ClassificationFilter
+import { useToast } from "@/hooks/use-toast";
 
 export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,6 +17,7 @@ export default function Dashboard() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   // Filter & Sort states
   const [classificationFilter, setClassificationFilter] = useState<string>('');
@@ -81,20 +82,20 @@ export default function Dashboard() {
     }
 
     try {
-      console.log("Deleting document with ID:", docId);
-      // Make the API call to delete the document
-      const response = await axios.delete(`https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod/documents?docId=${docId}`);
-
-      if (response.status === 200) {
-        alert(`Document ${docId} deleted successfully.`);
+        console.log("Deleting document with ID:", docId);
+        // Make the API call to delete the document
+        const response = await deleteDocument(docId);
 
         // Optimistically update the UI by removing the document from the list
         setDocuments((prevDocs) => prevDocs.filter((doc) => String(doc.id) !== docId));
-      } else {
-        console.error('Failed to delete document. Status:', response.status);
-        alert('Failed to delete the document. Please try again later.');
+
+        toast({
+          title: "Sucess",
+          variant: "success",
+          description: "Document deleted successfully"
+        });
       }
-    } catch (error) {
+    catch (error) {
       console.error('Error deleting document:', error);
       alert('Failed to delete the document. Please try again later.');
     }
