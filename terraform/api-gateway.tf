@@ -29,6 +29,15 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
   }
 
   depends_on = [
+    # API Resources
+    aws_api_gateway_resource.documents_resource,
+    aws_api_gateway_resource.download_resource,
+    aws_api_gateway_resource.download_url_resource,
+    aws_api_gateway_resource.feedback_resource,
+    aws_api_gateway_resource.upload_resource,
+    aws_api_gateway_resource.upload_url_resource,
+
+    # API Methods
     aws_api_gateway_method.documents_method_get,
     aws_api_gateway_method.documents_method_delete,
     aws_api_gateway_method.documents_method_options,
@@ -37,7 +46,18 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
     aws_api_gateway_method.download_url_method_get,
     aws_api_gateway_method.download_url_method_options,
     aws_api_gateway_method.feedback_method_post,
-    aws_api_gateway_method.feedback_method_options
+    aws_api_gateway_method.feedback_method_options,
+
+    # API Method Integrations
+    aws_api_gateway_integration.documents_method_delete_integration,
+    aws_api_gateway_integration.documents_method_get_integration,
+    aws_api_gateway_integration.documents_options_integration,
+    aws_api_gateway_integration.download_url_method_get_integration,
+    aws_api_gateway_integration.download_url_options_integration,
+    aws_api_gateway_integration.feedback_method_post_integration,
+    aws_api_gateway_integration.feedback_options_integration,
+    aws_api_gateway_integration.upload_url_method_get_integration,
+    aws_api_gateway_integration.upload_url_options_integration
   ]
 }
 
