@@ -178,3 +178,9 @@ data "aws_s3_object" "send_feedback_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "send_feedback.zip"
 }
+
+// ML Model pickle file
+data "aws_s3_object" "rf_model" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "rf_model.pkl"
+}
