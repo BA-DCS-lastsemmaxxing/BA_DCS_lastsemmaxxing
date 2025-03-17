@@ -45,6 +45,56 @@ resource "aws_api_gateway_resource" "documents_resource" {
   path_part   = "documents"
 }
 
+# Options method for CORS support (GET /documents)
+resource "aws_api_gateway_method" "documents_method_options" {
+  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id   = aws_api_gateway_resource.documents_resource.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "documents_method_options_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.documents_resource.id
+  http_method = aws_api_gateway_method.documents_method_options.http_method
+  status_code = "200"
+  
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"       = true
+    "method.response.header.Access-Control-Allow-Methods"      = true
+    "method.response.header.Access-Control-Allow-Headers"      = true
+    "method.response.header.Access-Control-Allow-Credentials"  = true
+  }
+}
+
+resource "aws_api_gateway_integration" "documents_options_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id             = aws_api_gateway_resource.documents_resource.id
+  http_method             = aws_api_gateway_method.documents_method_options.http_method
+  type                    = "MOCK"
+  request_templates = {
+    "application/json" = jsonencode({
+      statusCode = 200
+    })
+  }
+}
+
+resource "aws_api_gateway_integration_response" "documents_method_options_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.documents_resource.id
+  http_method = aws_api_gateway_method.documents_method_options.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
+    "method.response.header.Access-Control-Allow-Methods"      = "'GET,POST,OPTIONS,DELETE'"
+    "method.response.header.Access-Control-Allow-Headers"      = "'Content-Type,Authorization'"
+    "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
+  }
+
+  depends_on = [ aws_api_gateway_integration.documents_options_integration ]
+}
+
 # GET method for /documents
 resource "aws_api_gateway_method" "documents_method_get" {
   rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
@@ -178,56 +228,6 @@ resource "aws_api_gateway_integration_response" "upload_url_options_integration_
     depends_on = [aws_api_gateway_integration.upload_url_options_integration]
 }
 
-# Options method for CORS support (GET /documents)
-resource "aws_api_gateway_method" "documents_method_options" {
-  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id   = aws_api_gateway_resource.documents_resource.id
-  http_method   = "OPTIONS"
-  authorization = "NONE"
-}
-
-resource "aws_api_gateway_method_response" "documents_method_options_response" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.documents_resource.id
-  http_method = aws_api_gateway_method.documents_method_options.http_method
-  status_code = "200"
-  
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin"       = true
-    "method.response.header.Access-Control-Allow-Methods"      = true
-    "method.response.header.Access-Control-Allow-Headers"      = true
-    "method.response.header.Access-Control-Allow-Credentials"  = true
-  }
-}
-
-resource "aws_api_gateway_integration" "documents_options_integration" {
-  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id             = aws_api_gateway_resource.documents_resource.id
-  http_method             = aws_api_gateway_method.documents_method_options.http_method
-  type                    = "MOCK"
-  request_templates = {
-    "application/json" = jsonencode({
-      statusCode = 200
-    })
-  }
-}
-
-resource "aws_api_gateway_integration_response" "documents_method_options_integration_response" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.documents_resource.id
-  http_method = aws_api_gateway_method.documents_method_options.http_method
-  status_code = "200"
-
-  response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
-    "method.response.header.Access-Control-Allow-Methods"      = "'GET,POST,OPTIONS,DELETE'"
-    "method.response.header.Access-Control-Allow-Headers"      = "'Content-Type,Authorization'"
-    "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
-  }
-
-  depends_on = [ aws_api_gateway_integration.documents_options_integration ]
-}
-
 # Create /download resource
 resource "aws_api_gateway_resource" "download_resource" {
     rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
@@ -315,4 +315,60 @@ resource "aws_api_gateway_integration_response" "download_url_options_integratio
     }
     
     depends_on = [aws_api_gateway_integration.download_url_options_integration]
+}
+
+# Create /feedback resource
+resource "aws_api_gateway_resource" "feedback_resource" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  parent_id = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
+  path_part = "feedback"
+}
+
+resource "aws_api_gateway_method" "feedback_method_options" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.feedback_resource.id
+  http_method = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "feedback_method_options_response" {
+    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+    resource_id = aws_api_gateway_resource.feedback_resource.id
+    http_method = aws_api_gateway_method.feedback_method_options.http_method
+    status_code = "200"
+    
+    response_parameters = {
+        "method.response.header.Access-Control-Allow-Origin" = true
+        "method.response.header.Access-Control-Allow-Methods" = true
+        "method.response.header.Access-Control-Allow-Headers" = true
+        "method.response.header.Access-Control-Allow-Credentials" = true
+    }
+}
+
+resource "aws_api_gateway_integration" "feedback_options_integration" {
+    rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
+    resource_id             = aws_api_gateway_resource.feedback_resource.id
+    http_method             = aws_api_gateway_method.feedback_method_options.http_method
+    type                    = "MOCK"
+    request_templates = {
+        "application/json" = jsonencode({
+            statusCode = 200
+        })
+    }
+}
+
+resource "aws_api_gateway_integration_response" "feedback_options_integration_response" {
+    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+    resource_id = aws_api_gateway_resource.feedback_resource.id
+    http_method = aws_api_gateway_method.feedback_method_options.http_method
+    status_code = "200"
+
+    response_parameters = {
+        "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
+        "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
+        "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,Authorization'"
+        "method.response.header.Access-Control-Allow-Credentials" = "'true'"
+    }
+    
+    depends_on = [aws_api_gateway_integration.feedback_options_integration]
 }
