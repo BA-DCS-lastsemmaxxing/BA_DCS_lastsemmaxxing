@@ -225,7 +225,7 @@ resource "aws_lambda_function" "send_feedback_lambda" {
   function_name = "send_feedback"
   
   runtime = "python3.9"
-  handler = send_feedback.lambda_handler
+  handler = "send_feedback.lambda_handler"
 
   s3_bucket = "${var.project_name}-serverless-ap"
   s3_key = "send_feedback.zip"
