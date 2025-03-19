@@ -2,6 +2,7 @@ import json
 import boto3
 from botocore.exceptions import ClientError
 import logging
+from models import *
 
 # Configure logging
 logger = logging.getLogger()
@@ -19,6 +20,8 @@ def lambda_handler(event, context):
 
         response = s3_client.delete_object(Bucket=BUCKET_NAME, Key=file_key)
 
+        Document.delete_document(doc_id
+        )
         if response.get('ResponseMetadata', {}).get('HTTPStatusCode') == 204:
             return {
                 'statusCode': 200,
