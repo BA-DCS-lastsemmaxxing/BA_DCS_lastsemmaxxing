@@ -72,8 +72,7 @@ class Document:
         documents = []
 
         for row in results:
-            # Convert uploadedAt to local timezone
-            uploaded_at = row["uploadedAt"].astimezone(local_tz) if row["uploadedAt"] else None
+            uploaded_at = row["uploadedAt"] if row["uploadedAt"] else None
             documents.append(
                 Document(
                     id=row["id"],
