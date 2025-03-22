@@ -186,7 +186,7 @@ class ModelManager:
         for _, row in df.iterrows():
             folder = row["folder_name"]
             file_name = row["file_name"]
-            s3_key = f"preprocessed_data/{folder}/{file_name}"
+            s3_key = f"Extracted_Sample_Data/{folder}/{file_name}"
             local_path = f"/tmp/{file_name}"
 
             try:
