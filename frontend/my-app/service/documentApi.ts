@@ -154,7 +154,7 @@ export async function getCorrectedDocuments() {
           confidence: 0.82
         }
       ]
-    const response = await fetch(`${api.backendUrl}/documents?docId=${encodeURIComponent(documentId)}`, {
+    const response = await fetch(`${api.backendUrl}/documents`, {
         method : "DELETE",
         headers: {
             "Authorization": `${getCookie("CognitoToken")}`
