@@ -189,3 +189,15 @@ data "aws_s3_object" "rf_model" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "rf_model.pkl"
 }
+
+// TF-IDF vectorizer pickle file
+data "aws_s3_object" "tfidf_vectorizer" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "tfidf_vectorizer.pkl"
+}
+
+// Final file topic mapping csv file
+data "aws_s3_object" "final_file_topic_mapping" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "final_file_topic_mapping.csv"
+}

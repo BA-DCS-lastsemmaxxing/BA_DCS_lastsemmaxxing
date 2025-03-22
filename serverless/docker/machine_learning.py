@@ -30,6 +30,7 @@ bedrock_client = boto3.client(
 
 s3_client = boto3.client('s3')
 bucket_name = os.environ.get("S3_BUCKET")
+model_bucket = "lsm-fyp-serverless-ap"
 
 # =============================================================================
 # 1. Document Processing Utilities
@@ -108,10 +109,10 @@ class ModelManager:
     For example, a file with folder_name "Annual Reports" may be found under
       Extracted_Sample_Data/Financial/Annual Reports/
     """
-    def __init__(self, mapping_file_path: str = 'final_file_topic_mapping_v6.csv'):
+    def __init__(self, mapping_file_path: str = '/tmp/final_file_topic_mapping.csv'):
         self.mapping_file_path = mapping_file_path
-        self.vectorizer_path = "tfidf_vectorizer.pkl"
-        self.model_path = "rf_model.pkl"
+        self.vectorizer_path = "/tmp/tfidf_vectorizer.pkl"
+        self.model_path = "/tmp/rf_model.pkl"
         self.unique_topics = []
         self.unique_topics_str = ""
         self.load_models()  # load initial models
@@ -134,10 +135,11 @@ class ModelManager:
         Load the topic mapping CSV file. If not found, return an empty DataFrame.
         Expected columns: file_name, folder_name.
         """
-        if os.path.exists(self.mapping_file_path):
-            return pd.read_csv(self.mapping_file_path)
-        else:
-            return pd.DataFrame(columns=["folder_name", "file_name"])
+        if not os.path.exists(self.mapping_file_path):
+            print("Downloading mapping file from S3...", flush=True)
+            s3_client.download_file(model_bucket, "final_file_topic_mapping.csv", self.mapping_file_path)
+        return pd.read_csv(self.mapping_file_path)
+
 
     def save_mapping_file(self, df: pd.DataFrame) -> None:
         """Save the mapping DataFrame to a CSV file."""
@@ -212,6 +214,12 @@ class ModelManager:
         joblib.dump(self.tfidf_vectorizer, self.vectorizer_path)
         joblib.dump(classifier, self.model_path)
         print("Retrained and updated model and vectorizer.")
+
+        # ✅ Upload to S3
+        self.upload_to_s3(self.vectorizer_path, 'tfidf_vectorizer.pkl')
+        self.upload_to_s3(self.model_path, 'rf_model.pkl')
+        self.upload_to_s3(self.mapping_file_path, 'final_file_topic_mapping.csv')
+        print("Uploaded retrained files to S3.")
 
         # Update topics list from the mapping file
         df = self.load_mapping_file()
@@ -296,8 +304,14 @@ class ModelManager:
             print(" Loading Trained TF-IDF Vectorizer and Random Forest Model...",flush=True)
             os.environ["JOBLIB_TEMP_FOLDER"] = "/tmp"
             with parallel_backend("threading"):  # Forces threading instead of multiprocessing
-                self.tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
-                self.rf_model = joblib.load("rf_model.pkl")
+                if not os.path.exists(self.vectorizer_path):
+                    print("Downloading tfidf vectorizer from S3...", flush=True)
+                    s3_client.download_file(model_bucket, "tfidf_vectorizer.pkl", self.vectorizer_path)
+                self.tfidf_vectorizer = joblib.load(self.vectorizer_path)
+                if not os.path.exists(self.model_path):
+                    print("Downloading rf model from S3...", flush=True)
+                    s3_client.download_file(model_bucket, "rf_model.pkl", self.model_path)
+                self.rf_model = joblib.load(self.model_path)
             print("Models loaded successfully.")
         except Exception as e:
             print("Error loading models. Make sure the model files exist.", e)

@@ -88,6 +88,7 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
             'Content-Type': files[index].type
           }
         });
+        
       }));
 
       setUploadStatus("Upload successful");

@@ -3,9 +3,8 @@
 import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrainingDocument, Topic } from '@/types/model';
-import { getAllTopics } from '@/service/modelApi';
-import { getCorrectedDocuments } from '@/service/documentApi';
-import { fetchUploadUrl } from '@/service/documentApi';
+import { getAllTopics, addNewTopic } from '@/service/modelApi';
+import { getCorrectedDocuments, fetchUploadUrl } from '@/service/documentApi';
 import {
   Dialog,
   DialogContent,
@@ -117,35 +116,57 @@ export default function ModelManagement() {
       });
       return;
     }
+    if (!topicFiles) {
+        toast({
+            title: "Sample Documents Required",
+            description: "Please upload some files relevant to the new topic.",
+            variant: "destructive"
+          });
+        return;
+    }
     console.log(
         "topic files:", topicFiles
     )
-    // Get presigned URLs for each file
-    const uploadDetails = await Promise.all(topicFiles?.map(file => fetchUploadUrl(file.type ,file.name, true)) || []);
-    console.log("upload details: ", uploadDetails);
+    try{
+        // Get presigned URLs for each file
+        const uploadDetails = await Promise.all(topicFiles.map(file => fetchUploadUrl(file.type ,file.name, true)));
+        console.log("upload details: ", uploadDetails);
+        
+        const payload = uploadDetails.map((details, index) => ({
+            file_id: details.file_id,
+            file_name: topicFiles[index].name
+        }));
 
-    // Upload files to S3 using presigned URLs
-    await Promise.all(uploadDetails.map((details, index) => {
-      console.log("Current file: ", topicFiles?.[index])
-      return fetch(details.upload_url, {
-        method: 'PUT',
-        body: topicFiles?.[index],
-        headers: {
-          'Content-Type': topicFiles?.[index]?.type || 'application/octet-stream'
-        }
-      });
-    }));
-    
-    toast({
-      title: "Topic created",
-      description: `Successfully created topic: ${newTopicName}`,
-      variant: "success"
-    });
-
-    setIsAddTopicDialogOpen(false);
-    setNewTopicName('');
-    setTopicFiles(null);
-  };
+        // Upload files to S3 using presigned URLs
+        await Promise.all(uploadDetails.map((details, index) => {
+        console.log("Current file: ", topicFiles[index])
+        return fetch(details.upload_url, {
+            method: 'PUT',
+            body: topicFiles?.[index],
+            headers: {
+            'Content-Type': topicFiles?.[index]?.type || 'application/octet-stream'
+            }
+        });
+        }));
+        
+        await addNewTopic(newTopicName, payload);
+        toast({
+        title: "Topic created",
+        description: `Successfully created topic: ${newTopicName}`,
+        variant: "success"
+        });
+    } catch (err){
+        toast({
+            title: "Error creating topic",
+            description: `${err}`,
+            variant: "destructive"
+            });
+    } finally{
+        setIsAddTopicDialogOpen(false);
+        setNewTopicName('');
+        setTopicFiles(null);
+    }
+    };
 
   return (
     <div className="h-[calc(100vh-4rem)] bg-gray-100">

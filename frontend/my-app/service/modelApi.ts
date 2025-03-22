@@ -31,3 +31,27 @@ export async function getAllTopics() {
 
     return await response.json(); // Assuming the backend responds with JSON
 }
+
+export async function addNewTopic(topic: string, files: {file_id: string, file_name: string}[]) {
+    console.log("Add new topic service reached");
+    
+    // Perform the fetch request
+    const response = await fetch(`${api.backendUrl}/topics`, {
+        method: "POST",
+        headers: {
+            "Authorization": `${getCookie("CognitoToken")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "topic": topic,
+            "files": files 
+        })
+    });
+
+    // Handle the response
+    if (!response.ok) {
+        throw new Error(`Failed to fetch topics. Status: ${response.status}`);
+    }
+
+    return await response.json(); // Assuming the backend responds with JSON
+}
