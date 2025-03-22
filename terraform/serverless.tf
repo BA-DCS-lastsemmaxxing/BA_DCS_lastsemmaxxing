@@ -300,6 +300,32 @@ resource "aws_cloudwatch_log_group" "document_classification_lambda_logs" {
   retention_in_days = 7  # Adjust retention as needed
 }
 
+# Add new topic lambda
+resource "aws_lambda_function" "add_new_topic_lambda" {
+  function_name = "add_new_topic"
+  package_type  = "Image"
+  image_uri     = "${aws_ecr_repository.lsm_fyp_repo.repository_url}:latest"
+  timeout       = 900
+  memory_size   = 2000
+  role = aws_iam_role.lambda_execution_role.arn
+  
+  image_config {
+    command     = ["new_topic.lambda_handler"]
+  }
+
+  environment {
+    variables = merge(local.lambda_db_variables, {
+      REGION = var.region
+      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+    })
+  }
+}
+
+resource "aws_cloudwatch_log_group" "add_new_topic_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.add_new_topic_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
+}
+
 # Fetch topics function
 resource "aws_lambda_function" "fetch_topics_lambda" {
   function_name = "fetch_topics"
