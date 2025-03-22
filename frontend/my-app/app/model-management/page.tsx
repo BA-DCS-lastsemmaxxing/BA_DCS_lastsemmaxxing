@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrainingDocument, Topic } from '@/types/model';
+import { getAllTopics } from '@/service/modelApi';
+import { getCorrectedDocuments } from '@/service/documentApi';
 import {
   Dialog,
   DialogContent,
@@ -25,41 +27,33 @@ export default function ModelManagement() {
   const [newTopicName, setNewTopicName] = useState('');
   const { toast } = useToast();
 
-  // Dummy data - replace with actual API calls
-  const [documents] = useState<TrainingDocument[]>([
-    {
-      id: '1',
-      name: 'Financial Report 2023.pdf',
-      originalTopic: 'Administrative',
-      correctedTopic: 'Financial',
-      correctedAt: '2024-03-20',
-      confidence: 0.75
-    },
-    {
-      id: '2',
-      name: 'Risk Assessment.pdf',
-      originalTopic: 'Financial',
-      correctedTopic: 'Risk Management',
-      correctedAt: '2024-03-21',
-      confidence: 0.82
-    }
-  ]);
+  const [documents, setDocuments] = useState<TrainingDocument[]>([]);
 
-  const [topics] = useState<Topic[]>([
-    {
-      id: '1',
-      name: 'Financial',
-      documentCount: 150,
-      createdAt: '2024-01-15'
-    },
-    {
-      id: '2',
-      name: 'Risk Management',
-      documentCount: 75,
-      createdAt: '2024-02-01'
-    }
-  ]);
+  const [topics, setTopics] = useState<Topic[]>([]);
 
+  useEffect(() => {
+    const fetchTopics = async () => {
+        try {
+          const topics = await getAllTopics();
+          console.log(" Topics: ", topics);
+          setTopics(topics);
+        } catch (error) {
+          console.error("Error fetching topics:", error);
+        }
+      };
+      const fetchCorrectedDocuments = async () => {
+        try {
+          const docs = await getCorrectedDocuments();
+          console.log(" Corrected Documents: ", docs);
+          setDocuments(docs);
+        } catch (error) {
+          console.error("Error fetching corrected documents:", error);
+        }
+      };
+      fetchTopics();
+      fetchCorrectedDocuments();
+  }, []);
+  
   const handleDocumentSelect = (docId: string) => {
     const newSelected = new Set(selectedDocuments);
     if (newSelected.has(docId)) {

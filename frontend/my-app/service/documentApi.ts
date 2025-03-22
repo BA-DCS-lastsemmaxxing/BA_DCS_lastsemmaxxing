@@ -133,3 +133,37 @@ export async function deleteDocument(documentId: string) {
     
     return await response.json();
 }
+
+export async function getCorrectedDocuments() {
+
+    return [
+        {
+          id: '1',
+          name: 'Financial Report 2023.pdf',
+          originalTopic: 'Administrative',
+          correctedTopic: 'Financial',
+          correctedAt: '2024-03-20',
+          confidence: 0.75
+        },
+        {
+          id: '2',
+          name: 'Risk Assessment.pdf',
+          originalTopic: 'Financial',
+          correctedTopic: 'Risk Management',
+          correctedAt: '2024-03-21',
+          confidence: 0.82
+        }
+      ]
+    const response = await fetch(`${api.backendUrl}/documents?docId=${encodeURIComponent(documentId)}`, {
+        method : "DELETE",
+        headers: {
+            "Authorization": `${getCookie("CognitoToken")}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to delete document. Status: ${response.status}`);
+      }
+    
+    return await response.json();
+}

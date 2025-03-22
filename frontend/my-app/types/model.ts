@@ -8,7 +8,6 @@ export interface TrainingDocument {
 }
 
 export interface Topic {
-  id: string;
   name: string;
   documentCount: number;
   createdAt: string;

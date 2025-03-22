@@ -8,7 +8,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { getDownloadLink } from '@/service/classification';
+import { getDownloadLink } from '@/service/documentApi';
 import { Icons } from '@/components/Icons';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';

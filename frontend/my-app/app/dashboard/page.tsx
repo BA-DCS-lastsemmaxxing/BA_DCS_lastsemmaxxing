@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { searchDocuments, deleteDocument } from '@/service/classification';
+import { searchDocuments, deleteDocument } from '@/service/documentApi';
 import { Document } from '@/types/document';
 import { UploadSection } from '@/components/dashboard/UploadSection';
 import { SearchBar } from '@/components/dashboard/SearchBar';
