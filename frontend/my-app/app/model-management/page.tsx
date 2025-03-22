@@ -1,32 +1,135 @@
 'use client';
 
 import { useState } from 'react';
-
-interface Model {
-  id: string;
-  name: string;
-  status: 'active' | 'training' | 'failed';
-  accuracy: number;
-  lastUpdated: string;
-}
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TrainingDocument, Topic } from '@/types/model';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { UploadSection } from '@/components/dashboard/UploadSection';
+import { useToast } from "@/hooks/use-toast";
 
 export default function ModelManagement() {
-  const [models] = useState<Model[]>([
+  const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [topicToDelete, setTopicToDelete] = useState<Topic | null>(null);
+  const [isAddTopicDialogOpen, setIsAddTopicDialogOpen] = useState(false);
+  const [newTopicName, setNewTopicName] = useState('');
+  const { toast } = useToast();
+
+  // Dummy data - replace with actual API calls
+  const [documents] = useState<TrainingDocument[]>([
     {
       id: '1',
-      name: 'Document Classifier v1',
-      status: 'active',
-      accuracy: 0.95,
-      lastUpdated: '2024-03-20'
+      name: 'Financial Report 2023.pdf',
+      originalTopic: 'Administrative',
+      correctedTopic: 'Financial',
+      correctedAt: '2024-03-20',
+      confidence: 0.75
     },
     {
       id: '2',
-      name: 'Document Classifier v2',
-      status: 'training',
-      accuracy: 0.89,
-      lastUpdated: '2024-03-21'
+      name: 'Risk Assessment.pdf',
+      originalTopic: 'Financial',
+      correctedTopic: 'Risk Management',
+      correctedAt: '2024-03-21',
+      confidence: 0.82
     }
   ]);
+
+  const [topics] = useState<Topic[]>([
+    {
+      id: '1',
+      name: 'Financial',
+      documentCount: 150,
+      createdAt: '2024-01-15'
+    },
+    {
+      id: '2',
+      name: 'Risk Management',
+      documentCount: 75,
+      createdAt: '2024-02-01'
+    }
+  ]);
+
+  const handleDocumentSelect = (docId: string) => {
+    const newSelected = new Set(selectedDocuments);
+    if (newSelected.has(docId)) {
+      newSelected.delete(docId);
+    } else {
+      newSelected.add(docId);
+    }
+    setSelectedDocuments(newSelected);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedDocuments.size === documents.length) {
+      setSelectedDocuments(new Set());
+    } else {
+      setSelectedDocuments(new Set(documents.map(doc => doc.id)));
+    }
+  };
+
+  const handleStartRetraining = async () => {
+    if (selectedDocuments.size === 0) {
+      toast({
+        title: "No documents selected",
+        description: "Please select at least one document for retraining.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Add your retraining API call here
+    toast({
+      title: "Retraining started",
+      description: `Started retraining with ${selectedDocuments.size} documents.`,
+      variant: "success"
+    });
+  };
+
+  const handleDeleteTopic = async () => {
+    if (!topicToDelete) return;
+    
+    // Add your delete topic API call here
+    toast({
+      title: "Topic deleted",
+      description: `Successfully deleted topic: ${topicToDelete.name}`,
+      variant: "success"
+    });
+    
+    setIsDeleteDialogOpen(false);
+    setTopicToDelete(null);
+  };
+
+  const handleAddTopic = async () => {
+    if (!newTopicName.trim()) {
+      toast({
+        title: "Invalid topic name",
+        description: "Please enter a valid topic name.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Add your create topic API call here
+    toast({
+      title: "Topic created",
+      description: `Successfully created topic: ${newTopicName}`,
+      variant: "success"
+    });
+
+    setIsAddTopicDialogOpen(false);
+    setNewTopicName('');
+  };
 
   return (
     <div className="h-[calc(100vh-4rem)] bg-gray-100">
@@ -35,78 +138,202 @@ export default function ModelManagement() {
           <h1 className="text-2xl font-bold">Model Management</h1>
         </div>
       </div>
-      
+
       <div className="max-w-6xl mx-auto px-4 py-6">
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">Models</h2>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-              Train New Model
-            </button>
+        <Tabs defaultValue="retraining" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="retraining">Retraining</TabsTrigger>
+            <TabsTrigger value="topics">Topic Configuration</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="retraining" className="mt-6">
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold">Documents for Retraining</h2>
+                <Button 
+                  onClick={handleStartRetraining}
+                  disabled={selectedDocuments.size === 0}
+                >
+                  Start Retraining
+                </Button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="px-6 py-3 text-left">
+                        <Checkbox 
+                          checked={selectedDocuments.size === documents.length}
+                          onCheckedChange={handleSelectAll}
+                        />
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Document Name
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Original Topic
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Corrected Topic
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Corrected At
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Confidence
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {documents.map((doc) => (
+                      <tr key={doc.id}>
+                        <td className="px-6 py-4">
+                          <Checkbox 
+                            checked={selectedDocuments.has(doc.id)}
+                            onCheckedChange={() => handleDocumentSelect(doc.id)}
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {doc.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {doc.originalTopic}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {doc.correctedTopic}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {doc.correctedAt}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {(doc.confidence * 100).toFixed(1)}%
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="topics" className="mt-6">
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold">Topics</h2>
+                <Button onClick={() => setIsAddTopicDialogOpen(true)}>
+                  Add New Topic
+                </Button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Topic Name
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Document Count
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Created At
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {topics.map((topic) => (
+                      <tr key={topic.id}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {topic.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {topic.documentCount}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {topic.createdAt}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          <Button
+                            variant="destructive"
+                            onClick={() => {
+                              setTopicToDelete(topic);
+                              setIsDeleteDialogOpen(true);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+
+      {/* Delete Topic Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Topic</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete the topic "{topicToDelete?.name}"? 
+              This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleDeleteTopic}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Topic Dialog */}
+      <Dialog open={isAddTopicDialogOpen} onOpenChange={setIsAddTopicDialogOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Add New Topic</DialogTitle>
+            <DialogDescription>
+              Create a new topic and upload sample documents for training.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Topic Name</label>
+              <Input
+                placeholder="Enter topic name"
+                value={newTopicName}
+                onChange={(e) => setNewTopicName(e.target.value)}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Sample Documents</label>
+              <UploadSection onUploadSuccess={() => {}} />
+            </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Model Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Accuracy
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Last Updated
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {models.map((model) => (
-                  <tr key={model.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
-                        {model.name}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                        ${model.status === 'active' ? 'bg-green-100 text-green-800' : 
-                          model.status === 'training' ? 'bg-yellow-100 text-yellow-800' : 
-                          'bg-red-100 text-red-800'}`}>
-                        {model.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {(model.accuracy * 100).toFixed(1)}%
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {model.lastUpdated}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button className="text-blue-600 hover:text-blue-900 mr-4">
-                        View Details
-                      </button>
-                      {model.status === 'active' && (
-                        <button className="text-red-600 hover:text-red-900">
-                          Deactivate
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsAddTopicDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleAddTopic}>
+              Create Topic
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 } 
