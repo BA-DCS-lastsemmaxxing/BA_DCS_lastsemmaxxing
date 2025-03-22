@@ -176,82 +176,51 @@ class ModelManager:
 
     def retrain_model(self) -> None:
         """
-        Retrain the TF-IDF vectorizer and Random Forest classifier using all
-        documents listed in the mapping CSV.
+        Retrain TF-IDF + Random Forest using files downloaded from S3.
         """
-        # Check mapping paths (this version reports missing files)
-        df = self.update_mapping_paths()
-        # Drop rows with missing folder or file names
+        df = self.load_mapping_file()
         df = df.dropna(subset=["folder_name", "file_name"])
         texts = []
         labels = []
+
         for _, row in df.iterrows():
-            folder = row['folder_name']
-            file_name = row['file_name']
-            folder_path = self.find_folder_recursively("/tmp/Extracted_Sample_Data", folder)
-            if folder_path:
-                full_path = os.path.join(folder_path, file_name)
-            else:
-                full_path = os.path.join("/tmp","Extracted_Sample_Data", folder, file_name)
+            folder = row["folder_name"]
+            file_name = row["file_name"]
+            s3_key = f"preprocessed_data/{folder}/{file_name}"
+            local_path = f"/tmp/{file_name}"
+
             try:
-                with open(full_path, 'r', encoding="utf-8") as f:
+                s3_client.download_file(model_bucket, s3_key, local_path)
+                with open(local_path, "r", encoding="utf-8") as f:
                     text = f.read()
                 texts.append(text)
                 labels.append(folder)
             except Exception as e:
-                print(f"Error reading file {full_path}: {e}")
+                print(f"Error loading training file from S3 ({s3_key}): {e}")
 
         if not texts:
-            print("No training data available. Skipping retraining.")
+            print("No training data found. Aborting retraining.")
             return
 
-        # Train new TF-IDF vectorizer and Random Forest classifier
+        # Train model
         X = self.tfidf_vectorizer.fit_transform(texts)
         classifier = self.rf_model(random_state=42)
         classifier.fit(X, labels)
 
-        # Save updated models
+        # Save and upload model + vectorizer
         joblib.dump(self.tfidf_vectorizer, self.vectorizer_path)
         joblib.dump(classifier, self.model_path)
-        print("Retrained and updated model and vectorizer.")
+        print("Retrained and saved models.")
 
-        # ✅ Upload to S3
-        self.upload_to_s3(self.vectorizer_path, 'tfidf_vectorizer.pkl')
-        self.upload_to_s3(self.model_path, 'rf_model.pkl')
-        self.upload_to_s3(self.mapping_file_path, 'final_file_topic_mapping.csv')
-        print("Uploaded retrained files to S3.")
+        self.upload_to_s3(self.vectorizer_path, "tfidf_vectorizer.pkl")
+        self.upload_to_s3(self.model_path, "rf_model.pkl")
+        self.upload_to_s3(self.mapping_file_path, "final_file_topic_mapping.csv")
+        print("Uploaded updated models and mapping file to S3.")
 
-        # Update topics list from the mapping file
-        df = self.load_mapping_file()
-        self.unique_topics = df['folder_name'].unique().tolist()
-        self.unique_topics_str = ', '.join(self.unique_topics)
-        print("Updated topics list:", self.unique_topics_str)
-        # Refresh in-memory models
+        # Refresh local model state
         self.load_models()
 
-    def add_new_topic(self, topic_name: str, files: list, processor) -> None:
-        """
-        Add a new topic by processing the provided PDF document, moving the file to the correct
-        subfolder under Extracted_Sample_Data, updating the mapping CSV, and retraining the model.
-        """
 
-        for file in files:
-            # Process the PDF document
-            output_path, _ = processor.preprocess_pdf(file["file_content"], file["file_name"])
-            # Determine destination folder: create it under Extracted_Sample_Data if needed
-            # Here we assume that new topics are created directly under Extracted_Sample_Data.
-            dest_folder = os.path.join("/tmp", "Extracted_Sample_Data", topic_name)
-            os.makedirs(dest_folder, exist_ok=True)
-            new_destination = os.path.join(dest_folder, os.path.basename(output_path))
-            shutil.move(output_path, new_destination)
-            # Update mapping file with the new entry using file_name (not full path)
-            df = self.load_mapping_file()
-            new_entry = {"folder_name": topic_name, "file_name": os.path.basename(new_destination)}
-            df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
-            self.save_mapping_file(df)
-            print(f"New topic '{topic_name}' added with document: {new_destination}")
-        self.retrain_model()
-        self.update_unique_topics()
 
     def remove_topic(self, topic_name: str) -> None:
         """
