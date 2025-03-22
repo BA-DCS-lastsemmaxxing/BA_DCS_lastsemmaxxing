@@ -80,6 +80,106 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
   ]
 }
 
+# Create a resource for /topics
+resource "aws_api_gateway_resource" "topics_resource" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  parent_id   = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
+  path_part   = "topics"
+}
+
+# Options method for CORS support (GET /documents)
+resource "aws_api_gateway_method" "topics_method_options" {
+  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id   = aws_api_gateway_resource.topics_resource.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "topics_method_options_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.topics_resource.id
+  http_method = aws_api_gateway_method.topics_method_options.http_method
+  status_code = "200"
+  
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"       = true
+    "method.response.header.Access-Control-Allow-Methods"      = true
+    "method.response.header.Access-Control-Allow-Headers"      = true
+    "method.response.header.Access-Control-Allow-Credentials"  = true
+  }
+}
+
+resource "aws_api_gateway_integration" "topics_options_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id             = aws_api_gateway_resource.topics_resource.id
+  http_method             = aws_api_gateway_method.topics_method_options.http_method
+  type                    = "MOCK"
+  request_templates = {
+    "application/json" = jsonencode({
+      statusCode = 200
+    })
+  }
+}
+
+resource "aws_api_gateway_integration_response" "topics_method_options_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.topics_resource.id
+  http_method = aws_api_gateway_method.topics_method_options.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
+    "method.response.header.Access-Control-Allow-Methods"      = "'GET,POST,OPTIONS,DELETE'"
+    "method.response.header.Access-Control-Allow-Headers"      = "'Content-Type,Authorization'"
+    "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
+  }
+
+  depends_on = [ aws_api_gateway_integration.topics_options_integration ]
+}
+
+# GET method for /topics
+resource "aws_api_gateway_method" "topics_method_get" {
+  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id   = aws_api_gateway_resource.topics_resource.id
+  http_method   = "GET"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
+}
+
+# Trigger fetch topics lambda function when GET method called on /topics
+resource "aws_api_gateway_integration" "topics_method_get_integration" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.topics_resource.id
+  http_method = aws_api_gateway_method.topics_method_get.http_method
+
+  type = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri = aws_lambda_function.fetch_topics_lambda.invoke_arn
+}
+
+resource "aws_api_gateway_method_response" "topics_method_get_response" {
+    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+    resource_id = aws_api_gateway_resource.topics_resource.id
+    http_method = aws_api_gateway_method.topics_method_get.http_method
+    status_code = "200"
+    
+    response_parameters = {
+        "method.response.header.Access-Control-Allow-Origin" = true
+        "method.response.header.Access-Control-Allow-Methods" = true
+        "method.response.header.Access-Control-Allow-Headers" = true
+        "method.response.header.Access-Control-Allow-Credentials" = true
+  }
+}
+
+# Allow API Gateway to invoke the Lambda function
+resource "aws_lambda_permission" "topics_method_get_lambda_permission" {
+    statement_id  = "AllowAPIGatewayInvoke"
+    action        = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.fetch_topics_lambda.function_name
+    principal     = "apigateway.amazonaws.com"
+    source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
+}
+
 # Create a resource for /documents
 resource "aws_api_gateway_resource" "documents_resource" {
   rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
