@@ -117,6 +117,9 @@ export default function ModelManagement() {
       });
       return;
     }
+    console.log(
+        "topic files:", topicFiles
+    )
     // Get presigned URLs for each file
     const uploadDetails = await Promise.all(topicFiles?.map(file => fetchUploadUrl(file.type ,file.name, true)) || []);
     console.log("upload details: ", uploadDetails);

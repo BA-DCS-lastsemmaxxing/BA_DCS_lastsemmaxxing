@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 interface TopicFileUploadProps {
@@ -11,6 +11,10 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
   const [files, setFiles] = useState<File[] | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    onFilesChange(files)
+  }, [files]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
