@@ -165,11 +165,11 @@ class ModelManager:
         for idx, row in df.iterrows():
             folder = row['folder_name']
             file_name = row['file_name']
-            folder_path = self.find_folder_recursively("Extracted_Sample_Data", folder)
+            folder_path = self.find_folder_recursively("/tmp/Extracted_Sample_Data", folder)
             if folder_path:
                 full_path = os.path.join(folder_path, file_name)
             else:
-                full_path = os.path.join("Extracted_Sample_Data", folder, file_name)
+                full_path = os.path.join("/tmp", "Extracted_Sample_Data", folder, file_name)
             if not os.path.exists(full_path):
                 print(f"Warning: File not found for row {idx}: {full_path}")
         return df
@@ -188,11 +188,11 @@ class ModelManager:
         for _, row in df.iterrows():
             folder = row['folder_name']
             file_name = row['file_name']
-            folder_path = self.find_folder_recursively("Extracted_Sample_Data", folder)
+            folder_path = self.find_folder_recursively("/tmp/Extracted_Sample_Data", folder)
             if folder_path:
                 full_path = os.path.join(folder_path, file_name)
             else:
-                full_path = os.path.join("Extracted_Sample_Data", folder, file_name)
+                full_path = os.path.join("/tmp","Extracted_Sample_Data", folder, file_name)
             try:
                 with open(full_path, 'r', encoding="utf-8") as f:
                     text = f.read()
@@ -270,7 +270,7 @@ class ModelManager:
             return
 
         # Remove the topic folder and its contents
-        topic_folder_path = os.path.join("Extracted_Sample_Data", existing_topic)
+        topic_folder_path = os.path.join("/tmp","Extracted_Sample_Data", existing_topic)
         if os.path.exists(topic_folder_path):
             try:
                 shutil.rmtree(topic_folder_path)
