@@ -184,6 +184,7 @@ class ModelManager:
         labels = []
 
         for _, row in df.iterrows():
+            print("row info: ", row,flush=True)
             folder = row["folder_name"]
             file_name = row["file_name"]
             s3_key = f"Extracted_Sample_Data/{folder}/{file_name}"
@@ -229,7 +230,7 @@ class ModelManager:
             output_path, _ = processor.preprocess_pdf(file["file_content"], file["file_name"])
 
             # Step 2: Upload cleaned text to S3
-            s3_key = f"preprocessed_data/{topic_name}/{os.path.basename(output_path)}"
+            s3_key = f"Extracted_Sample_Data/{topic_name}/{os.path.basename(output_path)}"
             s3_client.upload_file(output_path, model_bucket, s3_key)
             print(f"Uploaded cleaned file to S3: {s3_key}")
 
