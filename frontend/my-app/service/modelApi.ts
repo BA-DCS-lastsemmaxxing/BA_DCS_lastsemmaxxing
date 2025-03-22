@@ -17,7 +17,7 @@ export async function getAllTopics() {
     console.log("Get all topics service reached");
     
     // Perform the fetch request
-    const response = await fetch(`${api.backendUrl}/topics}`, {
+    const response = await fetch(`${api.backendUrl}/topics`, {
         method: "GET",
         headers: {
             "Authorization": `${getCookie("CognitoToken")}`

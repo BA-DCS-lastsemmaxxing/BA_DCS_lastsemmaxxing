@@ -37,7 +37,7 @@ with parallel_backend("threading"):  # Forces threading instead of multiprocessi
     tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
     rf_model = joblib.load("rf_model.pkl")
 
-def lambda_handler(event, context):
+def classification_handler(event, context):
     print("Document classification triggered")
     print("Event: ", event, flush=True)
     body = event.get("body")
