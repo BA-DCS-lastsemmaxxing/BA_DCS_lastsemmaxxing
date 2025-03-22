@@ -283,7 +283,7 @@ export default function ModelManagement() {
           <DialogHeader>
             <DialogTitle>Delete Topic</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the topic "{topicToDelete?.name}"? 
+              Are you sure you want to delete the topic &quot;{topicToDelete?.name}&quot;? 
               This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
