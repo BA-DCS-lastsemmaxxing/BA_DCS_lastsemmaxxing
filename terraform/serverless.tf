@@ -282,6 +282,7 @@ resource "aws_lambda_function" "document_classification_lambda" {
   timeout       = 900
   memory_size   = 2000
   role = aws_iam_role.lambda_execution_role.arn
+  handler = "document_classification.classification_handler"
 
   environment {
     variables = merge(local.lambda_db_variables, {
