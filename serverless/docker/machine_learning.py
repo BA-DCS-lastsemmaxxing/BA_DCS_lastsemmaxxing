@@ -84,7 +84,7 @@ class DocumentProcessor:
 
             # Save cleaned text to a .txt file in the current working directory
             base_name = os.path.splitext(filename)[0]  # removes .pdf or any other extension
-            output_path = os.path.join("/tmp", f"{base_name}.txt")
+            output_path = os.path.join("/tmp", f"{base_name}_extracted.txt")
 
             with open(output_path, "w", encoding="utf-8") as text_file:
                 text_file.write(cleaned_text)
