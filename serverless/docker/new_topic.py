@@ -1,11 +1,11 @@
-import os
+import json
 from models import Document, Topic
 from machine_learning import *
 
 def lambda_handler(event, context):
     print("Add new topic triggered")
     print("Event: ", event, flush=True)
-    body = event.get("body")
+    body = json.loads(event.get("body"))
     file_info = body.get("files")
     new_topic = body.get("topic")
     files = []
@@ -16,7 +16,7 @@ def lambda_handler(event, context):
 
     ModelManager.add_new_topic(new_topic,files, DocumentProcessor())
     Topic.insert_topic(new_topic)
-    
+
     return {
         "statusCode": 200,
         "headers": { 
