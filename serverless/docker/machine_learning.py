@@ -83,7 +83,7 @@ class DocumentProcessor:
             cleaned_text = DocumentProcessor.remove_stop_words(cleaned_text)
 
             # Save cleaned text to a .txt file in the current working directory
-            output_path = os.path.join(os.getcwd(), f"{filename}.txt")
+            output_path = os.path.join("/tmp", f"{filename}.txt")
             with open(output_path, "w", encoding="utf-8") as text_file:
                 text_file.write(cleaned_text)
 
@@ -240,7 +240,7 @@ class ModelManager:
             output_path, _ = processor.preprocess_pdf(file["file_content"], file["file_name"])
             # Determine destination folder: create it under Extracted_Sample_Data if needed
             # Here we assume that new topics are created directly under Extracted_Sample_Data.
-            dest_folder = os.path.join("Extracted_Sample_Data", topic_name)
+            dest_folder = os.path.join("/tmp", "Extracted_Sample_Data", topic_name)
             os.makedirs(dest_folder, exist_ok=True)
             new_destination = os.path.join(dest_folder, os.path.basename(output_path))
             shutil.move(output_path, new_destination)
