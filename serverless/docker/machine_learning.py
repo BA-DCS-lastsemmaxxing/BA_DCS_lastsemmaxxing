@@ -83,7 +83,9 @@ class DocumentProcessor:
             cleaned_text = DocumentProcessor.remove_stop_words(cleaned_text)
 
             # Save cleaned text to a .txt file in the current working directory
-            output_path = os.path.join("/tmp", f"{filename}.txt")
+            base_name = os.path.splitext(filename)[0]  # removes .pdf or any other extension
+            output_path = os.path.join("/tmp", f"{base_name}.txt")
+
             with open(output_path, "w", encoding="utf-8") as text_file:
                 text_file.write(cleaned_text)
 
@@ -187,7 +189,7 @@ class ModelManager:
             print("row info: ", row,flush=True)
             folder = row["folder_name"]
             file_name = row["file_name"]
-            s3_key = f"Extracted_Sample_Data/{folder}/{file_name}_extracted"
+            s3_key = f"Extracted_Sample_Data/{folder}/{file_name}_extracted.txt"
             local_path = f"/tmp/{file_name}"
 
             try:
