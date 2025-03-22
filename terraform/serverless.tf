@@ -284,9 +284,7 @@ resource "aws_lambda_function" "document_classification_lambda" {
   role = aws_iam_role.lambda_execution_role.arn
   
   image_config {
-    entry_point = ["/usr/local/bin/npx", "aws-lambda-ric"]
     command     = ["document_classification.lambda_handler"]
-    working_directory = "/var/task"
   }
 
   environment {
