@@ -169,6 +169,11 @@ data "aws_s3_object" "insert_rds_new_document_lambda_zip" {
   key = "insert_rds_new_document.zip"
 }
 
+data "aws_s3_object" "fetch_topics_lambda_zip" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "fetch_topics.zip"
+}
+
 data "aws_s3_object" "s3_trigger_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "s3_trigger.zip"

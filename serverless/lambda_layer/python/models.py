@@ -98,8 +98,7 @@ class Document:
         cursor = connection.cursor()
 
         # Get current time in local timezone
-        current_time = datetime.now(local_tz).strftime('%Y-%m-%d %H:%M:%S')
-        print("current time for insert: ",current_time, flush=True)
+        current_time = datetime.now(local_tz)
 
         cursor.execute(
             "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence) VALUES (%s, %s, %s, 'processing' , null, null)",
@@ -146,4 +145,72 @@ class Document:
             return True
         except Exception as e:
             print(f"Error deleting document: {e}")
+            return False
+
+############################################################### Topic ##############################################################################################################
+
+class Topic:
+    def __init__(self, topic_name, created_at, document_count ):
+        self.topic_name = topic_name
+        self.created_at = created_at
+        self.document_count = document_count
+
+    @staticmethod
+    def get_all_topics():
+        """Retrieve all topics from the topics table."""
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM topics;")
+        results = cursor.fetchall()
+        topics = []
+
+        for row in results:
+            topics.append(
+                Topic(
+                    topic_name=row["topic_name"],
+                    created_at=row["created_at"],
+                    document_count=row["document_count"]
+                ).__dict__
+            )
+
+        cursor.close()
+        connection.close()
+        return topics
+
+    @staticmethod
+    def insert_topic(topic_name):
+        """Insert a new topic into the topics table."""
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            "INSERT INTO topics (topic_name) VALUES (%s);",
+            (topic_name,)
+        )
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+    @staticmethod
+    def delete_topic(topic_name):
+        """Delete a topic from the topics table by its name."""
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            # Delete the topic by its name
+            cursor.execute("DELETE FROM topics WHERE topic_name = %s;", (topic_name,))
+            connection.commit()
+
+            # Check if the topic was successfully deleted
+            if cursor.rowcount == 0:
+                print(f"No topic found with name {topic_name}.")
+                return False
+            print(f"Topic with name {topic_name} has been deleted successfully.")
+            cursor.close()
+            connection.close()
+            return True
+        except Exception as e:
+            print(f"Error deleting topic: {e}")
             return False

@@ -71,6 +71,39 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+DROP TABLE IF EXISTS `topics`;
+CREATE TABLE `topics` (
+    `topic_name` VARCHAR(255) NOT NULL,
+    `document_count` INT DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`topic_name`)
+);
+
+INSERT INTO topics (topic_name) VALUES
+('Operational'),
+('Administrative'),
+('Strategic'),
+('Technology'),
+('Market and Public Communications'),
+('Regulatory and Compliance'),
+('Consumer Finance'),
+('Anti Money Laundering'),
+('Financial Regulations'),
+('Taxation'),
+('Risk Management'),
+('Audit Reports'),
+('Legal and Contractual'),
+('Employment'),
+('Loans'),
+('Client Agreements'),
+('Non-Disclosure Agreements'),
+('Derivatives'),
+('Partnerships'),
+('Merges and Acquisitions'),
+('Financial'),
+('Investments and Market Research'),
+('Annual Reports');
+
 --
 -- Dumping data for table `users`
 --

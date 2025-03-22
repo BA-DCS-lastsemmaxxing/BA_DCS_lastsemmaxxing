@@ -282,6 +282,10 @@ resource "aws_lambda_function" "document_classification_lambda" {
   timeout       = 900
   memory_size   = 2000
   role = aws_iam_role.lambda_execution_role.arn
+  
+  image_config {
+    command     = ["document_classification.lambda_handler"]
+  }
 
   environment {
     variables = merge(local.lambda_db_variables, {
@@ -293,6 +297,31 @@ resource "aws_lambda_function" "document_classification_lambda" {
 
 resource "aws_cloudwatch_log_group" "document_classification_lambda_logs" {
   name              = "/aws/lambda/${aws_lambda_function.document_classification_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
+}
+
+# Fetch topics function
+resource "aws_lambda_function" "fetch_topics_lambda" {
+  function_name = "fetch_topics"
+
+  runtime = "python3.9"
+  handler = "fetch_topics.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "fetch_topics.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.fetch_topics_lambda_zip.etag
+
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  environment {
+    variables = local.lambda_db_variables
+  }
+}
+
+resource "aws_cloudwatch_log_group" "fetch_topics_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.fetch_topics_lambda.function_name}"
   retention_in_days = 7  # Adjust retention as needed
 }
 
