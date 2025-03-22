@@ -96,7 +96,7 @@ export default function ModelManagement() {
     // Add your delete topic API call here
     toast({
       title: "Topic deleted",
-      description: `Successfully deleted topic: ${topicToDelete.name}`,
+      description: `Successfully deleted topic: ${topicToDelete.topic_name}`,
       variant: "success"
     });
     
@@ -240,15 +240,15 @@ export default function ModelManagement() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {topics.map((topic) => (
-                      <tr key={topic.name}>
+                      <tr key={topic.topic_name}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {topic.name}
+                          {topic.topic_name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {topic.documentCount}
+                          {topic.document_count}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {topic.createdAt}
+                          {topic.created_at}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           <Button
@@ -277,7 +277,7 @@ export default function ModelManagement() {
           <DialogHeader>
             <DialogTitle>Delete Topic</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the topic &quot;{topicToDelete?.name}&quot;? 
+              Are you sure you want to delete the topic &quot;{topicToDelete?.topic_name}&quot;? 
               This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
