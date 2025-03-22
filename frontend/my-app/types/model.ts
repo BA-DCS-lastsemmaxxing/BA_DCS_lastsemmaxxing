@@ -5,6 +5,7 @@ export interface TrainingDocument {
   correctedTopic: string;
   correctedAt: string;
   confidence: number;
+  justification: string;
 }
 
 export interface Topic {

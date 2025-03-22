@@ -13,11 +13,11 @@ function getCookie(name: string): string | undefined {
     return undefined;
 }
 
-export async function fetchUploadUrl(filetype: string, filename: string) {
+export async function fetchUploadUrl(filetype: string, filename: string, forTraining: boolean) {
     console.log("Upload service reached");
 
     // Perform the fetch request
-    const response = await fetch(`${api.backendUrl}/upload/url?file_type=${encodeURIComponent(filetype)}&file_name=${encodeURIComponent(filename)}`, {
+    const response = await fetch(`${api.backendUrl}/upload/url?file_type=${encodeURIComponent(filetype)}&file_name=${encodeURIComponent(filename)}&for_training=${encodeURIComponent(forTraining)}`, {
         method: "GET",
         headers: {
             "Authorization": `${getCookie("CognitoToken")}`

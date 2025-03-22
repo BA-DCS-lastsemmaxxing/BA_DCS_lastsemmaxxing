@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrainingDocument, Topic } from '@/types/model';
 import { getAllTopics } from '@/service/modelApi';
 import { getCorrectedDocuments } from '@/service/documentApi';
+import { fetchUploadUrl } from '@/service/documentApi';
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UploadSection } from '@/components/dashboard/UploadSection';
 import { useToast } from "@/hooks/use-toast";
+import { TopicFileUpload } from '@/components/model-management/TopicFileUpload';
 
 export default function ModelManagement() {
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
@@ -30,6 +32,8 @@ export default function ModelManagement() {
   const [documents, setDocuments] = useState<TrainingDocument[]>([]);
 
   const [topics, setTopics] = useState<Topic[]>([]);
+
+  const [topicFiles, setTopicFiles] = useState<File[] | null>(null);
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -113,8 +117,22 @@ export default function ModelManagement() {
       });
       return;
     }
+    // Get presigned URLs for each file
+    const uploadDetails = await Promise.all(topicFiles?.map(file => fetchUploadUrl(file.type ,file.name, true)) || []);
+    console.log("upload details: ", uploadDetails);
 
-    // Add your create topic API call here
+    // Upload files to S3 using presigned URLs
+    await Promise.all(uploadDetails.map((details, index) => {
+      console.log("Current file: ", topicFiles?.[index])
+      return fetch(details.upload_url, {
+        method: 'PUT',
+        body: topicFiles?.[index],
+        headers: {
+          'Content-Type': topicFiles?.[index]?.type || 'application/octet-stream'
+        }
+      });
+    }));
+    
     toast({
       title: "Topic created",
       description: `Successfully created topic: ${newTopicName}`,
@@ -123,6 +141,7 @@ export default function ModelManagement() {
 
     setIsAddTopicDialogOpen(false);
     setNewTopicName('');
+    setTopicFiles(null);
   };
 
   return (
@@ -177,6 +196,9 @@ export default function ModelManagement() {
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Confidence
                       </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Justification
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -202,6 +224,9 @@ export default function ModelManagement() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {(doc.confidence * 100).toFixed(1)}%
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {doc.justification}
                         </td>
                       </tr>
                     ))}
@@ -314,7 +339,7 @@ export default function ModelManagement() {
             
             <div className="space-y-2">
               <label className="text-sm font-medium">Sample Documents</label>
-              <UploadSection onUploadSuccess={() => {}} />
+              <TopicFileUpload onFilesChange={setTopicFiles} />
             </div>
           </div>
 

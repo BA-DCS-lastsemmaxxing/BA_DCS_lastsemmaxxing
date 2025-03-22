@@ -75,7 +75,7 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
     setIsLoading(true);
     try {
       // Get presigned URLs for each file
-      const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl(file.type, file.name)));
+      const uploadDetails = await Promise.all(files.map(file => fetchUploadUrl(file.type,file.name, false)));
       console.log("upload details: ", uploadDetails);
 
       // Upload files to S3 using presigned URLs
