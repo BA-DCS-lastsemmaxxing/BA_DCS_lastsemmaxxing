@@ -414,3 +414,6 @@ class ModelManager:
         except Exception as e:
             print(f"Error calling AWS Bedrock API: {e}")
             return "Unknown", "Error occurred during LLM call"
+
+modelManager = ModelManager()
+documentProcessor = DocumentProcessor()

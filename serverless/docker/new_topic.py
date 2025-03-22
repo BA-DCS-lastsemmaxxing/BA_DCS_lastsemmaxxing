@@ -14,7 +14,7 @@ def lambda_handler(event, context):
         file_content = response["Body"].read()
         files.append({"file_content": file_content, "file_name": f["file_name"]})
 
-    ModelManager.add_new_topic(new_topic,files, DocumentProcessor())
+    modelManager.add_new_topic(new_topic,files, documentProcessor)
     Topic.insert_topic(new_topic)
 
     return {

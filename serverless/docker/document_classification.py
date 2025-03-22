@@ -13,11 +13,11 @@ def lambda_handler(event, context):
     print('file id: ', file_id, flush=True)
     response = s3_client.get_object(Bucket=bucket_name, Key=file_id)
     file_content = response["Body"].read()
-    DocumentProcessor.preprocess_pdf(file_content,filename)
+    documentProcessor.preprocess_pdf(file_content,filename)
     pickle_path = "/tmp/processed_file.pkl"
     if not os.path.exists(pickle_path):
         raise FileNotFoundError(f"Error: Pickle file not found at {pickle_path}. Something went wrong in `preprocess_pdf()`.")
-    filename, classification, confidence, summary, source = ModelManager.classify_document()
+    filename, classification, confidence, summary, source = modelManager.classify_document()
     print("filename: ", filename)
     print("classification: ", classification)
     print("confidence: ", confidence)
