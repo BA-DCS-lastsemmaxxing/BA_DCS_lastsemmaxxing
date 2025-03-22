@@ -17,9 +17,9 @@ def lambda_handler(event, context):
     metadata_response = s3_client.head_object(Bucket=bucket_name, Key=object_key)
     metadata = metadata_response.get("Metadata", {})
     print("Metadata:", metadata, flush=True)
-    if metadata.get("for-training") == True:
+    if metadata.get("for-training") == 'true':
         return {"statusCode": 200, "body": "Training document detected, no step function triggered"}
-        
+
     file_id = record["s3"]["object"]["key"]
 
     # Start Step Function
