@@ -4,7 +4,7 @@ from models import Topic  # Import the shared models.py
 def lambda_handler(event, context):
     # Fetch topics from database
     topics = Topic.get_all_topics()
-    print("documents: ", topics, flush=True)
+    print("topics: ", topics, flush=True)
     # Return a valid API Gateway response
     return {
         "statusCode": 200,
