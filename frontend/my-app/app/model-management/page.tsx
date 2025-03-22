@@ -240,7 +240,7 @@ export default function ModelManagement() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {topics.map((topic) => (
-                      <tr key={topic.id}>
+                      <tr key={topic.name}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {topic.name}
                         </td>
