@@ -167,7 +167,6 @@ class Topic:
         for row in results:
             topics.append(
                 Topic(
-                    id=row["id"],
                     topic_name=row["topic_name"],
                     created_at=row["created_at"],
                     document_count=row["document_count"]
