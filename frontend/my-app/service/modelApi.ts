@@ -15,25 +15,9 @@ function getCookie(name: string): string | undefined {
 
 export async function getAllTopics() {
     console.log("Get all topics service reached");
-    return [{
-        id: '1',
-        name: 'Financial Report 2023.pdf',
-        originalTopic: 'Administrative',
-        correctedTopic: 'Financial',
-        correctedAt: '2024-03-20',
-        confidence: 0.75
-      },
-      {
-        id: '2',
-        name: 'Risk Assessment.pdf',
-        originalTopic: 'Financial',
-        correctedTopic: 'Risk Management',
-        correctedAt: '2024-03-21',
-        confidence: 0.82
-      }]
     
     // Perform the fetch request
-    const response = await fetch(`${api.backendUrl}/upload/url?}`, {
+    const response = await fetch(`${api.backendUrl}/topics}`, {
         method: "GET",
         headers: {
             "Authorization": `${getCookie("CognitoToken")}`
