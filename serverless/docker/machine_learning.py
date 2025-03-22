@@ -220,6 +220,32 @@ class ModelManager:
         # Refresh local model state
         self.load_models()
 
+    def add_new_topic(self, topic_name: str, files: list, processor) -> None:
+        """
+        Process and upload new topic documents, update mapping CSV, and retrain model.
+        """
+        for file in files:
+            # Step 1: Process the PDF
+            output_path, _ = processor.preprocess_pdf(file["file_content"], file["file_name"])
+
+            # Step 2: Upload cleaned text to S3
+            s3_key = f"preprocessed_data/{topic_name}/{os.path.basename(output_path)}"
+            s3_client.upload_file(output_path, model_bucket, s3_key)
+            print(f"Uploaded cleaned file to S3: {s3_key}")
+
+            # Step 3: Update mapping file
+            df = self.load_mapping_file()
+            new_entry = {"folder_name": topic_name, "file_name": os.path.basename(output_path)}
+            df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
+            self.save_mapping_file(df)
+            print(f"Mapping file updated with: {new_entry}")
+
+        # Step 4: Upload updated mapping CSV to S3
+        s3_client.upload_file(self.mapping_file_path, model_bucket, "final_file_topic_mapping.csv")
+
+        # Step 5: Retrain model using S3-based documents
+        self.retrain_model()
+        self.update_unique_topics()
 
 
     def remove_topic(self, topic_name: str) -> None:
