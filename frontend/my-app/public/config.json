@@ -4,6 +4,6 @@
     "clientId": "6728hti8d5j2fbiiv7mh35gp55"
   },
   "api": {
-    "backendUrl": "https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod"
+    "backendUrl": "https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/test"
   }
 }
