@@ -7,6 +7,16 @@ resource "aws_api_gateway_stage" "prod" {
   stage_name    = "prod"
   rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
   deployment_id = aws_api_gateway_deployment.prod_deployment.id
+
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.api_gw_logs.arn
+    format = jsonencode({
+      requestId         = "$context.requestId",
+      status            = "$context.status",
+      integrationStatus = "$context.integration.status",
+      errorMessage      = "$context.error.message",
+      integrationError  = "$context.integration.error"
+    })
 }
 
 resource "aws_api_gateway_authorizer" "lsm-fyp-authorizer" {
@@ -196,7 +206,7 @@ resource "aws_api_gateway_integration" "topics_method_post_integration" {
   http_method             = aws_api_gateway_method.topics_method_post.http_method
   type                    = "AWS"
   integration_http_method = "POST"
-  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${aws_sqs_queue.job_queue.name}"
+  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${var.aws_account_id}/${aws_sqs_queue.job_queue.name}"
   credentials             = aws_iam_role.api_gateway_to_sqs_role.arn
   request_templates = {
     "application/json" = <<EOF
@@ -218,6 +228,21 @@ resource "aws_api_gateway_method_response" "topics_method_post_response" {
         "method.response.header.Access-Control-Allow-Credentials" = true
   }
 }
+
+resource "aws_api_gateway_integration_response" "topics_method_post_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.topics_resource.id
+  http_method = aws_api_gateway_method.topics_method_post.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"      = "'*'"
+    "method.response.header.Access-Control-Allow-Methods"     = "'POST,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Headers"     = "'Content-Type,Authorization'"
+    "method.response.header.Access-Control-Allow-Credentials" = "'true'"
+  }
+}
+
 
 # Allow API Gateway to send jobs to the sqs
 resource "aws_iam_role" "api_gateway_to_sqs_role" {
