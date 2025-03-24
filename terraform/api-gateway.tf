@@ -17,6 +17,7 @@ resource "aws_api_gateway_stage" "prod" {
       errorMessage      = "$context.error.message",
       integrationError  = "$context.integration.error"
     })
+  }
 }
 
 resource "aws_api_gateway_authorizer" "lsm-fyp-authorizer" {
