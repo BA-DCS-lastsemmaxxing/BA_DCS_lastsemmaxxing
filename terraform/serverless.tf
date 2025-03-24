@@ -621,6 +621,7 @@ resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
 
 resource "aws_sqs_queue" "job_queue" {
   name = "async-job-queue"
+  visibility_timeout_seconds = 910
 }
 
 resource "aws_lambda_event_source_mapping" "lambda_sqs" {
