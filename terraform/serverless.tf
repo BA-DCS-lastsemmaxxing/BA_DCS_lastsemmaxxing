@@ -608,3 +608,14 @@ resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
   name              = "/aws/lambda/${aws_lambda_function.rds_init_lambda.function_name}"
   retention_in_days = 7  # Adjust retention as needed
 }
+
+resource "aws_sqs_queue" "job_queue" {
+  name = "async-job-queue"
+}
+
+resource "aws_lambda_event_source_mapping" "lambda_sqs" {
+  event_source_arn = aws_sqs_queue.job_queue.arn
+  function_name    = aws_lambda_function.add_new_topic.arn
+  batch_size       = 1
+  enabled          = true
+}

@@ -191,13 +191,18 @@ resource "aws_api_gateway_method" "topics_method_post" {
 
 # Trigger add new topic lambda function when POST method called on /topics
 resource "aws_api_gateway_integration" "topics_method_post_integration" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.topics_resource.id
-  http_method = aws_api_gateway_method.topics_method_post.http_method
-
-  type = "AWS_PROXY"
+  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id             = aws_api_gateway_resource.topics_resource.id
+  http_method             = aws_api_gateway_method.topics_method_post.http_method
+  type                    = "AWS"
   integration_http_method = "POST"
-  uri = aws_lambda_function.add_new_topic_lambda.invoke_arn
+  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${aws_sqs_queue.job_queue.name}"
+  credentials             = aws_iam_role.api_gateway_to_sqs_role.arn
+  request_templates = {
+    "application/json" = <<EOF
+Action=SendMessage&MessageBody=$util.urlEncode($input.body)
+EOF
+  }
 }
 
 resource "aws_api_gateway_method_response" "topics_method_post_response" {
@@ -214,13 +219,36 @@ resource "aws_api_gateway_method_response" "topics_method_post_response" {
   }
 }
 
-# Allow API Gateway to invoke the Lambda function
-resource "aws_lambda_permission" "topics_method_post_lambda_permission" {
-    statement_id  = "AllowAPIGatewayInvoke"
-    action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.add_new_topic_lambda.function_name
-    principal     = "apigateway.amazonaws.com"
-    source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
+# Allow API Gateway to send jobs to the sqs
+resource "aws_iam_role" "api_gateway_to_sqs_role" {
+  name = "APIGatewayToSQSRole"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Principal = {
+        Service = "apigateway.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_policy" "api_gateway_sqs_policy" {
+  name = "APIGatewaySQSSendPolicy"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Action = "sqs:SendMessage",
+      Resource = aws_sqs_queue.job_queue.arn
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "api_gateway_sqs_attachment" {
+  role       = aws_iam_role.api_gateway_to_sqs_role.name
+  policy_arn = aws_iam_policy.api_gateway_sqs_policy.arn
 }
 
 # Create a resource for /documents
