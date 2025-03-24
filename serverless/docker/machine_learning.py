@@ -215,28 +215,50 @@ class ModelManager:
         X = self.tfidf_vectorizer.fit_transform(texts)
         y = pd.Series(labels)
 
+        # Identify classes with at least two samples
+        class_counts = y.value_counts()
+        sufficient_samples = class_counts[class_counts >= 2].index.tolist()
+        insufficient_samples = class_counts[class_counts < 2].index.tolist()
+
+        # Filter data for SMOTE
+        sufficient_mask = y.isin(sufficient_samples)
+        sufficient_indices = sufficient_mask.values.nonzero()[0]  # Convert boolean mask to indices
+        X_sufficient = X[sufficient_indices]
+        y_sufficient = y.iloc[sufficient_indices]
+
+        # Apply SMOTE only to classes with sufficient samples
         smote = SMOTE(random_state=42, k_neighbors=1)
-
         smote_enn = SMOTEENN(smote=smote, random_state=42)
-        X_resampled, y_resampled = smote_enn.fit_resample(X, y)
+        X_resampled, y_resampled = smote_enn.fit_resample(X_sufficient, y_sufficient)
 
+        # Combine resampled data with the insufficient samples data
+        if insufficient_samples:
+            insufficient_indices = (~sufficient_mask.values).nonzero()[0]
+            X_insufficient = X[insufficient_indices]
+            y_insufficient = y.iloc[insufficient_indices]
+            X_resampled = vstack([X_resampled, X_insufficient])
+            y_resampled = pd.concat([y_resampled, y_insufficient])
+
+
+        # Train the random forest classifier
         rf_model = RandomForestClassifier(
             n_estimators=5000, max_depth=30, min_samples_split=2,
             min_samples_leaf=2, class_weight="balanced", random_state=42, n_jobs=-1
         )
         rf_model.fit(X_resampled, y_resampled)
 
+        # Calibrate model
         calibrated_rf = CalibratedClassifierCV(rf_model, method='isotonic', cv='prefit')
         calibrated_rf.fit(X_resampled, y_resampled)
 
-        joblib.dump(calibrated_rf, self.model_path)
+        # Save the retrained model
         joblib.dump(self.tfidf_vectorizer, self.vectorizer_path)
-        print(f"New model saved as {self.model_path}")
+        joblib.dump(calibrated_rf, self.model_path)
         print("Retrained and saved models.")
 
         s3_client.upload_file(self.model_path, model_bucket, "rf_model.pkl")
         s3_client.upload_file(self.vectorizer_path, model_bucket, "tfidf_vectorizer.pkl")
-        print("Uploaded updated model to S3.")
+        print("Uploaded updated models to S3.")
 
         # Refresh local model state
         self.load_models()
