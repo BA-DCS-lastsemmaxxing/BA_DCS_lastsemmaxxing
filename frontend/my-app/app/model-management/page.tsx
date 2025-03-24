@@ -156,6 +156,7 @@ export default function ModelManagement() {
         variant: "success"
         });
     } catch (err){
+        console.log("Error creating topic: ", err);
         toast({
             title: "Error creating topic",
             description: `${err}`,
