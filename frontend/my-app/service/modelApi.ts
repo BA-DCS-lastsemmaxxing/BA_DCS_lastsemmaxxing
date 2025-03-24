@@ -53,5 +53,5 @@ export async function addNewTopic(topic: string, files: {file_id: string, file_n
         throw new Error(`Failed to fetch topics. Status: ${response.status}`);
     }
 
-    return await response.json(); // Assuming the backend responds with JSON
+    return await response; // Assuming the backend responds with JSON
 }
