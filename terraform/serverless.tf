@@ -615,7 +615,7 @@ resource "aws_sqs_queue" "job_queue" {
 
 resource "aws_lambda_event_source_mapping" "lambda_sqs" {
   event_source_arn = aws_sqs_queue.job_queue.arn
-  function_name    = aws_lambda_function.add_new_topic.arn
+  function_name    = aws_lambda_function.add_new_topic_lambda.arn
   batch_size       = 1
   enabled          = true
 }
