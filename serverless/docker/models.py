@@ -182,7 +182,7 @@ class Topic:
         """Insert a new topic into the topics table."""
         connection = get_db_connection()
         cursor = connection.cursor()
-
+        
         cursor.execute(
             "INSERT INTO topics (topic_name) VALUES (%s);",
             (topic_name,)
