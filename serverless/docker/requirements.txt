@@ -4,4 +4,4 @@ pandas==2.2.3
 nltk==3.9.1
 scikit-learn==1.6.1
 pypdf==5.3.1
-imbalanced-learn==0.13.0
+imbalanced-learn==0.12.4
