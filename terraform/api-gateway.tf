@@ -7,17 +7,6 @@ resource "aws_api_gateway_stage" "prod" {
   stage_name    = "prod"
   rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
   deployment_id = aws_api_gateway_deployment.prod_deployment.id
-
-  access_log_settings {
-    destination_arn = aws_cloudwatch_log_group.api_gw_logs.arn
-    format = jsonencode({
-      requestId         = "$context.requestId",
-      status            = "$context.status",
-      integrationStatus = "$context.integration.status",
-      errorMessage      = "$context.error.message",
-      integrationError  = "$context.integration.error"
-    })
-  }
 }
 
 resource "aws_api_gateway_authorizer" "lsm-fyp-authorizer" {
@@ -207,7 +196,7 @@ resource "aws_api_gateway_integration" "topics_method_post_integration" {
   http_method             = aws_api_gateway_method.topics_method_post.http_method
   type                    = "AWS"
   integration_http_method = "POST"
-  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${var.aws_account_id}/${aws_sqs_queue.job_queue.name}"
+  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${data.aws_caller_identity.current.account_id}/${aws_sqs_queue.job_queue.name}"
   credentials             = aws_iam_role.api_gateway_to_sqs_role.arn
   request_templates = {
     "application/json" = <<EOF
