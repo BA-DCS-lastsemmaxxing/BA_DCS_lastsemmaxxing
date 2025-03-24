@@ -212,7 +212,7 @@ class ModelManager:
             return
 
         # Train model
-        X = self.vectorizer.fit_transform(texts)
+        X = self.tfidf_vectorizer.fit_transform(texts)
         y = pd.Series(labels)
 
         smote = SMOTE(random_state=42, k_neighbors=1)
