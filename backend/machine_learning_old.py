@@ -12,11 +12,6 @@ from pypdf import PdfReader
 from nltk.corpus import stopwords
 from botocore.config import Config
 from joblib import parallel_backend
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.calibration import CalibratedClassifierCV
-from imblearn.over_sampling import SMOTE
-from imblearn.combine import SMOTEENN
 
 # AWS credentials
 aws_region = os.environ.get("REGION")
@@ -212,31 +207,19 @@ class ModelManager:
             return
 
         # Train model
-        X = self.vectorizer.fit_transform(texts)
-        y = pd.Series(labels)
+        X = self.tfidf_vectorizer.fit_transform(texts)
+        classifier = self.rf_model(random_state=42)
+        classifier.fit(X, labels)
 
-        smote = SMOTE(random_state=42, k_neighbors=1)
-
-        smote_enn = SMOTEENN(smote=smote, random_state=42)
-        X_resampled, y_resampled = smote_enn.fit_resample(X, y)
-
-        rf_model = RandomForestClassifier(
-            n_estimators=5000, max_depth=30, min_samples_split=2,
-            min_samples_leaf=2, class_weight="balanced", random_state=42, n_jobs=-1
-        )
-        rf_model.fit(X_resampled, y_resampled)
-
-        calibrated_rf = CalibratedClassifierCV(rf_model, method='isotonic', cv='prefit')
-        calibrated_rf.fit(X_resampled, y_resampled)
-
-        joblib.dump(calibrated_rf, self.model_path)
+        # Save and upload model + vectorizer
         joblib.dump(self.tfidf_vectorizer, self.vectorizer_path)
-        print(f"New model saved as {self.model_path}")
+        joblib.dump(classifier, self.model_path)
         print("Retrained and saved models.")
 
-        self.upload_to_s3(self.model_path, "rf_model.pkl")
         self.upload_to_s3(self.vectorizer_path, "tfidf_vectorizer.pkl")
-        print("Uploaded updated model to S3.")
+        self.upload_to_s3(self.model_path, "rf_model.pkl")
+        self.upload_to_s3(self.mapping_file_path, "final_file_topic_mapping.csv")
+        print("Uploaded updated models and mapping file to S3.")
 
         # Refresh local model state
         self.load_models()
