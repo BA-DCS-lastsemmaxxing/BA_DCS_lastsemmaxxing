@@ -89,6 +89,16 @@ resource "aws_iam_policy" "lambda_policy" {
           "logs:PutLogEvents"
         ],
         Resource = "arn:aws:logs:ap-southeast-1:874280117166:*"
+      },
+      # Allow to receive messages from sqs
+      {
+        Effect = "Allow",
+        Action = [
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:GetQueueAttributes"
+        ],
+        Resource = aws_sqs_queue.job_queue.arn
       }
     ]
   })
