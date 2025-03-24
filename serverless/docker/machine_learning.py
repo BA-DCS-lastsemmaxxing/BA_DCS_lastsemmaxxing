@@ -234,8 +234,8 @@ class ModelManager:
         print(f"New model saved as {self.model_path}")
         print("Retrained and saved models.")
 
-        self.upload_to_s3(self.model_path, "rf_model.pkl")
-        self.upload_to_s3(self.vectorizer_path, "tfidf_vectorizer.pkl")
+        s3_client.upload_file(self.model_path, model_bucket, "rf_model.pkl")
+        s3_client.upload_file(self.vectorizer_path, model_bucket, "tfidf_vectorizer.pkl")
         print("Uploaded updated model to S3.")
 
         # Refresh local model state

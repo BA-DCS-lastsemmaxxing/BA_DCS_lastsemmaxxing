@@ -5,7 +5,8 @@ from machine_learning import *
 def lambda_handler(event, context):
     print("Add new topic triggered")
     print("Event: ", event, flush=True)
-    body = json.loads(event.get("body"))
+    record = event["Records"][0]
+    body = json.loads(record["body"])
     file_info = body.get("files")
     new_topic = body.get("topic")
     files = []

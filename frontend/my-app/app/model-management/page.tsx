@@ -150,10 +150,10 @@ export default function ModelManagement() {
         }));
         
         const response = await addNewTopic(newTopicName, payload);
-        console.log("Add new topic response: ", response);
         toast({
         title: "Topic created",
-        description: `Successfully created topic: ${newTopicName}`,
+        description: `Successfully created topic: ${newTopicName}
+        Please wait for up to 5 minutes for it to reflect here!`,
         variant: "success"
         });
     } catch (err){

@@ -187,6 +187,10 @@ resource "aws_api_gateway_method" "topics_method_post" {
   http_method   = "POST"
   authorization = "COGNITO_USER_POOLS"
   authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
+
+  request_parameters = {
+    "method.request.header.Content-Type" = true
+  }
 }
 
 # Trigger add new topic lambda function when POST method called on /topics
@@ -198,11 +202,16 @@ resource "aws_api_gateway_integration" "topics_method_post_integration" {
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${data.aws_caller_identity.current.account_id}/${aws_sqs_queue.job_queue.name}"
   credentials             = aws_iam_role.api_gateway_to_sqs_role.arn
-  request_templates = {
-    "application/json" = <<EOF
-    Action=SendMessage&MessageBody=$util.urlEncode($input.json('$'))
-    EOF
+
+  request_parameters = {
+    "integration.request.header.Content-Type" = "'application/x-www-form-urlencoded'"
   }
+
+  request_templates = {
+  "application/json" = <<EOF
+Action=SendMessage&MessageBody=$util.urlEncode($input.body)
+EOF
+}
 }
 
 resource "aws_api_gateway_method_response" "topics_method_post_response" {
