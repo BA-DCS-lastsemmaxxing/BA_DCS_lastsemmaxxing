@@ -149,7 +149,8 @@ export default function ModelManagement() {
         });
         }));
         
-        await addNewTopic(newTopicName, payload);
+        const response = await addNewTopic(newTopicName, payload);
+        console.log("Add new topic response: ", response);
         toast({
         title: "Topic created",
         description: `Successfully created topic: ${newTopicName}`,
