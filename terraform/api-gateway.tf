@@ -196,12 +196,12 @@ resource "aws_api_gateway_integration" "topics_method_post_integration" {
   http_method             = aws_api_gateway_method.topics_method_post.http_method
   type                    = "AWS"
   integration_http_method = "POST"
-  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${aws_sqs_queue.job_queue.name}"
+  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${data.aws_caller_identity.current.account_id}/${aws_sqs_queue.job_queue.name}"
   credentials             = aws_iam_role.api_gateway_to_sqs_role.arn
   request_templates = {
     "application/json" = <<EOF
-Action=SendMessage&MessageBody=$util.urlEncode($input.body)
-EOF
+    Action=SendMessage&MessageBody=$util.urlEncode($input.json('$'))
+    EOF
   }
 }
 
