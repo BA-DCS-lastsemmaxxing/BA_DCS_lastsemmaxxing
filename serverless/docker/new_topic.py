@@ -19,7 +19,7 @@ def lambda_handler(event, context):
         modelManager.add_new_topic(new_topic,files, documentProcessor)
         Topic.insert_topic(new_topic)
     except Exception as e: 
-        print("lambda handler failed with exception: " + e,flush=True)
+        print("lambda handler failed with exception: " + str(e),flush=True)
         return {
         "statusCode": 500,
         "headers": { 
