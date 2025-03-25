@@ -299,7 +299,7 @@ resource "aws_api_gateway_integration_response" "topics_method_delete_integratio
 
   response_parameters = {
     "method.response.header.Access-Control-Allow-Origin"      = "'*'"
-    "method.response.header.Access-Control-Allow-Methods"     = "'POST,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Methods"     = "'DELETE,OPTIONS'"
     "method.response.header.Access-Control-Allow-Headers"     = "'Content-Type,Authorization'"
     "method.response.header.Access-Control-Allow-Credentials" = "'true'"
   }
