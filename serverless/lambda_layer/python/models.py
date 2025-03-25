@@ -171,7 +171,7 @@ class Topic:
                     topic_name=row["topic_name"],
                     created_at=row["created_at"],
                     document_count=row["document_count"],
-                    staus=row["status"]
+                    status=row["status"]
                 ).__dict__
             )
 
