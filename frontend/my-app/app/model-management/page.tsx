@@ -16,7 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { UploadSection } from '@/components/dashboard/UploadSection';
 import { useToast } from "@/hooks/use-toast";
 import { TopicFileUpload } from '@/components/model-management/TopicFileUpload';
 import {
@@ -101,7 +100,7 @@ export default function ModelManagement() {
 
   const handleDeleteTopic = async () => {
     if (!topicToDelete) return;
-    
+    const response = await model
     // Add your delete topic API call here
     toast({
       title: "Topic deleted",

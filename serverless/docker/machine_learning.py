@@ -12,6 +12,7 @@ from pypdf import PdfReader
 from nltk.corpus import stopwords
 from botocore.config import Config
 from joblib import parallel_backend
+from scipy.sparse import vstack
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.calibration import CalibratedClassifierCV
@@ -329,7 +330,8 @@ class ModelManager:
             print(f"Removed {original_count - updated_count} mapping entries for topic '{existing_topic}'.")
         else:
             print("No mapping entries found for the topic.")
-
+        s3_client.delete_object(Bucket=model_bucket, Key=f"Extracted_Sample_Data/{existing_topic}")
+        print("Topic sample data deleted from S3")
         self.retrain_model()
         self.update_unique_topics()
         print(f"Topic '{existing_topic}' has been successfully removed.")

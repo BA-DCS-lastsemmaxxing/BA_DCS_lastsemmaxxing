@@ -55,3 +55,27 @@ export async function addNewTopic(topic: string, files: {file_id: string, file_n
 
     return await response; // Assuming the backend responds with JSON
 }
+
+export async function removeTopic(topic: string) {
+    console.log("Remove topic service reached");
+    console.log("Topic to delete: ", topic);
+    return;
+    // Perform the delete request
+    const response = await fetch(`${api.backendUrl}/topics`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `${getCookie("CognitoToken")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "topic": topic
+        })
+    });
+
+    // Handle the response
+    if (!response.ok) {
+        throw new Error(`Failed to delete topic. Status: ${response.status}`);
+    }
+
+    return await response; // Assuming the backend responds with JSON
+}
