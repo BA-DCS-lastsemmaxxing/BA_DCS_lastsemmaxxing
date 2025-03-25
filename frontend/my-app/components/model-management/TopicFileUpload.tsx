@@ -66,7 +66,7 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
   };
 
   return (
-    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+    <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center max-w-full">
       <input
         ref={fileInputRef}
         type="file"
