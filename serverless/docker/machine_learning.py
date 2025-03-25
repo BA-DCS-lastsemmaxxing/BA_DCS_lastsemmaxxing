@@ -3,7 +3,6 @@ import re
 import io
 import json
 import random
-import pickle
 import shutil
 import pandas as pd
 import joblib
@@ -357,16 +356,12 @@ class ModelManager:
             print("Error loading models. Make sure the model files exist.", e)
             self.tfidf_vectorizer, self.rf_model = None, None
 
-    def classify_document(self, file_path: str) -> tuple[str, str, float, str, str]:
+    def classify_document(self, file_path: str, filename: str) -> tuple[str, str, float, str, str]:
         """
         Classify a document using the uploaded test document.
         Returns a tuple: (filename, predicted_topic, confidence, explanation, source).
         Note: The test document metadata is stored separately (with full file path).
         """
-        with open(file_path, "rb") as f:
-            metadata = pickle.load(f)
-        file_path = metadata["file_path"]
-        filename = metadata["filename"]
 
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()

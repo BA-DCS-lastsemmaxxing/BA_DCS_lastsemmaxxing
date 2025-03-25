@@ -15,8 +15,8 @@ def lambda_handler(event, context):
     file_content = response["Body"].read()
     output_path , _ =documentProcessor.preprocess_pdf(file_content,filename)
     if not os.path.exists(output_path):
-        raise FileNotFoundError(f"Error: Pickle file not found at {output_path}. Something went wrong in `preprocess_pdf()`.")
-    filename, classification, confidence, summary, source = modelManager.classify_document(output_path)
+        raise FileNotFoundError(f"Error: Preprocessed file not found at {output_path}. Something went wrong in `preprocess_pdf()`.")
+    filename, classification, confidence, summary, source = modelManager.classify_document(output_path,filename)
     print("filename: ", filename)
     print("classification: ", classification)
     print("confidence: ", confidence)
