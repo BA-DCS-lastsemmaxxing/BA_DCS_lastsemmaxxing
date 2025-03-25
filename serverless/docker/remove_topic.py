@@ -4,28 +4,18 @@ from machine_learning import *
 
 def lambda_handler(event, context):
     try:
-        print("Add new topic triggered")
+        print("Remove topic triggered")
         print("Event: ", event, flush=True)
         record = event["Records"][0]
         body = json.loads(record["body"])
-        file_info = body.get("files")
-        new_topic = body.get("topic")
-        files = []
-        for f in file_info:
-            response = s3_client.get_object(Bucket=bucket_name, Key=f["file_id"])
-            file_content = response["Body"].read()
-            files.append({"file_content": file_content, "file_name": f["file_name"]})
-        Topic.insert_topic(new_topic)
-        modelManager.add_new_topic(new_topic,files, documentProcessor)
-        Topic.update_topic_status(new_topic, "Completed")
+        topic_to_remove = body.get("topic")
+        Topic.update_topic_status(topic_to_remove, "Pending")
+        modelManager.remove_topic(topic_to_remove)
+        Topic.delete_topic(topic_to_remove)
     except Exception as e: 
         print("lambda handler failed with exception: " + str(e),flush=True)
-        print("Deleting topic from RDS (Rollback)...")
-        try:
-            Topic.delete_topic(new_topic)
-        except Exception as e:
-            print("Error deleting topic from RDS: " + str(e))
-
+        Topic.update_topic_status(topic_to_remove, "Completed")
+            
         return {
         "statusCode": 500,
         "headers": { 

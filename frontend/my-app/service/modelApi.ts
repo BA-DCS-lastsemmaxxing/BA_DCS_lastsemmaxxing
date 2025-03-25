@@ -59,7 +59,6 @@ export async function addNewTopic(topic: string, files: {file_id: string, file_n
 export async function removeTopic(topic: string) {
     console.log("Remove topic service reached");
     console.log("Topic to delete: ", topic);
-    return;
     // Perform the delete request
     const response = await fetch(`${api.backendUrl}/topics`, {
         method: "DELETE",
@@ -77,5 +76,5 @@ export async function removeTopic(topic: string) {
         throw new Error(`Failed to delete topic. Status: ${response.status}`);
     }
 
-    return await response; // Assuming the backend responds with JSON
+    return await response.json(); // Assuming the backend responds with JSON
 }

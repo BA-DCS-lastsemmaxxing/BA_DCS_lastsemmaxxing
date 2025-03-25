@@ -88,18 +88,37 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
                   key={index}
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-lg group hover:bg-gray-100 transition-colors"
                 >
-                  <div className="flex items-center">
-                    <span className="text-gray-600">{file.name}</span>
-                    <span className="ml-2 text-sm text-gray-400">
-                      ({(file.size / 1024).toFixed(1)} KB)
-                    </span>
+                  <div className="flex items-center min-w-0 flex-1 mr-2">
+                    <div className="flex-shrink-0">
+                      <svg
+                        className="w-5 h-5 text-gray-500 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm text-gray-600 truncate">
+                        {file.name}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {(file.size / 1024).toFixed(1)} KB
+                      </p>
+                    </div>
                   </div>
                   <button
                     onClick={(e) => {
                       e.preventDefault();
                       handleDeleteFile(index);
                     }}
-                    className="text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="flex-shrink-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     Delete
                   </button>

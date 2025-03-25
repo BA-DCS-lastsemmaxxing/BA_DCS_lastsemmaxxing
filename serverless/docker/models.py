@@ -195,6 +195,21 @@ class Topic:
         connection.close()
 
     @staticmethod
+    def update_topic_status(topic_name, new_status):
+        """Update the status of an existing topic in the table."""
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute(
+            "UPDATE topics SET status = (%s) WHERE topic_name = (%s);"
+            (new_status, topic_name,)
+        )
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+    @staticmethod
     def delete_topic(topic_name):
         """Delete a topic from the topics table by its name."""
         try:
@@ -208,6 +223,8 @@ class Topic:
             # Check if the topic was successfully deleted
             if cursor.rowcount == 0:
                 print(f"No topic found with name {topic_name}.")
+                cursor.close()
+                connection.close()
                 return False
             print(f"Topic with name {topic_name} has been deleted successfully.")
             cursor.close()

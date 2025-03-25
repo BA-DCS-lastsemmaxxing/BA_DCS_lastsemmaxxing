@@ -39,25 +39,25 @@ export default function ModelManagement() {
 
   const [topicFiles, setTopicFiles] = useState<File[] | null>(null);
 
+  const fetchTopics = async () => {
+    try {
+      const topics = await getAllTopics();
+      console.log(" Topics: ", topics);
+      setTopics(topics);
+    } catch (error) {
+      console.error("Error fetching topics:", error);
+    }
+  };
+  const fetchCorrectedDocuments = async () => {
+    try {
+      const docs = await getCorrectedDocuments();
+      console.log(" Corrected Documents: ", docs);
+      setDocuments(docs);
+    } catch (error) {
+      console.error("Error fetching corrected documents:", error);
+    }
+  };
   useEffect(() => {
-    const fetchTopics = async () => {
-        try {
-          const topics = await getAllTopics();
-          console.log(" Topics: ", topics);
-          setTopics(topics);
-        } catch (error) {
-          console.error("Error fetching topics:", error);
-        }
-      };
-      const fetchCorrectedDocuments = async () => {
-        try {
-          const docs = await getCorrectedDocuments();
-          console.log(" Corrected Documents: ", docs);
-          setDocuments(docs);
-        } catch (error) {
-          console.error("Error fetching corrected documents:", error);
-        }
-      };
       fetchTopics();
       fetchCorrectedDocuments();
   }, []);
@@ -102,6 +102,7 @@ export default function ModelManagement() {
     if (!topicToDelete) return;
     const response = await removeTopic(topicToDelete.topic_name);
     // Add your delete topic API call here
+    console.log("Delete topic response: ", response);
     toast({
       title: "Topic deleted",
       description: `Successfully deleted topic: ${topicToDelete.topic_name}`,
@@ -110,6 +111,7 @@ export default function ModelManagement() {
     
     setIsDeleteDialogOpen(false);
     setTopicToDelete(null);
+    fetchTopics();
   };
 
   const handleAddTopic = async () => {
@@ -157,8 +159,7 @@ export default function ModelManagement() {
         const response = await addNewTopic(newTopicName, payload);
         toast({
         title: "Topic created",
-        description: `Successfully created topic: ${newTopicName}
-        Please wait for up to 5 minutes for it to reflect here!`,
+        description: `Successfully created topic: ${newTopicName}`,
         variant: "success"
         });
     } catch (err){
@@ -172,6 +173,7 @@ export default function ModelManagement() {
         setIsAddTopicDialogOpen(false);
         setNewTopicName('');
         setTopicFiles(null);
+        fetchTopics();
     }
     };
 
