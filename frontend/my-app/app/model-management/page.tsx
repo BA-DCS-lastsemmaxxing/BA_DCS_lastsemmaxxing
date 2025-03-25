@@ -19,6 +19,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { UploadSection } from '@/components/dashboard/UploadSection';
 import { useToast } from "@/hooks/use-toast";
 import { TopicFileUpload } from '@/components/model-management/TopicFileUpload';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function ModelManagement() {
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
@@ -276,6 +282,9 @@ export default function ModelManagement() {
                   <thead>
                     <tr className="bg-gray-50">
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Status
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Topic Name
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
@@ -292,6 +301,26 @@ export default function ModelManagement() {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {topics.map((topic) => (
                       <tr key={topic.topic_name}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <div
+                                  className={`h-3 w-3 rounded-full ${
+                                    topic.status === 'Completed'
+                                      ? 'bg-green-500'
+                                      : topic.status === 'Pending'
+                                      ? 'bg-yellow-500'
+                                      : 'bg-red-500'
+                                  }`}
+                                />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{topic.status}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {topic.topic_name}
                         </td>

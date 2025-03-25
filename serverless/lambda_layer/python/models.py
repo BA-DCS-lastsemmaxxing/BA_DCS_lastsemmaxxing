@@ -150,10 +150,11 @@ class Document:
 ############################################################### Topic ##############################################################################################################
 
 class Topic:
-    def __init__(self, topic_name, created_at, document_count ):
+    def __init__(self, topic_name, created_at, document_count, status = "Pending"):
         self.topic_name = topic_name
         self.created_at = created_at
         self.document_count = document_count
+        self.status = status
 
     @staticmethod
     def get_all_topics():
@@ -168,8 +169,9 @@ class Topic:
             topics.append(
                 Topic(
                     topic_name=row["topic_name"],
-                    created_at=row["created_at"].strftime("%Y-%m-%d %H:%M:%S") if row["created_at"] else None,
-                    document_count=row["document_count"]
+                    created_at=row["created_at"],
+                    document_count=row["document_count"],
+                    staus=row["status"]
                 ).__dict__
             )
 
@@ -214,4 +216,3 @@ class Topic:
         except Exception as e:
             print(f"Error deleting topic: {e}")
             return False
-

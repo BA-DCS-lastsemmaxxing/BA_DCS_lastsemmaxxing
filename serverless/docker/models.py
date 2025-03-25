@@ -150,10 +150,11 @@ class Document:
 ############################################################### Topic ##############################################################################################################
 
 class Topic:
-    def __init__(self, topic_name, created_at, document_count ):
+    def __init__(self, topic_name, created_at, document_count, status = "Pending"):
         self.topic_name = topic_name
         self.created_at = created_at
         self.document_count = document_count
+        self.status = status
 
     @staticmethod
     def get_all_topics():
@@ -169,7 +170,8 @@ class Topic:
                 Topic(
                     topic_name=row["topic_name"],
                     created_at=row["created_at"],
-                    document_count=row["document_count"]
+                    document_count=row["document_count"],
+                    staus=row["status"]
                 ).__dict__
             )
 
@@ -182,7 +184,7 @@ class Topic:
         """Insert a new topic into the topics table."""
         connection = get_db_connection()
         cursor = connection.cursor()
-        
+
         cursor.execute(
             "INSERT INTO topics (topic_name) VALUES (%s);",
             (topic_name,)
