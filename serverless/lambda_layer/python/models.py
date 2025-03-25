@@ -169,7 +169,7 @@ class Topic:
             topics.append(
                 Topic(
                     topic_name=row["topic_name"],
-                    created_at=row["created_at"],
+                    created_at=row["created_at"].strftime("%Y-%m-%d %H:%M:%S") if row["created_at"] else None,
                     document_count=row["document_count"],
                     status=row["status"]
                 ).__dict__
