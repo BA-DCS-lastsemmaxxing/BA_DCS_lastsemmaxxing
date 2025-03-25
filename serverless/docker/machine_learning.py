@@ -222,6 +222,8 @@ class ModelManager:
         # Filter data for SMOTE
         sufficient_mask = y.isin(sufficient_samples)
         sufficient_indices = sufficient_mask.values.nonzero()[0]  # Convert boolean mask to indices
+        print("Sufficient_mask: ", sufficient_mask)
+        print("sufficient_indices: ", sufficient_indices)
         X_sufficient = X[sufficient_indices]
         y_sufficient = y.iloc[sufficient_indices]
 
