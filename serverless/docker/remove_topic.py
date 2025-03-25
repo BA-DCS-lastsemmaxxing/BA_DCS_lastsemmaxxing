@@ -6,8 +6,7 @@ def lambda_handler(event, context):
     try:
         print("Remove topic triggered")
         print("Event: ", event, flush=True)
-        record = event["Records"][0]
-        body = json.loads(record["body"])
+        body = json.loads(event.get("body"))
         topic_to_remove = body.get("topic")
         Topic.update_topic_status(topic_to_remove, "Pending")
         modelManager.remove_topic(topic_to_remove)
