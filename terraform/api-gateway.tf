@@ -19,65 +19,12 @@ resource "aws_api_gateway_authorizer" "lsm-fyp-authorizer" {
 resource "aws_api_gateway_deployment" "prod_deployment" {
   rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
   triggers = {
-    redeployment = sha1(jsonencode({
-      api = aws_api_gateway_rest_api.lsm-fyp-api.id
-      resources = [
-        aws_api_gateway_resource.documents_resource,
-        aws_api_gateway_resource.download_resource,
-        aws_api_gateway_resource.download_url_resource,
-        aws_api_gateway_resource.feedback_resource,
-        aws_api_gateway_resource.upload_resource,
-        aws_api_gateway_resource.upload_url_resource
-      ]
-      methods = [
-            aws_api_gateway_method.documents_method_get,
-            aws_api_gateway_method.documents_method_delete,
-            aws_api_gateway_method.documents_method_options,
-            aws_api_gateway_method.upload_url_method_get,
-            aws_api_gateway_method.upload_url_method_options,
-            aws_api_gateway_method.download_url_method_get,
-            aws_api_gateway_method.download_url_method_options,
-            aws_api_gateway_method.feedback_method_post,
-            aws_api_gateway_method.feedback_method_options
-      ]
-    }))
+    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.lsm-fyp-api.body))
   }
 
   lifecycle {
     create_before_destroy = true
   }
-
-  depends_on = [
-    # API Resources
-    aws_api_gateway_resource.documents_resource,
-    aws_api_gateway_resource.download_resource,
-    aws_api_gateway_resource.download_url_resource,
-    aws_api_gateway_resource.feedback_resource,
-    aws_api_gateway_resource.upload_resource,
-    aws_api_gateway_resource.upload_url_resource,
-
-    # API Methods
-    aws_api_gateway_method.documents_method_get,
-    aws_api_gateway_method.documents_method_delete,
-    aws_api_gateway_method.documents_method_options,
-    aws_api_gateway_method.upload_url_method_get,
-    aws_api_gateway_method.upload_url_method_options,
-    aws_api_gateway_method.download_url_method_get,
-    aws_api_gateway_method.download_url_method_options,
-    aws_api_gateway_method.feedback_method_post,
-    aws_api_gateway_method.feedback_method_options,
-
-    # API Method Integrations
-    aws_api_gateway_integration.documents_method_delete_integration,
-    aws_api_gateway_integration.documents_method_get_integration,
-    aws_api_gateway_integration.documents_options_integration,
-    aws_api_gateway_integration.download_url_method_get_integration,
-    aws_api_gateway_integration.download_url_options_integration,
-    aws_api_gateway_integration.feedback_method_post_integration,
-    aws_api_gateway_integration.feedback_options_integration,
-    aws_api_gateway_integration.upload_url_method_get_integration,
-    aws_api_gateway_integration.upload_url_options_integration
-  ]
 }
 
 # Create a resource for /topics
