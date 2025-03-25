@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrainingDocument, Topic } from '@/types/model';
-import { getAllTopics, addNewTopic } from '@/service/modelApi';
+import { getAllTopics, addNewTopic, removeTopic } from '@/service/modelApi';
 import { getCorrectedDocuments, fetchUploadUrl } from '@/service/documentApi';
 import {
   Dialog,
@@ -100,7 +100,7 @@ export default function ModelManagement() {
 
   const handleDeleteTopic = async () => {
     if (!topicToDelete) return;
-    const response = await model
+    const response = await removeTopic(topicToDelete.topic_name);
     // Add your delete topic API call here
     toast({
       title: "Topic deleted",
