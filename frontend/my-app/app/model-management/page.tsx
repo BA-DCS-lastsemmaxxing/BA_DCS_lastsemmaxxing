@@ -104,8 +104,14 @@ export default function ModelManagement() {
     // Add your delete topic API call here
     console.log("Delete topic response: ", response);
     toast({
-      title: "Topic deleted",
-      description: `Successfully deleted topic: ${topicToDelete.topic_name}`,
+      title: "Topic deletion triggered",
+      description: (
+        <>
+          Deleting topic: {topicToDelete.topic_name}
+          <br />
+          This may take a few moments.
+        </>
+      ),
       variant: "success"
     });
     
@@ -158,8 +164,14 @@ export default function ModelManagement() {
         
         const response = await addNewTopic(newTopicName, payload);
         toast({
-        title: "Topic created",
-        description: `Successfully created topic: ${newTopicName}`,
+        title: "Topic creation triggered",
+        description: (
+            <>
+              Creating topic: {newTopicName}
+              <br />
+              This may take a few moments.
+            </>
+          ),
         variant: "success"
         });
     } catch (err){

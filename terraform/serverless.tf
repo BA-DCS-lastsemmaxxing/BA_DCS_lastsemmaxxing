@@ -645,14 +645,26 @@ resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
   retention_in_days = 7  # Adjust retention as needed
 }
 
-resource "aws_sqs_queue" "job_queue" {
-  name = "async-job-queue"
+resource "aws_sqs_queue" "add_new_topic_queue" {
+  name = "add-new-topic-queue"
   visibility_timeout_seconds = 910
 }
 
-resource "aws_lambda_event_source_mapping" "lambda_sqs" {
-  event_source_arn = aws_sqs_queue.job_queue.arn
+resource "aws_lambda_event_source_mapping" "add_new_topic_queue_mapping" {
+  event_source_arn = aws_sqs_queue.add_new_topic_queue.arn
   function_name    = aws_lambda_function.add_new_topic_lambda.arn
+  batch_size       = 1
+  enabled          = true
+}
+
+resource "aws_sqs_queue" "remove_topic_queue" {
+  name = "remove-topic-queue"
+  visibility_timeout_seconds = 910
+}
+
+resource "aws_lambda_event_source_mapping" "remove_topic_queue_mapping" {
+  event_source_arn = aws_sqs_queue.remove_topic_queue.arn
+  function_name    = aws_lambda_function.remove_topic_lambda.arn
   batch_size       = 1
   enabled          = true
 }

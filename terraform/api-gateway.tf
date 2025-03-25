@@ -200,7 +200,7 @@ resource "aws_api_gateway_integration" "topics_method_post_integration" {
   http_method             = aws_api_gateway_method.topics_method_post.http_method
   type                    = "AWS"
   integration_http_method = "POST"
-  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${data.aws_caller_identity.current.account_id}/${aws_sqs_queue.job_queue.name}"
+  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${data.aws_caller_identity.current.account_id}/${aws_sqs_queue.add_new_topic_queue.name}"
   credentials             = aws_iam_role.api_gateway_to_sqs_role.arn
 
   request_parameters = {
@@ -249,17 +249,32 @@ resource "aws_api_gateway_method" "topics_method_delete" {
   http_method   = "DELETE"
   authorization = "COGNITO_USER_POOLS"
   authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
+
+  request_parameters = {
+    "method.request.header.Content-Type" = true
+  }
+
 }
 
 # Trigger remove topic lambda function when DELETE method called on /topics
 resource "aws_api_gateway_integration" "topics_method_delete_integration" {
-  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
-  resource_id = aws_api_gateway_resource.topics_resource.id
-  http_method = aws_api_gateway_method.topics_method_delete.http_method
-
-  type = "AWS_PROXY"
+  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id             = aws_api_gateway_resource.topics_resource.id
+  http_method             = aws_api_gateway_method.topics_method_delete.http_method
+  type                    = "AWS"
   integration_http_method = "POST"
-  uri = aws_lambda_function.remove_topic_lambda.invoke_arn
+  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${data.aws_caller_identity.current.account_id}/${aws_sqs_queue.remove_topic_queue.name}"
+  credentials             = aws_iam_role.api_gateway_to_sqs_role.arn
+
+  request_parameters = {
+    "integration.request.header.Content-Type" = "'application/x-www-form-urlencoded'"
+  }
+
+  request_templates = {
+  "application/json" = <<EOF
+Action=SendMessage&MessageBody=$util.urlEncode($input.body)
+EOF
+}
 }
 
 resource "aws_api_gateway_method_response" "topics_method_delete_response" {
@@ -273,6 +288,20 @@ resource "aws_api_gateway_method_response" "topics_method_delete_response" {
         "method.response.header.Access-Control-Allow-Methods" = true
         "method.response.header.Access-Control-Allow-Headers" = true
         "method.response.header.Access-Control-Allow-Credentials" = true
+  }
+}
+
+resource "aws_api_gateway_integration_response" "topics_method_delete_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.topics_resource.id
+  http_method = aws_api_gateway_method.topics_method_delete.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"      = "'*'"
+    "method.response.header.Access-Control-Allow-Methods"     = "'POST,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Headers"     = "'Content-Type,Authorization'"
+    "method.response.header.Access-Control-Allow-Credentials" = "'true'"
   }
 }
 
