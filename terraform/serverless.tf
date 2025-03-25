@@ -98,7 +98,9 @@ resource "aws_iam_policy" "lambda_policy" {
           "sqs:DeleteMessage",
           "sqs:GetQueueAttributes"
         ],
-        Resource = aws_sqs_queue.job_queue.arn
+        Resource = [
+          aws_sqs_queue.add_new_topic_queue.arn,
+          aws_sqs_queue.remove_topic_queue.arn
       }
     ]
   })

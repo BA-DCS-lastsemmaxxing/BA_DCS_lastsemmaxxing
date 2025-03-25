@@ -336,7 +336,9 @@ resource "aws_iam_policy" "api_gateway_sqs_policy" {
     Statement = [{
       Effect = "Allow",
       Action = "sqs:SendMessage",
-      Resource = aws_sqs_queue.job_queue.arn
+      Resource = [
+        aws_sqs_queue.add_new_topic_queue.arn,
+        aws_sqs_queue.remove_topic_queue.arn
     }]
   })
 }
