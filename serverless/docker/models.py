@@ -201,7 +201,7 @@ class Topic:
         cursor = connection.cursor()
 
         cursor.execute(
-            "UPDATE topics SET status = (%s) WHERE topic_name = (%s);"
+            "UPDATE topics SET status = (%s) WHERE topic_name = (%s);",
             (new_status, topic_name,)
         )
 
