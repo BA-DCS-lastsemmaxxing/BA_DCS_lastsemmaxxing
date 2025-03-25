@@ -101,6 +101,7 @@ resource "aws_iam_policy" "lambda_policy" {
         Resource = [
           aws_sqs_queue.add_new_topic_queue.arn,
           aws_sqs_queue.remove_topic_queue.arn
+        ]
       }
     ]
   })
