@@ -88,15 +88,14 @@ class DocumentProcessor:
             cleaned_text = DocumentProcessor.remove_stop_words(cleaned_text)
 
             # Save cleaned text to a .txt file in the current working directory
-            base_name = os.path.splitext(filename)[0]  # removes .pdf or any other extension
-            output_path = os.path.join("/tmp", f"{base_name}_extracted.txt")
+            
 
-            with open(output_path, "w", encoding="utf-8") as text_file:
+            with open(filename, "w", encoding="utf-8") as text_file:
                 text_file.write(cleaned_text)
 
-            print(f"Processed text saved to: {output_path}")
+            print(f"Processed text saved to: {filename}")
             print(f"Preview:\n{cleaned_text[:500]}...")
-            return output_path, cleaned_text
+            return filename, cleaned_text
 
         except Exception as e:
             print(f"Error processing PDF: {e}")
@@ -194,6 +193,7 @@ class ModelManager:
             print("row info: ", row,flush=True)
             folder = row["folder_name"]
             file_name = row["file_name"]
+            file_name = file_name.replace(".txt", "_extracted.txt")
             s3_key = f"Extracted_Sample_Data/{folder}/{file_name}"
             local_path = f"/tmp/{file_name}"
 
@@ -270,7 +270,9 @@ class ModelManager:
         """
         for file in files:
             # Step 1: Process the PDF
-            output_path, _ = processor.preprocess_pdf(file["file_content"], file["file_name"])
+            base_name = os.path.splitext(file["file_name"])[0]  # removes .pdf or any other extension
+            filename = os.path.join("/tmp", f"{base_name}_extracted.txt")
+            output_path, _ = processor.preprocess_pdf(file["file_content"], filename)
 
             # Step 2: Upload cleaned text to S3
             s3_key = f"Extracted_Sample_Data/{topic_name}/{os.path.basename(output_path)}"
