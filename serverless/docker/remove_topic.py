@@ -1,4 +1,4 @@
-import json
+import json, traceback
 from models import Document, Topic
 from machine_learning import *
 
@@ -13,6 +13,7 @@ def lambda_handler(event, context):
         Topic.delete_topic(topic_to_remove)
     except Exception as e: 
         print("lambda handler failed with exception: " + str(e),flush=True)
+        traceback.print_exc()
         Topic.update_topic_status(topic_to_remove, "Completed")
             
         return {

@@ -1,4 +1,4 @@
-import json
+import json, traceback
 from models import Document, Topic
 from machine_learning import *
 
@@ -20,6 +20,7 @@ def lambda_handler(event, context):
         Topic.update_topic_status(new_topic, "Completed")
     except Exception as e: 
         print("lambda handler failed with exception: " + str(e),flush=True)
+        traceback.print_exc()
         print("Deleting topic from RDS (Rollback)...")
         try:
             Topic.delete_topic(new_topic)
