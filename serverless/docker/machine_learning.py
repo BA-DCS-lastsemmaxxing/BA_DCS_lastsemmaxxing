@@ -194,7 +194,6 @@ class ModelManager:
             print("row info: ", row,flush=True)
             folder = row["folder_name"]
             file_name = row["file_name"]
-            file_name = file_name.replace(".txt", "_extracted.txt")
             s3_key = f"Extracted_Sample_Data/{folder}/{file_name}"
             local_path = f"/tmp/{file_name}"
 
