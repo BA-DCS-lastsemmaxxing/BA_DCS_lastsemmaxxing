@@ -6,3 +6,4 @@ scikit-learn==1.6.1
 pypdf==5.3.1
 imbalanced-learn==0.12.4
 scipy==1.13.1
+cryptography==3.1
