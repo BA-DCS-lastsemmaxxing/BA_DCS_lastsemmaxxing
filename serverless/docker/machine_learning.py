@@ -279,7 +279,7 @@ class ModelManager:
 
             # Step 3: Update mapping file
             df = self.load_mapping_file()
-            new_entry = {"folder_name": topic_name, "file_name": os.path.splitext(file["file_name"])[0]}
+            new_entry = {"folder_name": topic_name, "file_name": os.path.splitext(file["file_name"])[0] + ".txt"}
             df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
             self.save_mapping_file(df)
             print(f"Mapping file updated with: {new_entry}")
@@ -330,7 +330,12 @@ class ModelManager:
             print(f"Removed {original_count - updated_count} mapping entries for topic '{existing_topic}'.")
         else:
             print("No mapping entries found for the topic.")
-        s3_client.delete_object(Bucket=model_bucket, Key=f"Extracted_Sample_Data/{existing_topic}")
+        objects_to_delete = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=f"Extracted_Sample_Data/{existing_topic}")
+
+        if 'Contents' in objects_to_delete:
+            for obj in objects_to_delete['Contents']:
+                print(f"Deleting: {obj['Key']}")
+                s3_client.delete_object(Bucket=bucket_name, Key=obj['Key'])
         print("Topic sample data deleted from S3")
         self.retrain_model()
         self.update_unique_topics()
