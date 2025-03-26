@@ -105,7 +105,7 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
                       </svg>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-gray-600 truncate">
+                      <p className="text-sm text-gray-600 max-w-full truncate">
                         {file.name}
                       </p>
                       <p className="text-xs text-gray-400">
