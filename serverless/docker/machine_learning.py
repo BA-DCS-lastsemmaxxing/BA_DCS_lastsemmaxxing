@@ -331,7 +331,7 @@ class ModelManager:
             print(f"Removed {original_count - updated_count} mapping entries for topic '{existing_topic}'.")
         else:
             print("No mapping entries found for the topic.")
-        response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=f"Extracted_Sample_Data/{existing_topic}/")
+        response = s3_client.list_objects_v2(Bucket=model_bucket, Prefix=f"Extracted_Sample_Data/{existing_topic}/")
         print("response: ", response)
         if 'Contents' in response:
             # Prepare list of object keys
@@ -343,7 +343,7 @@ class ModelManager:
             
             # Batch delete
             s3_client.delete_objects(
-                Bucket=bucket_name,
+                Bucket=model_bucket,
                 Delete={'Objects': objects}
             )
 
