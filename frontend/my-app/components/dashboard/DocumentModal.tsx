@@ -128,7 +128,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between max-w-full">
             <DialogTitle className="max-w-full truncate">{document.name}</DialogTitle>
             <button
               onClick={handleDownload}
