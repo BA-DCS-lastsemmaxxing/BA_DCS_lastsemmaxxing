@@ -78,20 +78,20 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
       />
       <label
         htmlFor="file-upload"
-        className="cursor-pointer text-blue-600 hover:text-blue-800 block w-full"
+        className="cursor-pointer text-blue-600 hover:text-blue-800"
       >
         {files && files.length > 0 ? (
           <div className="w-full">
-            <ul className="space-y-2 max-w-full">
+            <ul className="space-y-2">
               {files.map((file, index) => (
                 <li
                   key={index}
-                  className="flex items-center p-2 bg-gray-50 rounded-lg group hover:bg-gray-100 transition-colors overflow-hidden"
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg group hover:bg-gray-100 transition-colors"
                 >
-                  <div className="flex items-center min-w-0 flex-1">
-                    <div className="flex-shrink-0 mr-2">
+                  <div className="flex items-center min-w-0 flex-1 mr-2">
+                    <div className="flex-shrink-0">
                       <svg
-                        className="w-5 h-5 text-gray-500"
+                        className="w-5 h-5 text-gray-500 mr-2"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -104,8 +104,8 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
                         />
                       </svg>
                     </div>
-                    <div className="min-w-0 flex-1 overflow-hidden">
-                      <p className="text-sm text-gray-600 truncate max-w-full" title={file.name}>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm text-gray-600 truncate">
                         {file.name}
                       </p>
                       <p className="text-xs text-gray-400">
@@ -118,7 +118,7 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
                       e.preventDefault();
                       handleDeleteFile(index);
                     }}
-                    className="flex-shrink-0 text-red-500 hover:text-red-700 ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="flex-shrink-0 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     Delete
                   </button>
