@@ -89,7 +89,8 @@ class DocumentProcessor:
 
             # Save cleaned text to a .txt file in the current working directory
             
-
+            base_name = os.path.splitext(filename)[0]  # removes .pdf or any other extension
+            filename = os.path.join("/tmp", f"{base_name}_extracted.txt")
             with open(filename, "w", encoding="utf-8") as text_file:
                 text_file.write(cleaned_text)
 
@@ -270,9 +271,7 @@ class ModelManager:
         """
         for file in files:
             # Step 1: Process the PDF
-            base_name = os.path.splitext(file["file_name"])[0]  # removes .pdf or any other extension
-            filename = os.path.join("/tmp", f"{base_name}_extracted.txt")
-            output_path, _ = processor.preprocess_pdf(file["file_content"], filename)
+            output_path, _ = processor.preprocess_pdf(file["file_content"], file["file_name"])
 
             # Step 2: Upload cleaned text to S3
             s3_key = f"Extracted_Sample_Data/{topic_name}/{os.path.basename(output_path)}"
@@ -281,7 +280,7 @@ class ModelManager:
 
             # Step 3: Update mapping file
             df = self.load_mapping_file()
-            new_entry = {"folder_name": topic_name, "file_name": os.path.basename(output_path)}
+            new_entry = {"folder_name": topic_name, "file_name": os.path.splitext(file["file_name"])[0]}
             df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
             self.save_mapping_file(df)
             print(f"Mapping file updated with: {new_entry}")

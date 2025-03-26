@@ -13,8 +13,6 @@ def lambda_handler(event, context):
     print('file id: ', file_id, flush=True)
     response = s3_client.get_object(Bucket=bucket_name, Key=file_id)
     file_content = response["Body"].read()
-    base_name = os.path.splitext(filename)[0]  # removes .pdf or any other extension
-    filename = os.path.join("/tmp", f"{base_name}_extracted.txt")
     output_path , _ =documentProcessor.preprocess_pdf(file_content,filename)
     if not os.path.exists(output_path):
         raise FileNotFoundError(f"Error: Preprocessed file not found at {output_path}. Something went wrong in `preprocess_pdf()`.")
