@@ -126,14 +126,16 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto overflow-x-hidden">
         <DialogHeader>
           <div className="flex items-center justify-between">
-            <DialogTitle>{document.name}</DialogTitle>
+            <DialogTitle className="pr-2 truncate max-w-[70%]" title={document.name}>
+              {document.name}
+            </DialogTitle>
             <button
               onClick={handleDownload}
               disabled={isDownloading}
-              className="flex items-center gap-2 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+              className="flex-shrink-0 flex items-center gap-2 px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
             >
               {isDownloading ? (
                 <Icons.Loader className="h-4 w-4 animate-spin" />
@@ -143,7 +145,9 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
               {isDownloading ? 'Downloading...' : 'Download'}
             </button>
           </div>
-          <DialogDescription>Uploaded on {document.uploadedAt}</DialogDescription>
+          <DialogDescription className="truncate" title={`Uploaded on ${document.uploadedAt}`}>
+            Uploaded on {document.uploadedAt}
+          </DialogDescription>
         </DialogHeader>
 
         <div className="mt-4 space-y-4">
