@@ -332,7 +332,7 @@ class ModelManager:
         else:
             print("No mapping entries found for the topic.")
         response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=f"Extracted_Sample_Data/{existing_topic}/")
-
+        print("response: ", response)
         if 'Contents' in response:
             # Prepare list of object keys
             objects = [{'Key': obj['Key']} for obj in response['Contents']]
@@ -346,7 +346,7 @@ class ModelManager:
                 Bucket=bucket_name,
                 Delete={'Objects': objects}
             )
-            
+
         print("Topic sample data deleted from S3")
         self.retrain_model()
         self.update_unique_topics()
