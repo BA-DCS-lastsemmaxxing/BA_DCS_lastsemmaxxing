@@ -327,15 +327,26 @@ class ModelManager:
         updated_count = len(df)
         if original_count != updated_count:
             self.save_mapping_file(df)
+            s3_client.upload_file(self.mapping_file_path, model_bucket, "final_file_topic_mapping.csv")
             print(f"Removed {original_count - updated_count} mapping entries for topic '{existing_topic}'.")
         else:
             print("No mapping entries found for the topic.")
-        objects_to_delete = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=f"Extracted_Sample_Data/{existing_topic}")
+        response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=f"Extracted_Sample_Data/{existing_topic}/")
 
-        if 'Contents' in objects_to_delete:
-            for obj in objects_to_delete['Contents']:
-                print(f"Deleting: {obj['Key']}")
-                s3_client.delete_object(Bucket=bucket_name, Key=obj['Key'])
+        if 'Contents' in response:
+            # Prepare list of object keys
+            objects = [{'Key': obj['Key']} for obj in response['Contents']]
+            
+            print(f"Deleting {len(objects)} objects:")
+            for obj in objects:
+                print(f"- {obj['Key']}")
+            
+            # Batch delete
+            s3_client.delete_objects(
+                Bucket=bucket_name,
+                Delete={'Objects': objects}
+            )
+            
         print("Topic sample data deleted from S3")
         self.retrain_model()
         self.update_unique_topics()
