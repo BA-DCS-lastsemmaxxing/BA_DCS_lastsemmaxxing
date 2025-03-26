@@ -106,7 +106,7 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
                     </div>
                     <div className="min-w-0 flex-1 max-w-full">
                         <p
-                        className="text-sm text-gray-600 truncate w-full"
+                        className="text-sm text-gray-600 break-all w-full"
                         title={file.name}
                         >
                         {file.name}
