@@ -52,19 +52,8 @@ export default function Dashboard() {
         return;
       }
 
-      const mappedDocuments = results.map((doc: any) => ({
-        id: doc.id,
-        name: doc.name,
-        uploadedAt: doc.uploadedAt,
-        status: doc.status,
-        summary: doc.summary,
-        topics: doc.topics,
-        classification: doc.classification,
-        confidence: doc.confidence,
-      }));
-
-      setDocuments(mappedDocuments);
-      console.log("documents: ", mappedDocuments);
+      setDocuments(results);
+      console.log("documents: ", results);
     } catch (error) {
       console.error("Search error:", error);
       alert("Search failed. Please try again later.");
