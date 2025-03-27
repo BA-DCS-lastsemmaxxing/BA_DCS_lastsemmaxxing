@@ -84,12 +84,14 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const handleFeedbackSubmit = async () => {
     // Validation: Ensure both category and feedback are provided
     if (!userCategory || !feedbackText) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Please fill in both the category and feedback."
-      });
-      return;
+      if (!document.feedback && !document.user_corrected_category){
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Please fill in both the category and feedback."
+        });
+        return;
+      }
     }
   
     try {
@@ -210,8 +212,8 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                       <Button
                         variant="outline"
                         onClick={() => {
-                          setUserCategory(document.classification || '');
-                          setFeedbackText('Classification is correct');
+                          setUserCategory('');
+                          setFeedbackText('');
                           handleFeedbackSubmit();
                         }}
                       >

@@ -10,7 +10,11 @@ def lambda_handler(event, context):
     document_id = event.get('queryStringParameters', {}).get('document_id')
     body = json.loads(event.get("body"))
     corrected_topic = body.get("corrected_topic")
+    if not corrected_topic:
+        corrected_topic = None
     feedback = body.get("feedback")
+    if not feedback:
+        feedback = None
     print("Doc id: ", document_id)
     print("body: ", body)
     Document.add_feedback(document_id, corrected_topic, feedback)

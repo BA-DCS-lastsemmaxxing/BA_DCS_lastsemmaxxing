@@ -151,7 +151,7 @@ export async function sendFeedback(documentId: string, userCorrectedCategory: st
     throw new Error(`Failed to send feedback. Status: ${response.status}`);
     }
     
-    return await response.json();
+    return await response;
 }
 
 export async function getCorrectedDocuments() {
