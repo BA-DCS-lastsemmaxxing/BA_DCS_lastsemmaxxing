@@ -81,36 +81,50 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     }
   };
 
-  const handleFeedbackSubmit = async () => {
-    // Validation: Ensure both category and feedback are provided
-    if (!userCategory || !feedbackText) {
-      if (!document.feedback && !document.user_corrected_category){
+  const handleFeedbackSubmit = async (isCorrect: boolean) => {
+    try{
+      if (isCorrect){
+        const response = await sendFeedback(document.id, '','')
+        console.log("Feedback response: ", response)
         toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Please fill in both the category and feedback."
+          title: "Success",
+          variant: "success",
+          description: "Feedback submitted successfully!"
         });
-        return;
-      }
-    }
-  
-    try {
-      // Sending feedback to the API
-      const response = await sendFeedback(document.id, userCategory, feedbackText)
-      console.log("Feedback response: ", response)
-      
-      toast({
-        title: "Success",
-        variant: "success",
-        description: "Feedback submitted successfully!"
-      });
-      
-      // Update the document object with the new feedback (this would ideally be handled by refreshing data)
-      document.user_corrected_category = userCategory;
-      document.feedback = feedbackText;
-      
-      // Return to viewing mode
-      setFeedbackMode('viewing');
+
+        // Update the document object with the new feedback (this would ideally be handled by refreshing data)
+        document.user_corrected_category = '';
+        document.feedback = '';
+        
+        // Return to viewing mode
+        setFeedbackMode('viewing');
+      }else{
+        // Validation: Ensure both category and feedback are provided
+        if (!userCategory || !feedbackText) {
+          toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Please fill in both the category and feedback."
+          });
+          return;
+        }
+
+        const response = await sendFeedback(document.id, userCategory, feedbackText)
+        console.log("Feedback response: ", response)
+        
+        toast({
+          title: "Success",
+          variant: "success",
+          description: "Feedback submitted successfully!"
+        });
+        
+        // Update the document object with the new feedback (this would ideally be handled by refreshing data)
+        document.user_corrected_category = userCategory;
+        document.feedback = feedbackText;
+        
+        // Return to viewing mode
+        setFeedbackMode('viewing');
+        }
     } catch (error) {
       console.error('Submission error:', error);
       toast({
@@ -214,7 +228,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                         onClick={() => {
                           setUserCategory('');
                           setFeedbackText('');
-                          handleFeedbackSubmit();
+                          handleFeedbackSubmit(true);
                         }}
                       >
                         👍 Yes
