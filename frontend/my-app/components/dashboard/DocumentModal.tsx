@@ -98,6 +98,8 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
         
         // Return to viewing mode
         setFeedbackMode('viewing');
+        setUserCategory('');
+        setFeedbackText('');
       }else{
         // Validation: Ensure both category and feedback are provided
         if (!userCategory || !feedbackText) {
@@ -115,7 +117,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
         toast({
           title: "Success",
           variant: "success",
-          description: "Feedback submitted successfully!"
+          description: "Thank you for your feedback!"
         });
         
         // Update the document object with the new feedback (this would ideally be handled by refreshing data)
@@ -226,8 +228,6 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                       <Button
                         variant="outline"
                         onClick={() => {
-                          setUserCategory('');
-                          setFeedbackText('');
                           handleFeedbackSubmit(true);
                         }}
                       >
