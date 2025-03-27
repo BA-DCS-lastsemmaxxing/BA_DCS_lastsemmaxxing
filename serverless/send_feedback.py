@@ -8,7 +8,7 @@ def lambda_handler(event, context):
     print("Event: ", event)
     # Extract query parameters (document_id)
     document_id = event.get('queryStringParameters', {}).get('document_id')
-    body = event.get("body")
+    body = json.loads(event.get("body"))
     corrected_topic = body.get("corrected_topic")
     feedback = body.get("feedback")
     print("Doc id: ", document_id)
