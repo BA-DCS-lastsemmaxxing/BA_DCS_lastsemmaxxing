@@ -134,6 +134,26 @@ export async function deleteDocument(documentId: string) {
     return await response.json();
 }
 
+export async function sendFeedback(documentId: string, userCorrectedCategory: string, feedbackText: string) {
+    const response = await fetch(`${api.backendUrl}/feedback?document_id=${encodeURIComponent(String(documentId))}`, {
+        method: 'POST',
+        headers: {
+          "Authorization": `${getCookie("CognitoToken")}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          corrected_topic: userCorrectedCategory,
+          feedback: feedbackText,
+        }),
+      });
+    
+    if (!response.ok) {
+    throw new Error(`Failed to send feedback. Status: ${response.status}`);
+    }
+    
+    return await response.json();
+}
+
 export async function getCorrectedDocuments() {
 
     return [

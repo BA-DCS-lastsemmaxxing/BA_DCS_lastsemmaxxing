@@ -179,16 +179,6 @@ export default function Dashboard() {
           document={selectedDoc}
         />
       </div>
-
-      {/* Submit Feedback Button */}
-      <div className="mt-4 flex justify-center">
-        <button
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300 ease-in-out transform hover:scale-105 active:scale-95"
-          onClick={() => alert('Feedback Submitted!')}
-        >
-          ✅ Submit Feedback
-        </button>
-      </div>
     </div>
   );
 }

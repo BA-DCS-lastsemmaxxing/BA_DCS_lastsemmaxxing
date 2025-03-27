@@ -147,6 +147,26 @@ class Document:
             print(f"Error deleting document: {e}")
             return False
 
+    @staticmethod
+    def add_feedback(doc_id, corrected_topic, feedback):
+        """Delete a document from the database by its ID."""
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            
+            # Add corrected category and feedback by document ID
+            cursor.execute(
+                "UPDATE documents SET user_corrected_category = (%s), feedback = (%s) WHERE id = (%s);", 
+                (corrected_topic, feedback, doc_id,))
+            connection.commit()
+            print(f"Successfully corrected document with ID {doc_id} to {corrected_topic} category with reason: {feedback}")
+            cursor.close()
+            connection.close()
+            return True
+        except Exception as e:
+            print(f"Error adding feedback for document: {e}")
+            return False
+
 ############################################################### Topic ##############################################################################################################
 
 class Topic:
@@ -201,7 +221,7 @@ class Topic:
         cursor = connection.cursor()
 
         cursor.execute(
-            "UPDATE topics SET status = (%s) WHERE topic_name = (%s);",
+            "UPDATE topics SET status = (%s) WHERE topic_name = (%s);"
             (new_status, topic_name,)
         )
 

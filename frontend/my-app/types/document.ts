@@ -7,4 +7,6 @@ export interface Document {
   topics?: string[];
   classification?: string;
   confidence?: number;
+  user_corrected_category?: string;
+  feedback?: string;
 } 
