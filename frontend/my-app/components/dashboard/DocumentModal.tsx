@@ -285,7 +285,9 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                             Cancel
                           </Button>
                           <Button
-                            onClick={handleFeedbackSubmit}
+                            onClick={() => {
+                              handleFeedbackSubmit(false);
+                            }}
                           >
                             Submit Feedback
                           </Button>
