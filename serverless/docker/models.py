@@ -45,7 +45,7 @@ class User:
 
 ############################################################### Document ##############################################################################################################
 class Document:
-    def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None, confidence=None):
+    def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None, confidence=None, user_corrected_category=None, feedback=None):
         self.id = id
         self.name = name
         self.uploadedAt = uploadedAt
@@ -54,6 +54,8 @@ class Document:
         self.topics = topics
         self.classification = classification
         self.confidence = confidence
+        self.user_corrected_category = user_corrected_category
+        self.feedback = feedback
 
     @staticmethod
     def get_documents(query=None):
@@ -82,7 +84,9 @@ class Document:
                     summary=row["summary"],
                     topics=json.loads(row["topics"]) if row["topics"] else None,
                     classification=row["classification"] if row['classification'] else None,
-                    confidence = float(row["confidence"]) if row["confidence"] else None
+                    confidence = float(row["confidence"]) if row["confidence"] else None,
+                    user_corrected_category=row["user_corrected_category"],
+                    feedback=row["feedback"]
                 ).__dict__
             )
 
