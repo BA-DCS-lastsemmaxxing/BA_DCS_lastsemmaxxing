@@ -275,11 +275,11 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                                 // Reset to original values
                                 setUserCategory(document.user_corrected_category || '');
                                 setFeedbackText(document.feedback || '');
-                                setFeedbackMode('viewing');
                               } else {
                                 setUserCategory('');
                                 setFeedbackText('');
                               }
+                              setFeedbackMode('viewing');
                             }}
                           >
                             Cancel
