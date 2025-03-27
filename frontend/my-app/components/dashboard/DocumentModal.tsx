@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Document } from '@/types/document';
 import {
   Dialog,
@@ -42,23 +42,20 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   const [feedbackText, setFeedbackText] = useState('');
   const { toast } = useToast();
   
+  // Use useEffect to initialize feedback form with existing data when document changes
+  useEffect(() => {
+    if (document) {
+      setFeedbackMode('viewing');
+      setUserCategory(document.user_corrected_category || '');
+      setFeedbackText(document.feedback || '');
+    }
+  }, [document?.id]);
+  
   if (!document) return null;
 
-  // Initialize feedback form with existing data if available
+  // Check if document has previous feedback
   const hasPreviousFeedback = document.user_corrected_category || document.feedback;
   
-  // Reset state when document changes
-  const resetFeedbackState = () => {
-    setFeedbackMode('viewing');
-    setUserCategory(document.user_corrected_category || '');
-    setFeedbackText(document.feedback || '');
-  };
-
-  // Call resetFeedbackState when document changes
-  if (document.id && (userCategory === '' && feedbackText === '')) {
-    resetFeedbackState();
-  }
-
   const isLLMBased = document.summary !== null && document.summary !== undefined;
   const isRuleBased = document.confidence !== null && document.confidence !== undefined;
   
@@ -259,7 +256,9 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                             variant="outline"
                             onClick={() => {
                               if (hasPreviousFeedback) {
-                                resetFeedbackState();
+                                // Reset to original values
+                                setUserCategory(document.user_corrected_category || '');
+                                setFeedbackText(document.feedback || '');
                                 setFeedbackMode('viewing');
                               } else {
                                 setUserCategory('');
