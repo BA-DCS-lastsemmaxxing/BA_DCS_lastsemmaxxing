@@ -96,6 +96,41 @@ class Document:
         return documents
     
     @staticmethod
+    def get_corrected_documents():
+        """Retrieve corrected document metadata from the database with topics and classification."""
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        sql = "SELECT * FROM documents WHERE user_corrected_category IS NOT NULL"
+        params = []
+
+        cursor.execute(sql, params)
+        results = cursor.fetchall()
+        documents = []
+
+        for row in results:
+            uploaded_at = row["uploadedAt"] if row["uploadedAt"] else None
+            documents.append(
+                Document(
+                    id=row["id"],
+                    name=row["name"],
+                    uploadedAt=uploaded_at.strftime("%Y-%m-%d %H:%M:%S") if uploaded_at else None,
+                    status=row["status"],
+                    summary=row["summary"],
+                    topics=json.loads(row["topics"]) if row["topics"] else None,
+                    classification=row["classification"] if row['classification'] else None,
+                    confidence = float(row["confidence"]) if row["confidence"] else None,
+                    user_corrected_category=row["user_corrected_category"],
+                    feedback=row["feedback"]
+                ).__dict__
+            )
+
+        cursor.close()
+        connection.close()
+
+        return documents
+    
+    @staticmethod
     def insert_file_record(fileid, filename):
         """Store document metadata in the database with dummy values."""
         connection = get_db_connection()

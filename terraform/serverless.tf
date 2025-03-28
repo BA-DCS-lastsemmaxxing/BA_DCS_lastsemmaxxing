@@ -162,6 +162,31 @@ resource "aws_cloudwatch_log_group" "fetch_documents_lambda_logs" {
   retention_in_days = 7  # Adjust retention as needed
 }
 
+# Fetch Corrected Documents Function
+resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
+  function_name = "fetch_corrected_documents"
+
+  runtime = "python3.9"
+  handler = "fetch_corrected_documents.lambda_handler"
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key = "fetch_corrected_documents.zip"
+
+  role = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.fetch_corrected_documents_lambda_zip.etag
+
+  layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  environment {
+    variables = local.lambda_db_variables
+  }
+}
+
+resource "aws_cloudwatch_log_group" "fetch_corrected_documents_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.fetch_corrected_documents_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
+}
+
 # Fetch upload url function
 resource "aws_lambda_function" "fetch_upload_url_lambda" {
   function_name = "fetch_upload_url"

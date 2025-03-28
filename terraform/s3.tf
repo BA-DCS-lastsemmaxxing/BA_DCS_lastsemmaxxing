@@ -174,6 +174,11 @@ data "aws_s3_object" "fetch_topics_lambda_zip" {
   key = "fetch_topics.zip"
 }
 
+data "aws_s3_object" "fetch_corrected_documents_lambda_zip" {
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
+  key = "fetch_topics.zip"
+}
+
 data "aws_s3_object" "s3_trigger_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "s3_trigger.zip"
