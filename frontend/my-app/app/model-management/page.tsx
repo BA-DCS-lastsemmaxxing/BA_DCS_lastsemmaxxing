@@ -25,6 +25,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Icons } from '@/components/Icons';
 
 export default function ModelManagement() {
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
@@ -237,7 +238,7 @@ export default function ModelManagement() {
                         Corrected Topic
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Corrected At
+                        Uploaded At
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Confidence
@@ -271,8 +272,8 @@ export default function ModelManagement() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {doc.confidence ? (doc.confidence * 100).toFixed(1) : "-"}%
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {doc.feedback}
+                        <td className="px-6 py-4 max-w-xs">
+                          {doc.feedback ? (<TruncatedText text={doc.feedback}/>): "-"} 
                         </td>
                       </tr>
                     ))}
@@ -422,6 +423,38 @@ export default function ModelManagement() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+    </div>
+  );
+}
+
+function TruncatedText({ text, maxLength = 50 }: { text: string, maxLength?: number }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  if (!text) return <span className="text-gray-400 italic">No justification provided</span>;
+  
+  if (text.length <= maxLength) return <span>{text}</span>;
+  
+  return (
+    <div className="relative">
+      <p className={`${isExpanded ? '' : 'line-clamp-2'}`}>
+        {text}
+      </p>
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="text-blue-600 hover:text-blue-800 text-xs flex items-center mt-1 focus:outline-none"
+      >
+        {isExpanded ? (
+          <>
+            <Icons.ChevronUp className="h-3 w-3 mr-1" />
+            Show less
+          </>
+        ) : (
+          <>
+            <Icons.ChevronDown className="h-3 w-3 mr-1" />
+            Show more
+          </>
+        )}
+      </button>
     </div>
   );
 } 
