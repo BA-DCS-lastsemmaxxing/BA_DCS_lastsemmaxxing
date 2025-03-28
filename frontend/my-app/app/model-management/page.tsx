@@ -222,28 +222,28 @@ export default function ModelManagement() {
                 <table className="min-w-full">
                   <thead>
                     <tr className="bg-gray-50">
-                      <th className="px-6 py-3 text-left">
+                      <th className="px-2 py-3 text-left">
                         <Checkbox 
                           checked={selectedDocuments.size === documents.length}
                           onCheckedChange={handleSelectAll}
                         />
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[15%]">
                         Document Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
                         Original Topic
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
                         Corrected Topic
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
                         Uploaded At
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[8%]">
                         Confidence
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[40%]">
                         Justification
                       </th>
                     </tr>
@@ -251,29 +251,31 @@ export default function ModelManagement() {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {documents.map((doc) => (
                       <tr key={doc.id}>
-                        <td className="px-6 py-4">
+                        <td className="px-2 py-4">
                           <Checkbox 
                             checked={selectedDocuments.has(doc.id)}
                             onCheckedChange={() => handleDocumentSelect(doc.id)}
                           />
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {doc.name}
+                        <td className="px-3 py-4 text-sm">
+                          <div className="truncate max-w-[200px]" title={doc.name}>
+                            {doc.name}
+                          </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <td className="px-3 py-4 text-sm">
                           {doc.classification}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <td className="px-3 py-4 text-sm">
                           {doc.user_corrected_category}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <td className="px-3 py-4 text-sm">
                           {doc.uploadedAt}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <td className="px-3 py-4 text-sm">
                           {doc.confidence ? (doc.confidence * 100).toFixed(1) : "-"}%
                         </td>
-                        <td className="px-6 py-4 max-w-xs">
-                          {doc.feedback ? (<TruncatedText text={doc.feedback}/>): "-"} 
+                        <td className="px-3 py-4 max-w-md">
+                          {doc.feedback ? (<TruncatedText text={doc.feedback}/>) : "-"} 
                         </td>
                       </tr>
                     ))}
