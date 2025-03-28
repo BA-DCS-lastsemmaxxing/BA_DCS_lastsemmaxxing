@@ -3,7 +3,7 @@ export interface TrainingDocument {
   name: string;
   originalTopic: string;
   correctedTopic: string;
-  correctedAt: string;
+  uploadedAt: string;
   confidence: number;
   justification: string;
 }

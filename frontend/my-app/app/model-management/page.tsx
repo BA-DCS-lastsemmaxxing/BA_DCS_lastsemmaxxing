@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TrainingDocument, Topic } from '@/types/model';
+import { Topic } from '@/types/model';
+import { Document } from '@/types/document';
 import { getAllTopics, addNewTopic, removeTopic } from '@/service/modelApi';
 import { getCorrectedDocuments, fetchUploadUrl } from '@/service/documentApi';
 import {
@@ -33,7 +34,7 @@ export default function ModelManagement() {
   const [newTopicName, setNewTopicName] = useState('');
   const { toast } = useToast();
 
-  const [documents, setDocuments] = useState<TrainingDocument[]>([]);
+  const [documents, setDocuments] = useState<Document[]>([]);
 
   const [topics, setTopics] = useState<Topic[]>([]);
 
@@ -259,19 +260,19 @@ export default function ModelManagement() {
                           {doc.name}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {doc.originalTopic}
+                          {doc.classification}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {doc.correctedTopic}
+                          {doc.user_corrected_category}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {doc.correctedAt}
+                          {doc.uploadedAt}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {(doc.confidence * 100).toFixed(1)}%
+                          {doc.confidence ? (doc.confidence * 100).toFixed(1) : "-"}%
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {doc.justification}
+                          {doc.feedback}
                         </td>
                       </tr>
                     ))}
