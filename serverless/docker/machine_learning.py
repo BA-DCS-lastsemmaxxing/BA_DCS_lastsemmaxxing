@@ -379,13 +379,13 @@ class ModelManager:
             print("Correcting document: ", doc)
             if doc["name"] in df['file_name'].values:
                 old_topic = df.loc[df['file_name'].str.startswith(doc["name"]), 'folder_name']
-                df.loc[df['file_name'].str.startswith(doc["file_name"]), 'folder_name'] = doc["corrected_topic"]
+                df.loc[df['file_name'].str.startswith(doc["file_name"]), 'folder_name'] = doc["user_corrected_topic"]
                 print("Copying file in s3 to new location...")
                 # Move the extracted sample data file in S3
                 s3_client.copy_object(
                     Bucket=model_bucket,
                     CopySource={'Bucket': model_bucket, 'Key': "Extracted_Sample_Data/"+old_topic},
-                    Key="Extracted_Sample_Data/" + doc["corrected_topic"]
+                    Key="Extracted_Sample_Data/" + doc["user_corrected_topic"]
                 )
                 print("Deleting file in s3 from old location...")
                 # Delete the original object
@@ -393,7 +393,7 @@ class ModelManager:
 
             else:
                 base_name = os.path.splitext(doc["name"])[0]
-                new_row = pd.DataFrame({'file_name': [base_name + ".txt"], 'folder_name': [doc["corrected_topic"]]})
+                new_row = pd.DataFrame({'file_name': [base_name + ".txt"], 'folder_name': [doc["user_corrected_topic"]]})
                 df = pd.concat([df, new_row], ignore_index=True)
                 # Download file from document storage s3
                 response = s3_client.get_object(Bucket=bucket_name, Key=doc["id"])
@@ -402,7 +402,7 @@ class ModelManager:
                 output_path, _ = processor.preprocess_pdf(response['Body'].read(), doc["name"])   
 
                 # Upload file to extracted sample data s3       
-                s3_client.upload_file(output_path, model_bucket, f"Extracted_Sample_Data/{doc['corrected_topic']}/{os.path.basename(output_path)}")
+                s3_client.upload_file(output_path, model_bucket, f"Extracted_Sample_Data/{doc['user_corrected_topic']}/{os.path.basename(output_path)}")
         
         df.to_csv(self.mapping_file_path, index=False)
         s3_client.upload_file("final_file_topic_mapping.csv", model_bucket, self.mapping_file_path)
