@@ -91,7 +91,7 @@ export default function ModelManagement() {
       });
       return;
     }
-
+    console.log("Retraining documents: ", selectedDocuments);
     // Add your retraining API call here
     toast({
       title: "Retraining started",
