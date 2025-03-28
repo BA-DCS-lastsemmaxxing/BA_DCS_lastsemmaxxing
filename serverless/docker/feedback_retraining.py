@@ -1,5 +1,5 @@
 import json, traceback
-from models import Document, ModelState
+from models import Document, ModelState, local_tz
 from machine_learning import *
 import datetime
 
@@ -22,7 +22,7 @@ def lambda_handler(event, context):
             }
         ModelState.update_state({
             "isRetraining": True,
-            "startedAt": datetime.datetime.now().isoformat(),
+            "startedAt": datetime.datetime.now(local_tz).isoformat(),
             "type": "Feedback Retraining"
         })
         record = event.get("Records")[0]

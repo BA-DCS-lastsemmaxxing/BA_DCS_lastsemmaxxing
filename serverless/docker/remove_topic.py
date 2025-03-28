@@ -1,5 +1,5 @@
 import json, traceback, datetime
-from models import ModelState, Topic
+from models import ModelState, Topic, local_tz
 from machine_learning import *
 
 def lambda_handler(event, context):
@@ -21,7 +21,7 @@ def lambda_handler(event, context):
             }
         ModelState.update_state({
             "isRetraining": True,
-            "startedAt": datetime.datetime.now().isoformat(),
+            "startedAt": datetime.datetime.now(local_tz).isoformat(),
             "type": "Removing Topic"
         })
         record = event.get("Records")[0]
