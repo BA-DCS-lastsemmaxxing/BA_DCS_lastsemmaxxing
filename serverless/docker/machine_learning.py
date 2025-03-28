@@ -405,7 +405,7 @@ class ModelManager:
                 s3_client.upload_file(output_path, model_bucket, f"Extracted_Sample_Data/{doc['user_corrected_category']}/{os.path.basename(output_path)}")
         
         df.to_csv(self.mapping_file_path, index=False)
-        s3_client.upload_file("final_file_topic_mapping.csv", model_bucket, self.mapping_file_path)
+        s3_client.upload_file(self.mapping_file_path, model_bucket,"final_file_topic_mapping.csv")
         self.retrain_model()
 
         return
