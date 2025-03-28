@@ -291,7 +291,6 @@ class ModelManager:
         self.retrain_model()
         self.update_unique_topics()
 
-
     def remove_topic(self, topic_name: str) -> None:
         """
         Remove an existing topic by deleting all related files in the corresponding folder under
@@ -372,6 +371,48 @@ class ModelManager:
         except Exception as e:
             print("Error loading models. Make sure the model files exist.", e)
             self.tfidf_vectorizer, self.rf_model = None, None
+
+    def retrain_with_feedback(self, corrected_documents, processor):
+        df = self.load_mapping_file()
+        for doc in corrected_documents:
+            # Update final file topic mapping file
+            print("Correcting document: ", doc)
+            if doc["name"] in df['file_name'].values:
+                old_topic = df.loc[df['file_name'].str.startswith(doc["name"]), 'folder_name']
+                df.loc[df['file_name'].str.startswith(doc["file_name"]), 'folder_name'] = doc["corrected_topic"]
+                print("Copying file in s3 to new location...")
+                # Move the extracted sample data file in S3
+                s3_client.copy_object(
+                    Bucket=model_bucket,
+                    CopySource={'Bucket': model_bucket, 'Key': "Extracted_Sample_Data/"+old_topic},
+                    Key="Extracted_Sample_Data/" + doc["corrected_topic"]
+                )
+                print("Deleting file in s3 from old location...")
+                # Delete the original object
+                s3_client.delete_object(Bucket=model_bucket, Key="Extracted_Sample_Data/" + old_topic)
+
+            else:
+                base_name = os.path.splitext(doc["name"])[0]
+                new_row = pd.DataFrame({'file_name': [base_name + ".txt"], 'folder_name': [doc["corrected_topic"]]})
+                df = pd.concat([df, new_row], ignore_index=True)
+                # Download file from document storage s3
+                response = s3_client.get_object(Bucket=bucket_name, Key=doc["id"])
+
+                # Process file (extract txt content)
+                output_path, _ = processor.preprocess_pdf(response['Body'].read(), doc["name"])   
+
+                # Upload file to extracted sample data s3       
+                s3_client.upload_file(output_path, model_bucket, f"Extracted_Sample_Data/{doc['corrected_topic']}/{os.path.basename(output_path)}")
+        
+        df.to_csv(self.mapping_file_path, index=False)
+        s3_client.upload_file("final_file_topic_mapping.csv", model_bucket, self.mapping_file_path)
+        self.retrain_model()
+
+        return
+
+            
+        
+
 
     def classify_document(self, file_path: str, filename: str) -> tuple[str, str, float, str, str]:
         """

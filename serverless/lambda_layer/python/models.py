@@ -205,6 +205,27 @@ class Document:
         except Exception as e:
             print(f"Error adding feedback for document: {e}")
             return False
+    
+    @staticmethod
+    def correct_file_topic(doc_id, corrected_topic, feedback):
+        """Delete a document from the database by its ID."""
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            
+            summary = f"This document's classification has been manually overwritten based on the following feedback: \n\n{feedback}"
+            # Add corrected category and feedback by document ID
+            cursor.execute(
+                "UPDATE documents SET user_corrected_category = NULL, feedback = NULL, classification = (%s), confidence = 1 summary = (%s) WHERE id = (%s);", 
+                (corrected_topic, summary, doc_id,))
+            connection.commit()
+            print(f"Successfully corrected document with ID {doc_id} to {corrected_topic} category with reason: {feedback}")
+            cursor.close()
+            connection.close()
+            return True
+        except Exception as e:
+            print(f"Error correcting file topic for document: {e}")
+            return False
 
 ############################################################### Topic ##############################################################################################################
 

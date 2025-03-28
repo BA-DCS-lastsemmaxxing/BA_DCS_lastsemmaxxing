@@ -100,7 +100,8 @@ resource "aws_iam_policy" "lambda_policy" {
         ],
         Resource = [
           aws_sqs_queue.add_new_topic_queue.arn,
-          aws_sqs_queue.remove_topic_queue.arn
+          aws_sqs_queue.remove_topic_queue.arn,
+          aws_sqs_queue.feedback_retraining_queue.arn
         ]
       }
     ]
@@ -387,6 +388,32 @@ resource "aws_lambda_function" "remove_topic_lambda" {
 
 resource "aws_cloudwatch_log_group" "remove_topic_lambda_logs" {
   name              = "/aws/lambda/${aws_lambda_function.remove_topic_lambda.function_name}"
+  retention_in_days = 7  # Adjust retention as needed
+}
+
+# Add new topic lambda
+resource "aws_lambda_function" "feedback_retraining_lambda" {
+  function_name = "feedback_retraining"
+  package_type  = "Image"
+  image_uri     = "${aws_ecr_repository.lsm_fyp_repo.repository_url}:latest"
+  timeout       = 900
+  memory_size   = 2000
+  role = aws_iam_role.lambda_execution_role.arn
+  
+  image_config {
+    command     = ["feedback_retraining.lambda_handler"]
+  }
+
+  environment {
+    variables = merge(local.lambda_db_variables, {
+      REGION = var.region
+      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+    })
+  }
+}
+
+resource "aws_cloudwatch_log_group" "feedback_retraining_lambda_logs" {
+  name              = "/aws/lambda/${aws_lambda_function.feedback_retraining_lambda.function_name}"
   retention_in_days = 7  # Adjust retention as needed
 }
 
@@ -693,6 +720,18 @@ resource "aws_sqs_queue" "remove_topic_queue" {
 resource "aws_lambda_event_source_mapping" "remove_topic_queue_mapping" {
   event_source_arn = aws_sqs_queue.remove_topic_queue.arn
   function_name    = aws_lambda_function.remove_topic_lambda.arn
+  batch_size       = 1
+  enabled          = true
+}
+
+resource "aws_sqs_queue" "feedback_retraining_queue" {
+  name = "feedback-retraining-queue"
+  visibility_timeout_seconds = 910
+}
+
+resource "aws_lambda_event_source_mapping" "feedback_retraining_queue_mapping" {
+  event_source_arn = aws_sqs_queue.feedback_retraining_queue.arn
+  function_name    = aws_lambda_function.feedback_retraining_lambda.arn
   batch_size       = 1
   enabled          = true
 }

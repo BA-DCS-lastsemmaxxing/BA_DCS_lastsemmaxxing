@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Topic } from '@/types/model';
 import { Document } from '@/types/document';
-import { getAllTopics, addNewTopic, removeTopic } from '@/service/modelApi';
+import { getAllTopics, addNewTopic, removeTopic, feedbackRetraining } from '@/service/modelApi';
 import { getCorrectedDocuments, fetchUploadUrl } from '@/service/documentApi';
 import {
   Dialog,
@@ -91,13 +91,29 @@ export default function ModelManagement() {
       });
       return;
     }
-    console.log("Retraining documents: ", selectedDocuments);
-    // Add your retraining API call here
-    toast({
-      title: "Retraining started",
-      description: `Started retraining with ${selectedDocuments.size} documents.`,
-      variant: "success"
-    });
+    
+    // Filter documents to only include those that are selected
+    const selectedDocs = documents.filter(doc => selectedDocuments.has(doc.id));
+    
+    console.log("Retraining documents: ", selectedDocs);
+    
+    try {
+      // Call your API with the selected documents
+      const response = await feedbackRetraining(selectedDocs);
+      
+      toast({
+        title: "Retraining started",
+        description: `Started retraining with ${selectedDocuments.size} documents.`,
+        variant: "success"
+      });
+    } catch (error) {
+      console.error("Error starting retraining:", error);
+      toast({
+        title: "Retraining failed",
+        description: "There was an error starting the retraining process.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleDeleteTopic = async () => {

@@ -34,7 +34,7 @@ resource "aws_api_gateway_resource" "topics_resource" {
   path_part   = "topics"
 }
 
-# Options method for CORS support (GET /documents)
+# Options method for CORS support (GET /topics)
 resource "aws_api_gateway_method" "topics_method_options" {
   rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
   resource_id   = aws_api_gateway_resource.topics_resource.id
@@ -285,7 +285,8 @@ resource "aws_iam_policy" "api_gateway_sqs_policy" {
       Action = "sqs:SendMessage",
       Resource = [
         aws_sqs_queue.add_new_topic_queue.arn,
-        aws_sqs_queue.remove_topic_queue.arn
+        aws_sqs_queue.remove_topic_queue.arn,
+        aws_sqs_queue.feedback_retraining_queue.arn
       ]
     }]
   })
@@ -797,4 +798,123 @@ resource "aws_lambda_permission" "feedback_method_post_lambda_permission" {
     function_name = aws_lambda_function.send_feedback_lambda.function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
+}
+
+# Create a resource for /retrain
+resource "aws_api_gateway_resource" "retrain_resource" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  parent_id   = aws_api_gateway_rest_api.lsm-fyp-api.root_resource_id
+  path_part   = "retrain"
+}
+
+# Options method for CORS support (GET /retrain)
+resource "aws_api_gateway_method" "retrain_method_options" {
+  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id   = aws_api_gateway_resource.retrain_resource.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "retrain_method_options_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.retrain_resource.id
+  http_method = aws_api_gateway_method.retrain_method_options.http_method
+  status_code = "200"
+  
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"       = true
+    "method.response.header.Access-Control-Allow-Methods"      = true
+    "method.response.header.Access-Control-Allow-Headers"      = true
+    "method.response.header.Access-Control-Allow-Credentials"  = true
+  }
+}
+
+resource "aws_api_gateway_integration" "retrain_options_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id             = aws_api_gateway_resource.retrain_resource.id
+  http_method             = aws_api_gateway_method.retrain_method_options.http_method
+  type                    = "MOCK"
+  request_templates = {
+    "application/json" = jsonencode({
+      statusCode = 200
+    })
+  }
+}
+
+resource "aws_api_gateway_integration_response" "retrain_method_options_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.retrain_resource.id
+  http_method = aws_api_gateway_method.retrain_method_options.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = "'https://${aws_cloudfront_distribution.cdn.domain_name}'"
+    "method.response.header.Access-Control-Allow-Methods"      = "'GET,POST,OPTIONS,DELETE'"
+    "method.response.header.Access-Control-Allow-Headers"      = "'Content-Type,Authorization'"
+    "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
+  }
+
+  depends_on = [ aws_api_gateway_integration.retrain_options_integration ]
+}
+
+# POST method for /retrain
+resource "aws_api_gateway_method" "retrain_method_post" {
+  rest_api_id   = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id   = aws_api_gateway_resource.retrain_resource.id
+  http_method   = "POST"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.lsm-fyp-authorizer.id
+
+  request_parameters = {
+    "method.request.header.Content-Type" = true
+  }
+}
+
+# Trigger feedback retraining lambda function when POST method called on /retrain
+resource "aws_api_gateway_integration" "retrain_method_post_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id             = aws_api_gateway_resource.retrain_resource.id
+  http_method             = aws_api_gateway_method.retrain_method_post.http_method
+  type                    = "AWS"
+  integration_http_method = "POST"
+  uri                     = "arn:aws:apigateway:${var.region}:sqs:path/${data.aws_caller_identity.current.account_id}/${aws_sqs_queue.feedback_retraining_queue.name}"
+  credentials             = aws_iam_role.api_gateway_to_sqs_role.arn
+
+  request_parameters = {
+    "integration.request.header.Content-Type" = "'application/x-www-form-urlencoded'"
+  }
+
+  request_templates = {
+  "application/json" = <<EOF
+Action=SendMessage&MessageBody=$util.urlEncode($input.body)
+EOF
+}
+}
+
+resource "aws_api_gateway_method_response" "retrain_method_post_response" {
+    rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+    resource_id = aws_api_gateway_resource.retrain_resource.id
+    http_method = aws_api_gateway_method.retrain_method_post.http_method
+    status_code = "200"
+    
+    response_parameters = {
+        "method.response.header.Access-Control-Allow-Origin" = true
+        "method.response.header.Access-Control-Allow-Methods" = true
+        "method.response.header.Access-Control-Allow-Headers" = true
+        "method.response.header.Access-Control-Allow-Credentials" = true
+  }
+}
+
+resource "aws_api_gateway_integration_response" "retrain_method_post_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.lsm-fyp-api.id
+  resource_id = aws_api_gateway_resource.retrain_resource.id
+  http_method = aws_api_gateway_method.retrain_method_post.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin"      = "'*'"
+    "method.response.header.Access-Control-Allow-Methods"     = "'POST,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Headers"     = "'Content-Type,Authorization'"
+    "method.response.header.Access-Control-Allow-Credentials" = "'true'"
+  }
 }

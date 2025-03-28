@@ -1,5 +1,5 @@
 import { configService } from './config';
-
+import { Document } from '@/types/document'
 const { api } = configService.get();
 
 function getCookie(name: string): string | undefined {
@@ -74,6 +74,27 @@ export async function removeTopic(topic: string) {
     // Handle the response
     if (!response.ok) {
         throw new Error(`Failed to delete topic. Status: ${response.status}`);
+    }
+
+    return await response.json(); // Assuming the backend responds with JSON
+}
+
+export async function feedbackRetraining(documents: Document[]) {
+    // Perform the delete request
+    const response = await fetch(`${api.backendUrl}/retrain`, {
+        method: "POST",
+        headers: {
+            "Authorization": `${getCookie("CognitoToken")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "documents": documents
+        })
+    });
+
+    // Handle the response
+    if (!response.ok) {
+        throw new Error(`Failed to retrain model with feedback. Status: ${response.status}`);
     }
 
     return await response.json(); // Assuming the backend responds with JSON
