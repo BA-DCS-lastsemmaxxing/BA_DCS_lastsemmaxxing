@@ -12,7 +12,7 @@ def lambda_handler(event, context):
         modelManager.retrain_with_feedback(documents_to_retrain, documentProcessor)
 
         for doc in documents_to_retrain:
-            Document.correct_file_topic(doc["id"], doc["corrected_topic"], doc["feedback"])
+            Document.correct_file_topic(doc["id"], doc["user_corrected_category"], doc["feedback"])
 
     except Exception as e: 
         print("lambda handler failed with exception: " + str(e),flush=True)
