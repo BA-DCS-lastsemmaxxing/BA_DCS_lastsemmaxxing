@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Topic } from '@/types/model';
+import { ModelState, Topic } from '@/types/model';
 import { Document } from '@/types/document';
 import { getAllTopics, addNewTopic, removeTopic, feedbackRetraining } from '@/service/modelApi';
 import { getCorrectedDocuments, fetchUploadUrl } from '@/service/documentApi';
@@ -27,6 +27,98 @@ import {
 } from "@/components/ui/tooltip";
 import { Icons } from '@/components/Icons';
 
+// Component to display when model is retraining
+function ModelRetrainingState({ modelState }: { modelState: ModelState }) {
+  // Calculate time elapsed since retraining started
+  const startTime = new Date(modelState.startedAt);
+  const [timeElapsed, setTimeElapsed] = useState<string>('');
+  
+  useEffect(() => {
+    const calculateTimeElapsed = () => {
+      const now = new Date();
+      const diffMs = now.getTime() - startTime.getTime();
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHrs = Math.floor(diffMins / 60);
+      const remainingMins = diffMins % 60;
+      
+      if (diffHrs > 0) {
+        setTimeElapsed(`${diffHrs}h ${remainingMins}m`);
+      } else {
+        setTimeElapsed(`${diffMins}m`);
+      }
+    };
+    
+    calculateTimeElapsed();
+    const interval = setInterval(calculateTimeElapsed, 60000); // Update every minute
+    
+    return () => clearInterval(interval);
+  }, [startTime]);
+  
+  // Get appropriate message based on retraining type
+  const getRetrainingMessage = () => {
+    switch (modelState.type) {
+      case "Feedback Retraining":
+        return "The model is being retrained with user feedback to improve classification accuracy.";
+      case "Adding New Topic":
+        return "A new topic is being added to the model. This process involves training the model to recognize this topic.";
+      case "Removing Topic":
+        return "A topic is being removed from the model. This requires retraining the model without this topic.";
+      default:
+        return "Model retraining is in progress.";
+    }
+  };
+  
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[70vh] p-8">
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full">
+        <div className="flex items-center justify-center mb-6">
+          <div className="bg-blue-100 p-3 rounded-full">
+            <Icons.RefreshCw className="h-8 w-8 text-blue-600 animate-spin" />
+          </div>
+        </div>
+        
+        <h1 className="text-2xl font-bold text-center mb-2">Model Retraining in Progress</h1>
+        <p className="text-gray-600 text-center mb-6">{modelState.type}</p>
+        <p className="text-gray-500 text-center mb-6">{getRetrainingMessage()}</p>
+        
+        <div className="space-y-6">
+          <div>
+            <div className="flex justify-between mb-2">
+              <span className="text-sm font-medium">Retraining Progress</span>
+              <span className="text-sm font-medium">In Progress</span>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4 text-center">
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <p className="text-sm text-gray-500">Started</p>
+              <p className="font-medium">{startTime.toLocaleString()}</p>
+            </div>
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <p className="text-sm text-gray-500">Time Elapsed</p>
+              <p className="font-medium">{timeElapsed}</p>
+            </div>
+          </div>
+          
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <Icons.AlertTriangle className="h-5 w-5 text-yellow-400" />
+              </div>
+              <div className="ml-3">
+                <p className="text-sm text-yellow-700">
+                  The model management features are temporarily unavailable during retraining. 
+                  Please check back later.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ModelManagement() {
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -34,36 +126,54 @@ export default function ModelManagement() {
   const [isAddTopicDialogOpen, setIsAddTopicDialogOpen] = useState(false);
   const [newTopicName, setNewTopicName] = useState('');
   const { toast } = useToast();
-
+  
+  // Initialize modelState with null instead of undefined
+  const [modelState, setModelState] = useState<ModelState | null>(null);
   const [documents, setDocuments] = useState<Document[]>([]);
-
   const [topics, setTopics] = useState<Topic[]>([]);
-
   const [topicFiles, setTopicFiles] = useState<File[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchTopics = async () => {
     try {
-      const topics = await getAllTopics();
-      console.log(" Topics: ", topics);
-      setTopics(topics);
+      const response = await getAllTopics();
+      console.log(" fetch topics Response: ", response);
+      if ('state' in response){
+        setModelState(response.state)
+      }else{
+        console.log("Topics: ", response.topics);
+        setTopics(response.topics);
+        setModelState(null); // Clear model state if we get topics
+      }
     } catch (error) {
       console.error("Error fetching topics:", error);
     }
   };
+  
   const fetchCorrectedDocuments = async () => {
     try {
-      const docs = await getCorrectedDocuments();
-      console.log(" Corrected Documents: ", docs);
-      setDocuments(docs);
+      const response = await getCorrectedDocuments();
+      console.log(" fetch topics Response: ", response);
+      if ('state' in response){
+        setModelState(response.state)
+      }else{
+        console.log("Corrected Documents: ", response.documents);
+        setDocuments(response.documents);
+        setModelState(null); // Clear model state if we get documents
+      }
     } catch (error) {
       console.error("Error fetching corrected documents:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
-  useEffect(() => {
-      fetchTopics();
-      fetchCorrectedDocuments();
-  }, []);
   
+  useEffect(() => {
+    setIsLoading(true);
+    fetchTopics();
+    fetchCorrectedDocuments();
+  }, []);
+
   const handleDocumentSelect = (docId: string) => {
     const newSelected = new Set(selectedDocuments);
     if (newSelected.has(docId)) {
@@ -106,6 +216,10 @@ export default function ModelManagement() {
         description: `Started retraining with ${selectedDocuments.size} documents.`,
         variant: "success"
       });
+      
+      // Refresh the page to show retraining state
+      fetchTopics();
+      fetchCorrectedDocuments();
     } catch (error) {
       console.error("Error starting retraining:", error);
       toast({
@@ -207,6 +321,12 @@ export default function ModelManagement() {
     }
     };
 
+  // If model is retraining, show the retraining state UI
+  if (modelState && modelState.isRetraining) {
+    return <ModelRetrainingState modelState={modelState} />;
+  }
+
+  // Otherwise, show the normal UI
   return (
     <div className="h-[calc(100vh-4rem)] bg-gray-100">
       <div className="bg-white border-b">

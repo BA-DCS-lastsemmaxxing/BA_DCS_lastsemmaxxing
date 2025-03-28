@@ -105,6 +105,17 @@ INSERT INTO topics (topic_name) VALUES
 ('Investments and Market Research'),
 ('Annual Reports');
 
+
+DROP TABLE IF EXISTS `ModelState`;
+CREATE TABLE `ModelState` (
+    `id` INT DEFAULT 1 PRIMARY KEY,
+    `state` JSON NOT NULL,
+    `updatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO ModelState (state) VALUES
+('{"isRetraining": false}');
+
 --
 -- Dumping data for table `users`
 --

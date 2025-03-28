@@ -23,6 +23,38 @@ def get_db_connection():
 # Define timezone (Asia/Singapore)
 local_tz = pytz.timezone("Asia/Singapore")
 
+############################################################### ModelState ##############################################################################################################
+class ModelState:
+    def __init__(self, state):
+        self.state = state
+
+    @staticmethod
+    def get_state():
+        """Get the current state of the ML model"""
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM ModelState")
+        result = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        if result:
+            return json.loads(result['state']) if isinstance(result['state'], str) else result['state']
+        return None
+
+    @staticmethod
+    def update_state(new_state):
+        """Get the current state of the ML model"""
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary=True)
+        state_json = json.dumps(new_state) if not isinstance(new_state, str) else new_state
+        cursor.execute("UPDATE ModelState SET state=(%s) WHERE id = 1;",
+        (state_json,))
+        connection.commit()
+        print(f"Successfully updated model state")
+        cursor.close()
+        connection.close()
+        return
+
 ############################################################### Login ##############################################################################################################
 class User:
     def __init__(self, id, email, password):
@@ -216,7 +248,7 @@ class Document:
             summary = f"This document's classification has been manually overwritten based on the following feedback: \n\n{feedback}"
             # Add corrected category and feedback by document ID
             cursor.execute(
-                "UPDATE documents SET user_corrected_category = NULL, feedback = NULL, classification = (%s), confidence = 1, summary = (%s) WHERE id = (%s);", 
+                "UPDATE documents SET user_corrected_category = NULL, feedback = NULL, classification = (%s), confidence = 1 summary = (%s) WHERE id = (%s);", 
                 (corrected_topic, summary, doc_id,))
             connection.commit()
             print(f"Successfully corrected document with ID {doc_id} to {corrected_topic} category with reason: {feedback}")

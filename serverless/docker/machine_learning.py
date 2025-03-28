@@ -410,10 +410,6 @@ class ModelManager:
 
         return
 
-            
-        
-
-
     def classify_document(self, file_path: str, filename: str) -> tuple[str, str, float, str, str]:
         """
         Classify a document using the uploaded test document.

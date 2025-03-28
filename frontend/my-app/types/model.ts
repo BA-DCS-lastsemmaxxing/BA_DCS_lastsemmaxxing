@@ -4,3 +4,9 @@ export interface Topic {
   created_at: string;
   status: 'Pending' | 'Completed' | 'Failed';
 } 
+
+export interface ModelState {
+    isRetraining: boolean;
+    type: string;
+    startedAt: Date;
+}

@@ -1,11 +1,30 @@
-import json, traceback
-from models import Document, Topic
+import json, traceback, datetime
+from models import ModelState, Topic
 from machine_learning import *
 
 def lambda_handler(event, context):
     try:
         print("Add new topic triggered")
         print("Event: ", event, flush=True)
+        state = ModelState.get_state()
+        print("Model state: ", state)
+        if state["isRetraining"]:
+            return {
+                "statusCode": 400,
+                "headers": { 
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS, GET, POST, PUT, DELETE",
+                    "Access-Control-Allow-Headers": "Content-Type, Authorization"
+                },
+                "body": json.dumps({"message": "Model is undergoing training, aborting new topic request..."})
+            }
+        ModelState.update_state({
+            "isRetraining": True,
+            "startedAt": datetime.datetime.now().isoformat(),
+            "type": "Adding New Topic"
+        })
+        record = event.get("Records")[0]
         record = event["Records"][0]
         body = json.loads(record["body"])
         file_info = body.get("files")
@@ -18,6 +37,7 @@ def lambda_handler(event, context):
         Topic.insert_topic(new_topic)
         modelManager.add_new_topic(new_topic,files, documentProcessor)
         Topic.update_topic_status(new_topic, "Completed")
+        ModelState.update_state({"isRetraining": False})
     except Exception as e: 
         print("lambda handler failed with exception: " + str(e),flush=True)
         traceback.print_exc()
@@ -26,7 +46,7 @@ def lambda_handler(event, context):
             Topic.delete_topic(new_topic)
         except Exception as e:
             print("Error deleting topic from RDS: " + str(e))
-
+        ModelState.update_state({"isRetraining": False})
         return {
         "statusCode": 500,
         "headers": { 
