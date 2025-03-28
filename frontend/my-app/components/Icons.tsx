@@ -6,6 +6,8 @@ import{
     Download,
     Loader,
     ChevronUp,
+    LucideRefreshCw,
+    LucideAlertTriangle,
 } from "lucide-react";
 
 export const Icons: any = {
@@ -15,5 +17,7 @@ export const Icons: any = {
     ChevronUp: ChevronUp,
     NewDocument: FilePlus2,
     Download: Download,
-    Loader: Loader
+    Loader: Loader,
+    RefreshCw: LucideRefreshCw,
+    AlertTriangle: LucideAlertTriangle, 
 }
