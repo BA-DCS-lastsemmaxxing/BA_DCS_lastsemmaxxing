@@ -175,7 +175,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                 <Badge className="bg-green-500 text-white">{document.classification}</Badge>
               </div>
 
-              {isLLMBased && <p className="text-gray-600">{document.summary?.replace(/\n/g, '<br />')}</p>}
+              {isLLMBased && <p className="text-gray-600 whitespace-pre-line">{document.summary}</p>}
 
               {document.confidence && isRuleBased && (
                 <div className="flex items-center gap-2 text-gray-600">
