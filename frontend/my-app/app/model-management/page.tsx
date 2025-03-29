@@ -19,12 +19,6 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { TopicFileUpload } from '@/components/model-management/TopicFileUpload';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Icons } from '@/components/Icons';
 
 // Component to display when model is retraining
@@ -242,7 +236,7 @@ export default function ModelManagement() {
         fetchTopics();
         fetchCorrectedDocuments();
         setIsLoading(false);
-      }, 10000);
+      }, 8000);
 
     } catch (error) {
       console.error("Error starting retraining:", error);
@@ -354,7 +348,7 @@ export default function ModelManagement() {
       setTimeout(() => {
         fetchTopics();
         setIsLoading(false);
-      }, 10000);
+      }, 8000);
       
     }
   };
