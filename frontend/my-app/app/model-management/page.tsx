@@ -242,8 +242,8 @@ export default function ModelManagement() {
         fetchTopics();
         fetchCorrectedDocuments();
         setIsLoading(false);
-      }, 5000);
-      
+      }, 8000);
+
     } catch (error) {
       console.error("Error starting retraining:", error);
       toast({
@@ -354,7 +354,7 @@ export default function ModelManagement() {
       setTimeout(() => {
         fetchTopics();
         setIsLoading(false);
-      }, 5000);
+      }, 8000);
       
     }
   };
