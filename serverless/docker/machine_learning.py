@@ -431,11 +431,11 @@ class ModelManager:
             return self.rf_model.predict_proba(self.tfidf_vectorizer.transform(texts))
 
         exp = explainer.explain_instance(text, predict_proba, num_features=len(self.tfidf_vectorizer.get_feature_names_out()))
-        print("Top words (features) influencing the prediction with their LIME scores:")
+        explanation_text = f"Top words (features) influencing the prediction with their LIME scores:\n"
         sorted_features = sorted(exp.as_list(), key=lambda x: abs(x[1]), reverse=True)
         for feature, value in sorted_features[:5]:
-            print(f"{feature}: {value}")
-        return exp
+            explanation_text += (f"\n{feature}: {value}")
+        return explanation_text
 
     def classify_document(self, file_path: str, filename: str) -> tuple[str, str, float, str, str]:
         """
