@@ -119,6 +119,24 @@ function ModelRetrainingState({ modelState }: { modelState: ModelState }) {
   );
 }
 
+// Empty state component for when no documents have feedback
+function NoFeedbackDocuments() {
+  return (
+    <div className="text-center py-12 bg-white rounded-lg shadow">
+      <div className="mx-auto flex justify-center">
+        <Icons.FileX className="h-12 w-12 text-gray-400" />
+      </div>
+      <h3 className="mt-2 text-lg font-medium text-gray-900">No feedback documents</h3>
+      <p className="mt-1 text-sm text-gray-500">
+        There are no documents with user feedback available for retraining.
+      </p>
+      <p className="mt-1 text-sm text-gray-500">
+        When users provide feedback on document classifications, they will appear here.
+      </p>
+    </div>
+  );
+}
+
 export default function ModelManagement() {
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -133,15 +151,15 @@ export default function ModelManagement() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [topicFiles, setTopicFiles] = useState<File[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAddingTopic, setIsAddingTopic] = useState(false);
 
   const fetchTopics = async () => {
     try {
       const response = await getAllTopics();
-      console.log(" fetch topics Response: ", response);
-      if ('state' in response){
-        setModelState(response.state)
-      }else{
-        console.log("Topics: ", response.topics);
+      console.log("Fetch topics response:", response);
+      if ('state' in response) {
+        setModelState(response.state);
+      } else {
         setTopics(response.topics);
         setModelState(null); // Clear model state if we get topics
       }
@@ -153,11 +171,10 @@ export default function ModelManagement() {
   const fetchCorrectedDocuments = async () => {
     try {
       const response = await getCorrectedDocuments();
-      console.log(" fetch topics Response: ", response);
-      if ('state' in response){
-        setModelState(response.state)
-      }else{
-        console.log("Corrected Documents: ", response.documents);
+      console.log("Fetch documents response:", response);
+      if ('state' in response) {
+        setModelState(response.state);
+      } else {
         setDocuments(response.documents);
         setModelState(null); // Clear model state if we get documents
       }
@@ -262,64 +279,82 @@ export default function ModelManagement() {
       return;
     }
     if (!topicFiles) {
-        toast({
-            title: "Sample Documents Required",
-            description: "Please upload some files relevant to the new topic.",
-            variant: "destructive"
-          });
-        return;
+      toast({
+        title: "Sample Documents Required",
+        description: "Please upload some files relevant to the new topic.",
+        variant: "destructive"
+      });
+      return;
     }
-    console.log(
-        "topic files:", topicFiles
-    )
-    try{
-        // Get presigned URLs for each file
-        const uploadDetails = await Promise.all(topicFiles.map(file => fetchUploadUrl(file.type ,file.name, true)));
-        console.log("upload details: ", uploadDetails);
-        
-        const payload = uploadDetails.map((details, index) => ({
-            file_id: details.file_id,
-            file_name: topicFiles[index].name
-        }));
+    if (topicFiles.length < 2) {
+      toast({
+        title: "Sample Documents Required",
+        description: "Please upload at least 2 sample documents.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setIsAddingTopic(true);
+    
+    try {
+      // Get presigned URLs for each file
+      const uploadDetails = await Promise.all(topicFiles.map(file => fetchUploadUrl(file.type, file.name, true)));
+      console.log("upload details: ", uploadDetails);
+      
+      const payload = uploadDetails.map((details, index) => ({
+        file_id: details.file_id,
+        file_name: topicFiles[index].name
+      }));
 
-        // Upload files to S3 using presigned URLs
-        await Promise.all(uploadDetails.map((details, index) => {
-        console.log("Current file: ", topicFiles[index])
+      // Upload files to S3 using presigned URLs
+      await Promise.all(uploadDetails.map((details, index) => {
+        console.log("Current file: ", topicFiles[index]);
         return fetch(details.upload_url, {
-            method: 'PUT',
-            body: topicFiles?.[index],
-            headers: {
+          method: 'PUT',
+          body: topicFiles?.[index],
+          headers: {
             'Content-Type': topicFiles?.[index]?.type || 'application/octet-stream'
-            }
+          }
         });
-        }));
-        
-        const response = await addNewTopic(newTopicName, payload);
-        toast({
+      }));
+      
+      const response = await addNewTopic(newTopicName, payload);
+      toast({
         title: "Topic creation triggered",
         description: (
-            <>
-              Creating topic: {newTopicName}
-              <br />
-              This may take a few moments.
-            </>
-          ),
+          <>
+            Creating topic: {newTopicName}
+            <br />
+            This may take a few moments.
+          </>
+        ),
         variant: "success"
-        });
-    } catch (err){
-        console.log("Error creating topic: ", err);
-        toast({
-            title: "Error creating topic",
-            description: `${err}`,
-            variant: "destructive"
-            });
-    } finally{
-        setIsAddTopicDialogOpen(false);
-        setNewTopicName('');
-        setTopicFiles(null);
-        fetchTopics();
+      });
+    } catch (err) {
+      console.log("Error creating topic: ", err);
+      toast({
+        title: "Error creating topic",
+        description: `${err}`,
+        variant: "destructive"
+      });
+    } finally {
+      setIsAddingTopic(false);
+      setIsAddTopicDialogOpen(false);
+      setNewTopicName('');
+      setTopicFiles(null);
+      fetchTopics();
     }
-    };
+  };
+
+  // Show loading state while initial data is being fetched
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
+        <Icons.Loader className="h-8 w-8 animate-spin text-blue-600" />
+      </div>
+    );
+  }
 
   // If model is retraining, show the retraining state UI
   if (modelState && modelState.isRetraining) {
@@ -354,70 +389,78 @@ export default function ModelManagement() {
                 </Button>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="min-w-full">
-                  <thead>
-                    <tr className="bg-gray-50">
-                      <th className="px-2 py-3 text-left">
-                        <Checkbox 
-                          checked={selectedDocuments.size === documents.length}
-                          onCheckedChange={handleSelectAll}
-                        />
-                      </th>
-                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[15%]">
-                        Document Name
-                      </th>
-                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
-                        Original Topic
-                      </th>
-                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
-                        Corrected Topic
-                      </th>
-                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
-                        Uploaded At
-                      </th>
-                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[8%]">
-                        Confidence
-                      </th>
-                      <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[40%]">
-                        Justification
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {documents.map((doc) => (
-                      <tr key={doc.id}>
-                        <td className="px-2 py-4">
+              {documents.length === 0 ? (
+                <NoFeedbackDocuments />
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full">
+                    <thead>
+                      <tr className="bg-gray-50">
+                        <th className="px-2 py-3 text-left">
                           <Checkbox 
-                            checked={selectedDocuments.has(doc.id)}
-                            onCheckedChange={() => handleDocumentSelect(doc.id)}
+                            checked={selectedDocuments.size === documents.length}
+                            onCheckedChange={handleSelectAll}
                           />
-                        </td>
-                        <td className="px-3 py-4 text-sm">
-                          <div className="truncate max-w-[200px]" title={doc.name}>
-                            {doc.name}
-                          </div>
-                        </td>
-                        <td className="px-3 py-4 text-sm">
-                          {doc.classification}
-                        </td>
-                        <td className="px-3 py-4 text-sm">
-                          {doc.user_corrected_category}
-                        </td>
-                        <td className="px-3 py-4 text-sm">
-                          {doc.uploadedAt}
-                        </td>
-                        <td className="px-3 py-4 text-sm">
-                          {doc.confidence ? (doc.confidence * 100).toFixed(1) : "-"}%
-                        </td>
-                        <td className="px-3 py-4 max-w-md">
-                          {doc.feedback ? (<TruncatedText text={doc.feedback}/>) : "-"} 
-                        </td>
+                        </th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[15%]">
+                          Document Name
+                        </th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
+                          Original Topic
+                        </th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
+                          Corrected Topic
+                        </th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
+                          Uploaded At
+                        </th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[8%]">
+                          Confidence
+                        </th>
+                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[40%]">
+                          Justification
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {documents.map((doc) => (
+                        <tr key={doc.id}>
+                          <td className="px-2 py-4">
+                            <Checkbox 
+                              checked={selectedDocuments.has(doc.id)}
+                              onCheckedChange={() => handleDocumentSelect(doc.id)}
+                            />
+                          </td>
+                          <td className="px-3 py-4 text-sm">
+                            <div className="truncate max-w-[200px]" title={doc.name}>
+                              {doc.name}
+                            </div>
+                          </td>
+                          <td className="px-3 py-4 text-sm">
+                            {doc.classification}
+                          </td>
+                          <td className="px-3 py-4 text-sm">
+                            {doc.user_corrected_category}
+                          </td>
+                          <td className="px-3 py-4 text-sm">
+                            {doc.uploadedAt}
+                          </td>
+                          <td className="px-3 py-4 text-sm">
+                            {doc.confidence ? (doc.confidence * 100).toFixed(1) : "-"}%
+                          </td>
+                          <td className="px-3 py-4 max-w-md">
+                            {doc.feedback ? (
+                              <TruncatedText text={doc.feedback} />
+                            ) : (
+                              <span className="text-gray-400 italic">No justification provided</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </TabsContent>
 
@@ -510,10 +553,12 @@ export default function ModelManagement() {
           <DialogHeader>
             <DialogTitle>Delete Topic</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the topic &quot;{topicToDelete?.topic_name}&quot;? 
-              This action cannot be undone.
+              Are you sure you want to delete this topic? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
+          <p className="py-4">
+            Topic: <span className="font-medium">{topicToDelete?.topic_name}</span>
+          </p>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
               Cancel
@@ -526,7 +571,9 @@ export default function ModelManagement() {
       </Dialog>
 
       {/* Add Topic Dialog */}
-      <Dialog open={isAddTopicDialogOpen} onOpenChange={setIsAddTopicDialogOpen}>
+      <Dialog open={isAddTopicDialogOpen} onOpenChange={(open) => {
+        if (!isAddingTopic) setIsAddTopicDialogOpen(open);
+      }}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Add New Topic</DialogTitle>
@@ -542,6 +589,7 @@ export default function ModelManagement() {
                 placeholder="Enter topic name"
                 value={newTopicName}
                 onChange={(e) => setNewTopicName(e.target.value)}
+                disabled={isAddingTopic}
               />
             </div>
             
@@ -552,11 +600,25 @@ export default function ModelManagement() {
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsAddTopicDialogOpen(false)}>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsAddTopicDialogOpen(false)}
+              disabled={isAddingTopic}
+            >
               Cancel
             </Button>
-            <Button onClick={handleAddTopic}>
-              Create Topic
+            <Button 
+              onClick={handleAddTopic}
+              disabled={isAddingTopic}
+            >
+              {isAddingTopic ? (
+                <>
+                  <Icons.Loader className="mr-2 h-4 w-4 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                'Create Topic'
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -565,6 +627,7 @@ export default function ModelManagement() {
   );
 }
 
+// TruncatedText component
 function TruncatedText({ text, maxLength = 50 }: { text: string, maxLength?: number }) {
   const [isExpanded, setIsExpanded] = useState(false);
   
