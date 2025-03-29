@@ -180,8 +180,6 @@ export default function ModelManagement() {
       }
     } catch (error) {
       console.error("Error fetching corrected documents:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
   
@@ -189,6 +187,7 @@ export default function ModelManagement() {
     setIsLoading(true);
     fetchTopics();
     fetchCorrectedDocuments();
+    setIsLoading(false);
   }, []);
 
   const handleDocumentSelect = (docId: string) => {
@@ -218,7 +217,7 @@ export default function ModelManagement() {
       });
       return;
     }
-    
+    setIsLoading(true);
     // Filter documents to only include those that are selected
     const selectedDocs = documents.filter(doc => selectedDocuments.has(doc.id));
     
@@ -227,13 +226,24 @@ export default function ModelManagement() {
     try {
       // Call your API with the selected documents
       const response = await feedbackRetraining(selectedDocs);
-      
       toast({
         title: "Retraining started",
-        description: `Started retraining with ${selectedDocuments.size} documents.`,
+        description: (
+            <>
+              Started retraining with ${selectedDocuments.size} documents.
+              <br />
+              This may take a few moments.
+            </>
+          ),
         variant: "success"
       });
-      
+      setTimeout(() => {
+        
+
+        fetchTopics();
+        fetchCorrectedDocuments();
+      }, 5000);
+      setIsLoading(false);
       // Refresh the page to show retraining state
       fetchTopics();
       fetchCorrectedDocuments();
@@ -339,11 +349,17 @@ export default function ModelManagement() {
         variant: "destructive"
       });
     } finally {
+      setIsLoading(true);
       setIsAddingTopic(false);
       setIsAddTopicDialogOpen(false);
       setNewTopicName('');
       setTopicFiles(null);
-      fetchTopics();
+      setTimeout(() => {
+        
+
+        fetchTopics();
+      }, 5000);
+      setIsLoading(false);
     }
   };
 
