@@ -17,6 +17,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.calibration import CalibratedClassifierCV
 from imblearn.over_sampling import SMOTE
 from imblearn.combine import SMOTEENN
+import lime
+from lime.lime_text import LimeTextExplainer
 
 # AWS credentials
 aws_region = os.environ.get("REGION")
@@ -409,6 +411,31 @@ class ModelManager:
         self.retrain_model()
 
         return
+    def explain_prediction(self, text: str):
+        # Convert the input text into a TF-IDF vector (dense format)
+        text_tfidf = self.tfidf_vectorizer.transform([text])
+        dense_vector = text_tfidf.toarray()  # shape: (1, n_features)
+        feature_names = self.tfidf_vectorizer.get_feature_names_out()
+        if len(feature_names) != dense_vector.shape[1]:
+            feature_names = [f"f{i}" for i in range(dense_vector.shape[1])]
+        
+        # Get baseline prediction probability and predicted class.
+        proba = self.rf_model.predict_proba(dense_vector)[0]
+        predicted_class = self.rf_model.predict(dense_vector)[0]
+        class_index = list(self.rf_model.classes_).index(predicted_class)
+        baseline_prob = proba[class_index]
+
+        explainer = LimeTextExplainer(class_names=self.rf_model.classes_)
+
+        def predict_proba(texts):
+            return self.rf_model.predict_proba(self.tfidf_vectorizer.transform(texts))
+
+        exp = explainer.explain_instance(text, predict_proba, num_features=len(self.tfidf_vectorizer.get_feature_names_out()))
+        print("Top words (features) influencing the prediction with their LIME scores:")
+        sorted_features = sorted(exp.as_list(), key=lambda x: abs(x[1]), reverse=True)
+        for feature, value in sorted_features[:5]:
+            print(f"{feature}: {value}")
+        return exp
 
     def classify_document(self, file_path: str, filename: str) -> tuple[str, str, float, str, str]:
         """
@@ -421,15 +448,17 @@ class ModelManager:
             content = f.read()
 
         sampled_text = self.extract_intro_middle_conclusion(content)
+        
         predicted_topic, confidence = self.rf_classify_document(sampled_text)
 
         if predicted_topic:
-            print(f"Random Forest Classification: {predicted_topic} (Confidence: {confidence:.2f})")
-            return filename, predicted_topic, confidence, "-", "Random Forest Classification"
+            explanation = self.model_manager.explain_prediction(sampled_text)
+            print(f"Random Forest Classification: {predicted_topic} (Confidence: {confidence:.2f}) (Explanation: {explanation})")
+            return filename, predicted_topic, confidence, explanation, "ML-based"
 
-        predicted_topic, explanation = self.evaluate_topic_with_llama(sampled_text)
+        predicted_topic, explanation, confidence = self.evaluate_topic_with_llama(sampled_text)
         print(f"LLM Classification: {predicted_topic}")
-        return filename, predicted_topic, -1, explanation, "LLM Classification"
+        return filename, predicted_topic, confidence, explanation, "LLM-based"
 
     def rf_classify_document(self, text: str, confidence_threshold: float = 0.99) -> tuple[str, float]:
         text_tfidf = self.tfidf_vectorizer.transform([text])
@@ -471,13 +500,14 @@ class ModelManager:
         try:
             prompt = f"""
             Analyze the following document sample and classify it into only one of these topics: {self.unique_topics_str}.
-            After explaining your reasoning, clearly state the final topic at the end.
+            After explaining your reasoning, clearly state the final topic and the confidence score at the end.
             
             Document:
             {text}
             
             Explanation: <Your explanation>
             Final Topic: <One of the topics from the list>
+            Confidence Score: <0 to 100%>
             """
             formatted_prompt = f"""
             <|begin_of_text|>
@@ -497,9 +527,15 @@ class ModelManager:
             )
             response_body = json.loads(response['body'].read())
             response_text = response_body.get("generation", "").strip()
-            match = re.search(r"Final Topic:\s*(.+)", response_text, re.IGNORECASE)
+            match = re.search(r"Final Topic:\s*([^\n]+?)\s*(?:\n|$)", response_text, re.IGNORECASE)
             predicted_topic = match.group(1).strip() if match else "Unknown"
-            return predicted_topic, response_text
+            match = re.search(r"Confidence Score:\s*(\d{1,3})\s*%?", response_text, re.IGNORECASE)
+            try:
+                confidence = int(match.group(1)) if match else 0
+                confidence = max(0, min(100, confidence))  # Clamp to 0-100
+            except (ValueError, AttributeError):
+                confidence = 0
+            return predicted_topic, response_text, confidence
         except Exception as e:
             print(f"Error calling AWS Bedrock API: {e}")
             return "Unknown", "Error occurred during LLM call"

@@ -56,9 +56,6 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   // Check if document has previous feedback
   const hasPreviousFeedback = document.user_corrected_category || document.feedback;
   
-  const isLLMBased = document.summary !== null && document.summary !== undefined;
-  const isRuleBased = document.confidence !== null && document.confidence !== undefined;
-  
   const handleDownload = async () => {
     try {
       setIsDownloading(true);
@@ -170,19 +167,19 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
             <>
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="text-blue-600 border-blue-600">
-                  {isLLMBased ? 'LLM-based' : 'Rule-based'}
+                  {document.classification_type}
                 </Badge>
                 <Badge className="bg-green-500 text-white">{document.classification}</Badge>
               </div>
 
-              {isLLMBased && <p className="text-gray-600 whitespace-pre-line">{document.summary}</p>}
+              <p className="text-gray-600 whitespace-pre-line">{document.summary}</p>
 
-              {document.confidence && isRuleBased && (
-                <div className="flex items-center gap-2 text-gray-600">
-                  <span>Confidence Score:</span>
-                  <span className="font-medium">{(document.confidence * 100).toFixed(1)}%</span>
-                </div>
-              )}
+    
+              <div className="flex items-center gap-2 text-gray-600">
+                <span>Confidence Score:</span>
+                <span className="font-medium">{document.confidence ? (document.confidence * 100).toFixed(1) : null}%</span>
+              </div>
+              
 
               <div className="flex flex-wrap gap-2">
                 {document.topics?.map((topic) => (

@@ -9,4 +9,5 @@ export interface Document {
   confidence?: number;
   user_corrected_category?: string;
   feedback?: string;
+  classification_type: string;
 } 

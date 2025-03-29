@@ -77,7 +77,7 @@ class User:
 
 ############################################################### Document ##############################################################################################################
 class Document:
-    def __init__(self, id, name, uploadedAt, status, summary=None, topics=None, classification=None, confidence=None, user_corrected_category=None, feedback=None):
+    def __init__(self, id, name, uploadedAt, status, classification_type, summary=None, topics=None, classification=None, confidence=None, user_corrected_category=None, feedback=None):
         self.id = id
         self.name = name
         self.uploadedAt = uploadedAt
@@ -88,6 +88,7 @@ class Document:
         self.confidence = confidence
         self.user_corrected_category = user_corrected_category
         self.feedback = feedback
+        self.classification_type = classification_type
 
     @staticmethod
     def get_documents(query=None):
@@ -118,7 +119,8 @@ class Document:
                     classification=row["classification"] if row['classification'] else None,
                     confidence = float(row["confidence"]) if row["confidence"] else None,
                     user_corrected_category=row["user_corrected_category"],
-                    feedback=row["feedback"]
+                    feedback=row["feedback"],
+                    classification_type=row["classification_type"]
                 ).__dict__
             )
 
@@ -153,7 +155,8 @@ class Document:
                     classification=row["classification"] if row['classification'] else None,
                     confidence = float(row["confidence"]) if row["confidence"] else None,
                     user_corrected_category=row["user_corrected_category"],
-                    feedback=row["feedback"]
+                    feedback=row["feedback"],
+                    classification_type=row["classification_type"]
                 ).__dict__
             )
 
@@ -172,7 +175,7 @@ class Document:
         current_time = datetime.now(local_tz)
 
         cursor.execute(
-            "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence) VALUES (%s, %s, %s, 'processing' , null, null)",
+            "INSERT INTO documents (id, name, uploadedAt, status, summary, confidence, classification_type) VALUES (%s, %s, %s, 'processing' , null, null, null)",
             (fileid, filename, current_time)
         )
 
@@ -182,14 +185,14 @@ class Document:
         return
 
     @staticmethod
-    def update_file_classification(file_id, summary, classification, confidence):
+    def update_file_classification(file_id, summary, classification, confidence, classification_type):
         """Store document metadata in the database with updated classification and summary."""
         print("file_id type: ", type(file_id),flush=True)
         connection = get_db_connection()
         cursor = connection.cursor()
         cursor.execute(
-            "UPDATE documents SET summary = %s, classification = %s, confidence = %s, status='completed' WHERE id = %s;",
-            (summary, classification, confidence, file_id)
+            "UPDATE documents SET summary = %s, classification = %s, confidence = %s, status='completed', classification_type = %s WHERE id = %s;",
+            (summary, classification, confidence, classification_type, file_id,)
         )
         connection.commit()
         cursor.close()
