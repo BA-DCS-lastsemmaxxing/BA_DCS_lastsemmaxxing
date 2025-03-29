@@ -26,6 +26,20 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Icons } from '@/components/Icons';
+import { useRouter } from 'next/navigation';
+
+// Loading component to show during retraining actions
+function LoadingState({ message }: { message: string }) {
+  return (
+    <div className="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50">
+      <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center">
+        <Icons.Loader className="h-12 w-12 text-blue-600 animate-spin mb-4" />
+        <h3 className="text-xl font-medium text-gray-900 mb-2">Processing...</h3>
+        <p className="text-gray-600">{message}</p>
+      </div>
+    </div>
+  );
+}
 
 // Component to display when model is retraining
 function ModelRetrainingState({ modelState }: { modelState: ModelState }) {
@@ -139,57 +153,73 @@ function NoFeedbackDocuments() {
 
 export default function ModelManagement() {
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(new Set());
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [topicToDelete, setTopicToDelete] = useState<Topic | null>(null);
-  const [isAddTopicDialogOpen, setIsAddTopicDialogOpen] = useState(false);
-  const [newTopicName, setNewTopicName] = useState('');
-  const { toast } = useToast();
-  
-  // Initialize modelState with null instead of undefined
-  const [modelState, setModelState] = useState<ModelState | null>(null);
   const [documents, setDocuments] = useState<Document[]>([]);
   const [topics, setTopics] = useState<Topic[]>([]);
-  const [topicFiles, setTopicFiles] = useState<File[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [modelState, setModelState] = useState<ModelState | null>(null);
+  const [isAddTopicDialogOpen, setIsAddTopicDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [newTopicName, setNewTopicName] = useState('');
+  const [topicFiles, setTopicFiles] = useState<File[]>([]);
+  const [topicToDelete, setTopicToDelete] = useState<Topic | null>(null);
   const [isAddingTopic, setIsAddingTopic] = useState(false);
+  const [activeTab, setActiveTab] = useState("retraining");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [processingMessage, setProcessingMessage] = useState("");
+  
+  const { toast } = useToast();
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetchTopics();
+    fetchCorrectedDocuments();
+    setIsLoading(false)
+  }, []);
 
   const fetchTopics = async () => {
     try {
       const response = await getAllTopics();
-      console.log("Fetch topics response:", response);
+      
+      // Check if the model is in retraining state
       if ('state' in response) {
         setModelState(response.state);
+        setTopics([]);
       } else {
+        setModelState(null);
         setTopics(response.topics);
-        setModelState(null); // Clear model state if we get topics
       }
     } catch (error) {
       console.error("Error fetching topics:", error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch topics. Please try again.",
+        variant: "destructive"
+      });
     }
   };
-  
+
   const fetchCorrectedDocuments = async () => {
     try {
       const response = await getCorrectedDocuments();
-      console.log("Fetch documents response:", response);
+      
+      // Check if the model is in retraining state
       if ('state' in response) {
         setModelState(response.state);
+        setDocuments([]);
       } else {
-        setDocuments(response.documents);
-        setModelState(null); // Clear model state if we get documents
+        setModelState(null);
+        setDocuments(response.documents || []);
       }
     } catch (error) {
       console.error("Error fetching corrected documents:", error);
-    } finally {
-      setIsLoading(false);
+      toast({
+        title: "Error",
+        description: "Failed to fetch documents. Please try again.",
+        variant: "destructive"
+      });
     }
   };
-  
-  useEffect(() => {
-    setIsLoading(true);
-    fetchTopics();
-    fetchCorrectedDocuments();
-  }, []);
 
   const handleDocumentSelect = (docId: string) => {
     const newSelected = new Set(selectedDocuments);
@@ -209,6 +239,128 @@ export default function ModelManagement() {
     }
   };
 
+  const handleAddTopic = async () => {
+    if (!newTopicName.trim()) {
+      toast({
+        title: "Topic name required",
+        description: "Please enter a name for the new topic.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (topicFiles.length === 0) {
+      toast({
+        title: "Sample documents required",
+        description: "Please upload at least one sample document for training.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      setIsAddingTopic(true);
+      
+      // Upload files and get URLs
+      const uploadPromises = topicFiles.map(async (file) => {
+        const uploadUrlResponse = await fetchUploadUrl(file.type, file.name, true);
+        const uploadUrl = uploadUrlResponse.uploadUrl;
+        
+        // Upload the file to the provided URL
+        await fetch(uploadUrl, {
+          method: 'PUT',
+          body: file,
+          headers: {
+            'Content-Type': file.type,
+          },
+        });
+        
+        return uploadUrlResponse.fileKey;
+      });
+      
+      const fileKeys = await Promise.all(uploadPromises);
+      
+      // Create the new topic
+      const response = await addNewTopic(newTopicName, fileKeys);
+      
+      toast({
+        title: "Topic creation initiated",
+        description: "Your new topic is being created. This may take a few minutes.",
+        variant: "success"
+      });
+      
+      // Close the dialog and reset form
+      setIsAddTopicDialogOpen(false);
+      setNewTopicName('');
+      setTopicFiles([]);
+      
+      // Show processing state and redirect to documents tab
+      setProcessingMessage("Creating new topic. Please wait...");
+      setIsProcessing(true);
+      
+      // Wait for a few seconds to give the backend time to update
+      setTimeout(() => {
+        setIsProcessing(false);
+        fetchTopics();
+        fetchCorrectedDocuments();
+        router.push('/dashboard');
+      }, 3000);
+      
+    } catch (error) {
+      console.error("Error adding topic:", error);
+      toast({
+        title: "Topic creation failed",
+        description: "There was an error creating the new topic.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsAddingTopic(false);
+    }
+  };
+
+  const handleDeleteTopic = async () => {
+    if (!topicToDelete) return;
+    
+    try {
+      setIsDeleteDialogOpen(false);
+      
+      // Show processing state
+      setProcessingMessage("Removing topic. Please wait...");
+      setIsProcessing(true);
+      
+      const response = await removeTopic(topicToDelete.topic_name);
+      
+      toast({
+        title: "Topic deletion triggered",
+        description: (
+          <>
+            Deleting topic: {topicToDelete.topic_name}
+            <br />
+            This may take a few moments.
+          </>
+        ),
+        variant: "success"
+      });
+      
+      // Wait for a few seconds to give the backend time to update
+      setTimeout(() => {
+        setIsProcessing(false);
+        fetchTopics();
+        fetchCorrectedDocuments();
+        router.push('/dashboard');
+      }, 3000);
+      
+    } catch (error) {
+      setIsProcessing(false);
+      console.error("Error deleting topic:", error);
+      toast({
+        title: "Topic deletion failed",
+        description: "There was an error deleting the topic.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const handleStartRetraining = async () => {
     if (selectedDocuments.size === 0) {
       toast({
@@ -222,9 +374,11 @@ export default function ModelManagement() {
     // Filter documents to only include those that are selected
     const selectedDocs = documents.filter(doc => selectedDocuments.has(doc.id));
     
-    console.log("Retraining documents: ", selectedDocs);
-    
     try {
+      // Show processing state
+      setProcessingMessage("Starting model retraining. Please wait...");
+      setIsProcessing(true);
+      
       // Call your API with the selected documents
       const response = await feedbackRetraining(selectedDocs);
       
@@ -234,10 +388,16 @@ export default function ModelManagement() {
         variant: "success"
       });
       
-      // Refresh the page to show retraining state
-      fetchTopics();
-      fetchCorrectedDocuments();
+      // Wait for a few seconds to give the backend time to update
+      setTimeout(() => {
+        setIsProcessing(false);
+        fetchTopics();
+        fetchCorrectedDocuments();
+        router.push('/dashboard');
+      }, 3000);
+      
     } catch (error) {
+      setIsProcessing(false);
       console.error("Error starting retraining:", error);
       toast({
         title: "Retraining failed",
@@ -247,278 +407,182 @@ export default function ModelManagement() {
     }
   };
 
-  const handleDeleteTopic = async () => {
-    if (!topicToDelete) return;
-    const response = await removeTopic(topicToDelete.topic_name);
-    // Add your delete topic API call here
-    console.log("Delete topic response: ", response);
-    toast({
-      title: "Topic deletion triggered",
-      description: (
-        <>
-          Deleting topic: {topicToDelete.topic_name}
-          <br />
-          This may take a few moments.
-        </>
-      ),
-      variant: "success"
-    });
-    
-    setIsDeleteDialogOpen(false);
-    setTopicToDelete(null);
-    fetchTopics();
-  };
-
-  const handleAddTopic = async () => {
-    if (!newTopicName.trim()) {
-      toast({
-        title: "Invalid topic name",
-        description: "Please enter a valid topic name.",
-        variant: "destructive"
-      });
-      return;
-    }
-    if (!topicFiles) {
-      toast({
-        title: "Sample Documents Required",
-        description: "Please upload some files relevant to the new topic.",
-        variant: "destructive"
-      });
-      return;
-    }
-    if (topicFiles.length < 2) {
-      toast({
-        title: "Sample Documents Required",
-        description: "Please upload at least 2 sample documents.",
-        variant: "destructive"
-      });
-      return;
-    }
-    
-    setIsAddingTopic(true);
-    
-    try {
-      // Get presigned URLs for each file
-      const uploadDetails = await Promise.all(topicFiles.map(file => fetchUploadUrl(file.type, file.name, true)));
-      console.log("upload details: ", uploadDetails);
-      
-      const payload = uploadDetails.map((details, index) => ({
-        file_id: details.file_id,
-        file_name: topicFiles[index].name
-      }));
-
-      // Upload files to S3 using presigned URLs
-      await Promise.all(uploadDetails.map((details, index) => {
-        console.log("Current file: ", topicFiles[index]);
-        return fetch(details.upload_url, {
-          method: 'PUT',
-          body: topicFiles?.[index],
-          headers: {
-            'Content-Type': topicFiles?.[index]?.type || 'application/octet-stream'
-          }
-        });
-      }));
-      
-      const response = await addNewTopic(newTopicName, payload);
-      toast({
-        title: "Topic creation triggered",
-        description: (
-          <>
-            Creating topic: {newTopicName}
-            <br />
-            This may take a few moments.
-          </>
-        ),
-        variant: "success"
-      });
-    } catch (err) {
-      console.log("Error creating topic: ", err);
-      toast({
-        title: "Error creating topic",
-        description: `${err}`,
-        variant: "destructive"
-      });
-    } finally {
-      setIsAddingTopic(false);
-      setIsAddTopicDialogOpen(false);
-      setNewTopicName('');
-      setTopicFiles(null);
-      fetchTopics();
-    }
-  };
-
-  // Show loading state while initial data is being fetched
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
-        <Icons.Loader className="h-8 w-8 animate-spin text-blue-600" />
-      </div>
-    );
-  }
-
   // If model is retraining, show the retraining state UI
   if (modelState && modelState.isRetraining) {
     return <ModelRetrainingState modelState={modelState} />;
   }
 
-  // Otherwise, show the normal UI
-  return (
-    <div className="h-[calc(100vh-4rem)] bg-gray-100">
-      <div className="bg-white border-b">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold">Model Management</h1>
-        </div>
+  // Show loading state while initial data is being fetched
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[70vh]">
+        <Icons.Loader className="h-8 w-8 text-blue-600 animate-spin" />
       </div>
+    );
+  }
 
-      <div className="max-w-6xl mx-auto px-4 py-6">
-        <Tabs defaultValue="retraining" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="retraining">Retraining</TabsTrigger>
-            <TabsTrigger value="topics">Topic Configuration</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="retraining" className="mt-6">
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold">Documents for Retraining</h2>
-                <Button 
-                  onClick={handleStartRetraining}
-                  disabled={selectedDocuments.size === 0}
-                >
-                  Start Retraining
-                </Button>
-              </div>
-
-              {documents.length === 0 ? (
-                <NoFeedbackDocuments />
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="min-w-full">
-                    <thead>
-                      <tr className="bg-gray-50">
-                        <th className="px-2 py-3 text-left">
-                          <Checkbox 
-                            checked={selectedDocuments.size === documents.length}
-                            onCheckedChange={handleSelectAll}
-                          />
-                        </th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[15%]">
-                          Document Name
-                        </th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
-                          Original Topic
-                        </th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
-                          Corrected Topic
-                        </th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[10%]">
-                          Uploaded At
-                        </th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[8%]">
-                          Confidence
-                        </th>
-                        <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase w-[40%]">
-                          Justification
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {documents.map((doc) => (
-                        <tr key={doc.id}>
-                          <td className="px-2 py-4">
-                            <Checkbox 
-                              checked={selectedDocuments.has(doc.id)}
-                              onCheckedChange={() => handleDocumentSelect(doc.id)}
-                            />
-                          </td>
-                          <td className="px-3 py-4 text-sm">
-                            <div className="truncate max-w-[200px]" title={doc.name}>
-                              {doc.name}
-                            </div>
-                          </td>
-                          <td className="px-3 py-4 text-sm">
-                            {doc.classification}
-                          </td>
-                          <td className="px-3 py-4 text-sm">
-                            {doc.user_corrected_category}
-                          </td>
-                          <td className="px-3 py-4 text-sm">
-                            {doc.uploadedAt}
-                          </td>
-                          <td className="px-3 py-4 text-sm">
-                            {doc.confidence ? (doc.confidence * 100).toFixed(1) : "-"}%
-                          </td>
-                          <td className="px-3 py-4 max-w-md">
-                            {doc.feedback ? (
-                              <TruncatedText text={doc.feedback} />
-                            ) : (
-                              <span className="text-gray-400 italic">No justification provided</span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+  return (
+    <div className="container mx-auto py-8">
+      {isProcessing && <LoadingState message={processingMessage} />}
+      
+      <h1 className="text-2xl font-bold mb-6">Model Management</h1>
+      
+      <Tabs defaultValue="retraining" value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="mb-4">
+          <TabsTrigger value="retraining">Retraining</TabsTrigger>
+          <TabsTrigger value="topics">Topics</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="retraining" className="mt-6">
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold">Documents with Feedback</h2>
+              <Button 
+                onClick={handleStartRetraining}
+                disabled={selectedDocuments.size === 0}
+              >
+                Start Retraining
+              </Button>
             </div>
-          </TabsContent>
-
-          <TabsContent value="topics" className="mt-6">
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold">Topics</h2>
-                <Button onClick={() => setIsAddTopicDialogOpen(true)}>
-                  Add New Topic
-                </Button>
+            
+            {documents.length === 0 ? (
+              <div className="text-center py-12">
+                <Icons.FileX className="mx-auto h-12 w-12 text-gray-400" />
+                <h3 className="mt-2 text-lg font-medium text-gray-900">No feedback documents</h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  There are no documents with user feedback available for retraining.
+                </p>
               </div>
-
+            ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full">
                   <thead>
                     <tr className="bg-gray-50">
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Topic Name
+                      <th className="w-[5%] px-3 py-3 text-left">
+                        <Checkbox 
+                          checked={selectedDocuments.size === documents.length && documents.length > 0}
+                          onCheckedChange={handleSelectAll}
+                        />
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Created At
+                      <th className="w-[20%] px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Document Name
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Actions
+                      <th className="w-[10%] px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        ML Classification
+                      </th>
+                      <th className="w-[10%] px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        User Correction
+                      </th>
+                      <th className="w-[10%] px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Date
+                      </th>
+                      <th className="w-[5%] px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Confidence
+                      </th>
+                      <th className="w-[40%] px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                        Justification
                       </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {topics.map((topic) => (
-                      <tr key={topic.topic_name}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {topic.topic_name}
+                    {documents.map((doc) => (
+                      <tr key={doc.id}>
+                        <td className="px-3 py-4">
+                          <Checkbox 
+                            checked={selectedDocuments.has(doc.id)}
+                            onCheckedChange={() => handleDocumentSelect(doc.id)}
+                          />
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {topic.created_at}
+                        <td className="px-3 py-4 text-sm">
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <span className="truncate block max-w-[200px]">{doc.name}</span>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{doc.name}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-red-600 hover:text-red-800 hover:bg-red-50"
-                            onClick={() => {
-                              setTopicToDelete(topic);
-                              setIsDeleteDialogOpen(true);
-                            }}
-                          >
-                            Delete
-                          </Button>
+                        <td className="px-3 py-4 text-sm">
+                          {doc.classification}
+                        </td>
+                        <td className="px-3 py-4 text-sm">
+                          {doc.user_corrected_category}
+                        </td>
+                        <td className="px-3 py-4 text-sm">
+                          {doc.uploadedAt}
+                        </td>
+                        <td className="px-3 py-4 text-sm">
+                          {doc.confidence ? (doc.confidence * 100).toFixed(1) : "-"}%
+                        </td>
+                        <td className="px-3 py-4 max-w-md">
+                          {doc.feedback ? (<TruncatedText text={doc.feedback}/>) : "-"} 
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
+            )}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="topics" className="mt-6">
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold">Topics</h2>
+              <Button onClick={() => setIsAddTopicDialogOpen(true)}>
+                Add New Topic
+              </Button>
             </div>
-          </TabsContent>
-        </Tabs>
-      </div>
+
+            <div className="overflow-x-auto">
+              <table className="min-w-full">
+                <thead>
+                  <tr className="bg-gray-50">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      Topic Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      Created At
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {topics.map((topic) => (
+                    <tr key={topic.topic_name}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {topic.topic_name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {topic.created_at}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                          onClick={() => {
+                            setTopicToDelete(topic);
+                            setIsDeleteDialogOpen(true);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
 
       {/* Delete Topic Dialog */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
@@ -568,7 +632,7 @@ export default function ModelManagement() {
             
             <div className="space-y-2">
               <label className="text-sm font-medium">Sample Documents</label>
-              <TopicFileUpload onFilesChange={setTopicFiles} />
+              <TopicFileUpload onFilesChange={(files) => setTopicFiles(files || [])} />
             </div>
           </div>
 
