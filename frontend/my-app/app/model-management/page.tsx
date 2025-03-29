@@ -230,23 +230,22 @@ export default function ModelManagement() {
         title: "Retraining started",
         description: (
             <>
-              Started retraining with ${selectedDocuments.size} documents.
+              Started retraining with {selectedDocuments.size} document(s).
               <br />
               This may take a few moments.
             </>
           ),
         variant: "success"
       });
-      setTimeout(() => {
-        
-
-        fetchTopics();
-        fetchCorrectedDocuments();
+      // Store timeout ID for cleanup
+    const timeoutId = setTimeout(() => {
+        fetchTopics(),
+        fetchCorrectedDocuments()
+        setIsLoading(false);
       }, 5000);
-      setIsLoading(false);
-      // Refresh the page to show retraining state
-      fetchTopics();
-      fetchCorrectedDocuments();
+  
+      // Cleanup function for component unmount
+      return () => clearTimeout(timeoutId);
     } catch (error) {
       console.error("Error starting retraining:", error);
       toast({
@@ -355,11 +354,10 @@ export default function ModelManagement() {
       setNewTopicName('');
       setTopicFiles(null);
       setTimeout(() => {
-        
-
         fetchTopics();
+        setIsLoading(false);
       }, 5000);
-      setIsLoading(false);
+      
     }
   };
 
