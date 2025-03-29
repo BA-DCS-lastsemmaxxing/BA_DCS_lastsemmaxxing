@@ -237,15 +237,13 @@ export default function ModelManagement() {
           ),
         variant: "success"
       });
-      // Store timeout ID for cleanup
-    const timeoutId = setTimeout(() => {
-        fetchTopics(),
-        fetchCorrectedDocuments()
+
+      setTimeout(() => {
+        fetchTopics();
+        fetchCorrectedDocuments();
         setIsLoading(false);
       }, 5000);
-  
-      // Cleanup function for component unmount
-      return () => clearTimeout(timeoutId);
+      
     } catch (error) {
       console.error("Error starting retraining:", error);
       toast({
