@@ -7,11 +7,10 @@ def lambda_handler(event, context):
     body = {}
     if state["isRetraining"]:
         body["state"] = state
-    else:
-        # Fetch topics from database
-        topics = Topic.get_all_topics()
-        print("topics: ", topics, flush=True)
-        body["topics"] = topics
+    # Fetch topics from database
+    topics = Topic.get_all_topics()
+    print("topics: ", topics, flush=True)
+    body["topics"] = topics
     # Return a valid API Gateway response
     return {
         "statusCode": 200,

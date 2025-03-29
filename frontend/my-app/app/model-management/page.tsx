@@ -478,13 +478,7 @@ export default function ModelManagement() {
                   <thead>
                     <tr className="bg-gray-50">
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Status
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Topic Name
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Document Count
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Created At
@@ -497,38 +491,17 @@ export default function ModelManagement() {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {topics.map((topic) => (
                       <tr key={topic.topic_name}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <div
-                                  className={`h-3 w-3 rounded-full ${
-                                    topic.status === 'Completed'
-                                      ? 'bg-green-500'
-                                      : topic.status === 'Pending'
-                                      ? 'bg-yellow-500'
-                                      : 'bg-red-500'
-                                  }`}
-                                />
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{topic.status}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {topic.topic_name}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {topic.document_count}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           {topic.created_at}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           <Button
-                            variant="destructive"
+                            variant="ghost"
+                            size="sm"
+                            className="text-red-600 hover:text-red-800 hover:bg-red-50"
                             onClick={() => {
                               setTopicToDelete(topic);
                               setIsDeleteDialogOpen(true);

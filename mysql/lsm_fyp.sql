@@ -74,7 +74,6 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `topics`;
 CREATE TABLE `topics` (
     `topic_name` VARCHAR(255) NOT NULL,
-    `document_count` INT DEFAULT 0,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `status` VARCHAR(10) NOT NULL DEFAULT 'Pending',
     PRIMARY KEY (`topic_name`)
