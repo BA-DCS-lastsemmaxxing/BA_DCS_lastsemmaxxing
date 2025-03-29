@@ -531,10 +531,11 @@ class ModelManager:
             predicted_topic = match.group(1).strip() if match else "Unknown"
             match = re.search(r"Confidence Score:\s*(\d{1,3})\s*%?", response_text, re.IGNORECASE)
             try:
-                confidence = int(match.group(1)) if match else 0
+                confidence = int(match.group(1))/100 if match else 0
                 confidence = max(0, min(100, confidence))  # Clamp to 0-100
             except (ValueError, AttributeError):
                 confidence = 0
+            response_text = response_text.split("Final Topic:")[0]
             return predicted_topic, response_text, confidence
         except Exception as e:
             print(f"Error calling AWS Bedrock API: {e}")
