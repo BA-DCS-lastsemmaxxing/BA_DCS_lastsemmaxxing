@@ -253,6 +253,7 @@ export default function ModelManagement() {
     const response = await removeTopic(topicToDelete.topic_name);
     // Add your delete topic API call here
     console.log("Delete topic response: ", response);
+    setIsLoading(true);
     toast({
       title: "Topic deletion triggered",
       description: (
@@ -267,7 +268,10 @@ export default function ModelManagement() {
     
     setIsDeleteDialogOpen(false);
     setTopicToDelete(null);
-    fetchTopics();
+    setTimeout(() => {
+        fetchTopics();
+        setIsLoading(false);
+      }, 8000);
   };
 
   const handleAddTopic = async () => {
