@@ -258,7 +258,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                             Feedback
                           </label>
                           <Textarea
-                            placeholder="Tell us why you agree or disagree..."
+                            placeholder="Tell us why you disagree..."
                             value={feedbackText}
                             onChange={(e) => setFeedbackText(e.target.value)}
                           />

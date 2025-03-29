@@ -67,7 +67,7 @@ const ClassificationFilter: React.FC<ClassificationFilterProps> = ({
     // First pass: create all categories
     topics.forEach(topic => {
       // Check if this is a top-level category
-      if (predefinedCategories[topic]) {
+      if (predefinedCategories[topic] && topic !== "Others") {
         if (!categoryMap[topic]) {
           categoryMap[topic] = {
             name: topic,
@@ -190,17 +190,27 @@ const ClassificationFilter: React.FC<ClassificationFilterProps> = ({
         ) : (
           topicCategories.map(category => (
             <React.Fragment key={category.name}>
-              <optgroup label={category.name}>
-                <option value={category.name}>
-                  &nbsp;&nbsp;{category.emoji} {category.name}
-                </option>
-                
-                {category.children?.map(child => (
-                  <option key={child.name} value={child.name}>
-                    &nbsp;&nbsp;&nbsp;&nbsp;{child.emoji} {child.name}
+              {category.name !== "Others" ? (
+                <optgroup label={category.name}>
+                  <option value={category.name}>
+                    &nbsp;&nbsp;{category.emoji} {category.name}
                   </option>
-                ))}
-              </optgroup>
+                  
+                  {category.children?.map(child => (
+                    <option key={child.name} value={child.name}>
+                      &nbsp;&nbsp;&nbsp;&nbsp;{child.emoji} {child.name}
+                    </option>
+                  ))}
+                </optgroup>
+              ) : (
+                <optgroup label={`${category.emoji} ${category.name}`}>
+                  {category.children?.map(child => (
+                    <option key={child.name} value={child.name}>
+                      &nbsp;&nbsp;{child.emoji} {child.name}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
             </React.Fragment>
           ))
         )}
