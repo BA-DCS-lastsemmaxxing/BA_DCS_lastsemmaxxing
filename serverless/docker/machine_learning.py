@@ -452,7 +452,7 @@ class ModelManager:
         predicted_topic, confidence = self.rf_classify_document(sampled_text)
 
         if predicted_topic:
-            explanation = self.model_manager.explain_prediction(sampled_text)
+            explanation = self.explain_prediction(sampled_text)
             print(f"Random Forest Classification: {predicted_topic} (Confidence: {confidence:.2f}) (Explanation: {explanation})")
             return filename, predicted_topic, confidence, explanation, "ML-based"
 
