@@ -251,7 +251,7 @@ class Document:
             summary = f"This document's classification has been manually overwritten based on the following feedback: \n\n{feedback}"
             # Add corrected category and feedback by document ID
             cursor.execute(
-                "UPDATE documents SET user_corrected_category = NULL, feedback = NULL, classification = (%s), confidence = 1 summary = (%s) WHERE id = (%s);", 
+                "UPDATE documents SET user_corrected_category = NULL, feedback = NULL, classification = (%s), confidence = 1, summary = (%s) WHERE id = (%s);", 
                 (corrected_topic, summary, doc_id,))
             connection.commit()
             print(f"Successfully corrected document with ID {doc_id} to {corrected_topic} category with reason: {feedback}")
