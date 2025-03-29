@@ -16,13 +16,13 @@ def lambda_handler(event, context):
     output_path , _ =documentProcessor.preprocess_pdf(file_content,filename)
     if not os.path.exists(output_path):
         raise FileNotFoundError(f"Error: Preprocessed file not found at {output_path}. Something went wrong in `preprocess_pdf()`.")
-    filename, classification, confidence, summary, source = modelManager.classify_document(output_path,filename)
+    filename, classification, confidence, summary, classification_type = modelManager.classify_document(output_path,filename)
     print("filename: ", filename)
     print("classification: ", classification)
     print("confidence: ", confidence)
     print("summary: ", summary)
-    print("source: ", source)
+    print("classification type: ", classification_type)
     
-    Document.update_file_classification(file_id, summary if summary != "-" else None, classification, float(confidence) if confidence != "-" else None)
+    Document.update_file_classification(file_id, summary if summary != "-" else None, classification, float(confidence) if confidence != "-" else None, classification_type)
     return
 
