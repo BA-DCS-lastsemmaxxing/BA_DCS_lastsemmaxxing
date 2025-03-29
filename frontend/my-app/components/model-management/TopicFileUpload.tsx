@@ -73,7 +73,7 @@ export function TopicFileUpload({ onFilesChange }: TopicFileUploadProps) {
         onChange={handleFileUpload}
         className="hidden"
         id="file-upload"
-        accept=".pdf,.doc,.docx,.txt"
+        accept=".pdf"
         multiple
       />
       <label

@@ -114,7 +114,7 @@ export function UploadSection({ onUploadSuccess }: UploadSectionProps) {
             onChange={handleFileUpload}
             className="hidden"
             id="file-upload"
-            accept=".pdf,.doc,.docx,.txt"
+            accept=".pdf"
             multiple
           />
           <label
