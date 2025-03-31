@@ -730,8 +730,14 @@ resource "aws_iam_policy" "rds_init_lambda_policy" {
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "s3:GetObject",
-      "Resource": "${aws_s3_bucket.serverless_bucket_ap.arn}/*"
+      "Action": [
+        "s3:GetObject:,
+        "s3:ListBucket",
+      ],
+      "Resource": [
+        "${aws_s3_bucket.serverless_bucket_ap.arn}/*",
+        "${aws_s3_bucket.serverless_bucket_ap.arn}",
+      ]
     },
     {
       "Effect": "Allow",
