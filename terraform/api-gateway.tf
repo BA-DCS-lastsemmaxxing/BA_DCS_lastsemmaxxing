@@ -40,6 +40,8 @@ resource "aws_api_gateway_method" "topics_method_options" {
   resource_id   = aws_api_gateway_resource.topics_resource.id
   http_method   = "OPTIONS"
   authorization = "NONE"
+  
+  depends_on = [ aws_api_gateway_resource.topics_resource ]
 }
 
 resource "aws_api_gateway_method_response" "topics_method_options_response" {
@@ -81,7 +83,7 @@ resource "aws_api_gateway_integration_response" "topics_method_options_integrati
     "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
   }
 
-  depends_on = [ aws_api_gateway_integration.topics_options_integration ]
+  depends_on = [ aws_api_gateway_method.topics_method_options, aws_api_gateway_integration.topics_options_integration ]
 }
 
 # GET method for /topics
@@ -187,6 +189,8 @@ resource "aws_api_gateway_integration_response" "topics_method_post_integration_
     "method.response.header.Access-Control-Allow-Headers"     = "'Content-Type,Authorization'"
     "method.response.header.Access-Control-Allow-Credentials" = "'true'"
   }
+
+  depends_on = [ aws_api_gateway_method.topics_method_post, aws_api_gateway_integration.topics_method_post_integration ]
 }
 
 # DELETE method for /topics
@@ -250,6 +254,8 @@ resource "aws_api_gateway_integration_response" "topics_method_delete_integratio
     "method.response.header.Access-Control-Allow-Headers"     = "'Content-Type,Authorization'"
     "method.response.header.Access-Control-Allow-Credentials" = "'true'"
   }
+
+  depends_on = [aws_api_gateway_method.topics_method_delete, aws_api_gateway_integration.topics_method_delete_integration]
 }
 
 # Allow API Gateway to invoke the Lambda function
@@ -351,7 +357,7 @@ resource "aws_api_gateway_integration_response" "documents_method_options_integr
     "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
   }
 
-  depends_on = [ aws_api_gateway_integration.documents_options_integration ]
+  depends_on = [ aws_api_gateway_method.documents_method_options, aws_api_gateway_integration.documents_options_integration ]
 }
 
 # GET method for /documents
@@ -500,7 +506,7 @@ resource "aws_api_gateway_integration_response" "documents_corrected_method_opti
     "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
   }
 
-  depends_on = [aws_api_gateway_integration.documents_corrected_options_integration]
+  depends_on = [aws_api_gateway_method.documents_corrected_method_options ,aws_api_gateway_integration.documents_corrected_options_integration]
 }
 
 # GET method for /documents/corrected
@@ -624,7 +630,7 @@ resource "aws_api_gateway_integration_response" "upload_url_options_integration_
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
     }
     
-    depends_on = [aws_api_gateway_integration.upload_url_options_integration]
+    depends_on = [aws_api_gateway_method.upload_url_method_options, aws_api_gateway_integration.upload_url_options_integration]
 }
 
 # Create /download resource
@@ -713,7 +719,7 @@ resource "aws_api_gateway_integration_response" "download_url_options_integratio
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
     }
     
-    depends_on = [aws_api_gateway_integration.download_url_options_integration]
+    depends_on = [aws_api_gateway_method.download_url_method_options, aws_api_gateway_integration.download_url_options_integration]
 }
 
 # Create /feedback resource
@@ -770,7 +776,7 @@ resource "aws_api_gateway_integration_response" "feedback_options_integration_re
         "method.response.header.Access-Control-Allow-Credentials" = "'true'"
     }
     
-    depends_on = [aws_api_gateway_integration.feedback_options_integration]
+    depends_on = [aws_api_gateway_method.feedback_method_options, aws_api_gateway_integration.feedback_options_integration]
 }
 
 # POST for /feedback
@@ -854,7 +860,7 @@ resource "aws_api_gateway_integration_response" "retrain_method_options_integrat
     "method.response.header.Access-Control-Allow-Credentials"  = "'true'"
   }
 
-  depends_on = [ aws_api_gateway_integration.retrain_options_integration ]
+  depends_on = [ aws_api_gateway_method.retrain_method_options, aws_api_gateway_integration.retrain_options_integration ]
 }
 
 # POST method for /retrain
@@ -917,4 +923,6 @@ resource "aws_api_gateway_integration_response" "retrain_method_post_integration
     "method.response.header.Access-Control-Allow-Headers"     = "'Content-Type,Authorization'"
     "method.response.header.Access-Control-Allow-Credentials" = "'true'"
   }
+
+  depends_on = [ aws_api_gateway_method.retrain_method_options, aws_api_gateway_integration.retrain_method_post_integration ]
 }
