@@ -816,12 +816,13 @@ resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.private_vpc.id
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_vpc_endpoint.s3_endpoint.id
-  }
-
   depends_on = [ aws_vpc_endpoint.s3_endpoint]
+}
+
+resource "aws_route" "s3_route" {
+  route_table_id  = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"  # Directing all outbound traffic to S3 VPC endpoint
+  vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
 }
 
 resource "aws_route_table_association" "private_subnet_1" {
