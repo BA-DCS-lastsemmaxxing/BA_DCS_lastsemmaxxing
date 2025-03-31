@@ -1,5 +1,12 @@
 resource "aws_vpc" "private_vpc" {
   cidr_block = "172.28.0.0/16"
+
+  enable_dns_hostnames = true
+  enable_dns_support = true
+
+  tags = {
+    Name = "Private VPC"
+  }
 }
 
 resource "aws_subnet" "private_subnet_1" {
