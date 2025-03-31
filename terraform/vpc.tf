@@ -177,3 +177,43 @@ resource "aws_security_group" "bedrock_sg" {
     Name = "Bedrock Security Group"
   }
 }
+
+# VPC endpoint for SQS
+resource "aws_vpc_endpoint" "sqs_endpoint" {
+  vpc_id            = aws_vpc.private_vpc.id
+  service_name      = "com.amazonaws.${var.region}.sqs"
+  vpc_endpoint_type = "Interface"
+  subnet_ids = [
+    aws_subnet.private_subnet_1.id,
+    aws_subnet.private_subnet_2.id
+  ]
+  security_group_ids = [aws_security_group.sqs_sg.id]
+  private_dns_enabled = true
+
+  tags = {
+    Name = "SQS VPC Endpoint"
+  }
+}
+
+resource "aws_security_group" "sqs_sg" {
+  name   = "${var.project_name}-sqs-sg"
+  vpc_id = aws_vpc.private_vpc.id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    security_groups = [aws_security_group.lambda_sg.id]  # Allow Lambda to reach SQS
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "SQS Security Group"
+  }
+}
