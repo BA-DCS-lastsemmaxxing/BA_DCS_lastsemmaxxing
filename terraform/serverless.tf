@@ -820,50 +820,6 @@ resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
   retention_in_days = 7 # Adjust retention as needed
 }
 
-resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.private_vpc.id
-}
-
-resource "aws_vpc_endpoint" "s3_endpoint" {
-  vpc_id       = aws_vpc.private_vpc.id
-  service_name = "com.amazonaws.${var.region}.s3"
-  vpc_endpoint_type = "Gateway"
-
-  tags = {
-    Name = "S3 VPC Endpoint"
-  }
-}
-
-resource "aws_vpc_endpoint_route_table_association" "s3_endpoint_association" {
-  route_table_id = aws_route_table.private.id
-  vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
-}
-
-resource "aws_route_table_association" "private_subnet_1" {
-  subnet_id      = aws_subnet.private_subnet_1.id
-  route_table_id = aws_route_table.private.id
-}
-resource "aws_route_table_association" "private_subnet_2" {
-  subnet_id      = aws_subnet.private_subnet_2.id
-  route_table_id = aws_route_table.private.id
-}
-
-resource "aws_vpc_endpoint_policy" "s3_endpoint_policy" {
-  vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
-
-  policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": "*",
-        "Action": "s3:*",
-        "Resource": "*"
-      }
-    ]
-  })
-}
-
 resource "aws_sqs_queue" "add_new_topic_queue" {
   name                       = "add-new-topic-queue"
   visibility_timeout_seconds = 910
