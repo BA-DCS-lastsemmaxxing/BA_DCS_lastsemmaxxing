@@ -53,7 +53,7 @@ resource "aws_db_subnet_group" "lsm-fyp-db-subnet-group" {
 
 resource "aws_security_group" "rds_sg" {
     name = "${var.project_name}-rds-sg"
-    vpc_id = data.aws_vpc.default.id
+    vpc_id = aws_vpc.private_vpc.id
 
     ingress {
         from_port = 3306
