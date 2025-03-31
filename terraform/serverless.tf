@@ -730,8 +730,14 @@ resource "aws_iam_policy" "rds_init_lambda_policy" {
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "s3:GetObject",
-      "Resource": "${aws_s3_bucket.serverless_bucket_ap.arn}/*"
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.serverless_bucket_ap.arn}/*",
+        "${aws_s3_bucket.serverless_bucket_ap.arn}"
+      ]
     },
     {
       "Effect": "Allow",
@@ -815,22 +821,6 @@ resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.private_vpc.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_vpc_endpoint.s3_endpoint.id
-  }
-
-  depends_on = [ aws_vpc_endpoint.s3_endpoint]
-}
-
-resource "aws_route_table_association" "private_subnet_1" {
-  subnet_id      = aws_subnet.private_subnet_1.id
-  route_table_id = aws_route_table.private.id
-}
-resource "aws_route_table_association" "private_subnet_2" {
-  subnet_id      = aws_subnet.private_subnet_2.id
-  route_table_id = aws_route_table.private.id
 }
 
 resource "aws_vpc_endpoint" "s3_endpoint" {
@@ -841,6 +831,20 @@ resource "aws_vpc_endpoint" "s3_endpoint" {
   tags = {
     Name = "S3 VPC Endpoint"
   }
+}
+
+resource "aws_vpc_endpoint_route_table_association" "s3_endpoint_association" {
+  route_table_id = aws_route_table.private.id
+  vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
+}
+
+resource "aws_route_table_association" "private_subnet_1" {
+  subnet_id      = aws_subnet.private_subnet_1.id
+  route_table_id = aws_route_table.private.id
+}
+resource "aws_route_table_association" "private_subnet_2" {
+  subnet_id      = aws_subnet.private_subnet_2.id
+  route_table_id = aws_route_table.private.id
 }
 
 resource "aws_vpc_endpoint_policy" "s3_endpoint_policy" {
