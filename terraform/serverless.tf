@@ -126,6 +126,15 @@ resource "aws_iam_policy" "lambda_policy" {
           aws_sqs_queue.remove_topic_queue.arn,
           aws_sqs_queue.feedback_retraining_queue.arn
         ]
+      },
+      # Allow network interface creation
+      {
+        Effect = "Allow",
+        Action = [
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterfaces"
+        ]
       }
     ]
   })
