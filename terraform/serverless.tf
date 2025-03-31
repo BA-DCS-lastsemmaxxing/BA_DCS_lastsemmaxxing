@@ -731,7 +731,7 @@ resource "aws_iam_policy" "rds_init_lambda_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "s3:GetObject:,
+        "s3:GetObject",
         "s3:ListBucket",
       ],
       "Resource": [
