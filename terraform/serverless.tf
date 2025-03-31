@@ -826,7 +826,7 @@ resource "aws_vpc_endpoint" "s3_endpoint" {
   vpc_id       = aws_vpc.private_vpc.id
   service_name = "com.amazonaws.${var.region}.s3"
   route_table_ids = [
-    aws_route_table.private_route_table_1.id
+    aws_route_table.private.id
   ]
 
   tags = {
@@ -835,7 +835,7 @@ resource "aws_vpc_endpoint" "s3_endpoint" {
 }
 
 resource "aws_vpc_endpoint_policy" "s3_endpoint_policy" {
-  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+  vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
 
   policy = jsonencode({
     "Version": "2012-10-17",
