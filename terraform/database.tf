@@ -44,7 +44,7 @@ resource "aws_subnet" "private_subnet_2" {
 # Create a DB subnet group using the default VPC subnets
 resource "aws_db_subnet_group" "lsm-fyp-db-subnet-group" {
   name       = "${var.project_name}-subnet-group"
-  subnet_ids = [aws_subnet.private_subnet_1, aws_subnet.private_subnet_2]
+  subnet_ids = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
 
   tags = {
     Name = "DB Subnet Group"

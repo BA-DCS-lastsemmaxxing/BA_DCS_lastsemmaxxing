@@ -147,7 +147,7 @@ resource "aws_lambda_function" "delete_document_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -182,7 +182,7 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -212,7 +212,7 @@ resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -240,7 +240,7 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
   source_code_hash = data.aws_s3_object.fetch_upload_url_lambda_zip.etag
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -270,7 +270,7 @@ resource "aws_lambda_function" "fetch_download_url_lambda" {
   source_code_hash = data.aws_s3_object.fetch_download_url_lambda_zip.etag
   
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -302,7 +302,7 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -330,7 +330,7 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
   source_code_hash = data.aws_s3_object.s3_trigger_lambda_zip.etag
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -362,7 +362,7 @@ resource "aws_lambda_function" "send_feedback_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -386,7 +386,7 @@ resource "aws_lambda_function" "document_classification_lambda" {
   role = aws_iam_role.lambda_execution_role.arn
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
   
@@ -421,7 +421,7 @@ resource "aws_lambda_function" "add_new_topic_lambda" {
   }
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -448,7 +448,7 @@ resource "aws_lambda_function" "remove_topic_lambda" {
   role = aws_iam_role.lambda_execution_role.arn
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
   
@@ -479,7 +479,7 @@ resource "aws_lambda_function" "feedback_retraining_lambda" {
   role = aws_iam_role.lambda_execution_role.arn
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
   
@@ -516,7 +516,7 @@ resource "aws_lambda_function" "fetch_topics_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -773,7 +773,7 @@ resource "aws_lambda_function" "rds_init_lambda" {
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
   vpc_config {
-    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    subnet_ids = [ aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id ]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
