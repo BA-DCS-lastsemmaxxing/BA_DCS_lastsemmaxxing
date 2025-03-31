@@ -41,6 +41,7 @@ CREATE TABLE `documents` (
   `confidence` decimal(18,16) DEFAULT NULL,
   `user_corrected_category` varchar(255) DEFAULT NULL,
   `feedback` text,
+  `classification_type` varchar(10),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
