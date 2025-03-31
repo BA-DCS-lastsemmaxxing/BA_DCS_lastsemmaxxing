@@ -7,5 +7,5 @@ variable "region" {
 variable "project_name" {
   description = "The name of the project to use for naming resources"
   type        = string
-  default     = "lsm-fyp"
+  default     = "test-lsm-bucket"
 }
