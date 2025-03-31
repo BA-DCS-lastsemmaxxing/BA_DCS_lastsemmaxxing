@@ -19,7 +19,7 @@ resource "aws_security_group" "lambda_sg" {
   name = "lambda-sg"
   vpc_id = aws_vpc.private_vpc.id
 
-  egress {
+  ingress {
     from_port = 3306
     to_port = 3306
     protocol = "tcp"
