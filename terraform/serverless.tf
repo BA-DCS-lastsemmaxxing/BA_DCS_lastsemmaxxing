@@ -817,12 +817,19 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.private_vpc.id
 }
 
-resource "aws_route" "s3_route" {
-  route_table_id  = aws_route_table.private.id
-  destination_cidr_block = "0.0.0.0/0"  # Directing all outbound traffic to S3 VPC endpoint
-  vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
+resource "aws_vpc_endpoint" "s3_endpoint" {
+  vpc_id       = aws_vpc.private_vpc.id
+  service_name = "com.amazonaws.${var.region}.s3"
+  vpc_endpoint_type = "Gateway"
 
-  depends_on = [ aws_vpc_endpoint.s3_endpoint ] 
+  tags = {
+    Name = "S3 VPC Endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint_route_table_association" "s3_endpoint_association" {
+  route_table_id = aws_route_table.private.id
+  vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
 }
 
 resource "aws_route_table_association" "private_subnet_1" {
@@ -832,16 +839,6 @@ resource "aws_route_table_association" "private_subnet_1" {
 resource "aws_route_table_association" "private_subnet_2" {
   subnet_id      = aws_subnet.private_subnet_2.id
   route_table_id = aws_route_table.private.id
-}
-
-resource "aws_vpc_endpoint" "s3_endpoint" {
-  vpc_id       = aws_vpc.private_vpc.id
-  service_name = "com.amazonaws.${var.region}.s3"
-  vpc_endpoint_type = "Gateway"
-
-  tags = {
-    Name = "S3 VPC Endpoint"
-  }
 }
 
 resource "aws_vpc_endpoint_policy" "s3_endpoint_policy" {
