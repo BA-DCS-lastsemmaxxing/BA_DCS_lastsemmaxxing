@@ -21,6 +21,8 @@ resource "aws_db_instance" "rds" {
     tags = {
         Name = "lsm-fyp-rds"
     }
+
+    depends_on = [ data.aws_vpc.default, data.aws_subnets.default ]
 }
 
 # Fetch the default VPC
