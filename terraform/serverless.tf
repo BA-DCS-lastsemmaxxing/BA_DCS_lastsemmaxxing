@@ -788,6 +788,7 @@ resource "aws_lambda_function" "rds_init_lambda" {
   s3_key           = "rds_init.zip"
   role             = aws_iam_role.rds_init_lambda_role.arn
   source_code_hash = data.aws_s3_object.rds_init_lambda_zip.etag
+  timeout = 30
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
@@ -810,6 +811,43 @@ resource "aws_lambda_function" "rds_init_lambda" {
 resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
   name              = "/aws/lambda/${aws_lambda_function.rds_init_lambda.function_name}"
   retention_in_days = 7 # Adjust retention as needed
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.private_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_vpc_endpoint.s3_endpoint.id
+  }
+}
+
+resource "aws_vpc_endpoint" "s3_endpoint" {
+  vpc_id       = aws_vpc.private_vpc.id
+  service_name = "com.amazonaws.${var.region}.s3"
+  route_table_ids = [
+    aws_route_table.private_route_table_1.id
+  ]
+
+  tags = {
+    Name = "S3 VPC Endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint_policy" "s3_endpoint_policy" {
+  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": "s3:*",
+        "Resource": "*"
+      }
+    ]
+  })
 }
 
 resource "aws_sqs_queue" "add_new_topic_queue" {
