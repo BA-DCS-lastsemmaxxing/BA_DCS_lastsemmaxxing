@@ -14,6 +14,29 @@ resource "aws_ecr_repository" "lsm_fyp_repo" {
   name = "${var.project_name}-repo"
 }
 
+# Security Group for Lambda Functions
+resource "aws_security_group" "lambda_sg" {
+  name = "lambda-sg"
+  vpc_id = aws_vpc.private_vpc.id
+
+  egress {
+    from_port = 3306
+    to_port = 3306
+    protocol = "tcp"
+    security_groups = [aws_security_group.rds_sg.id] # Allow outbound connection to rds sg
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "Lambda Security Group"
+  }
+}
 
 resource "aws_iam_role" "lambda_execution_role" {
   name = "${var.project_name}-lambda-execution-role"
@@ -123,6 +146,11 @@ resource "aws_lambda_function" "delete_document_lambda" {
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
+
   environment {
     variables = merge(
       local.lambda_db_variables,
@@ -153,6 +181,11 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
+
   environment {
     variables = local.lambda_db_variables
   }
@@ -178,6 +211,11 @@ resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
+
   environment {
     variables = local.lambda_db_variables
   }
@@ -200,6 +238,11 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
 
   role = aws_iam_role.lambda_execution_role.arn
   source_code_hash = data.aws_s3_object.fetch_upload_url_lambda_zip.etag
+
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
 
   environment {
     variables = {
@@ -226,6 +269,11 @@ resource "aws_lambda_function" "fetch_download_url_lambda" {
   role = aws_iam_role.lambda_execution_role.arn
   source_code_hash = data.aws_s3_object.fetch_download_url_lambda_zip.etag
   
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
+
   environment {
     variables = {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
@@ -253,6 +301,11 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
+
   environment {
     variables = local.lambda_db_variables
   }
@@ -275,6 +328,11 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
 
   role = aws_iam_role.lambda_execution_role.arn
   source_code_hash = data.aws_s3_object.s3_trigger_lambda_zip.etag
+
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
 
   environment {
     variables = {
@@ -303,6 +361,11 @@ resource "aws_lambda_function" "send_feedback_lambda" {
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
+
   environment {
     variables = local.lambda_db_variables
   }
@@ -321,6 +384,11 @@ resource "aws_lambda_function" "document_classification_lambda" {
   timeout       = 900
   memory_size   = 2000
   role = aws_iam_role.lambda_execution_role.arn
+
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
   
   image_config {
     command     = ["document_classification.lambda_handler"]
@@ -352,6 +420,11 @@ resource "aws_lambda_function" "add_new_topic_lambda" {
     command     = ["new_topic.lambda_handler"]
   }
 
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
+
   environment {
     variables = merge(local.lambda_db_variables, {
       REGION = var.region
@@ -373,6 +446,11 @@ resource "aws_lambda_function" "remove_topic_lambda" {
   timeout       = 900
   memory_size   = 2000
   role = aws_iam_role.lambda_execution_role.arn
+
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
   
   image_config {
     command     = ["remove_topic.lambda_handler"]
@@ -399,6 +477,11 @@ resource "aws_lambda_function" "feedback_retraining_lambda" {
   timeout       = 900
   memory_size   = 2000
   role = aws_iam_role.lambda_execution_role.arn
+
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
   
   image_config {
     command     = ["feedback_retraining.lambda_handler"]
@@ -431,6 +514,11 @@ resource "aws_lambda_function" "fetch_topics_lambda" {
   source_code_hash = data.aws_s3_object.fetch_topics_lambda_zip.etag
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
 
   environment {
     variables = local.lambda_db_variables
@@ -683,6 +771,11 @@ resource "aws_lambda_function" "rds_init_lambda" {
   source_code_hash = data.aws_s3_object.rds_init_lambda_zip.etag
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
+
+  vpc_config {
+    subnet_ids = [ aws_subnet.private_subnet_1, aws_subnet.private_subnet_2 ]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
 
   environment {
     variables = merge(

@@ -12,7 +12,7 @@ resource "aws_db_instance" "rds" {
     db_name = "lsm_fyp"
     username = local.credentials.username
     password = local.credentials.password
-    publicly_accessible = true
+    publicly_accessible = false
     skip_final_snapshot = true
 
     vpc_security_group_ids = [aws_security_group.rds_sg.id]
@@ -22,31 +22,29 @@ resource "aws_db_instance" "rds" {
         Name = "lsm-fyp-rds"
     }
 
-    depends_on = [ data.aws_vpc.default, data.aws_subnets.default ]
+    # depends_on = [ data.aws_vpc.default, data.aws_subnets.default ]
 }
 
-# Fetch the default VPC
-data "aws_vpc" "default" {
-    default = true
+resource "aws_vpc" "private_vpc" {
+    cidr_block = "172.28.0.0/16"
 }
 
-# Fetch the default subnet in the default VPC
-data "aws_subnets" "default" {
-    filter {
-        name = "vpc-id"
-        values = [data.aws_vpc.default.id]
-    }
+resource "aws_subnet" "private_subnet_1" {
+    vpc_id = aws_vpc.private_vpc.id
+    cidr_block = "172.28.1.0/24"
+    availability_zone = "ap-southeast-1a"
 }
 
-# Select the first two subnets from the default VPC
-locals {
-  selected_subnets = slice(data.aws_subnets.default.ids, 0, 2) # Picks first two subnets
+resource "aws_subnet" "private_subnet_2" {
+    vpc_id = aws_vpc.private_vpc.id
+    cidr_block = "172.28.2.0/24"
+    availability_zone = "ap-southeast-1b"
 }
 
 # Create a DB subnet group using the default VPC subnets
 resource "aws_db_subnet_group" "lsm-fyp-db-subnet-group" {
   name       = "${var.project_name}-subnet-group"
-  subnet_ids = local.selected_subnets
+  subnet_ids = [aws_subnet.private_subnet_1, aws_subnet.private_subnet_2]
 
   tags = {
     Name = "DB Subnet Group"
@@ -61,7 +59,7 @@ resource "aws_security_group" "rds_sg" {
         from_port = 3306
         to_port = 3306
         protocol = "tcp"
-        cidr_blocks = ["0.0.0.0/0"] # TODO: restrict to specific IP range for prod
+        cidr_blocks = [aws_security_group.lambda_sg.id] 
     }
 
     egress {
