@@ -736,7 +736,7 @@ resource "aws_iam_policy" "rds_init_lambda_policy" {
       ],
       "Resource": [
         "${aws_s3_bucket.serverless_bucket_ap.arn}/*",
-        "${aws_s3_bucket.serverless_bucket_ap.arn}",
+        "${aws_s3_bucket.serverless_bucket_ap.arn}"
       ]
     },
     {
