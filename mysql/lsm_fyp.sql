@@ -47,16 +47,6 @@ CREATE TABLE `documents` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `documents`
---
-
-LOCK TABLES `documents` WRITE;
-/*!40000 ALTER TABLE `documents` DISABLE KEYS */;
-INSERT INTO `documents` VALUES ('05fec96f-5a42-4d48-b188-278836398476','pillar3-disclosures-1q-2018.pdf','2025-03-11 18:07:44','completed',NULL,NULL,'Risk Management',0.9071312436354916,NULL,NULL),('568360f5-13d0-4655-9429-ba9029138c74','626 Banks_GCO vetted.pdf','2025-03-11 18:07:43','completed','The document provided appears to be a set of guidelines issued by the Monetary Authority of Singapore (MAS) regarding the prevention of money laundering and countering the financing of terrorism. The guidelines outline the requirements and obligations for banks in Singapore to take measures to help mitigate the risk of money laundering and terrorist financing in the banking system.\n\nThe document covers various topics, including customer due diligence (CDD) measures, risk-based customization of CDD measures, simplified CDD, and enhanced CDD for high-risk customers. It also discusses the requirements for establishing correspondent banking relations, record-keeping, and reporting suspicious transactions.\n\nThe language and terminology used in the document are technical and specific to the financial industry, indicating that it is a regulatory document intended for banks and financial institutions.\n\nBased on the content and language of the document, I would classify it under the topic of \"Anti Money Laundering\".\n\n\nFinal Topic: Anti Money Laundering',NULL,'Anti Money Laundering',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `documents` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `users`
 --
 
