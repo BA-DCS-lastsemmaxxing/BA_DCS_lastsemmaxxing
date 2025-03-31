@@ -141,7 +141,7 @@ resource "aws_security_group" "step_function_sg" {
 # VPC endpoint for bedrock
 resource "aws_vpc_endpoint" "bedrock_endpoint" {
   vpc_id            = aws_vpc.private_vpc.id
-  service_name      = "com.amazonaws.us-west-2.bedrock"
+  service_name      = "com.amazonaws.us-west-2.bedrock-runtime"
   vpc_endpoint_type = "Interface"
   subnet_ids = [
     aws_subnet.private_subnet_1.id,
