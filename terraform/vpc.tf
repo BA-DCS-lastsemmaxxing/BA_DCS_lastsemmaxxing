@@ -240,14 +240,6 @@ resource "aws_vpc_peering_connection" "bedrock_peering" {
 
   auto_accept = false # we will need to manually accept within the console
 
-  accepter {
-    allow_remote_vpc_dns_resolution = true
-  }
-
-  requester {
-    allow_remote_vpc_dns_resolution = true
-  }
-
   tags = {
     Name = "Bedrock VPC Peering"
   }
@@ -263,6 +255,16 @@ resource "aws_vpc_peering_connection_accepter" "peer_accept" {
   tags = {
     Name = "Bedrock VPC Peering Accepter"
   }
+}
+
+resource "aws_vpc_peering_connection_options" "peering_dns" {
+    vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
+    requester {
+        allow_remote_vpc_dns_resolution = true
+    }
+    accepter {
+        allow_remote_vpc_dns_resolution = true
+    }
 }
 
 resource "aws_security_group" "bedrock_sg" {
