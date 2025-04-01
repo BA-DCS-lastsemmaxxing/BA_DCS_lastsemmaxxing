@@ -42,6 +42,13 @@ resource "aws_security_group" "lambda_sg" {
     security_groups = [aws_security_group.rds_sg.id] # Allow outbound connection to rds sg
   }
 
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol = "tcp"
+    security_groups = [aws_security_group.bedrock_sg.id ]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
