@@ -49,6 +49,20 @@ resource "aws_security_group" "lambda_sg" {
     cidr_blocks = ["172.20.0.0/16"] # Allow responses from bedrock in us-west-2
   }
 
+  ingress {
+    from_port = 53
+    to_port   = 53
+    protocol = "udp"
+    cidr_blocks = ["172.20.0.0/16"] # Allow DNS resolution for bedrock in us-west-2
+  }
+
+  ingress {
+    from_port = 53
+    to_port   = 53
+    protocol = "tcp"
+    cidr_blocks = ["172.20.0.0/16"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -286,6 +300,20 @@ resource "aws_security_group" "bedrock_sg" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["172.28.0.0/16"] # Allow Lambda to reach Bedrock from ap-southeast-1
+  }
+
+  ingress {
+    from_port = 53
+    to_port   = 53
+    protocol = "udp"
+    cidr_blocks = ["172.28.0.0/16"] # Allow DNS resolution for Lambda to reach Bedrock from ap-southeast-1  
+  }
+
+  ingress {
+    from_port = 53
+    to_port = 53
+    protocol = "tcp"
+    cidr_blocks = ["172.28.0.0/16"] # Allow DNS resolution for Lambda to reach Bedrock from ap-southeast-1
   }
 
   egress {
