@@ -25,7 +25,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.private_vpc.id
 
   route {
-    cidr_block = "172.28.0.0/16"
+    cidr_block                = "172.20.0.0/16"
     vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
   }
 }
@@ -146,7 +146,7 @@ resource "aws_security_group" "step_function_sg" {
 # VPC and VPC endpoint for bedrock
 resource "aws_vpc" "bedrock_vpc" {
   provider             = aws.us_west_2
-  cidr_block           = "172.28.0.0/16"
+  cidr_block           = "172.20.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
 
@@ -158,7 +158,7 @@ resource "aws_vpc" "bedrock_vpc" {
 resource "aws_subnet" "bedrock_subnet" {
   provider          = aws.us_west_2
   vpc_id            = aws_vpc.bedrock_vpc.id
-  cidr_block        = "172.28.1.0/24"
+  cidr_block        = "172.20.1.0/24"
   availability_zone = "us-west-2a"
 
   tags = {
@@ -167,22 +167,22 @@ resource "aws_subnet" "bedrock_subnet" {
 }
 
 resource "aws_route_table" "bedrock_rt" {
-    provider = aws.us_west_2
-    vpc_id   = aws_vpc.bedrock_vpc.id
+  provider = aws.us_west_2
+  vpc_id   = aws_vpc.bedrock_vpc.id
 
-    route {
-        cidr_block = "172.20.0.0/16"
-        vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
-    }
+  route {
+    cidr_block                = "172.28.0.0/16"
+    vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
+  }
 
-    tags = {
-        Name = "bedrock-route-table"
-    }
+  tags = {
+    Name = "bedrock-route-table"
+  }
 }
 
 resource "aws_route_table_association" "bedrock_subnet_association" {
-  provider      = aws.us_west_2
-  subnet_id     = aws_subnet.bedrock_subnet.id
+  provider       = aws.us_west_2
+  subnet_id      = aws_subnet.bedrock_subnet.id
   route_table_id = aws_route_table.bedrock_rt.id
 }
 
@@ -195,7 +195,6 @@ resource "aws_vpc_endpoint" "bedrock_endpoint" {
     aws_subnet.bedrock_subnet.id
   ]
   security_group_ids  = [aws_security_group.bedrock_sg.id]
-  private_dns_enabled = true
 
   tags = {
     Name = "Bedrock VPC Endpoint"
@@ -213,23 +212,23 @@ resource "aws_vpc_peering_connection" "bedrock_peering" {
 }
 
 resource "aws_vpc_peering_connection_accepter" "peer_accept" {
-    provider = aws.us_west_2
-    vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
-    auto_accept = true
-    tags = {
-        Name = "Bedrock VPC Peering Accepter"
-    }
+  provider                  = aws.us_west_2
+  vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
+  tags = {
+    Name = "Bedrock VPC Peering Accepter"
+  }
 }
 
 resource "aws_security_group" "bedrock_sg" {
-  name   = "${var.project_name}-bedrock-sg"
-  vpc_id = aws_vpc.private_vpc.id
+  provider = aws.us_west_2
+  name     = "${var.project_name}-bedrock-sg"
+  vpc_id   = aws_vpc.bedrock_vpc.id
 
   ingress {
     from_port       = 443
     to_port         = 443
     protocol        = "tcp"
-    security_groups = [aws_security_group.lambda_sg.id] # Allow Lambda to reach Bedrock
+    cidr_blocks = ["172.28.0.0/16"] # Allow Lambda to reach Bedrock from ap-southeast-1
   }
 
   egress {
