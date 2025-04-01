@@ -194,7 +194,7 @@ resource "aws_vpc_endpoint" "bedrock_endpoint" {
   subnet_ids = [
     aws_subnet.bedrock_subnet.id
   ]
-  security_group_ids  = [aws_security_group.bedrock_sg.id]
+  security_group_ids = [aws_security_group.bedrock_sg.id]
 
   tags = {
     Name = "Bedrock VPC Endpoint"
@@ -205,6 +205,13 @@ resource "aws_vpc_peering_connection" "bedrock_peering" {
   vpc_id      = aws_vpc.private_vpc.id
   peer_vpc_id = aws_vpc.bedrock_vpc.id
   peer_region = "us-west-2"
+
+  accepter {
+    allow_remote_vpc_dns_resolution = true
+  }
+  requester {
+    allow_remote_vpc_dns_resolution = true
+  }
 
   tags = {
     Name = "Bedrock VPC Peering"
@@ -225,9 +232,9 @@ resource "aws_security_group" "bedrock_sg" {
   vpc_id   = aws_vpc.bedrock_vpc.id
 
   ingress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["172.28.0.0/16"] # Allow Lambda to reach Bedrock from ap-southeast-1
   }
 
