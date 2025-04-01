@@ -367,3 +367,52 @@ resource "aws_security_group" "sqs_sg" {
     Name = "SQS Security Group"
   }
 }
+
+# Create the Route 53 Resolver for DNS resolution between VPC regions
+resource "aws_route53_resolver_endpoint" "inbound_us_west_2" {
+    provider = aws.us_west_2
+    direction = "INBOUND"
+    name = "bedrock-inbound"
+    security_group_ids = [aws_security_group.bedrock_sg.id]
+
+    ip_address {
+        subnet_id = aws_subnet.bedrock_subnet.id
+        ip = "172.20.1.10"
+    }
+
+    ip_address {
+        subnet_id = aws_subnet.bedrock_subnet.id
+        ip = "172.20.1.11"
+    }
+}
+
+resource "aws_route53_resolver_endpoint" "outbound_ap_southeast_1" {
+    direction = "OUTBOUND"
+    name = "bedrock-outbound"
+    security_group_ids = [aws_security_group.lambda_sg.id]
+
+    ip_address {
+        subnet_id = aws_subnet.private_subnet_1.id
+        ip = "172.28.1.10"
+    }
+
+    ip_address {
+      subnet_id = aws_subnet.private_subnet_1.id
+      ip = "172.28.1.11"
+    }
+}
+
+resource "aws_route53_resolver_rule" "resolver_rule_ap_southeast_1" {
+    domain_name = "bedrock-runtime.us-west-2.amazonaws.com"
+    name = "forward-bedrock-rule"
+    rule_type = "FORWARD"
+    resolver_endpoint_id = aws_route53_resolver_endpoint.outbound_ap_southeast_1.id
+
+    target_ip {
+        ip = "172.20.1.10"
+    }
+    target_ip {
+        ip = "172.20.1.11"
+    }
+    share_status = "NOT_SHARED"
+}
