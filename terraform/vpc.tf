@@ -265,6 +265,8 @@ resource "aws_vpc_peering_connection_options" "peering_dns" {
     accepter {
         allow_remote_vpc_dns_resolution = true
     }
+
+    depends_on = [ aws_vpc_peering_connection.bedrock_peering ]
 }
 
 resource "aws_security_group" "bedrock_sg" {
