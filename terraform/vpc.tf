@@ -414,5 +414,4 @@ resource "aws_route53_resolver_rule" "resolver_rule_ap_southeast_1" {
     target_ip {
         ip = "172.20.1.11"
     }
-    share_status = "NOT_SHARED"
 }
