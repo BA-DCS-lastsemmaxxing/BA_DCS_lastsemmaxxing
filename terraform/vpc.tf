@@ -257,16 +257,23 @@ resource "aws_vpc_peering_connection_accepter" "peer_accept" {
   }
 }
 
-resource "aws_vpc_peering_connection_options" "peering_dns" {
+resource "aws_vpc_peering_connection_options" "requester_dns" {
     vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
     requester {
         allow_remote_vpc_dns_resolution = true
     }
+
+    depends_on = [ aws_vpc_peering_connection.bedrock_peering ]
+}
+
+resource "aws_vpc_peering_connection_options" "acceptor_dns" {
+    provider = aws.us_west_2
+    vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
     accepter {
         allow_remote_vpc_dns_resolution = true
     }
 
-    depends_on = [ aws_vpc_peering_connection.bedrock_peering ]
+    depends_on = [ aws_vpc_peering_connection_accepter.peer_accept ]
 }
 
 resource "aws_security_group" "bedrock_sg" {
