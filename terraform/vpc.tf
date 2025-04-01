@@ -257,6 +257,9 @@ resource "aws_vpc_peering_connection_accepter" "peer_accept" {
   provider                  = aws.us_west_2
   vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
 
+  auto_accept = true
+  depends_on = [ aws_vpc_peering_connection.bedrock_peering ]
+
   tags = {
     Name = "Bedrock VPC Peering Accepter"
   }
