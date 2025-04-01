@@ -188,7 +188,7 @@ resource "aws_route_table_association" "bedrock_subnet_association" {
 
 resource "aws_vpc_endpoint" "bedrock_endpoint" {
   provider          = aws.us_west_2
-  vpc_id            = aws_vpc.private_vpc.id
+  vpc_id            = aws_vpc.bedrock_vpc.id
   service_name      = "com.amazonaws.us-west-2.bedrock-runtime"
   vpc_endpoint_type = "Interface"
   subnet_ids = [
@@ -205,12 +205,20 @@ resource "aws_vpc_endpoint" "bedrock_endpoint" {
 resource "aws_vpc_peering_connection" "bedrock_peering" {
   vpc_id      = aws_vpc.private_vpc.id
   peer_vpc_id = aws_vpc.bedrock_vpc.id
-  auto_accept = true
   peer_region = "us-west-2"
 
   tags = {
     Name = "Bedrock VPC Peering"
   }
+}
+
+resource "aws_vpc_peering_connection_accepter" "peer_accept" {
+    provider = aws.us_west_2
+    vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
+    auto_accept = true
+    tags = {
+        Name = "Bedrock VPC Peering Accepter"
+    }
 }
 
 resource "aws_security_group" "bedrock_sg" {
