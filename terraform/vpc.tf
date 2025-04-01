@@ -415,3 +415,10 @@ resource "aws_route53_resolver_rule" "resolver_rule_ap_southeast_1" {
         ip = "172.20.1.11"
     }
 }
+
+resource "aws_route53_resolver_rule_association" "resolver_rule_association" {
+    resolver_rule_id = aws_route53_resolver_rule.resolver_rule_ap_southeast_1.id
+    vpc_id = aws_vpc.private_vpc.id
+    name = "bedrock-rule-association"
+    depends_on = [aws_route53_resolver_rule.resolver_rule_ap_southeast_1]
+}
