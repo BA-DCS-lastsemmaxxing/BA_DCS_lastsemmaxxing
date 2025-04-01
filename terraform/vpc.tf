@@ -46,7 +46,7 @@ resource "aws_security_group" "lambda_sg" {
     from_port = 443
     to_port   = 443
     protocol = "tcp"
-    security_groups = [aws_security_group.bedrock_sg.id ]
+    cidr_blocks = ["172.20.0.0/16"] # Allow responses from bedrock in us-west-2
   }
 
   egress {
