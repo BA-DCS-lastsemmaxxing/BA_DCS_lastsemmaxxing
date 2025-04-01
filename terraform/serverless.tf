@@ -14,30 +14,6 @@ resource "aws_ecr_repository" "lsm_fyp_repo" {
   name = "${var.project_name}-repo"
 }
 
-# Security Group for Lambda Functions
-resource "aws_security_group" "lambda_sg" {
-  name   = "lambda-sg"
-  vpc_id = aws_vpc.private_vpc.id
-
-  ingress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-    security_groups = [aws_security_group.rds_sg.id] # Allow outbound connection to rds sg
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "Lambda Security Group"
-  }
-}
-
 resource "aws_iam_role" "lambda_execution_role" {
   name = "${var.project_name}-lambda-execution-role"
   assume_role_policy = jsonencode({

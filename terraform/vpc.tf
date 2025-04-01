@@ -25,8 +25,39 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.private_vpc.id
 
   route {
-    cidr_block                = "172.20.0.0/16"
+    cidr_block                = "172.20.0.0/16" # Bedrock CIDR Block
     vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
+  }
+}
+
+# Security Group for Lambda Functions
+resource "aws_security_group" "lambda_sg" {
+  name   = "lambda-sg"
+  vpc_id = aws_vpc.private_vpc.id
+
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.rds_sg.id] # Allow outbound connection to rds sg
+  }
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+    cidr_blocks = ["172.20.0.0/16"] # Allow traffic from Bedrock VPC in us-west-2
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "Lambda Security Group"
   }
 }
 
@@ -195,6 +226,7 @@ resource "aws_vpc_endpoint" "bedrock_endpoint" {
     aws_subnet.bedrock_subnet.id
   ]
   security_group_ids = [aws_security_group.bedrock_sg.id]
+  private_dns_enabled = true
 
   tags = {
     Name = "Bedrock VPC Endpoint"
