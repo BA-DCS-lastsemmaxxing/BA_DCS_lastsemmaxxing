@@ -2,7 +2,7 @@ resource "aws_vpc" "private_vpc" {
   cidr_block = "172.28.0.0/16"
 
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
 
   tags = {
     Name = "Private VPC"
@@ -23,6 +23,11 @@ resource "aws_subnet" "private_subnet_2" {
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.private_vpc.id
+
+  route {
+    cidr_block = "172.28.0.0/16"
+    vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
+  }
 }
 
 # VPC Endpoint for rds_init lambda to access S3
@@ -67,26 +72,26 @@ resource "aws_vpc_endpoint_policy" "s3_endpoint_policy" {
 }
 
 resource "aws_security_group" "rds_sg" {
-    name = "${var.project_name}-rds-sg"
-    vpc_id = aws_vpc.private_vpc.id
+  name   = "${var.project_name}-rds-sg"
+  vpc_id = aws_vpc.private_vpc.id
 
-    ingress {
-        from_port = 3306
-        to_port = 3306
-        protocol = "tcp"
-        cidr_blocks = ["172.28.0.0/16"] 
-    }
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["172.28.0.0/16"]
+  }
 
-    egress {
-        from_port = 0
-        to_port = 0
-        protocol = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-    tags = {
-        Name = "RDS Security Group"
-    }
+  tags = {
+    Name = "RDS Security Group"
+  }
 }
 
 resource "aws_security_group_rule" "rds_ingress_from_lambda" {
@@ -107,7 +112,7 @@ resource "aws_vpc_endpoint" "step_function_endpoint" {
     aws_subnet.private_subnet_1.id,
     aws_subnet.private_subnet_2.id
   ]
-  security_group_ids = [aws_security_group.step_function_sg.id]
+  security_group_ids  = [aws_security_group.step_function_sg.id]
   private_dns_enabled = true
 
   tags = {
@@ -116,38 +121,80 @@ resource "aws_vpc_endpoint" "step_function_endpoint" {
 }
 
 resource "aws_security_group" "step_function_sg" {
-    name = "${var.project_name}-step-function-sg"
-    vpc_id = aws_vpc.private_vpc.id
+  name   = "${var.project_name}-step-function-sg"
+  vpc_id = aws_vpc.private_vpc.id
 
-    ingress {
-        from_port = 443
-        to_port = 443
-        protocol = "tcp"
-        cidr_blocks = ["172.28.0.0/16"] 
-    }
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["172.28.0.0/16"]
+  }
 
-    egress {
-        from_port = 0
-        to_port = 0
-        protocol = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "Step Functions Security Group"
+  }
+}
+
+# VPC and VPC endpoint for bedrock
+resource "aws_vpc" "bedrock_vpc" {
+  provider             = aws.us_west_2
+  cidr_block           = "172.28.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  tags = {
+    Name = "us-west-2 Bedrock VPC"
+  }
+}
+
+resource "aws_subnet" "bedrock_subnet" {
+  provider          = aws.us_west_2
+  vpc_id            = aws_vpc.bedrock_vpc.id
+  cidr_block        = "172.28.1.0/24"
+  availability_zone = "us-west-2a"
+
+  tags = {
+    Name = "bedrock-subnet"
+  }
+}
+
+resource "aws_route_table" "bedrock_rt" {
+    provider = aws.us_west_2
+    vpc_id   = aws_vpc.bedrock_vpc.id
+
+    route {
+        cidr_block = "172.20.0.0/16"
+        vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
     }
 
     tags = {
-        Name = "Step Functions Security Group"
+        Name = "bedrock-route-table"
     }
 }
 
-# VPC endpoint for bedrock
+resource "aws_route_table_association" "bedrock_subnet_association" {
+  provider      = aws.us_west_2
+  subnet_id     = aws_subnet.bedrock_subnet.id
+  route_table_id = aws_route_table.bedrock_rt.id
+}
+
 resource "aws_vpc_endpoint" "bedrock_endpoint" {
+  provider          = aws.us_west_2
   vpc_id            = aws_vpc.private_vpc.id
   service_name      = "com.amazonaws.us-west-2.bedrock-runtime"
   vpc_endpoint_type = "Interface"
   subnet_ids = [
-    aws_subnet.private_subnet_1.id,
-    aws_subnet.private_subnet_2.id
+    aws_subnet.bedrock_subnet.id
   ]
-  security_group_ids = [aws_security_group.bedrock_sg.id]
+  security_group_ids  = [aws_security_group.bedrock_sg.id]
   private_dns_enabled = true
 
   tags = {
@@ -155,15 +202,26 @@ resource "aws_vpc_endpoint" "bedrock_endpoint" {
   }
 }
 
+resource "aws_vpc_peering_connection" "bedrock_peering" {
+  vpc_id      = aws_vpc.private_vpc.id
+  peer_vpc_id = aws_vpc.bedrock_vpc.id
+  auto_accept = true
+  peer_region = "us-west-2"
+
+  tags = {
+    Name = "Bedrock VPC Peering"
+  }
+}
+
 resource "aws_security_group" "bedrock_sg" {
-    name   = "${var.project_name}-bedrock-sg"
+  name   = "${var.project_name}-bedrock-sg"
   vpc_id = aws_vpc.private_vpc.id
 
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    security_groups = [aws_security_group.lambda_sg.id]  # Allow Lambda to reach Bedrock
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lambda_sg.id] # Allow Lambda to reach Bedrock
   }
 
   egress {
@@ -187,7 +245,7 @@ resource "aws_vpc_endpoint" "sqs_endpoint" {
     aws_subnet.private_subnet_1.id,
     aws_subnet.private_subnet_2.id
   ]
-  security_group_ids = [aws_security_group.sqs_sg.id]
+  security_group_ids  = [aws_security_group.sqs_sg.id]
   private_dns_enabled = true
 
   tags = {
@@ -200,10 +258,10 @@ resource "aws_security_group" "sqs_sg" {
   vpc_id = aws_vpc.private_vpc.id
 
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    security_groups = [aws_security_group.lambda_sg.id]  # Allow Lambda to reach SQS
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lambda_sg.id] # Allow Lambda to reach SQS
   }
 
   egress {
