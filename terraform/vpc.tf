@@ -238,9 +238,12 @@ resource "aws_vpc_peering_connection" "bedrock_peering" {
   peer_vpc_id = aws_vpc.bedrock_vpc.id
   peer_region = "us-west-2"
 
+  auto_accept = false # we will need to manually accept within the console
+
   accepter {
     allow_remote_vpc_dns_resolution = true
   }
+
   requester {
     allow_remote_vpc_dns_resolution = true
   }
@@ -253,6 +256,7 @@ resource "aws_vpc_peering_connection" "bedrock_peering" {
 resource "aws_vpc_peering_connection_accepter" "peer_accept" {
   provider                  = aws.us_west_2
   vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
+
   tags = {
     Name = "Bedrock VPC Peering Accepter"
   }
