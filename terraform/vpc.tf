@@ -42,13 +42,6 @@ resource "aws_security_group" "lambda_sg" {
     security_groups = [aws_security_group.rds_sg.id] # Allow outbound connection to rds sg
   }
 
-  ingress {
-    from_port = 443
-    to_port   = 443
-    protocol  = "tcp"
-    cidr_blocks = ["172.20.0.0/16"] # Allow traffic from Bedrock VPC in us-west-2
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -273,7 +266,7 @@ resource "aws_vpc_peering_connection_options" "acceptor_dns" {
         allow_remote_vpc_dns_resolution = true
     }
 
-    depends_on = [ aws_vpc_peering_connection_accepter.peer_accept ]
+    depends_on = [ aws_vpc_peering_connection.bedrock_peering ]
 }
 
 resource "aws_security_group" "bedrock_sg" {
