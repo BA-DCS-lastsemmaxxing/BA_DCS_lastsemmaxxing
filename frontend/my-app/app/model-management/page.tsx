@@ -74,14 +74,6 @@ function ModelRetrainingState({ modelState }: { modelState: ModelState }) {
         <h1 className="text-2xl font-bold text-center mb-2">Model Retraining in Progress</h1>
         <p className="text-gray-600 text-center mb-6">{modelState.type}</p>
         <p className="text-gray-500 text-center mb-6">{getRetrainingMessage()}</p>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex justify-between mb-2">
-              <span className="text-sm font-medium">Retraining Progress</span>
-              <span className="text-sm font-medium">In Progress</span>
-            </div>
-          </div>
           
           <div className="grid grid-cols-2 gap-4 text-center">
             <div className="bg-gray-50 p-4 rounded-lg">
