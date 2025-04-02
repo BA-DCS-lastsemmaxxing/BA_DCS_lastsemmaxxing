@@ -40,6 +40,8 @@ export const auth = {
     if (currentUser) {
       currentUser.signOut();
     }
+    // Clear the CognitoToken cookie after sign-out
+    document.cookie = 'CognitoToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
   },
 
   getCurrentUser: (): Promise<any> => {
