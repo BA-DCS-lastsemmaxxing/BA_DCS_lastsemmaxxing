@@ -283,6 +283,14 @@ export default function ModelManagement() {
       });
       return;
     }
+    if (topics.some((topic) => topic.topic_name === newTopicName)){
+        toast({
+            title: "Topic already exists",
+            description: "Please choose a new topic.",
+            variant: "destructive"
+          });
+        return;
+    }
     if (!topicFiles) {
       toast({
         title: "Sample Documents Required",

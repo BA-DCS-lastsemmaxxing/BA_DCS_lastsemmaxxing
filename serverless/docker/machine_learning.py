@@ -144,9 +144,8 @@ class ModelManager:
         Load the topic mapping CSV file. If not found, return an empty DataFrame.
         Expected columns: file_name, folder_name.
         """
-        if not os.path.exists(self.mapping_file_path):
-            print("Downloading mapping file from S3...", flush=True)
-            s3_client.download_file(model_bucket, "final_file_topic_mapping.csv", self.mapping_file_path)
+        print("Downloading mapping file from S3...", flush=True)
+        s3_client.download_file(model_bucket, "final_file_topic_mapping.csv", self.mapping_file_path)
         return pd.read_csv(self.mapping_file_path)
 
 
