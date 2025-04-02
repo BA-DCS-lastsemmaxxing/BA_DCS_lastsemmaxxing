@@ -442,7 +442,9 @@ class ModelManager:
         Returns a tuple: (filename, predicted_topic, confidence, explanation, source).
         Note: The test document metadata is stored separately (with full file path).
         """
-
+        print("topics before loading: ", self.unique_topics_str)
+        self.update_unique_topics()
+        print("topics after loading: ", self.unique_topics_str)
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
 
