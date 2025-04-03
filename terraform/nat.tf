@@ -2,7 +2,7 @@ module "nat-instance" {
     source = "RaJiska/fck-nat/aws"
     
     name = "nat-instance"
-    vpc_id = aws_vpc.private_vpc.id
+    vpc_id = aws_vpc.main_vpc.id
     subnet_id = aws_subnet.public_subnet_1.id
     instance_type = "t2.micro"
 
@@ -21,7 +21,7 @@ resource "aws_security_group" "nat_sg" {
         from_port = 0
         to_port = 65535
         protocol = "tcp"
-        cidr_blocks = [aws_vpc.private_vpc.cidr_block]
+        cidr_blocks = [aws_vpc.main_vpc.cidr_block]
     }
 
     egress {
