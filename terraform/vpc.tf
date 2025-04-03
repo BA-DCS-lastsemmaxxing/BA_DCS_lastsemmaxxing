@@ -1,4 +1,4 @@
-resource "aws_vpc" "main_vpc" {
+resource "aws_vpc" "private_vpc" {
   cidr_block = "172.28.0.0/16"
 
   enable_dns_hostnames = true
@@ -10,25 +10,25 @@ resource "aws_vpc" "main_vpc" {
 }
 
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
   cidr_block = "172.28.11.0/24"
   availability_zone = "ap-southeast-1a"
 }
 
 resource "aws_subnet" "private_subnet_1" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   cidr_block        = "172.28.1.0/24"
   availability_zone = "ap-southeast-1a"
 }
 
 resource "aws_subnet" "private_subnet_2" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   cidr_block        = "172.28.2.0/24"
   availability_zone = "ap-southeast-1b"
 }
 
 resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   # route {
   #   cidr_block                = "172.20.0.0/16" # Bedrock CIDR Block
@@ -39,7 +39,7 @@ resource "aws_route_table" "private" {
 # Security Group for Lambda Functions
 resource "aws_security_group" "lambda_sg" {
   name   = "lambda-sg"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   ingress {
     from_port       = 3306
@@ -83,7 +83,7 @@ resource "aws_security_group" "lambda_sg" {
 
 # VPC Endpoint for rds_init lambda to access S3
 resource "aws_vpc_endpoint" "s3_endpoint" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   service_name      = "com.amazonaws.${var.region}.s3"
   vpc_endpoint_type = "Gateway"
 
@@ -124,7 +124,7 @@ resource "aws_vpc_endpoint_policy" "s3_endpoint_policy" {
 
 resource "aws_security_group" "rds_sg" {
   name   = "${var.project_name}-rds-sg"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   ingress {
     from_port   = 3306
@@ -156,7 +156,7 @@ resource "aws_security_group_rule" "rds_ingress_from_lambda" {
 
 # VPC Endpoint for step_function trigger lambda to reach step function
 resource "aws_vpc_endpoint" "step_function_endpoint" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   service_name      = "com.amazonaws.${var.region}.states"
   vpc_endpoint_type = "Interface"
   subnet_ids = [
@@ -173,7 +173,7 @@ resource "aws_vpc_endpoint" "step_function_endpoint" {
 
 resource "aws_security_group" "step_function_sg" {
   name   = "${var.project_name}-step-function-sg"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   ingress {
     from_port   = 443
@@ -254,7 +254,7 @@ resource "aws_vpc_endpoint" "bedrock_endpoint" {
 }
 
 # resource "aws_vpc_peering_connection" "bedrock_peering" {
-#   vpc_id      = aws_vpc.main_vpc.id
+#   vpc_id      = aws_vpc.private_vpc.id
 #   peer_vpc_id = aws_vpc.bedrock_vpc.id
 #   peer_region = "us-west-2"
 
@@ -336,7 +336,7 @@ resource "aws_security_group" "bedrock_sg" {
 
 # VPC endpoint for SQS
 resource "aws_vpc_endpoint" "sqs_endpoint" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   service_name      = "com.amazonaws.${var.region}.sqs"
   vpc_endpoint_type = "Interface"
   subnet_ids = [
@@ -353,7 +353,7 @@ resource "aws_vpc_endpoint" "sqs_endpoint" {
 
 resource "aws_security_group" "sqs_sg" {
   name   = "${var.project_name}-sqs-sg"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   ingress {
     from_port       = 443
@@ -424,7 +424,7 @@ resource "aws_security_group" "sqs_sg" {
 
 # resource "aws_route53_resolver_rule_association" "resolver_rule_association" {
 #     resolver_rule_id = aws_route53_resolver_rule.resolver_rule_ap_southeast_1.id
-#     vpc_id = aws_vpc.main_vpc.id
+#     vpc_id = aws_vpc.private_vpc.id
 #     name = "bedrock-rule-association"
 #     depends_on = [aws_route53_resolver_rule.resolver_rule_ap_southeast_1]
 # }
