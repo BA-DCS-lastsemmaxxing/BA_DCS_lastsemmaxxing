@@ -31,6 +31,32 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.private_vpc.id
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.private_vpc.id
+
+  tags = {
+    Name = "VPC IGW"
+  }
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.private_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "Public Route Table"
+  }
+}
+
+resource "aws_route_table_association" "public_subnet" {
+  subnet_id      = aws_subnet.public_subnet_1.id
+  route_table_id = aws_route_table.public.id
+}
+
 # Security Group for Lambda Functions
 resource "aws_security_group" "lambda_sg" {
   name   = "lambda-sg"
