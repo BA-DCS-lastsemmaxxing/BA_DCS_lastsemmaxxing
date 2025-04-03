@@ -31,3 +31,9 @@ resource "aws_security_group" "nat_sg" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 }
+
+resource "aws_route" "private_nat" {
+  route_table_id         = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  network_interface_id   = module.nat-instance.nat_eni_id
+}
