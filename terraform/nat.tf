@@ -9,7 +9,7 @@ module "nat-instance" {
     use_cloudwatch_agent = true
     update_route_tables = true
     route_tables_ids = {
-        "private" = aws_route_table.private_rt.id
+        "private" = aws_route_table.private.id
     }
 }
 
