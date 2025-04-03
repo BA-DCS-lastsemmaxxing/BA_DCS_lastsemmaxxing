@@ -147,11 +147,6 @@ resource "aws_lambda_function" "delete_document_lambda" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "delete_document_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.delete_document_lambda.function_name}"
-  retention_in_days = 7
-}
-
 # Fetch Documents Function
 resource "aws_lambda_function" "fetch_documents_lambda" {
   function_name = "fetch_documents"
@@ -175,11 +170,6 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
-}
-
-resource "aws_cloudwatch_log_group" "fetch_documents_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.fetch_documents_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
 }
 
 # Fetch Corrected Documents Function
@@ -207,11 +197,6 @@ resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "fetch_corrected_documents_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.fetch_corrected_documents_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
-}
-
 # Fetch upload url function
 resource "aws_lambda_function" "fetch_upload_url_lambda" {
   function_name = "fetch_upload_url"
@@ -235,11 +220,6 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     }
   }
-}
-
-resource "aws_cloudwatch_log_group" "fetch_upload_url_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.fetch_upload_url_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
 }
 
 # Fetch download url function
@@ -267,11 +247,6 @@ resource "aws_lambda_function" "fetch_download_url_lambda" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "fetch_download_url_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.fetch_download_url_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
-}
-
 # Insert new document into RDS function
 resource "aws_lambda_function" "insert_rds_new_document_lambda" {
   function_name = "insert_rds_new_document"
@@ -295,11 +270,6 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
-}
-
-resource "aws_cloudwatch_log_group" "insert_rds_new_document_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.insert_rds_new_document_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
 }
 
 # Lambda function triggered on new object in S3
@@ -328,11 +298,6 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "s3_trigger_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.s3_trigger_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
-}
-
 # Send Feedback Lambda
 resource "aws_lambda_function" "send_feedback_lambda" {
   function_name = "send_feedback"
@@ -356,11 +321,6 @@ resource "aws_lambda_function" "send_feedback_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
-}
-
-resource "aws_cloudwatch_log_group" "send_feedback_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.send_feedback_lambda.function_name}"
-  retention_in_days = 7
 }
 
 # Document classification lambda
@@ -389,11 +349,6 @@ resource "aws_lambda_function" "document_classification_lambda" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "document_classification_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.document_classification_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
-}
-
 # Add new topic lambda
 resource "aws_lambda_function" "add_new_topic_lambda" {
   function_name = "add_new_topic"
@@ -418,11 +373,6 @@ resource "aws_lambda_function" "add_new_topic_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     })
   }
-}
-
-resource "aws_cloudwatch_log_group" "add_new_topic_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.add_new_topic_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
 }
 
 # Remove topic lambda
@@ -451,11 +401,6 @@ resource "aws_lambda_function" "remove_topic_lambda" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "remove_topic_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.remove_topic_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
-}
-
 # Add new topic lambda
 resource "aws_lambda_function" "feedback_retraining_lambda" {
   function_name = "feedback_retraining"
@@ -482,11 +427,6 @@ resource "aws_lambda_function" "feedback_retraining_lambda" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "feedback_retraining_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.feedback_retraining_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
-}
-
 # Fetch topics function
 resource "aws_lambda_function" "fetch_topics_lambda" {
   function_name = "fetch_topics"
@@ -510,11 +450,6 @@ resource "aws_lambda_function" "fetch_topics_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
-}
-
-resource "aws_cloudwatch_log_group" "fetch_topics_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.fetch_topics_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
 }
 
 # Attach the policy to the role
@@ -589,12 +524,6 @@ resource "aws_lambda_function" "auth_lambda_edge" {
   publish       = true
 
   source_code_hash = data.aws_s3_object.auth_lambda_zip.etag
-}
-
-resource "aws_cloudwatch_log_group" "auth_lambda_edge_logs" {
-  provider          = aws.us-east-1
-  name              = "/aws/lambda/${aws_lambda_function.rds_init_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
 }
 
 # Document processing workflow
@@ -789,45 +718,4 @@ resource "aws_lambda_function" "rds_init_lambda" {
       }
     )
   }
-}
-
-resource "aws_cloudwatch_log_group" "rds_init_lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.rds_init_lambda.function_name}"
-  retention_in_days = 7 # Adjust retention as needed
-}
-
-resource "aws_sqs_queue" "add_new_topic_queue" {
-  name                       = "add-new-topic-queue"
-  visibility_timeout_seconds = 910
-}
-
-resource "aws_lambda_event_source_mapping" "add_new_topic_queue_mapping" {
-  event_source_arn = aws_sqs_queue.add_new_topic_queue.arn
-  function_name    = aws_lambda_function.add_new_topic_lambda.arn
-  batch_size       = 1
-  enabled          = true
-}
-
-resource "aws_sqs_queue" "remove_topic_queue" {
-  name                       = "remove-topic-queue"
-  visibility_timeout_seconds = 910
-}
-
-resource "aws_lambda_event_source_mapping" "remove_topic_queue_mapping" {
-  event_source_arn = aws_sqs_queue.remove_topic_queue.arn
-  function_name    = aws_lambda_function.remove_topic_lambda.arn
-  batch_size       = 1
-  enabled          = true
-}
-
-resource "aws_sqs_queue" "feedback_retraining_queue" {
-  name                       = "feedback-retraining-queue"
-  visibility_timeout_seconds = 910
-}
-
-resource "aws_lambda_event_source_mapping" "feedback_retraining_queue_mapping" {
-  event_source_arn = aws_sqs_queue.feedback_retraining_queue.arn
-  function_name    = aws_lambda_function.feedback_retraining_lambda.arn
-  batch_size       = 1
-  enabled          = true
 }
