@@ -13,18 +13,28 @@ resource "aws_subnet" "public_subnet_1" {
   vpc_id = aws_vpc.private_vpc.id
   cidr_block = "172.28.11.0/24"
   availability_zone = "ap-southeast-1a"
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "Public Subnet 1"
+  }
 }
 
 resource "aws_subnet" "private_subnet_1" {
   vpc_id            = aws_vpc.private_vpc.id
   cidr_block        = "172.28.1.0/24"
   availability_zone = "ap-southeast-1a"
+  tags = {
+    Name = "Private Subnet 1"
+  }
 }
 
 resource "aws_subnet" "private_subnet_2" {
   vpc_id            = aws_vpc.private_vpc.id
   cidr_block        = "172.28.2.0/24"
   availability_zone = "ap-southeast-1b"
+  tags = {
+    Name = "Private Subnet 2"
+  }
 }
 
 resource "aws_route_table" "private" {
@@ -41,7 +51,12 @@ resource "aws_internet_gateway" "igw" {
 
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.private_vpc.id
-  
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
   tags = {
     Name = "Public Route Table"
   }
