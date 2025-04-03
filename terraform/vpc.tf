@@ -1,4 +1,4 @@
-resource "aws_vpc" "main_vpc" {
+resource "aws_vpc" "private_vpc" {
   cidr_block = "172.28.0.0/16"
 
   enable_dns_hostnames = true
@@ -9,37 +9,70 @@ resource "aws_vpc" "main_vpc" {
   }
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.private_vpc.id
+
+  tags = {
+    Name = "VPC IGW"
+  }
+}
+
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
   cidr_block = "172.28.11.0/24"
   availability_zone = "ap-southeast-1a"
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "Public Subnet 1"
+  }
 }
 
 resource "aws_subnet" "private_subnet_1" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   cidr_block        = "172.28.1.0/24"
   availability_zone = "ap-southeast-1a"
+  tags = {
+    Name = "Private Subnet 1"
+  }
 }
 
 resource "aws_subnet" "private_subnet_2" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   cidr_block        = "172.28.2.0/24"
   availability_zone = "ap-southeast-1b"
+  tags = {
+    Name = "Private Subnet 2"
+  }
 }
 
 resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
+}
 
-  # route {
-  #   cidr_block                = "172.20.0.0/16" # Bedrock CIDR Block
-  #   vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
-  # }
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.private_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  depends_on = [ aws_internet_gateway.igw ]
+
+  tags = {
+    Name = "Public Route Table"
+  }
+}
+
+resource "aws_route_table_association" "public_subnet" {
+  subnet_id      = aws_subnet.public_subnet_1.id
+  route_table_id = aws_route_table.public.id
 }
 
 # Security Group for Lambda Functions
 resource "aws_security_group" "lambda_sg" {
   name   = "lambda-sg"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   ingress {
     from_port       = 3306
@@ -55,20 +88,6 @@ resource "aws_security_group" "lambda_sg" {
     cidr_blocks = ["172.20.0.0/16"] # Allow responses from bedrock in us-west-2
   }
 
-  # ingress {
-  #   from_port = 53
-  #   to_port   = 53
-  #   protocol = "udp"
-  #   cidr_blocks = ["172.20.0.0/16"] # Allow DNS resolution for bedrock in us-west-2
-  # }
-
-  # ingress {
-  #   from_port = 53
-  #   to_port   = 53
-  #   protocol = "tcp"
-  #   cidr_blocks = ["172.20.0.0/16"]
-  # }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -83,7 +102,7 @@ resource "aws_security_group" "lambda_sg" {
 
 # VPC Endpoint for rds_init lambda to access S3
 resource "aws_vpc_endpoint" "s3_endpoint" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   service_name      = "com.amazonaws.${var.region}.s3"
   vpc_endpoint_type = "Gateway"
 
@@ -124,7 +143,7 @@ resource "aws_vpc_endpoint_policy" "s3_endpoint_policy" {
 
 resource "aws_security_group" "rds_sg" {
   name   = "${var.project_name}-rds-sg"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   ingress {
     from_port   = 3306
@@ -156,7 +175,7 @@ resource "aws_security_group_rule" "rds_ingress_from_lambda" {
 
 # VPC Endpoint for step_function trigger lambda to reach step function
 resource "aws_vpc_endpoint" "step_function_endpoint" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   service_name      = "com.amazonaws.${var.region}.states"
   vpc_endpoint_type = "Interface"
   subnet_ids = [
@@ -173,7 +192,7 @@ resource "aws_vpc_endpoint" "step_function_endpoint" {
 
 resource "aws_security_group" "step_function_sg" {
   name   = "${var.project_name}-step-function-sg"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   ingress {
     from_port   = 443
@@ -194,149 +213,9 @@ resource "aws_security_group" "step_function_sg" {
   }
 }
 
-# VPC and VPC endpoint for bedrock
-resource "aws_vpc" "bedrock_vpc" {
-  provider             = aws.us_west_2
-  cidr_block           = "172.20.0.0/16"
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-
-  tags = {
-    Name = "us-west-2 Bedrock VPC"
-  }
-}
-
-resource "aws_subnet" "bedrock_subnet" {
-  provider          = aws.us_west_2
-  vpc_id            = aws_vpc.bedrock_vpc.id
-  cidr_block        = "172.20.1.0/24"
-  availability_zone = "us-west-2a"
-
-  tags = {
-    Name = "bedrock-subnet"
-  }
-}
-
-resource "aws_route_table" "bedrock_rt" {
-  provider = aws.us_west_2
-  vpc_id   = aws_vpc.bedrock_vpc.id
-
-  # route {
-  #   cidr_block                = "172.28.0.0/16"
-  #   vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
-  # }
-
-  tags = {
-    Name = "bedrock-route-table"
-  }
-}
-
-resource "aws_route_table_association" "bedrock_subnet_association" {
-  provider       = aws.us_west_2
-  subnet_id      = aws_subnet.bedrock_subnet.id
-  route_table_id = aws_route_table.bedrock_rt.id
-}
-
-resource "aws_vpc_endpoint" "bedrock_endpoint" {
-  provider          = aws.us_west_2
-  vpc_id            = aws_vpc.bedrock_vpc.id
-  service_name      = "com.amazonaws.us-west-2.bedrock-runtime"
-  vpc_endpoint_type = "Interface"
-  subnet_ids = [
-    aws_subnet.bedrock_subnet.id
-  ]
-  security_group_ids = [aws_security_group.bedrock_sg.id]
-  private_dns_enabled = true
-
-  tags = {
-    Name = "Bedrock VPC Endpoint"
-  }
-}
-
-# resource "aws_vpc_peering_connection" "bedrock_peering" {
-#   vpc_id      = aws_vpc.main_vpc.id
-#   peer_vpc_id = aws_vpc.bedrock_vpc.id
-#   peer_region = "us-west-2"
-
-#   auto_accept = false # we will need to manually accept within the console
-
-#   tags = {
-#     Name = "Bedrock VPC Peering"
-#   }
-# }
-
-# resource "aws_vpc_peering_connection_accepter" "peer_accept" {
-#   provider                  = aws.us_west_2
-#   vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
-
-#   auto_accept = true
-#   depends_on = [ aws_vpc_peering_connection.bedrock_peering ]
-
-#   tags = {
-#     Name = "Bedrock VPC Peering Accepter"
-#   }
-# }
-
-# resource "aws_vpc_peering_connection_options" "requester_dns" {
-#     vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
-#     requester {
-#         allow_remote_vpc_dns_resolution = true
-#     }
-
-#     depends_on = [ aws_vpc_peering_connection.bedrock_peering ]
-# }
-
-# resource "aws_vpc_peering_connection_options" "acceptor_dns" {
-#     provider = aws.us_west_2
-#     vpc_peering_connection_id = aws_vpc_peering_connection.bedrock_peering.id
-#     accepter {
-#         allow_remote_vpc_dns_resolution = true
-#     }
-
-#     depends_on = [ aws_vpc_peering_connection.bedrock_peering ]
-# }
-
-resource "aws_security_group" "bedrock_sg" {
-  provider = aws.us_west_2
-  name     = "${var.project_name}-bedrock-sg"
-  vpc_id   = aws_vpc.bedrock_vpc.id
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["172.28.0.0/16"] # Allow Lambda to reach Bedrock from ap-southeast-1
-  }
-
-  # ingress {
-  #   from_port = 53
-  #   to_port   = 53
-  #   protocol = "udp"
-  #   cidr_blocks = ["172.28.0.0/16"] # Allow DNS resolution for Lambda to reach Bedrock from ap-southeast-1  
-  # }
-
-  # ingress {
-  #   from_port = 53
-  #   to_port = 53
-  #   protocol = "tcp"
-  #   cidr_blocks = ["172.28.0.0/16"] # Allow DNS resolution for Lambda to reach Bedrock from ap-southeast-1
-  # }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "Bedrock Security Group"
-  }
-}
-
 # VPC endpoint for SQS
 resource "aws_vpc_endpoint" "sqs_endpoint" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.private_vpc.id
   service_name      = "com.amazonaws.${var.region}.sqs"
   vpc_endpoint_type = "Interface"
   subnet_ids = [
@@ -353,7 +232,7 @@ resource "aws_vpc_endpoint" "sqs_endpoint" {
 
 resource "aws_security_group" "sqs_sg" {
   name   = "${var.project_name}-sqs-sg"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.private_vpc.id
 
   ingress {
     from_port       = 443
@@ -373,58 +252,3 @@ resource "aws_security_group" "sqs_sg" {
     Name = "SQS Security Group"
   }
 }
-
-# Create the Route 53 Resolver for DNS resolution between VPC regions
-# resource "aws_route53_resolver_endpoint" "inbound_us_west_2" {
-#     provider = aws.us_west_2
-#     direction = "INBOUND"
-#     name = "bedrock-inbound"
-#     security_group_ids = [aws_security_group.bedrock_sg.id]
-
-#     ip_address {
-#         subnet_id = aws_subnet.bedrock_subnet.id
-#         ip = "172.20.1.10"
-#     }
-
-#     ip_address {
-#         subnet_id = aws_subnet.bedrock_subnet.id
-#         ip = "172.20.1.11"
-#     }
-# }
-
-# resource "aws_route53_resolver_endpoint" "outbound_ap_southeast_1" {
-#     direction = "OUTBOUND"
-#     name = "bedrock-outbound"
-#     security_group_ids = [aws_security_group.lambda_sg.id]
-
-#     ip_address {
-#         subnet_id = aws_subnet.private_subnet_1.id
-#         ip = "172.28.1.10"
-#     }
-
-#     ip_address {
-#       subnet_id = aws_subnet.private_subnet_1.id
-#       ip = "172.28.1.11"
-#     }
-# }
-
-# resource "aws_route53_resolver_rule" "resolver_rule_ap_southeast_1" {
-#     domain_name = "bedrock-runtime.us-west-2.amazonaws.com"
-#     name = "forward-bedrock-rule"
-#     rule_type = "FORWARD"
-#     resolver_endpoint_id = aws_route53_resolver_endpoint.outbound_ap_southeast_1.id
-
-#     target_ip {
-#         ip = "172.20.1.10"
-#     }
-#     target_ip {
-#         ip = "172.20.1.11"
-#     }
-# }
-
-# resource "aws_route53_resolver_rule_association" "resolver_rule_association" {
-#     resolver_rule_id = aws_route53_resolver_rule.resolver_rule_ap_southeast_1.id
-#     vpc_id = aws_vpc.main_vpc.id
-#     name = "bedrock-rule-association"
-#     depends_on = [aws_route53_resolver_rule.resolver_rule_ap_southeast_1]
-# }
