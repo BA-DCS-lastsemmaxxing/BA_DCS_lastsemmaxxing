@@ -9,6 +9,14 @@ resource "aws_vpc" "private_vpc" {
   }
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.private_vpc.id
+
+  tags = {
+    Name = "VPC IGW"
+  }
+}
+
 resource "aws_subnet" "public_subnet_1" {
   vpc_id = aws_vpc.private_vpc.id
   cidr_block = "172.28.11.0/24"
@@ -41,14 +49,6 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.private_vpc.id
 }
 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.private_vpc.id
-
-  tags = {
-    Name = "VPC IGW"
-  }
-}
-
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.private_vpc.id
 
@@ -56,6 +56,8 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
+
+  depends_on = [ aws_internet_gateway.igw ]
 
   tags = {
     Name = "Public Route Table"
