@@ -36,8 +36,8 @@ jobs:
       - name: Build and push docker image for ML ECR image
         run: |
           docker build -t document-classification ./serverless/docker/
-          docker tag document-classification:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com/lsm-fyp-repo:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com/lsm-fyp-repo:latest
+          docker tag document-classification:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com/${{vars.AWS_ECR_REPO}}:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com/${{vars.AWS_ECR_REPO}}:latest
 
       - name: Zip Functions and Deploy
         run: |
