@@ -25,6 +25,19 @@ resource "aws_api_gateway_deployment" "prod_deployment" {
   lifecycle {
     create_before_destroy = true
   }
+
+  depends_on = [ 
+    aws_api_gateway_method.topics_method_get,
+    aws_api_gateway_method.topics_method_post,
+    aws_api_gateway_method.topics_method_delete,
+    aws_api_gateway_method.documents_method_get,
+    aws_api_gateway_method.documents_method_delete,
+    aws_api_gateway_method.upload_url_method_get,
+    aws_api_gateway_method.download_url_method_get,
+    aws_api_gateway_method.documents_corrected_method_get,
+    aws_api_gateway_method.feedback_method_post,
+    aws_api_gateway_method.retrain_method_post,
+  ]
 }
 
 # Create a resource for /topics
