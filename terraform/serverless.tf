@@ -132,15 +132,15 @@ resource "aws_lambda_function" "delete_document_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-    S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Fetch Documents Function
@@ -165,14 +165,14 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Fetch Corrected Documents Function
@@ -197,14 +197,14 @@ resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Fetch upload url function
@@ -231,7 +231,7 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
     }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Fetch download url function
@@ -258,7 +258,7 @@ resource "aws_lambda_function" "fetch_download_url_lambda" {
     }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Insert new document into RDS function
@@ -283,14 +283,14 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Lambda function triggered on new object in S3
@@ -318,7 +318,7 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
     }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Send Feedback Lambda
@@ -343,14 +343,14 @@ resource "aws_lambda_function" "send_feedback_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Document classification lambda
@@ -373,16 +373,16 @@ resource "aws_lambda_function" "document_classification_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-    REGION    = var.region
-    S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      REGION      = var.region
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Add new topic lambda
@@ -405,16 +405,16 @@ resource "aws_lambda_function" "add_new_topic_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-    REGION    = var.region
-    S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      REGION      = var.region
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Remove topic lambda
@@ -437,16 +437,16 @@ resource "aws_lambda_function" "remove_topic_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-    REGION    = var.region
-    S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      REGION      = var.region
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Add new topic lambda
@@ -469,16 +469,16 @@ resource "aws_lambda_function" "feedback_retraining_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-    REGION    = var.region
-    S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      REGION      = var.region
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Fetch topics function
@@ -503,14 +503,14 @@ resource "aws_lambda_function" "fetch_topics_lambda" {
 
   environment {
     variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
-  }
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+    }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+
 }
 
 # Attach the policy to the role
@@ -761,7 +761,7 @@ resource "aws_lambda_function" "rds_init_lambda" {
   s3_key           = "rds_init.zip"
   role             = aws_iam_role.rds_init_lambda_role.arn
   source_code_hash = data.aws_s3_object.rds_init_lambda_zip.etag
-  timeout = 30
+  timeout          = 30
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
@@ -772,11 +772,11 @@ resource "aws_lambda_function" "rds_init_lambda" {
 
   environment {
     variables = {
-      DB_HOST     = aws_db_instance.rds.address,
-      DB_USER     = local.rds_credentials.username,
-      DB_PASSWORD = local.rds_credentials.password,
-      DB_NAME     = aws_db_instance.rds.db_name,
-      S3_BUCKET   = aws_s3_bucket.serverless_bucket_ap.bucket
+      DB_HOST      = aws_db_instance.rds.address,
+      DB_USER      = local.rds_credentials.username,
+      DB_PASSWORD  = local.rds_credentials.password,
+      DB_NAME      = aws_db_instance.rds.db_name,
+      S3_BUCKET    = aws_s3_bucket.serverless_bucket_ap.bucket
       SQL_FILE_KEY = "rds_init_script.sql"
     }
   }
