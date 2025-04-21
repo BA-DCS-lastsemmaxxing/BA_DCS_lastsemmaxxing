@@ -517,15 +517,11 @@ resource "aws_lambda_function" "fetch_topics_lambda" {
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
   role       = aws_iam_role.lambda_execution_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
-
-  depends_on = [aws_iam_role.lambda_execution_role, aws_iam_policy.lambda_policy]
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   role       = aws_iam_role.lambda_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-
-  depends_on = [aws_iam_role.lambda_execution_role]
 }
 
 # Code for Lambda Edge Function - Lambda Authoriser
