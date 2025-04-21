@@ -145,6 +145,8 @@ resource "aws_lambda_function" "delete_document_lambda" {
       }
     )
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Fetch Documents Function
@@ -170,6 +172,8 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Fetch Corrected Documents Function
@@ -195,6 +199,8 @@ resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Fetch upload url function
@@ -220,6 +226,8 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     }
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Fetch download url function
@@ -245,6 +253,8 @@ resource "aws_lambda_function" "fetch_download_url_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     }
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Insert new document into RDS function
@@ -270,6 +280,8 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Lambda function triggered on new object in S3
@@ -296,6 +308,8 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
       STEP_FUNCTION_ARN = aws_sfn_state_machine.s3_workflow.arn
     }
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Send Feedback Lambda
@@ -321,6 +335,8 @@ resource "aws_lambda_function" "send_feedback_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Document classification lambda
@@ -347,6 +363,8 @@ resource "aws_lambda_function" "document_classification_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     })
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Add new topic lambda
@@ -373,6 +391,8 @@ resource "aws_lambda_function" "add_new_topic_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     })
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Remove topic lambda
@@ -399,6 +419,8 @@ resource "aws_lambda_function" "remove_topic_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     })
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Add new topic lambda
@@ -425,6 +447,8 @@ resource "aws_lambda_function" "feedback_retraining_lambda" {
       S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
     })
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Fetch topics function
@@ -450,6 +474,8 @@ resource "aws_lambda_function" "fetch_topics_lambda" {
   environment {
     variables = local.lambda_db_variables
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Attach the policy to the role
