@@ -146,7 +146,7 @@ resource "aws_lambda_function" "delete_document_lambda" {
     )
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Fetch Documents Function
@@ -173,7 +173,7 @@ resource "aws_lambda_function" "fetch_documents_lambda" {
     variables = local.lambda_db_variables
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Fetch Corrected Documents Function
@@ -200,7 +200,7 @@ resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
     variables = local.lambda_db_variables
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Fetch upload url function
@@ -227,7 +227,7 @@ resource "aws_lambda_function" "fetch_upload_url_lambda" {
     }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Fetch download url function
@@ -254,7 +254,7 @@ resource "aws_lambda_function" "fetch_download_url_lambda" {
     }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Insert new document into RDS function
@@ -281,7 +281,7 @@ resource "aws_lambda_function" "insert_rds_new_document_lambda" {
     variables = local.lambda_db_variables
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Lambda function triggered on new object in S3
@@ -309,7 +309,7 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
     }
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Send Feedback Lambda
@@ -336,7 +336,7 @@ resource "aws_lambda_function" "send_feedback_lambda" {
     variables = local.lambda_db_variables
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Document classification lambda
@@ -364,7 +364,7 @@ resource "aws_lambda_function" "document_classification_lambda" {
     })
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Add new topic lambda
@@ -392,7 +392,7 @@ resource "aws_lambda_function" "add_new_topic_lambda" {
     })
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Remove topic lambda
@@ -420,7 +420,7 @@ resource "aws_lambda_function" "remove_topic_lambda" {
     })
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Add new topic lambda
@@ -448,7 +448,7 @@ resource "aws_lambda_function" "feedback_retraining_lambda" {
     })
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Fetch topics function
@@ -475,7 +475,7 @@ resource "aws_lambda_function" "fetch_topics_lambda" {
     variables = local.lambda_db_variables
   }
 
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution, aws_db_instance.rds ]
 }
 
 # Attach the policy to the role
