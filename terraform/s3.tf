@@ -144,49 +144,11 @@ data "aws_s3_object" "auth_lambda_zip" {
   key = "auth_lambda.zip"
 }
 
-data "aws_s3_object" "delete_document_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "delete_document.zip"
-}
+data "aws_s3_object" "lambda_zips" {
+  for_each = local.lambda_functions
 
-data "aws_s3_object" "fetch_documents_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_documents.zip"
-}
-
-data "aws_s3_object" "fetch_upload_url_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_upload_url.zip"
-}
-
-data "aws_s3_object" "fetch_download_url_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_download_url.zip"
-}
-
-data "aws_s3_object" "insert_rds_new_document_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "insert_rds_new_document.zip"
-}
-
-data "aws_s3_object" "fetch_topics_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_topics.zip"
-}
-
-data "aws_s3_object" "fetch_corrected_documents_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_topics.zip"
-}
-
-data "aws_s3_object" "s3_trigger_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "s3_trigger.zip"
-}
-
-data "aws_s3_object" "send_feedback_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "send_feedback.zip"
+  bucket = "${var.project_name}-serverless-ap"
+  key = "${each.key}.zip"
 }
 
 // ML Model pickle file
