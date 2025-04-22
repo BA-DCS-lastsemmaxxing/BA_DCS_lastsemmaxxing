@@ -358,7 +358,7 @@ resource "aws_sfn_state_machine" "s3_workflow" {
     "States": {
       "InsertIntoRDS": {
         "Type": "Task",
-        "Resource": "${aws_lambda_function.zip_lambdas["insert_rds_new_document_lambda"].arn}",
+        "Resource": "${aws_lambda_function.zip_lambdas["insert_rds_new_document"].arn}",
         "Next": "ProcessDocument"
       },
       "ProcessDocument": {
@@ -402,7 +402,7 @@ resource "aws_iam_policy" "step_function_policy" {
           "lambda:InvokeFunction"
         ]
         Resource = [
-          aws_lambda_function.zip_lambdas["insert_rds_new_document_lambda"].arn,
+          aws_lambda_function.zip_lambdas["insert_rds_new_document"].arn,
           aws_lambda_function.document_classification_lambda.arn
         ]
       },
