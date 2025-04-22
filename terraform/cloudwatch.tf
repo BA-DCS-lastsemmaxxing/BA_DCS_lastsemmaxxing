@@ -1,5 +1,5 @@
 locals {
-  lambda_functions = merge(
+  lambda_functions_cloudwatch = merge(
     aws_lambda_function.zip_lambdas,
     {
       "document_classification_lambda" = aws_lambda_function.document_classification_lambda,
@@ -14,7 +14,7 @@ locals {
 
 // cloudwatch groups for lambda functions
 resource "aws_cloudwatch_log_group" "lambda_log_groups" {
-  for_each = local.lambda_functions
+  for_each = local.lambda_functions_cloudwatch
 
   name              = "/aws/lambda/${each.value.function_name}"
   retention_in_days = 7
