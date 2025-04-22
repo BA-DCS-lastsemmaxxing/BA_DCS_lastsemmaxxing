@@ -273,7 +273,7 @@ resource "aws_api_gateway_integration_response" "topics_method_delete_integratio
 resource "aws_lambda_permission" "topics_method_delete_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.zip_lambdas["remove_topic"].function_name
+    function_name = aws_lambda_function.remove_topic_lambda.function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
@@ -812,7 +812,7 @@ resource "aws_api_gateway_integration" "feedback_method_post_integration" {
 resource "aws_lambda_permission" "feedback_method_post_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.zip_lambdas["send_feedback_lambda"].function_name
+    function_name = aws_lambda_function.zip_lambdas["send_feedback"].function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
