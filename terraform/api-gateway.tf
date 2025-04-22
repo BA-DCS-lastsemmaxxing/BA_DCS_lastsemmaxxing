@@ -114,7 +114,7 @@ resource "aws_api_gateway_integration" "topics_method_get_integration" {
 
   type = "AWS_PROXY"
   integration_http_method = "POST"
-  uri = aws_lambda_function.fetch_topics_lambda.invoke_arn
+  uri = aws_lambda_function.zip_lambdas["fetch_topics_lambda"].invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "topics_method_get_response" {
@@ -135,7 +135,7 @@ resource "aws_api_gateway_method_response" "topics_method_get_response" {
 resource "aws_lambda_permission" "topics_method_get_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.fetch_topics_lambda.function_name
+    function_name = aws_lambda_function.zip_lambdas["fetch_topics_lambda"].function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
@@ -273,7 +273,7 @@ resource "aws_api_gateway_integration_response" "topics_method_delete_integratio
 resource "aws_lambda_permission" "topics_method_delete_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.remove_topic_lambda.function_name
+    function_name = aws_lambda_function.zip_lambdas["remove_topic_lambda"].function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
@@ -389,7 +389,7 @@ resource "aws_api_gateway_integration" "documents_method_get_integration" {
 
   type = "AWS_PROXY"
   integration_http_method = "POST"
-  uri = aws_lambda_function.fetch_documents_lambda.invoke_arn
+  uri = aws_lambda_function.zip_lambdas["fetch_documents_lambda"].invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "documents_method_get_response" {
@@ -410,7 +410,7 @@ resource "aws_api_gateway_method_response" "documents_method_get_response" {
 resource "aws_lambda_permission" "documents_method_get_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.fetch_documents_lambda.function_name
+    function_name = aws_lambda_function.zip_lambdas["fetch_documents_lambda"].function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
@@ -431,7 +431,7 @@ resource "aws_api_gateway_integration" "documents_method_delete_integration" {
 
   type = "AWS_PROXY"
   integration_http_method = "POST"
-  uri = aws_lambda_function.delete_document_lambda.invoke_arn
+  uri = aws_lambda_function.zip_lambdas["delete_document_lambda"].invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "documents_method_delete_response" {
@@ -451,7 +451,7 @@ resource "aws_api_gateway_method_response" "documents_method_delete_response" {
 resource "aws_lambda_permission" "documents_method_delete_lambda_permission" {
   statement_id = "AllowAPIGatewayInvoke"
   action = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.delete_document_lambda.function_name
+  function_name = aws_lambda_function.zip_lambdas["delete_document_lambda"].function_name
   principal = "apigateway.amazonaws.com"
   source_arn = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
@@ -536,7 +536,7 @@ resource "aws_api_gateway_integration" "documents_corrected_method_get_integrati
 
   type = "AWS_PROXY"
   integration_http_method = "POST"
-  uri = aws_lambda_function.fetch_corrected_documents_lambda.invoke_arn
+  uri = aws_lambda_function.zip_lambdas["fetch_corrected_documents_lambda"].invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "documents_corrected_method_get_response" {
@@ -557,7 +557,7 @@ resource "aws_api_gateway_method_response" "documents_corrected_method_get_respo
 resource "aws_lambda_permission" "documents_corrected_method_get_lambda_permission" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.fetch_corrected_documents_lambda.function_name
+  function_name = aws_lambda_function.zip_lambdas["fetch_corrected_documents_lambda"].function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
@@ -584,13 +584,13 @@ resource "aws_api_gateway_integration" "upload_url_method_get_integration" {
     
     integration_http_method = "POST" # Always POST for Lambda proxy integration
     type = "AWS_PROXY"
-    uri = aws_lambda_function.fetch_upload_url_lambda.invoke_arn
+    uri = aws_lambda_function.zip_lambdas["fetch_upload_url_lambda"].invoke_arn
 }
 
 resource "aws_lambda_permission" "upload_url_method_get_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.fetch_upload_url_lambda.function_name
+    function_name = aws_lambda_function.zip_lambdas["fetch_upload_url_lambda"].function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
@@ -673,13 +673,13 @@ resource "aws_api_gateway_integration" "download_url_method_get_integration" {
     
     integration_http_method = "POST" # Always POST for Lambda proxy integration
     type = "AWS_PROXY"
-    uri = aws_lambda_function.fetch_download_url_lambda.invoke_arn
+    uri = aws_lambda_function.zip_lambdas["fetch_download_url_lambda"].invoke_arn
 }
 
 resource "aws_lambda_permission" "download_url_method_get_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.fetch_download_url_lambda.function_name
+    function_name = aws_lambda_function.zip_lambdas["fetch_download_url_lambda"].function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
@@ -806,13 +806,13 @@ resource "aws_api_gateway_integration" "feedback_method_post_integration" {
 
   integration_http_method = "POST"
   type = "AWS_PROXY"
-  uri = aws_lambda_function.send_feedback_lambda.invoke_arn
+  uri = aws_lambda_function.zip_lambdas["send_feedback_lambda"].invoke_arn
 }
 
 resource "aws_lambda_permission" "feedback_method_post_lambda_permission" {
     statement_id  = "AllowAPIGatewayInvoke"
     action        = "lambda:InvokeFunction"
-    function_name = aws_lambda_function.send_feedback_lambda.function_name
+    function_name = aws_lambda_function.zip_lambdas["send_feedback_lambda"].function_name
     principal     = "apigateway.amazonaws.com"
     source_arn    = "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*/*"
 }
