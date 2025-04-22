@@ -1,5 +1,16 @@
 locals {
   rds_credentials = jsondecode(data.aws_ssm_parameter.db_credentials.value)
+
+  lambda_functions = {
+    delete_document = "delete_document.lambda_handler",
+    fetch_documents = "fetch_documents.lambda_handler",
+    fetch_corrected_documents = "fetch_corrected_documents.lambda_handler",
+    fetch_upload_url = "fetch_upload_url.lambda_handler",
+    fetch_download_url = "fetch_download_url.lambda_handler",
+    insert_rds_new_document = "insert_rds_new_document.lambda_handler",
+    s3_trigger = "s3_trigger.lambda_handler",
+    send_feedback = "send_feedback.lambda_handler",
+  }
 }
 
 # ECR Repository
@@ -121,18 +132,19 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# Delete Document Function
-resource "aws_lambda_function" "delete_document_lambda" {
-  function_name = "delete_document"
+# Lambda Functions from S3 Zips
+resource "aws_lambda_function" "zip_lambdas" {
+  for_each = local.lambda_functions
 
+  function_name = each.key
+  handler = each.value
   runtime = "python3.9"
-  handler = "delete_document.lambda_handler"
 
   s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "delete_document.zip"
+  s3_key    = "${each.key}.zip"
 
   role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
+  source_code_hash = data.aws_s3_object[each.key].etag
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
@@ -140,7 +152,6 @@ resource "aws_lambda_function" "delete_document_lambda" {
     subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
-
   environment {
     variables = {
       DB_HOST     = aws_db_instance.rds.address
@@ -150,218 +161,6 @@ resource "aws_lambda_function" "delete_document_lambda" {
       S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
     }
   }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
-}
-
-# Fetch Documents Function
-resource "aws_lambda_function" "fetch_documents_lambda" {
-  function_name = "fetch_documents"
-
-  runtime = "python3.9"
-  handler = "fetch_documents.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_documents.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_documents_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      DB_HOST     = aws_db_instance.rds.address
-      DB_USER     = local.rds_credentials.username
-      DB_PASSWORD = local.rds_credentials.password
-      DB_NAME     = aws_db_instance.rds.db_name
-    }
-  }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
-}
-
-# Fetch Corrected Documents Function
-resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
-  function_name = "fetch_corrected_documents"
-
-  runtime = "python3.9"
-  handler = "fetch_corrected_documents.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_corrected_documents.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_corrected_documents_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      DB_HOST     = aws_db_instance.rds.address
-      DB_USER     = local.rds_credentials.username
-      DB_PASSWORD = local.rds_credentials.password
-      DB_NAME     = aws_db_instance.rds.db_name
-    }
-  }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
-}
-
-# Fetch upload url function
-resource "aws_lambda_function" "fetch_upload_url_lambda" {
-  function_name = "fetch_upload_url"
-
-  runtime = "python3.9"
-  handler = "fetch_upload_url.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_upload_url.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_upload_url_lambda_zip.etag
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-    }
-  }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
-}
-
-# Fetch download url function
-resource "aws_lambda_function" "fetch_download_url_lambda" {
-  function_name = "fetch_download_url"
-
-  runtime = "python3.9"
-  handler = "fetch_download_url.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_download_url.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_download_url_lambda_zip.etag
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-    }
-  }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
-}
-
-# Insert new document into RDS function
-resource "aws_lambda_function" "insert_rds_new_document_lambda" {
-  function_name = "insert_rds_new_document"
-
-  runtime = "python3.9"
-  handler = "insert_rds_new_document.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "insert_rds_new_document.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.insert_rds_new_document_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      DB_HOST     = aws_db_instance.rds.address
-      DB_USER     = local.rds_credentials.username
-      DB_PASSWORD = local.rds_credentials.password
-      DB_NAME     = aws_db_instance.rds.db_name
-    }
-  }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
-}
-
-# Lambda function triggered on new object in S3
-resource "aws_lambda_function" "s3_trigger_lambda" {
-  function_name = "s3_trigger"
-
-  runtime = "python3.9"
-  handler = "s3_trigger.lambda_handler"
-  timeout = 120
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "s3_trigger.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.s3_trigger_lambda_zip.etag
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      STEP_FUNCTION_ARN = aws_sfn_state_machine.s3_workflow.arn
-    }
-  }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
-}
-
-# Send Feedback Lambda
-resource "aws_lambda_function" "send_feedback_lambda" {
-  function_name = "send_feedback"
-
-  runtime = "python3.9"
-  handler = "send_feedback.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "send_feedback.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.send_feedback_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      DB_HOST     = aws_db_instance.rds.address
-      DB_USER     = local.rds_credentials.username
-      DB_PASSWORD = local.rds_credentials.password
-      DB_NAME     = aws_db_instance.rds.db_name
-    }
-  }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Document classification lambda
