@@ -140,7 +140,7 @@ resource "aws_lambda_function" "zip_lambdas" {
   s3_key    = "${each.key}.zip"
 
   role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object[each.key].etag
+  source_code_hash = data.aws_s3_object.lambda_zips[each.key].etag
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
@@ -358,7 +358,7 @@ resource "aws_sfn_state_machine" "s3_workflow" {
     "States": {
       "InsertIntoRDS": {
         "Type": "Task",
-        "Resource": "${aws_lambda_function.insert_rds_new_document_lambda.arn}",
+        "Resource": "${aws_lambda_function.zip_lambdas["insert_rds_new_document_lambda"].arn}",
         "Next": "ProcessDocument"
       },
       "ProcessDocument": {
@@ -402,7 +402,7 @@ resource "aws_iam_policy" "step_function_policy" {
           "lambda:InvokeFunction"
         ]
         Resource = [
-          aws_lambda_function.insert_rds_new_document_lambda.arn,
+          aws_lambda_function.zip_lambdas["insert_rds_new_document_lambda"].arn,
           aws_lambda_function.document_classification_lambda.arn
         ]
       },
