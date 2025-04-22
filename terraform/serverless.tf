@@ -10,6 +10,7 @@ locals {
     insert_rds_new_document = "insert_rds_new_document.lambda_handler",
     s3_trigger = "s3_trigger.lambda_handler",
     send_feedback = "send_feedback.lambda_handler",
+    fetch_topics = "fetch_topics.lambda_handler",
   }
 }
 
@@ -68,11 +69,6 @@ resource "aws_iam_policy" "lambda_policy" {
           "${aws_db_instance.rds.arn}/*",
           "${aws_api_gateway_rest_api.lsm-fyp-api.execution_arn}/*"
         ]
-      },
-      {
-        Effect   = "Allow",
-        Action   = "states:StartExecution",
-        Resource = aws_sfn_state_machine.s3_workflow.arn
       },
       {
         Effect = "Allow",
@@ -291,38 +287,6 @@ resource "aws_lambda_function" "feedback_retraining_lambda" {
   depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
-# Fetch topics function
-resource "aws_lambda_function" "fetch_topics_lambda" {
-  function_name = "fetch_topics"
-
-  runtime = "python3.9"
-  handler = "fetch_topics.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_topics.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_topics_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      DB_HOST     = aws_db_instance.rds.address
-      DB_USER     = local.rds_credentials.username
-      DB_PASSWORD = local.rds_credentials.password
-      DB_NAME     = aws_db_instance.rds.db_name
-    }
-  }
-
-  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
-}
-
 # Code for Lambda Edge Function - Lambda Authoriser
 provider "aws" {
   alias  = "us-east-1"
@@ -460,6 +424,26 @@ resource "aws_iam_role_policy_attachment" "attach_policy" {
   role       = aws_iam_role.step_function_role.name
 
   depends_on = [aws_iam_role.step_function_role, aws_iam_policy.step_function_policy]
+}
+
+resource "aws_iam_policy" "lambda_sfn_policy" {
+  name        = "${var.project_name}-lambda-sfn-policy"
+  description = "Allow Lambda to start Step Functions"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = "states:StartExecution",
+        Resource = aws_sfn_state_machine.s3_workflow.arn
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_sfn_policy_attachment" {
+  role       = aws_iam_role.lambda_execution_role.name
+  policy_arn = aws_iam_policy.lambda_sfn_policy.arn
 }
 
 # db init lambda iam
