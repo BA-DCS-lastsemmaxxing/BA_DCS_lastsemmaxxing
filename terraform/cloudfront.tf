@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_cloudfront_origin_access_control" "oac" {
-  name = "lsm-fyp-oac"
+  name = "${var.project_name}-oac"
   description = "OAC for S3 Frontend Bucket"
   origin_access_control_origin_type = "s3"
   signing_behavior = "always"

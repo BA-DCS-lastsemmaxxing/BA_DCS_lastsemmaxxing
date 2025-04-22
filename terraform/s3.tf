@@ -59,6 +59,8 @@ resource "aws_s3_bucket_versioning" "serverless_bucket_versioning_ap" {
 
 resource "aws_s3_bucket" "document_storage_bucket" {
   bucket = "${var.project_name}-document-storage"
+
+  
 }
 
 resource "aws_lambda_permission" "allow_s3_trigger" {
@@ -90,26 +92,27 @@ resource "aws_s3_bucket_cors_configuration" "cors" {
   }
 }
 
-resource "aws_s3_bucket_policy" "allow_presigned_uploads" {
-  bucket = aws_s3_bucket.document_storage_bucket.id
+# manually set this policy
+# resource "aws_s3_bucket_policy" "allow_presigned_uploads" {
+#   bucket = aws_s3_bucket.document_storage_bucket.id
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = "*"
-        Action = "s3:PutObject"
-        Resource = "arn:aws:s3:::${aws_s3_bucket.document_storage_bucket.id}/*"
-        Condition = {
-          StringLike = {
-            "aws:Referer" = ["https://d1ztk01ovm0zc3.cloudfront.net"]
-          }
-        }
-      }
-    ]
-  })
-}
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Principal = "*"
+#         Action = "s3:PutObject"
+#         Resource = "arn:aws:s3:::${aws_s3_bucket.document_storage_bucket.id}/*"
+#         Condition = {
+#           StringLike = {
+#             "aws:Referer" = ["https://d1ztk01ovm0zc3.cloudfront.net"]
+#           }
+#         }
+#       }
+#     ]
+#   })
+# }
 
 // db init script 
 resource "aws_s3_object" "rds_init_script" {
