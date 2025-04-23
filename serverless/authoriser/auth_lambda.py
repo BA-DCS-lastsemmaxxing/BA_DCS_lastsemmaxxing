@@ -12,10 +12,9 @@ def lambda_handler(event, context):
 
     # Allowed paths (accessible without authentication)
     allowed_paths = [
-        "/login.html",
+        "/login",
         "/favicon.ico",
-        "/_next/static/",
-        "/dashboard"  # ✅ Temporarily allow dashboard for redirection
+        "/_next/static/"
     ]
 
     # Check for authentication token in cookies
@@ -40,7 +39,7 @@ def lambda_handler(event, context):
             "status": "302",
             "statusDescription": "Found",
             "headers": {
-                "location": [{"key": "Location", "value": "/login.html"}]
+                "location": [{"key": "Location", "value": "/login/"}]
             }
         }
 
