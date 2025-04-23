@@ -149,7 +149,7 @@ data "aws_s3_object" "auth_lambda_zip" {
 data "aws_s3_object" "lambda_zips" {
   for_each = local.lambda_functions
 
-  bucket = "${var.project_name}-serverless-ap"
+  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "${each.key}.zip"
 }
 
