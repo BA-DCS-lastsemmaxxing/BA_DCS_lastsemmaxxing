@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3_frontend" {
-  bucket = "${var.project_name}-frontend"
+  bucket = "${var.project_name}-bucket-frontend"
 }
 
 resource "aws_s3_bucket_website_configuration" "s3_frontend_website_config" {
@@ -42,12 +42,12 @@ resource "aws_s3_bucket_policy" "s3_frontend_bucket_policy" {
 data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "serverless_bucket_us" {
-  bucket = "${var.project_name}-serverless-us"
+  bucket = "${var.project_name}-bucket-serverless-us"
   provider = aws.us-east-1
 }
 
 resource "aws_s3_bucket" "serverless_bucket_ap" {
-  bucket = "${var.project_name}-serverless-ap"
+  bucket = "${var.project_name}-bucket-serverless-ap"
 }
 
 resource "aws_s3_bucket_versioning" "serverless_bucket_versioning_ap" {
@@ -58,7 +58,7 @@ resource "aws_s3_bucket_versioning" "serverless_bucket_versioning_ap" {
 }
 
 resource "aws_s3_bucket" "document_storage_bucket" {
-  bucket = "${var.project_name}-document-storage"
+  bucket = "${var.project_name}-bucket-document-storage"
 
   
 }
@@ -91,8 +91,7 @@ resource "aws_s3_bucket_cors_configuration" "cors" {
     max_age_seconds = 3000
   }
 }
-
-# manually set this policy
+# get the cdn dynamically? but then dependency.. 
 # resource "aws_s3_bucket_policy" "allow_presigned_uploads" {
 #   bucket = aws_s3_bucket.document_storage_bucket.id
 
