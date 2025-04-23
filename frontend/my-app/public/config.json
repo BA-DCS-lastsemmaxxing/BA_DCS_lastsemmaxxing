@@ -1,7 +1,7 @@
 {
   "cognito": {
-    "userPoolId": "ap-southeast-1_eWzxPr6UO",
-    "clientId": "6728hti8d5j2fbiiv7mh35gp55"
+    "userPoolId": "ap-southeast-1_g8PctvXjr",
+    "clientId": "5h76omse4q08a1cbo7qflm3o5g"
   },
   "api": {
     "backendUrl": "https://pvzlpboikc.execute-api.ap-southeast-1.amazonaws.com/prod"
