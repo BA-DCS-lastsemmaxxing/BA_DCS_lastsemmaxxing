@@ -3,6 +3,7 @@ import boto3
 from botocore.exceptions import ClientError
 import logging
 from models import *
+import os
 
 # Configure logging
 logger = logging.getLogger()
