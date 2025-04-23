@@ -136,7 +136,7 @@ resource "aws_lambda_function" "zip_lambdas" {
   handler = each.value
   runtime = "python3.9"
 
-  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_bucket = "${var.project_name}-bucket-serverless-ap"
   s3_key    = "${each.key}.zip"
 
   role             = aws_iam_role.lambda_execution_role.arn
@@ -335,7 +335,7 @@ resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
 
 resource "aws_lambda_function" "auth_lambda_edge" {
   provider      = aws.us-east-1
-  s3_bucket     = "${var.project_name}-serverless-us"
+  s3_bucket     = "${var.project_name}-bucket-serverless-us"
   s3_key        = "auth_lambda.zip"
   function_name = "auth_lambda_edge"
   role          = aws_iam_role.lambda_edge_role.arn
