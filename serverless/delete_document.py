@@ -9,7 +9,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 s3_client = boto3.client('s3')
-BUCKET_NAME = 'lsm-fyp-document-storage'  # Replace with your S3 bucket name
+BUCKET_NAME = os.getenv("S3_BUCKET") # Replace with your S3 bucket name
 
 def lambda_handler(event, context):
     logger.info(f"Received event: {json.dumps(event)}") # logs the event
