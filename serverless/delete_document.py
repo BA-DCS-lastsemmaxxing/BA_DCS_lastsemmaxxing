@@ -26,7 +26,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 200,
                 'headers': {
-                    'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net',  # Replace with your CloudFront domain
+                    'Access-Control-Allow-Origin': '*',  # Replace with your CloudFront domain
                     'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
                 },
@@ -38,7 +38,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 404,
                 'headers': {
-                    'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                    'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                     'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
                 },
@@ -52,7 +52,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 404,
                 'headers': {
-                    'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                    'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                     'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
                 },
@@ -64,7 +64,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 500,
             'headers': {
-                'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                 'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
             },
@@ -77,7 +77,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 400,
             'headers': {
-                'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                 'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
             },
@@ -90,7 +90,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 500,
             'headers':{
-                'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                 'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
             },
