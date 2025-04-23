@@ -166,7 +166,7 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
   handler = "s3_trigger.lambda_handler"
   timeout = 120
 
-  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_bucket = "${var.project_name}-bucket-serverless-ap"
   s3_key    = "s3_trigger.zip"
 
   role             = aws_iam_role.lambda_execution_role.arn
