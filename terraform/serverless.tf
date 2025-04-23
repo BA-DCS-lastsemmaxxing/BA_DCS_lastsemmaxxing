@@ -155,6 +155,7 @@ resource "aws_lambda_function" "zip_lambdas" {
       DB_PASSWORD = local.rds_credentials.password
       DB_NAME     = aws_db_instance.rds.db_name
       S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+      STEP_FUNCTION_ARN = aws_sfn_state_machine.s3_workflow.arn
     }
   }
 }
