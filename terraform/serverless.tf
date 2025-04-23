@@ -210,6 +210,7 @@ resource "aws_lambda_function" "document_classification_lambda" {
       DB_NAME     = aws_db_instance.rds.db_name
       REGION      = var.region
       S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+      MODEL_S3_BUCKET = aws_s3_bucket.serverless_bucket_ap.bucket
     }
   }
 

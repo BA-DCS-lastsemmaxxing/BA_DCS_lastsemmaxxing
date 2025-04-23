@@ -37,7 +37,7 @@ bedrock_client = boto3.client(
 
 s3_client = boto3.client('s3')
 bucket_name = os.environ.get("S3_BUCKET")
-model_bucket = "lsm-fyp-serverless-ap"
+model_bucket = os.environ.get("MODEL_S3_BUCKET")
 
 # =============================================================================
 # 1. Document Processing Utilities
