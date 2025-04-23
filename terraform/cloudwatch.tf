@@ -1,21 +1,22 @@
-locals {
-  lambda_functions_cloudwatch = merge(
-    aws_lambda_function.zip_lambdas,
-    {
-      "document_classification" = aws_lambda_function.document_classification_lambda,
-      "add_new_topic" = aws_lambda_function.add_new_topic_lambda,
-      "remove_topic" = aws_lambda_function.remove_topic_lambda,
-      "feedback_retraining" = aws_lambda_function.feedback_retraining_lambda,
-      "auth_lambda_edge" = aws_lambda_function.auth_lambda_edge,
-      "rds_init_lambda" = aws_lambda_function.rds_init_lambda,
-    }
-  )
-}
+# locals {
+#   lambda_functions_cloudwatch = merge(
+#     aws_lambda_function.zip_lambdas,
+#     {
+#       "document_classification" = aws_lambda_function.document_classification_lambda,
+#       "add_new_topic" = aws_lambda_function.add_new_topic_lambda,
+#       "remove_topic" = aws_lambda_function.remove_topic_lambda,
+#       "feedback_retraining" = aws_lambda_function.feedback_retraining_lambda,
+#       "auth_lambda_edge" = aws_lambda_function.auth_lambda_edge,
+#       "rds_init_lambda" = aws_lambda_function.rds_init_lambda,
+#       "s3_trigger" = aws_lambda_function.s3_trigger_lambda
+#     }
+#   )
+# }
 
-// cloudwatch groups for lambda functions
-resource "aws_cloudwatch_log_group" "lambda_log_groups" {
-  for_each = local.lambda_functions_cloudwatch
+# // cloudwatch groups for lambda functions
+# resource "aws_cloudwatch_log_group" "lambda_log_groups" {
+#   for_each = local.lambda_functions_cloudwatch
 
-  name              = "/aws/lambda/${each.value.function_name}"
-  retention_in_days = 7
-}
+#   name              = "/aws/lambda/${each.value.function_name}"
+#   retention_in_days = 7
+# }
