@@ -155,7 +155,7 @@ data "aws_s3_object" "lambda_zips" {
 
 data "aws_s3_object" "s3_trigger_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "s3_trigger_lambda.zip"
+  key = "s3_trigger.zip"
 }
 
 // ML Model pickle file
