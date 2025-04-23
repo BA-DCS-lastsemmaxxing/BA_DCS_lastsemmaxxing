@@ -8,7 +8,6 @@ locals {
     fetch_upload_url = "fetch_upload_url.lambda_handler",
     fetch_download_url = "fetch_download_url.lambda_handler",
     insert_rds_new_document = "insert_rds_new_document.lambda_handler",
-    s3_trigger = "s3_trigger.lambda_handler",
     send_feedback = "send_feedback.lambda_handler",
     fetch_topics = "fetch_topics.lambda_handler",
   }
@@ -155,6 +154,32 @@ resource "aws_lambda_function" "zip_lambdas" {
       DB_PASSWORD = local.rds_credentials.password
       DB_NAME     = aws_db_instance.rds.db_name
       S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+      STEP_FUNCTION_ARN = aws_sfn_state_machine.s3_workflow.arn
+    }
+  }
+}
+
+# S3 Trigger Lambda - separated to prevent circular dependency
+resource "aws_lambda_function" "s3_trigger_lambda" {
+  function_name = "s3_trigger"
+
+  runtime = "python3.9"
+  handler = "s3_trigger.lambda_handler"
+  timeout = 120
+
+  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_key    = "s3_trigger.zip"
+
+  role             = aws_iam_role.lambda_execution_role.arn
+  source_code_hash = data.aws_s3_object.s3_trigger_lambda_zip.etag
+
+  vpc_config {
+    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
+    security_group_ids = [aws_security_group.lambda_sg.id]
+  }
+
+  environment {
+    variables = {
       STEP_FUNCTION_ARN = aws_sfn_state_machine.s3_workflow.arn
     }
   }
