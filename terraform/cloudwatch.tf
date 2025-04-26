@@ -18,5 +18,9 @@ resource "aws_cloudwatch_log_group" "lambda_log_groups" {
   for_each = local.lambda_functions_cloudwatch
 
   name              = "/aws/lambda/${each.value.function_name}"
-  retention_in_days = 7
+  retention_in_days = 14
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
