@@ -86,7 +86,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ],
-        Resource = "arn:aws:logs:ap-southeast-1:874280117166:*"
+        Resource = "*"
       },
       # Allow to receive messages from sqs
       {
