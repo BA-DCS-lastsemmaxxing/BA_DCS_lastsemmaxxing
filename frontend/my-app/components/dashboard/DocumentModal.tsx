@@ -79,6 +79,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
   };
 
   const handleFeedbackSubmit = async (isCorrect: boolean) => {
+    console.log("document to submit feedback for: ", document);
     try{
       if (isCorrect) {
         // Store the current classification as positive feedback
