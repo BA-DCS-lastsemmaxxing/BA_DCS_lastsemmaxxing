@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3_frontend" {
-  bucket = "${var.project_name}-frontend"
+  bucket = "${var.project_name}-bucket-frontend"
 }
 
 resource "aws_s3_bucket_website_configuration" "s3_frontend_website_config" {
@@ -42,12 +42,12 @@ resource "aws_s3_bucket_policy" "s3_frontend_bucket_policy" {
 data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "serverless_bucket_us" {
-  bucket = "${var.project_name}-serverless-us"
+  bucket = "${var.project_name}-bucket-serverless-us"
   provider = aws.us-east-1
 }
 
 resource "aws_s3_bucket" "serverless_bucket_ap" {
-  bucket = "${var.project_name}-serverless-ap"
+  bucket = "${var.project_name}-bucket-serverless-ap"
 }
 
 resource "aws_s3_bucket_versioning" "serverless_bucket_versioning_ap" {
@@ -58,7 +58,9 @@ resource "aws_s3_bucket_versioning" "serverless_bucket_versioning_ap" {
 }
 
 resource "aws_s3_bucket" "document_storage_bucket" {
-  bucket = "${var.project_name}-document-storage"
+  bucket = "${var.project_name}-bucket-document-storage"
+
+  
 }
 
 resource "aws_lambda_permission" "allow_s3_trigger" {
@@ -89,27 +91,27 @@ resource "aws_s3_bucket_cors_configuration" "cors" {
     max_age_seconds = 3000
   }
 }
+# get the cdn dynamically? but then dependency.. 
+# resource "aws_s3_bucket_policy" "allow_presigned_uploads" {
+#   bucket = aws_s3_bucket.document_storage_bucket.id
 
-resource "aws_s3_bucket_policy" "allow_presigned_uploads" {
-  bucket = aws_s3_bucket.document_storage_bucket.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = "*"
-        Action = "s3:PutObject"
-        Resource = "arn:aws:s3:::${aws_s3_bucket.document_storage_bucket.id}/*"
-        Condition = {
-          StringLike = {
-            "aws:Referer" = ["https://d1ztk01ovm0zc3.cloudfront.net"]
-          }
-        }
-      }
-    ]
-  })
-}
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Effect = "Allow"
+#         Principal = "*"
+#         Action = "s3:PutObject"
+#         Resource = "arn:aws:s3:::${aws_s3_bucket.document_storage_bucket.id}/*"
+#         Condition = {
+#           StringLike = {
+#             "aws:Referer" = ["https://d1ztk01ovm0zc3.cloudfront.net"]
+#           }
+#         }
+#       }
+#     ]
+#   })
+# }
 
 // db init script 
 resource "aws_s3_object" "rds_init_script" {
@@ -144,49 +146,16 @@ data "aws_s3_object" "auth_lambda_zip" {
   key = "auth_lambda.zip"
 }
 
-data "aws_s3_object" "delete_document_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "delete_document.zip"
-}
+data "aws_s3_object" "lambda_zips" {
+  for_each = local.lambda_functions
 
-data "aws_s3_object" "fetch_documents_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_documents.zip"
-}
-
-data "aws_s3_object" "fetch_upload_url_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_upload_url.zip"
-}
-
-data "aws_s3_object" "fetch_download_url_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_download_url.zip"
-}
-
-data "aws_s3_object" "insert_rds_new_document_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "insert_rds_new_document.zip"
-}
-
-data "aws_s3_object" "fetch_topics_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_topics.zip"
-}
-
-data "aws_s3_object" "fetch_corrected_documents_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "fetch_topics.zip"
+  key = "${each.key}.zip"
 }
 
 data "aws_s3_object" "s3_trigger_lambda_zip" {
   bucket = aws_s3_bucket.serverless_bucket_ap.bucket
   key = "s3_trigger.zip"
-}
-
-data "aws_s3_object" "send_feedback_lambda_zip" {
-  bucket = aws_s3_bucket.serverless_bucket_ap.bucket
-  key = "send_feedback.zip"
 }
 
 // ML Model pickle file

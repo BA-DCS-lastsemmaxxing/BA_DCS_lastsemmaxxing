@@ -3,13 +3,14 @@ import boto3
 from botocore.exceptions import ClientError
 import logging
 from models import *
+import os
 
 # Configure logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 s3_client = boto3.client('s3')
-BUCKET_NAME = 'lsm-fyp-document-storage'  # Replace with your S3 bucket name
+BUCKET_NAME = os.getenv("S3_BUCKET") # Replace with your S3 bucket name
 
 def lambda_handler(event, context):
     logger.info(f"Received event: {json.dumps(event)}") # logs the event
@@ -26,7 +27,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 200,
                 'headers': {
-                    'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net',  # Replace with your CloudFront domain
+                    'Access-Control-Allow-Origin': '*',  # Replace with your CloudFront domain
                     'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
                 },
@@ -38,7 +39,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 404,
                 'headers': {
-                    'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                    'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                     'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
                 },
@@ -52,7 +53,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 404,
                 'headers': {
-                    'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                    'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                     'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
                 },
@@ -64,7 +65,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 500,
             'headers': {
-                'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                 'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
             },
@@ -77,7 +78,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 400,
             'headers': {
-                'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                 'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
             },
@@ -90,7 +91,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 500,
             'headers':{
-                'Access-Control-Allow-Origin': 'https://d1ztk01ovm0zc3.cloudfront.net', # Replace with your CloudFront domain
+                'Access-Control-Allow-Origin': '*', # Replace with your CloudFront domain
                 'Access-Control-Allow-Methods': 'DELETE,OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
             },

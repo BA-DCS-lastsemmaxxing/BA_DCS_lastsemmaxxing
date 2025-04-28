@@ -1,10 +1,10 @@
 locals {
-  s3_origin_id   = "${var.project_name}-frontend-origin"
-  s3_domain_name = "${var.project_name}-frontend.s3.${var.region}.amazonaws.com"  # Updated to regular S3 domain for HTTPS
+  s3_origin_id   = "${var.project_name}-bucket-frontend-origin"
+  s3_domain_name = "${var.project_name}-bucket-frontend.s3.${var.region}.amazonaws.com"  # Updated to regular S3 domain for HTTPS
 }
 
 resource "aws_cloudfront_origin_access_control" "oac" {
-  name = "lsm-fyp-oac"
+  name = "${var.project_name}-oac"
   description = "OAC for S3 Frontend Bucket"
   origin_access_control_origin_type = "s3"
   signing_behavior = "always"

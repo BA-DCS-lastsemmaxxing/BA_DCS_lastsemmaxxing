@@ -1,11 +1,15 @@
 locals {
   rds_credentials = jsondecode(data.aws_ssm_parameter.db_credentials.value)
 
-  lambda_db_variables = {
-    DB_HOST     = aws_db_instance.rds.address
-    DB_USER     = local.rds_credentials.username
-    DB_PASSWORD = local.rds_credentials.password
-    DB_NAME     = aws_db_instance.rds.db_name
+  lambda_functions = {
+    delete_document = "delete_document.lambda_handler",
+    fetch_documents = "fetch_documents.lambda_handler",
+    fetch_corrected_documents = "fetch_corrected_documents.lambda_handler",
+    fetch_upload_url = "fetch_upload_url.lambda_handler",
+    fetch_download_url = "fetch_download_url.lambda_handler",
+    insert_rds_new_document = "insert_rds_new_document.lambda_handler",
+    send_feedback = "send_feedback.lambda_handler",
+    fetch_topics = "fetch_topics.lambda_handler",
   }
 }
 
@@ -66,11 +70,6 @@ resource "aws_iam_policy" "lambda_policy" {
         ]
       },
       {
-        Effect   = "Allow",
-        Action   = "states:StartExecution",
-        Resource = aws_sfn_state_machine.s3_workflow.arn
-      },
-      {
         Effect = "Allow",
         Action = [
           "bedrock:InvokeModel",
@@ -87,7 +86,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ],
-        Resource = "arn:aws:logs:ap-southeast-1:874280117166:*"
+        Resource = "*"
       },
       # Allow to receive messages from sqs
       {
@@ -117,18 +116,30 @@ resource "aws_iam_policy" "lambda_policy" {
   })
 }
 
-# Delete Document Function
-resource "aws_lambda_function" "delete_document_lambda" {
-  function_name = "delete_document"
+# Attach the policy to the role
+resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
+  role       = aws_iam_role.lambda_execution_role.name
+  policy_arn = aws_iam_policy.lambda_policy.arn
+}
 
+resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
+  role       = aws_iam_role.lambda_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+# Lambda Functions from S3 Zips
+resource "aws_lambda_function" "zip_lambdas" {
+  for_each = local.lambda_functions
+
+  function_name = each.key
+  handler = each.value
   runtime = "python3.9"
-  handler = "delete_document.lambda_handler"
 
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "delete_document.zip"
+  s3_bucket = "${var.project_name}-bucket-serverless-ap"
+  s3_key    = "${each.key}.zip"
 
   role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.delete_document_lambda_zip.etag
+  source_code_hash = data.aws_s3_object.lambda_zips[each.key].etag
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
@@ -136,143 +147,18 @@ resource "aws_lambda_function" "delete_document_lambda" {
     subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
-
-  environment {
-    variables = merge(
-      local.lambda_db_variables,
-      {
-        S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-      }
-    )
-  }
-}
-
-# Fetch Documents Function
-resource "aws_lambda_function" "fetch_documents_lambda" {
-  function_name = "fetch_documents"
-
-  runtime = "python3.9"
-  handler = "fetch_documents.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_documents.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_documents_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = local.lambda_db_variables
-  }
-}
-
-# Fetch Corrected Documents Function
-resource "aws_lambda_function" "fetch_corrected_documents_lambda" {
-  function_name = "fetch_corrected_documents"
-
-  runtime = "python3.9"
-  handler = "fetch_corrected_documents.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_corrected_documents.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_corrected_documents_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = local.lambda_db_variables
-  }
-}
-
-# Fetch upload url function
-resource "aws_lambda_function" "fetch_upload_url_lambda" {
-  function_name = "fetch_upload_url"
-
-  runtime = "python3.9"
-  handler = "fetch_upload_url.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_upload_url.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_upload_url_lambda_zip.etag
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
   environment {
     variables = {
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
     }
   }
 }
 
-# Fetch download url function
-resource "aws_lambda_function" "fetch_download_url_lambda" {
-  function_name = "fetch_download_url"
-
-  runtime = "python3.9"
-  handler = "fetch_download_url.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_download_url.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_download_url_lambda_zip.etag
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = {
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-    }
-  }
-}
-
-# Insert new document into RDS function
-resource "aws_lambda_function" "insert_rds_new_document_lambda" {
-  function_name = "insert_rds_new_document"
-
-  runtime = "python3.9"
-  handler = "insert_rds_new_document.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "insert_rds_new_document.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.insert_rds_new_document_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = local.lambda_db_variables
-  }
-}
-
-# Lambda function triggered on new object in S3
+# S3 Trigger Lambda - separated to prevent circular dependency
 resource "aws_lambda_function" "s3_trigger_lambda" {
   function_name = "s3_trigger"
 
@@ -280,7 +166,7 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
   handler = "s3_trigger.lambda_handler"
   timeout = 120
 
-  s3_bucket = "${var.project_name}-serverless-ap"
+  s3_bucket = "${var.project_name}-bucket-serverless-ap"
   s3_key    = "s3_trigger.zip"
 
   role             = aws_iam_role.lambda_execution_role.arn
@@ -295,31 +181,6 @@ resource "aws_lambda_function" "s3_trigger_lambda" {
     variables = {
       STEP_FUNCTION_ARN = aws_sfn_state_machine.s3_workflow.arn
     }
-  }
-}
-
-# Send Feedback Lambda
-resource "aws_lambda_function" "send_feedback_lambda" {
-  function_name = "send_feedback"
-
-  runtime = "python3.9"
-  handler = "send_feedback.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "send_feedback.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.send_feedback_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
-  }
-
-  environment {
-    variables = local.lambda_db_variables
   }
 }
 
@@ -342,11 +203,18 @@ resource "aws_lambda_function" "document_classification_lambda" {
   }
 
   environment {
-    variables = merge(local.lambda_db_variables, {
-      REGION    = var.region
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-    })
+    variables = {
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      REGION      = var.region
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+      MODEL_S3_BUCKET = aws_s3_bucket.serverless_bucket_ap.bucket
+    }
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Add new topic lambda
@@ -368,11 +236,17 @@ resource "aws_lambda_function" "add_new_topic_lambda" {
   }
 
   environment {
-    variables = merge(local.lambda_db_variables, {
-      REGION    = var.region
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-    })
+    variables = {
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      REGION      = var.region
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+    }
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Remove topic lambda
@@ -394,11 +268,17 @@ resource "aws_lambda_function" "remove_topic_lambda" {
   }
 
   environment {
-    variables = merge(local.lambda_db_variables, {
-      REGION    = var.region
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-    })
+    variables = {
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      REGION      = var.region
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+    }
   }
+
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Add new topic lambda
@@ -420,51 +300,17 @@ resource "aws_lambda_function" "feedback_retraining_lambda" {
   }
 
   environment {
-    variables = merge(local.lambda_db_variables, {
-      REGION    = var.region
-      S3_BUCKET = aws_s3_bucket.document_storage_bucket.bucket
-    })
-  }
-}
-
-# Fetch topics function
-resource "aws_lambda_function" "fetch_topics_lambda" {
-  function_name = "fetch_topics"
-
-  runtime = "python3.9"
-  handler = "fetch_topics.lambda_handler"
-
-  s3_bucket = "${var.project_name}-serverless-ap"
-  s3_key    = "fetch_topics.zip"
-
-  role             = aws_iam_role.lambda_execution_role.arn
-  source_code_hash = data.aws_s3_object.fetch_topics_lambda_zip.etag
-
-  layers = [aws_lambda_layer_version.lambda_layer.arn]
-
-  vpc_config {
-    subnet_ids         = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
-    security_group_ids = [aws_security_group.lambda_sg.id]
+    variables = {
+      DB_HOST     = aws_db_instance.rds.address
+      DB_USER     = local.rds_credentials.username
+      DB_PASSWORD = local.rds_credentials.password
+      DB_NAME     = aws_db_instance.rds.db_name
+      REGION      = var.region
+      S3_BUCKET   = aws_s3_bucket.document_storage_bucket.bucket
+    }
   }
 
-  environment {
-    variables = local.lambda_db_variables
-  }
-}
-
-# Attach the policy to the role
-resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  role       = aws_iam_role.lambda_execution_role.name
-  policy_arn = aws_iam_policy.lambda_policy.arn
-
-  depends_on = [aws_iam_role.lambda_execution_role, aws_iam_policy.lambda_policy]
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-  role       = aws_iam_role.lambda_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-
-  depends_on = [aws_iam_role.lambda_execution_role]
+  depends_on = [ aws_iam_role_policy_attachment.lambda_policy_attachment, aws_iam_role_policy_attachment.lambda_basic_execution ]
 }
 
 # Code for Lambda Edge Function - Lambda Authoriser
@@ -515,7 +361,7 @@ resource "aws_iam_policy_attachment" "lambda_edge_policy_attach" {
 
 resource "aws_lambda_function" "auth_lambda_edge" {
   provider      = aws.us-east-1
-  s3_bucket     = "${var.project_name}-serverless-us"
+  s3_bucket     = "${var.project_name}-bucket-serverless-us"
   s3_key        = "auth_lambda.zip"
   function_name = "auth_lambda_edge"
   role          = aws_iam_role.lambda_edge_role.arn
@@ -538,7 +384,7 @@ resource "aws_sfn_state_machine" "s3_workflow" {
     "States": {
       "InsertIntoRDS": {
         "Type": "Task",
-        "Resource": "${aws_lambda_function.insert_rds_new_document_lambda.arn}",
+        "Resource": "${aws_lambda_function.zip_lambdas["insert_rds_new_document"].arn}",
         "Next": "ProcessDocument"
       },
       "ProcessDocument": {
@@ -582,7 +428,7 @@ resource "aws_iam_policy" "step_function_policy" {
           "lambda:InvokeFunction"
         ]
         Resource = [
-          aws_lambda_function.insert_rds_new_document_lambda.arn,
+          aws_lambda_function.zip_lambdas["insert_rds_new_document"].arn,
           aws_lambda_function.document_classification_lambda.arn
         ]
       },
@@ -604,6 +450,26 @@ resource "aws_iam_role_policy_attachment" "attach_policy" {
   role       = aws_iam_role.step_function_role.name
 
   depends_on = [aws_iam_role.step_function_role, aws_iam_policy.step_function_policy]
+}
+
+resource "aws_iam_policy" "lambda_sfn_policy" {
+  name        = "${var.project_name}-lambda-sfn-policy"
+  description = "Allow Lambda to start Step Functions"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = "states:StartExecution",
+        Resource = aws_sfn_state_machine.s3_workflow.arn
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_sfn_policy_attachment" {
+  role       = aws_iam_role.lambda_execution_role.name
+  policy_arn = aws_iam_policy.lambda_sfn_policy.arn
 }
 
 # db init lambda iam
@@ -700,7 +566,7 @@ resource "aws_lambda_function" "rds_init_lambda" {
   s3_key           = "rds_init.zip"
   role             = aws_iam_role.rds_init_lambda_role.arn
   source_code_hash = data.aws_s3_object.rds_init_lambda_zip.etag
-  timeout = 30
+  timeout          = 30
 
   layers = [aws_lambda_layer_version.lambda_layer.arn]
 
@@ -710,12 +576,13 @@ resource "aws_lambda_function" "rds_init_lambda" {
   }
 
   environment {
-    variables = merge(
-      local.lambda_db_variables,
-      {
-        S3_BUCKET    = aws_s3_bucket.serverless_bucket_ap.bucket,
-        SQL_FILE_KEY = "rds_init_script.sql"
-      }
-    )
+    variables = {
+      DB_HOST      = aws_db_instance.rds.address,
+      DB_USER      = local.rds_credentials.username,
+      DB_PASSWORD  = local.rds_credentials.password,
+      DB_NAME      = aws_db_instance.rds.db_name,
+      S3_BUCKET    = aws_s3_bucket.serverless_bucket_ap.bucket
+      SQL_FILE_KEY = "rds_init_script.sql"
+    }
   }
 }
