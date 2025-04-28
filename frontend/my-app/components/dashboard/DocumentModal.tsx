@@ -82,7 +82,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     try{
       if (isCorrect) {
         // Store the current classification as positive feedback
-        const response = await sendFeedback(document.id, userCategory, '');
+        const response = await sendFeedback(document.id, document.classification?document.classification:'', '');
         console.log("Feedback response: ", response);
         toast({
           title: "Success",
