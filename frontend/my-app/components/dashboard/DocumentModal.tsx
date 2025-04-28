@@ -82,7 +82,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
     try{
       if (isCorrect) {
         // Store the current classification as positive feedback
-        const response = await sendFeedback(document.id, userCategory, 'User confirmed classification');
+        const response = await sendFeedback(document.id, userCategory, '');
         console.log("Feedback response: ", response);
         toast({
           title: "Success",
@@ -92,12 +92,9 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
 
         // Update the document object with the new feedback
         document.user_corrected_category = document.classification;
-        document.feedback = 'User confirmed classification';
 
         // Return to viewing mode
         setFeedbackMode('viewing');
-        setUserCategory(userCategory);
-        setFeedbackText('User confirmed classification');
       } else {
         // Validation: Ensure both category and feedback are provided
         if (!userCategory || !feedbackText) {
@@ -118,7 +115,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
           description: "Thank you for your feedback!"
         });
         
-        // Update the document object with the new feedback (this would ideally be handled by refreshing data)
+      // Update the document object with the new feedback (this would ideally be handled by refreshing data)
         document.user_corrected_category = userCategory;
         document.feedback = feedbackText;
         
@@ -206,7 +203,19 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
                   )}
                 </div>
                 
-                {hasPreviousFeedback && feedbackMode === 'viewing' ? (
+                {hasPreviousFeedback && feedbackMode === 'viewing' && document.user_corrected_category === document.classification ? (
+                  // Display positive feedback in view mode
+                  <div className="space-y-3 bg-green-50 p-3 rounded-md border border-green-200">
+                    <div className="flex items-center gap-2">
+                      <Icons.ThumbsUp className="h-4 w-4 text-green-600" />
+                      <p className="font-medium text-green-700">You confirmed this classification is correct</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500">Confirmed Category:</p>
+                      <p className="font-medium">{document.classification}</p>
+                    </div>
+                  </div>
+                ) : hasPreviousFeedback && feedbackMode === 'viewing' ? (
                   // Display existing feedback in view mode
                   <div className="space-y-3 bg-gray-50 p-3 rounded-md">
                     <div>
