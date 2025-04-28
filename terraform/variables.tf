@@ -7,11 +7,11 @@ variable "region" {
 variable "project_name" {
   description = "The name of the project to use for naming resources"
   type        = string
-  default     = "ninjadoc"
+  default     = "lms-fyp"
 }
 
 variable "app_name" {
   description = "The name of the application to use for naming resources"
   type        = string
-  default     = "ninjadoc"
+  default     = "lsm-fyp"
 }
