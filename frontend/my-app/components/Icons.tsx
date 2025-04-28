@@ -9,6 +9,7 @@ import{
     LucideRefreshCw,
     LucideAlertTriangle,
     FileX,
+    ThumbsUp,
 } from "lucide-react";
 
 export const Icons: any = {
@@ -21,5 +22,6 @@ export const Icons: any = {
     Loader: Loader,
     RefreshCw: LucideRefreshCw,
     AlertTriangle: LucideAlertTriangle,
-    FileX: FileX
+    FileX: FileX,
+    ThumbsUp: ThumbsUp,
 }
