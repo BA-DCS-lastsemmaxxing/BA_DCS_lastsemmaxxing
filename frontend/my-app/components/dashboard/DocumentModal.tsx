@@ -80,24 +80,25 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
 
   const handleFeedbackSubmit = async (isCorrect: boolean) => {
     try{
-      if (isCorrect){
-        const response = await sendFeedback(document.id, '','')
-        console.log("Feedback response: ", response)
+      if (isCorrect) {
+        // Store the current classification as positive feedback
+        const response = await sendFeedback(document.id, userCategory, 'User confirmed classification');
+        console.log("Feedback response: ", response);
         toast({
           title: "Success",
           variant: "success",
           description: "Feedback submitted successfully!"
         });
 
-        // Update the document object with the new feedback (this would ideally be handled by refreshing data)
-        document.user_corrected_category = '';
-        document.feedback = '';
-        
+        // Update the document object with the new feedback
+        document.user_corrected_category = document.classification;
+        document.feedback = 'User confirmed classification';
+
         // Return to viewing mode
         setFeedbackMode('viewing');
-        setUserCategory('');
-        setFeedbackText('');
-      }else{
+        setUserCategory(userCategory);
+        setFeedbackText('User confirmed classification');
+      } else {
         // Validation: Ensure both category and feedback are provided
         if (!userCategory || !feedbackText) {
           toast({
@@ -123,7 +124,7 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
         
         // Return to viewing mode
         setFeedbackMode('viewing');
-        }
+      }
     } catch (error) {
       console.error('Submission error:', error);
       toast({
