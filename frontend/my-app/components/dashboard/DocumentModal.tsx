@@ -84,10 +84,8 @@ export function DocumentModal({ isOpen, onOpenChange, document }: DocumentModalP
       console.log("document to submit feedback for: ", document);
       if (isCorrect) {
         // Store the current classification as positive feedback
-        console.log("document to submit feedback for: ", document);
         const response = await sendFeedback(document.id, document.classification?document.classification:'', '');
         console.log("Feedback response: ", response);
-        console.log("document to submit feedback for: ", document);
         toast({
           title: "Success",
           variant: "success",
