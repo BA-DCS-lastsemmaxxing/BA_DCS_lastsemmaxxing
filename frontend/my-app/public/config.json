@@ -1,9 +1,9 @@
 {
   "cognito": {
-    "userPoolId": "ap-southeast-1_cNrgyuW8X",
+    "userPoolId": "ap-southeast-1_eWzxPr6UO",
     "clientId": "3t8uv9ugnrflri6spe2v4q6v12"
   },
   "api": {
-    "backendUrl": "https://uigdo24h1l.execute-api.ap-southeast-1.amazonaws.com/prod"
+    "backendUrl": "https://o9bkvjiri3.execute-api.ap-southeast-1.amazonaws.com/prod"
   }
 }

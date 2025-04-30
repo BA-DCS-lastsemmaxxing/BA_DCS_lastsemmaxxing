@@ -7,7 +7,7 @@ variable "region" {
 variable "project_name" {
   description = "The name of the project to use for naming resources"
   type        = string
-  default     = "lms-fyp"
+  default     = "lsm-fyp"
 }
 
 variable "app_name" {
